@@ -1,0 +1,843 @@
+import React, { useState } from 'react';
+import { 
+  User, 
+  Building2, 
+  Mail, 
+  Phone, 
+  Globe, 
+  ChevronDown, 
+  Target, 
+  TrendingUp, 
+  Megaphone, 
+  Users, 
+  MoreHorizontal, 
+  CheckCircle2, 
+  ShieldCheck, 
+  Lock, 
+  Clock, 
+  ArrowRight, 
+  Check, 
+  BarChart2, 
+  ArrowUpRight, 
+  Eye, 
+  Layers, 
+  MousePointerClick, 
+  UserCheck, 
+  Sparkles,
+  Calendar,
+  Send
+} from 'lucide-react';
+import { Navbar } from './Navbar';
+import { Footer } from './Footer';
+import { Toast, ToastMessage } from './Toast';
+import { DiscoveryBookingPage } from './DiscoveryBookingPage';
+import { saveLocalAuditLead, appendLeadToGoogleSheet, submitToGoogleForm, submitLeadToGoogleWebApp, AuditSubmissionRecord } from '../lib/googleSheets';
+import { getAccessToken } from '../lib/googleAuth';
+
+interface FreeAuditPageProps {
+  onBackToHome: () => void;
+  onNavigateToPackages?: () => void;
+}
+
+export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
+  onBackToHome,
+  onNavigateToPackages
+}) => {
+  // Form Fields
+  const [formData, setFormData] = useState({
+    fullName: '',
+    businessName: '',
+    email: '',
+    phoneCode: '+254',
+    phone: '',
+    website: '',
+    industry: '',
+    primaryGoal: 'Generate more leads',
+    challenges: [] as string[],
+    marketingBudget: '',
+    referralSource: '',
+    additionalNotes: ''
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedLead, setSubmittedLead] = useState<AuditSubmissionRecord | null>(null);
+  const [toast, setToast] = useState<ToastMessage | null>(null);
+
+  const goalOptions = [
+    { id: 'leads', label: 'Generate more leads', icon: Target },
+    { id: 'sales', label: 'Increase sales', icon: TrendingUp },
+    { id: 'awareness', label: 'Improve brand awareness', icon: Megaphone },
+    { id: 'retention', label: 'Customer retention', icon: Users },
+    { id: 'other', label: 'Other', icon: MoreHorizontal },
+  ];
+
+  const challengeOptions = [
+    'Generating quality leads',
+    'High customer acquisition cost',
+    'Lack of time / resources',
+    'Low website traffic',
+    'Inconsistent sales',
+    'Not sure what works',
+    'Low conversion rate',
+    'Poor ad performance',
+  ];
+
+  const toggleChallenge = (challenge: string) => {
+    if (formData.challenges.includes(challenge)) {
+      setFormData({
+        ...formData,
+        challenges: formData.challenges.filter((c) => c !== challenge),
+      });
+    } else {
+      setFormData({
+        ...formData,
+        challenges: [...formData.challenges, challenge],
+      });
+    }
+  };
+
+  const handleAuditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const leadRecord: AuditSubmissionRecord = {
+      timestamp: new Date().toISOString(),
+      fullName: formData.fullName.trim(),
+      businessName: formData.businessName.trim(),
+      email: formData.email.trim(),
+      phoneCode: formData.phoneCode,
+      phone: formData.phone.trim(),
+      website: formData.website.trim(),
+      industry: formData.industry,
+      primaryGoal: formData.primaryGoal,
+      challenges: formData.challenges,
+      marketingBudget: formData.marketingBudget,
+      referralSource: formData.referralSource,
+      additionalNotes: formData.additionalNotes.trim(),
+      status: 'Pending Audit'
+    };
+
+    // Save lead record in local store
+    const savedRecord = saveLocalAuditLead(leadRecord);
+
+    // 1. Submit directly to Google Apps Script Web App (instantly appends to Google Sheet)
+    submitLeadToGoogleWebApp(savedRecord).catch(console.error);
+
+    // 2. Submit directly to connected Google Form fallback
+    submitToGoogleForm(savedRecord).catch(console.error);
+
+    // 3. Try background append via REST API if token exists
+    const token = getAccessToken();
+    if (token) {
+      appendLeadToGoogleSheet(savedRecord, token).then((res) => {
+        if (res.success && res.sheetUrl) {
+          savedRecord.syncedToGoogleSheet = true;
+        }
+      }).catch(console.error);
+    }
+
+    setToast({
+      type: 'success',
+      title: 'Details Submitted Successfully!',
+      message: 'Your Growth Audit is being generated. Please proceed to book your 1-on-1 Discovery Call.',
+      duration: 5000
+    });
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmittedLead(savedRecord);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 600);
+  };
+
+  // If details submitted, show the dedicated Discovery Booking page (Next Page)
+  if (submittedLead) {
+    return (
+      <DiscoveryBookingPage 
+        leadData={submittedLead}
+        onBackToHome={onBackToHome}
+        onNavigateToPackages={onNavigateToPackages || onBackToHome}
+      />
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
+      
+      {/* Top Navbar */}
+      <Navbar 
+        activeSection="audit"
+        onRequestAudit={() => {
+          window.scrollTo({ top: 350, behavior: 'smooth' });
+        }}
+        onNavigate={(section) => {
+          onBackToHome();
+        }}
+      />
+
+      {/* Main Container */}
+      <main className="flex-1">
+        
+        {/* Hero Section */}
+        <section className="bg-white border-b border-slate-200/80 pt-10 pb-12 sm:pt-14 sm:pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+          
+          {/* Subtle Dotted Pattern Background */}
+          <div className="absolute top-8 right-8 w-40 h-40 opacity-40 pointer-events-none hidden md:block">
+            <div className="grid grid-cols-6 gap-2.5">
+              {Array.from({ length: 36 }).map((_, i) => (
+                <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
+              ))}
+            </div>
+          </div>
+
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            
+            {/* Left Column: Heading & Value Proposition */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              <div>
+                <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block mb-2">
+                  FREE GROWTH AUDIT
+                </span>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-[1.15]">
+                  Get a Free <span className="text-blue-600">Growth Audit</span>
+                </h1>
+              </div>
+
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
+                Discover what's holding your business back and get a clear, data-driven plan to grow more leads, increase sales and maximize ROI.
+              </p>
+
+              {/* 3 Blue Check Bullets */}
+              <div className="space-y-3 pt-1">
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800">
+                    In-depth analysis of your marketing performance
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800">
+                    Actionable recommendations tailored to your business
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800">
+                    No obligation. 100% free.
+                  </span>
+                </div>
+              </div>
+
+              {/* Mobile Jump to Form Button */}
+              <div className="pt-2 lg:hidden">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const formEl = document.getElementById('audit-form-section');
+                    if (formEl) {
+                      formEl.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="w-full py-3 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm"
+                >
+                  <span>Fill In Audit Form</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
+            </div>
+
+            {/* Right Column: "Your Growth Snapshot" Interactive Preview Card (Hidden on mobile or compact) */}
+            <div className="hidden lg:block lg:col-span-5">
+              <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-lg shadow-blue-500/5 border border-slate-200/90 relative">
+                
+                {/* Header */}
+                <div className="flex items-center justify-between pb-5 border-b border-slate-100">
+                  <h3 className="text-base font-extrabold text-slate-900">
+                    Your Growth Snapshot
+                  </h3>
+                  <span className="text-[11px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-md">
+                    Sample Audit
+                  </span>
+                </div>
+
+                {/* Score & Metrics Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 py-6 items-center">
+                  
+                  {/* Semi-Circular Radial Gauge */}
+                  <div className="sm:col-span-6 flex flex-col items-center justify-center relative">
+                    <div className="relative w-36 h-36 flex items-center justify-center">
+                      <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
+                        {/* Background track */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          stroke="#e2e8f0"
+                          strokeWidth="8"
+                          fill="transparent"
+                          strokeDasharray="251.2"
+                          strokeDashoffset="62.8"
+                          strokeLinecap="round"
+                        />
+                        {/* Progress arc (72%) */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="40"
+                          stroke="#2563eb"
+                          strokeWidth="8"
+                          fill="transparent"
+                          strokeDasharray="251.2"
+                          strokeDashoffset="115.5"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                        <span className="text-[10px] uppercase font-bold text-slate-400">
+                          Overall Growth Score
+                        </span>
+                        <div className="text-2xl font-black text-slate-900 leading-none my-0.5">
+                          72<span className="text-xs text-slate-400 font-bold">/100</span>
+                        </div>
+                        <span className="text-xs font-extrabold text-emerald-600">
+                          Good
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 5 Sub-Scores Breakdown */}
+                  <div className="sm:col-span-6 space-y-2.5">
+                    
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                          <Eye className="w-3 h-3" />
+                        </div>
+                        <span>Visibility</span>
+                      </div>
+                      <span className="font-bold text-slate-900">75/100</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                          <BarChart2 className="w-3 h-3" />
+                        </div>
+                        <span>Traffic</span>
+                      </div>
+                      <span className="font-bold text-slate-900">68/100</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                          <User className="w-3 h-3" />
+                        </div>
+                        <span>Leads</span>
+                      </div>
+                      <span className="font-bold text-slate-900">70/100</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                          <MousePointerClick className="w-3 h-3" />
+                        </div>
+                        <span>Conversion</span>
+                      </div>
+                      <span className="font-bold text-slate-900">65/100</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <div className="flex items-center gap-2 text-slate-600">
+                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                          <Users className="w-3 h-3" />
+                        </div>
+                        <span>Retention</span>
+                      </div>
+                      <span className="font-bold text-slate-900">80/100</span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                {/* Bottom Top Opportunity Box */}
+                <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 relative overflow-hidden">
+                  <div className="relative z-10">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-900 block mb-1">
+                      Top Opportunity
+                    </span>
+                    <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                      Improve conversion rate on your website and turn more visitors into customers.
+                    </p>
+                  </div>
+                  
+                  {/* Subtle Ascending Sparkline Graphic */}
+                  <div className="mt-3 pt-2">
+                    <svg className="w-full h-8 overflow-visible" viewBox="0 0 200 30" fill="none">
+                      <path
+                        d="M0 25 L40 22 L70 26 L100 18 L130 20 L160 8 L200 2"
+                        stroke="#2563eb"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <circle cx="200" cy="2" r="3.5" fill="#2563eb" className="animate-ping" />
+                      <circle cx="200" cy="2" r="3" fill="#2563eb" />
+                    </svg>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Audit Form Section with Left Form & Right Sticky Sidebar */}
+        <section id="audit-form-start" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+          
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 pb-4 border-b border-slate-200">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block mb-1">
+                FREE SME AUDIT & STRATEGY
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Tell us about your business
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                Submit your details to receive your customized growth audit and schedule your 1-on-1 Discovery Call.
+              </p>
+            </div>
+
+            {/* 100% Secure Badge */}
+            <div className="inline-flex items-center gap-3 bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-2xs self-start md:self-auto">
+              <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <Lock className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-slate-900 block leading-tight">
+                  100% Secure
+                </span>
+                <span className="text-[10px] text-slate-500">
+                  Your information is safe
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Form Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left Column: Form Elements */}
+            <div className="lg:col-span-8 bg-white rounded-2xl p-6 sm:p-8 shadow-xs border border-slate-200">
+              
+              {/* Unified 1-Step Audit Form */}
+              <form onSubmit={handleAuditSubmit} className="space-y-6">
+                
+                {/* Row 1: Full Name + Business Name */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                      Full Name <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <User className="w-4 h-4" />
+                      </div>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Your full name"
+                        value={formData.fullName}
+                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                        className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                      Business Name <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <Building2 className="w-4 h-4" />
+                      </div>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Your business name"
+                        value={formData.businessName}
+                        onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+                        className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                  {/* Row 2: Email Address + Phone Number */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Email Address <span className="text-red-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                          <Mail className="w-4 h-4" />
+                        </div>
+                        <input
+                          type="email"
+                          required
+                          placeholder="you@yourbusiness.com"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Phone Number <span className="text-red-500">*</span>
+                      </label>
+                      <div className="flex rounded-lg border border-slate-300 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500">
+                        <div className="flex items-center gap-1 bg-slate-50 px-3 border-r border-slate-300 text-xs font-semibold text-slate-700 shrink-0">
+                          <span>🇰🇪</span>
+                          <span>{formData.phoneCode}</span>
+                        </div>
+                        <input
+                          type="tel"
+                          required
+                          placeholder="712 345 678"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          className="w-full px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Website + Industry */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Website <span className="text-slate-500 font-normal">(Optional)</span>
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                          <Globe className="w-4 h-4" />
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="www.yourwebsite.com"
+                          value={formData.website}
+                          onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                          className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Industry <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        required
+                        value={formData.industry}
+                        onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all cursor-pointer"
+                      >
+                        <option value="">Select your industry</option>
+                        <option value="Home & Living / Interiors">Home & Living / Interiors</option>
+                        <option value="Real Estate & Property">Real Estate & Property</option>
+                        <option value="Healthcare & Wellness Clinics">Healthcare & Wellness Clinics</option>
+                        <option value="Professional & Financial Services">Professional & Financial Services</option>
+                        <option value="E-commerce & Retail">E-commerce & Retail</option>
+                        <option value="Hospitality, Events & Tours">Hospitality, Events & Tours</option>
+                        <option value="Automotive & Logistics">Automotive & Logistics</option>
+                        <option value="Education & Training">Education & Training</option>
+                        <option value="Technology & SaaS">Technology & SaaS</option>
+                        <option value="Other SME">Other SME</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Primary Business Goal Cards */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-2">
+                      What is your primary business goal? <span className="text-red-500">*</span>
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+                      {goalOptions.map((goal) => {
+                        const Icon = goal.icon;
+                        const isSelected = formData.primaryGoal === goal.label;
+                        return (
+                          <button
+                            type="button"
+                            key={goal.id}
+                            onClick={() => setFormData({ ...formData, primaryGoal: goal.label })}
+                            className={`p-3 rounded-xl border text-center flex flex-col items-center justify-center gap-2 transition-all cursor-pointer ${
+                              isSelected
+                                ? 'border-blue-600 bg-blue-50/70 text-blue-950 font-bold ring-1 ring-blue-600 shadow-2xs'
+                                : 'border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-medium'
+                            }`}
+                          >
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                              isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
+                            }`}>
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            <span className="text-[11px] leading-tight line-clamp-2">
+                              {goal.label}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Marketing Challenges Checkboxes */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-2">
+                      What marketing challenges are you currently facing? <span className="text-slate-500 font-normal">(Select all that apply)</span>
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      {challengeOptions.map((challenge, idx) => {
+                        const isChecked = formData.challenges.includes(challenge);
+                        return (
+                          <label
+                            key={idx}
+                            className={`flex items-start gap-2.5 p-2.5 rounded-lg border text-xs cursor-pointer transition-colors ${
+                              isChecked
+                                ? 'bg-blue-50/70 border-blue-300 text-blue-950 font-semibold'
+                                : 'border-slate-200 hover:border-slate-300 text-slate-700'
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={() => toggleChallenge(challenge)}
+                              className="mt-0.5 w-3.5 h-3.5 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
+                            />
+                            <span className="leading-tight">{challenge}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Row: Monthly Budget + Referral Source */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        Monthly Marketing Budget
+                      </label>
+                      <select
+                        value={formData.marketingBudget}
+                        onChange={(e) => setFormData({ ...formData, marketingBudget: e.target.value })}
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all cursor-pointer"
+                      >
+                        <option value="">Select your budget range</option>
+                        <option value="Under KSh 25,000">Under KSh 25,000 / month</option>
+                        <option value="KSh 25,000 – KSh 50,000">KSh 25,000 – KSh 50,000 / month</option>
+                        <option value="KSh 50,000 – KSh 100,000">KSh 50,000 – KSh 100,000 / month</option>
+                        <option value="KSh 100,000 – KSh 250,000">KSh 100,000 – KSh 250,000 / month</option>
+                        <option value="KSh 250,000+">KSh 250,000+ / month</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                        How did you hear about us?
+                      </label>
+                      <select
+                        value={formData.referralSource}
+                        onChange={(e) => setFormData({ ...formData, referralSource: e.target.value })}
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all cursor-pointer"
+                      >
+                        <option value="">Select an option</option>
+                        <option value="Google Search">Google Search</option>
+                        <option value="Instagram / Facebook">Instagram / Facebook</option>
+                        <option value="LinkedIn">LinkedIn</option>
+                        <option value="WhatsApp Referral">WhatsApp Referral</option>
+                        <option value="Client Recommendation">Client Recommendation</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Notes / Anything else */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                      Anything else we should know about your business?
+                    </label>
+                    <textarea
+                      rows={3}
+                      placeholder="Share anything that can help us give you better insights..."
+                      value={formData.additionalNotes}
+                      onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
+                    />
+                  </div>
+
+                  {/* Delivery Notice to Email & WhatsApp */}
+                  <div className="bg-blue-50/75 border border-blue-200/90 rounded-xl p-4 flex items-start gap-3.5 text-slate-800">
+                    <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                      <Send className="w-4 h-4" />
+                    </div>
+                    <div className="text-xs leading-relaxed">
+                      <span className="font-bold text-slate-900 block mb-0.5">
+                        Audit Report Delivery
+                      </span>
+                      <span className="text-slate-600">
+                        Your personalized Growth Audit report will be sent to the <strong>email</strong> and <strong>WhatsApp number</strong> inputted in the above fields within 24–48 hours.
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm sm:text-base transition-all shadow-md flex items-center justify-center gap-2.5 cursor-pointer active:scale-[0.99] disabled:opacity-70"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <span>Submitting Details...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Submit Details</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                </form>
+
+              {/* Privacy Footer */}
+              <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-xs text-slate-600">
+                <Lock className="w-3.5 h-3.5 text-slate-600 shrink-0" />
+                <span>We respect your privacy. Your information will never be shared.</span>
+              </div>
+
+            </div>
+
+            {/* Right Column: Sticky Sidebar "What you'll get" */}
+            <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-24">
+              
+              {/* Card 1: What you'll get */}
+              <div className="bg-white rounded-2xl p-6 shadow-xs border border-slate-200">
+                <h3 className="text-base font-extrabold text-slate-900 mb-5">
+                  What you'll get
+                </h3>
+
+                <div className="space-y-4">
+                  
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <BarChart2 className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900">Growth Score & Analysis</h4>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                        A clear scorecard of your marketing performance across key areas.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900">Actionable Recommendations</h4>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                        Specific strategies to generate more leads, increase sales and grow faster.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <Layers className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900">Growth Roadmap</h4>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                        A prioritized plan showing what to do first for the biggest impact.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <Users className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900">Expected Impact</h4>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                        See the potential results you can expect from our recommendations.
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Card 2: Time Estimate */}
+              <div className="bg-white rounded-2xl p-5 shadow-xs border border-slate-200 flex items-start gap-3.5">
+                <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <Clock className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-slate-900">Takes less than 2 minutes</h4>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Get your personalized audit report within 24–48 hours.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      {/* Footer */}
+      <Footer 
+        onNavigate={(section) => {
+          onBackToHome();
+        }}
+        onRequestAudit={() => {
+          window.scrollTo({ top: 380, behavior: 'smooth' });
+        }}
+      />
+
+      {/* Toast Notification Container */}
+      <Toast toast={toast} onClose={() => setToast(null)} />
+
+    </div>
+  );
+};
