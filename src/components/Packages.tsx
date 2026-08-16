@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import { 
-  Send, 
-  BarChart2, 
-  Crown, 
-  SlidersHorizontal, 
   Check, 
-  CheckCircle2,
-  ShieldCheck,
-  Zap
+  CheckCircle2
 } from 'lucide-react';
 import { PackageItem } from '../types';
 
@@ -18,28 +12,31 @@ interface PackagesProps {
 
 export const packagesData: PackageItem[] = [
   {
-    id: 'starter',
-    name: 'Starter',
-    iconType: 'starter',
-    description: 'Perfect for businesses getting started with digital growth.',
-    price: 'KSh 25,000',
+    id: 'essential',
+    name: 'Essential',
+    subBadge: 'Best for getting started',
+    iconType: 'essential',
+    description: 'Build your presence and stay consistent online.',
+    price: 'KSh 10,000',
     period: '/month',
     accentColor: 'blue',
     buttonText: 'View Details',
     buttonVariant: 'outline-blue',
     features: [
-      'Social media management',
-      'Content creation',
-      'Basic strategy',
-      'Monthly performance report'
+      '1 Social Platform',
+      '8 Posts per month',
+      'Basic graphics',
+      'Caption writing & scheduling',
+      'Monthly performance report',
+      'Community management (Comments & DMs)'
     ],
     fullFeatures: [
-      '2 Social Media Platforms (Facebook & Instagram)',
-      '12 Custom High-Quality Graphic Posts/month',
-      'Curated Industry Hashtags & Captions',
-      'Target Audience & Competitor Analysis',
-      'Monthly Zoom Performance Review & KPI Deck',
-      'Dedicated Social Media Manager'
+      '1 Social Platform (Facebook or Instagram)',
+      '8 Posts per month with custom branded visual assets',
+      'Basic graphics & consistent color palette formatting',
+      'Engaging caption writing & peak-time scheduling',
+      'Monthly performance report & key metrics breakdown',
+      'Community management (Comments & DMs response assistance)'
     ],
     idealFor: 'Small businesses and emerging service providers looking to build a consistent online presence.',
     timeline: 'Onboarding in 3 business days'
@@ -47,66 +44,75 @@ export const packagesData: PackageItem[] = [
   {
     id: 'growth',
     name: 'Growth',
+    subBadge: 'Most popular',
     iconType: 'growth',
-    description: 'Ideal for businesses ready to generate more leads & sales.',
-    price: 'KSh 50,000',
+    description: 'Grow your audience and convert more customers.',
+    price: 'KSh 20,000',
     period: '/month',
+    isPopular: true,
     accentColor: 'green',
     buttonText: 'View Details',
     buttonVariant: 'outline-green',
     features: [
-      'Everything in Starter',
-      'Paid advertising',
-      'Landing pages',
-      'WhatsApp integration',
-      'Performance reporting'
+      '2 Social Platforms',
+      '12–16 Posts per month',
+      '4 Short-form videos',
+      'Premium graphics',
+      'Community management (Comments & DMs)',
+      'Monthly strategy call',
+      'Performance report'
     ],
     fullFeatures: [
-      'Everything in Starter Package',
-      'Meta & Google Search Ads Management (Up to KSh 200K ad spend)',
-      '1 High-Converting Landing Page with A/B testing',
-      'WhatsApp Business Automation & Click-to-Chat Funnels',
-      'Bi-Weekly Strategy & Optimization Sprints',
-      'Conversion Rate Tracking & Pixel Setup'
+      '2 Social Platforms (e.g. Meta & TikTok or LinkedIn)',
+      '12–16 Posts per month tailored per platform',
+      '4 High-retention short-form videos (Reels/TikToks)',
+      'Premium graphics and custom brand templates',
+      'Proactive community management (Comments & DMs)',
+      'Monthly 1-on-1 strategy call with growth lead',
+      'Detailed monthly performance report & recommendations'
     ],
-    idealFor: 'Growing businesses ready to generate predictable inbound customer inquiries.',
-    timeline: 'Onboarding & Funnel Live in 7 business days'
+    idealFor: 'Growing businesses ready to expand audience reach and turn followers into paying clients.',
+    timeline: 'Onboarding in 3 business days'
   },
   {
-    id: 'scale',
-    name: 'Scale',
-    iconType: 'scale',
-    description: 'For businesses ready to automate, retain & scale with confidence.',
-    price: 'KSh 100,000',
+    id: 'business',
+    name: 'Business',
+    subBadge: 'For serious growth',
+    iconType: 'business',
+    description: 'Advanced marketing to drive leads, sales and loyalty.',
+    price: 'KSh 35,000',
     period: '/month',
     accentColor: 'purple',
     buttonText: 'View Details',
     buttonVariant: 'outline-purple',
     features: [
-      'Everything in Growth',
-      'Marketing automation',
-      'Email & SMS campaigns',
-      'Customer reactivation',
-      'Advanced analytics'
+      'Up to 3 Social Platforms',
+      '20 Posts per month',
+      '8 Short-form videos',
+      'Premium graphics & videos',
+      'Community management (Comments, DMs & Reviews)',
+      'Paid ads management (Meta or TikTok)',
+      'Monthly strategy call & report'
     ],
     fullFeatures: [
-      'Everything in Growth Package',
-      'Full CRM & Workflow Integration (HubSpot/Zoho/Zapier)',
-      'Monthly Multi-Channel Email & SMS Broadcasts',
-      'Automated Lead Nurturing & Abandoned Inquiry Recovery',
-      'Past-Customer Database Reactivation Playbook',
-      'Live Executive Analytics Dashboard with ROI tracking',
-      'Priority 24/7 Slack / WhatsApp Support Line'
+      'Up to 3 Social Platforms',
+      '20 High-impact posts per month',
+      '8 Edited short-form videos with captions & audio trends',
+      'Premium graphics, carousels & promotional assets',
+      'Comprehensive community management (Comments, DMs & Reviews)',
+      'Paid advertising management & budget optimization (Meta or TikTok)',
+      'Monthly executive strategy call & deep-dive ROI report'
     ],
-    idealFor: 'Established SMEs seeking hands-off, end-to-end customer acquisition and automation systems.',
-    timeline: 'Full System Rollout in 10 business days'
+    idealFor: 'Established SMEs ready for rapid scaling, active lead generation, and paid customer acquisition.',
+    timeline: 'Full system rollout in 5 business days'
   },
   {
     id: 'custom',
     name: 'Custom Package',
+    subBadge: 'Tailored to your needs',
     iconType: 'custom',
-    description: 'Select the individual services you need and get a custom price.',
-    price: 'Custom',
+    description: "Choose the exact services you need and we'll build the perfect plan for you.",
+    price: 'Tailored to You',
     period: '',
     isPopular: false,
     isCustom: true,
@@ -114,19 +120,23 @@ export const packagesData: PackageItem[] = [
     buttonText: 'Build My Package',
     buttonVariant: 'solid-dark',
     features: [
-      'Choose your services',
-      'Get a custom quote',
-      'Pay for what you need'
+      'Choose your platforms',
+      'Custom content volume',
+      'Add paid advertising',
+      'Automation & integrations',
+      'Dedicated support',
+      'Designed for your goals'
     ],
     fullFeatures: [
-      'A la carte service selection',
-      'Enterprise and multi-location custom terms',
-      'Dedicated growth team assigned to your brand',
-      'Custom API & ERP Integrations',
-      'Volume pricing on ad spend & message broadcasts'
+      'Interactive a la carte service selection',
+      'Flexible platforms: Meta, TikTok, Google, LinkedIn & WhatsApp',
+      'Custom content volume & dedicated video production sprints',
+      'Targeted paid advertising & conversion tracking funnels',
+      'Marketing automation, CRM sync & WhatsApp lead routing',
+      'Dedicated account manager & transparent custom quote'
     ],
-    idealFor: 'Businesses with specialized technical workflows or multi-channel expansion needs.',
-    timeline: 'Custom proposal delivered in 24 hours'
+    idealFor: 'Businesses with specialized workflows, multi-channel goals, or unique service combinations.',
+    timeline: 'Instant custom plan generation online'
   }
 ];
 
@@ -142,84 +152,74 @@ export const Packages: React.FC<PackagesProps> = ({
     return (
       <div
         key={pkg.id}
-        className={`bg-white rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-xl hover:shadow-slate-200/50 border flex flex-col justify-between transition-all duration-200 relative ${
+        className={`bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 shadow-xs hover:shadow-xl hover:shadow-slate-200/60 border flex flex-col justify-between transition-all duration-300 relative group ${
           isCustom 
-            ? 'border-slate-300 ring-1 ring-slate-200' 
-            : 'border-slate-100'
+            ? 'border-slate-300 ring-1 ring-slate-200/80' 
+            : 'border-slate-200/80 hover:border-slate-300'
         }`}
       >
-        {/* Badge for Custom */}
+        {/* Badge for Custom: MOST FLEXIBLE */}
         {isCustom && (
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm whitespace-nowrap">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-bold text-[10px] sm:text-[11px] uppercase tracking-wider px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full shadow-sm whitespace-nowrap z-10">
             MOST FLEXIBLE
           </div>
         )}
 
         <div>
-          {/* Header Icon */}
-          <div className="mb-4">
-            {pkg.iconType === 'starter' && (
-              <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                <Send className="w-5 h-5" />
-              </div>
-            )}
-            {pkg.iconType === 'growth' && (
-              <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <BarChart2 className="w-5 h-5" />
-              </div>
-            )}
-            {pkg.iconType === 'scale' && (
-              <div className="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
-                <Crown className="w-5 h-5" />
-              </div>
-            )}
-            {pkg.iconType === 'custom' && (
-              <div className="w-10 h-10 rounded-lg bg-slate-100 text-slate-800 flex items-center justify-center">
-                <SlidersHorizontal className="w-5 h-5" />
-              </div>
-            )}
-          </div>
-
           {/* Package Name */}
-          <h3 className="text-xl font-extrabold text-slate-900 mb-1.5">
+          <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mb-1 sm:mb-2">
             {pkg.name}
           </h3>
 
-          {/* Short Description */}
-          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4 min-h-[38px]">
-            {pkg.description}
-          </p>
-
-          {/* Price Display */}
-          {!isCustom ? (
-            <div className="mb-5 pb-4 border-b border-slate-100">
-              <span className="text-[11px] text-slate-500 font-medium block">From</span>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                  {pkg.price}
-                </span>
-                <span className="text-xs text-slate-500 font-medium">
-                  {pkg.period}
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className="mb-5 pb-4 border-b border-slate-100 min-h-[50px] flex flex-col justify-end">
-              <span className="text-[11px] text-slate-500 font-medium block">Custom pricing</span>
-              <span className="text-xl font-bold text-slate-900">
-                Tailored to You
+          {/* Sub-badge pill below title */}
+          {pkg.subBadge && (
+            <div className="mb-2 sm:mb-3">
+              <span className={`inline-block text-[11px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 rounded-full ${
+                pkg.iconType === 'essential' || pkg.iconType === 'starter'
+                  ? 'bg-blue-50 text-blue-600'
+                  : pkg.iconType === 'growth'
+                  ? 'bg-emerald-50 text-emerald-600'
+                  : pkg.iconType === 'business' || pkg.iconType === 'scale'
+                  ? 'bg-purple-50 text-purple-600'
+                  : 'bg-slate-100 text-slate-700'
+              }`}>
+                {pkg.subBadge}
               </span>
             </div>
           )}
 
-          {/* Features List */}
-          <div className="space-y-2 mb-6">
+          {/* Short Description */}
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-6 sm:min-h-[44px]">
+            {pkg.description}
+          </p>
+
+          {/* Price Display */}
+          <div className="mb-3 sm:mb-6 pb-3 sm:pb-6 border-b border-slate-100 sm:min-h-[64px] flex flex-col justify-end">
+            <span className="text-[10px] sm:text-xs text-slate-400 font-medium block mb-0.5 sm:mb-1">From</span>
+            {!isCustom ? (
+              <div className="flex items-baseline gap-1">
+                <span className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  {pkg.price}
+                </span>
+                <span className="text-xs sm:text-sm text-slate-500 font-normal">
+                  {pkg.period}
+                </span>
+              </div>
+            ) : (
+              <span className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                {pkg.price}
+              </span>
+            )}
+          </div>
+
+          {/* Features List with Blue Checkmarks */}
+          <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-8">
             {pkg.features.map((feat, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm">
-                <div className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-blue-600">
-                  <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+              <div key={idx} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm">
+                <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-blue-600">
+                  <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
                 </div>
-                <span className="text-slate-700 font-medium leading-tight">
+                <span className="text-slate-700 font-medium leading-normal">
                   {feat}
                 </span>
               </div>
@@ -228,12 +228,12 @@ export const Packages: React.FC<PackagesProps> = ({
         </div>
 
         {/* Action Button */}
-        <div>
+        <div className="pt-1 sm:pt-2">
           {isCustom ? (
             <button
               id="package-custom-builder-btn"
               onClick={onOpenCustomBuilder}
-              className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm transition-all shadow-xs cursor-pointer active:scale-[0.99]"
+              className="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm transition-all shadow-xs cursor-pointer active:scale-[0.99] text-center"
             >
               {pkg.buttonText}
             </button>
@@ -241,12 +241,12 @@ export const Packages: React.FC<PackagesProps> = ({
             <button
               id={`package-${pkg.id}-details-btn`}
               onClick={() => onSelectPackage(pkg)}
-              className={`w-full py-2.5 px-4 rounded-lg border font-semibold text-xs sm:text-sm transition-all cursor-pointer active:scale-[0.99] ${
+              className={`w-full py-2.5 sm:py-3 px-4 rounded-xl border font-bold text-xs sm:text-sm transition-all cursor-pointer active:scale-[0.99] text-center ${
                 pkg.buttonVariant === 'outline-blue'
                   ? 'border-blue-200 text-blue-600 hover:bg-blue-50/70 hover:border-blue-300'
                   : pkg.buttonVariant === 'outline-green'
-                  ? 'border-emerald-200 text-emerald-700 hover:bg-emerald-50/70 hover:border-emerald-300'
-                  : 'border-purple-200 text-purple-700 hover:bg-purple-50/70 hover:border-purple-300'
+                  ? 'border-emerald-200 text-emerald-600 hover:bg-emerald-50/70 hover:border-emerald-300'
+                  : 'border-purple-200 text-purple-600 hover:bg-purple-50/70 hover:border-purple-300'
               }`}
             >
               {pkg.buttonText}
@@ -259,29 +259,29 @@ export const Packages: React.FC<PackagesProps> = ({
   };
 
   return (
-    <section id="packages" className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="packages" className="py-6 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       
       {/* Section Header */}
-      <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-        <p className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">
+      <div className="text-center mb-4 sm:mb-8 lg:mb-10">
+        <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-blue-600 mb-1 sm:mb-2">
           OUR PACKAGES
         </p>
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+        <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-1 sm:mb-2">
           Choose the package that fits your goals
         </h2>
-        <p className="text-slate-600 text-xs sm:text-sm lg:text-base max-w-xl mx-auto mt-2 sm:mt-3">
-          Transparent, ROI-focused plans with zero hidden fees and no long-term lock-ins.
+        <p className="text-slate-600 text-xs sm:text-sm lg:text-base max-w-2xl mx-auto leading-relaxed">
+          Flexible plans for every stage of your business growth.
         </p>
       </div>
 
       {/* Mobile Segmented Tab Selector (Screens < 768px) */}
-      <div className="md:hidden mb-6">
+      <div className="md:hidden mb-4">
         <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
           {packagesData.map((pkg) => (
             <button
               key={pkg.id}
               onClick={() => setActiveMobileTab(pkg.id)}
-              className={`flex-1 py-2 px-1 text-center rounded-lg transition-all ${
+              className={`flex-1 py-1.5 px-1 text-center rounded-lg transition-all ${
                 activeMobileTab === pkg.id
                   ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-slate-500 hover:text-slate-800'
@@ -306,25 +306,19 @@ export const Packages: React.FC<PackagesProps> = ({
       </div>
 
       {/* Trust & Policy Micro-Badges */}
-      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 lg:gap-10 mt-8 sm:mt-10 text-[11px] sm:text-xs lg:text-sm font-semibold text-slate-700">
-        <div className="flex items-center gap-1.5">
-          <div className="w-4 h-4 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-            <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-blue-50" />
-          </div>
+      <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-8 lg:gap-10 mt-6 sm:mt-8 text-xs sm:text-sm font-semibold text-slate-700">
+        <div className="flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
           <span>No long-term contracts</span>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          <div className="w-4 h-4 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-            <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-blue-50" />
-          </div>
+        <div className="flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
           <span>Cancel anytime</span>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          <div className="w-4 h-4 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-            <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-blue-50" />
-          </div>
+        <div className="flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
           <span>Scalable as you grow</span>
         </div>
       </div>

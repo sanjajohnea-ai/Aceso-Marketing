@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AcesoLogo } from './AcesoLogo';
-import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 interface NavbarProps {
   activeSection: string;
@@ -15,16 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigate,
   ctaLabel = 'Get Free Growth Audit',
 }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navLinks = [
     { name: 'Home', id: 'home' },
@@ -34,13 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header 
-      className={`sticky top-0 z-40 w-full transition-all duration-200 ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-slate-100' 
-          : 'bg-white/80 backdrop-blur-xs border-b border-transparent'
-      }`}
-    >
+    <header className="static w-full bg-white border-b border-slate-100 shadow-2xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           

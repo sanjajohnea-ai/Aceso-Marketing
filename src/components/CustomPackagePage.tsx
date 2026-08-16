@@ -5,105 +5,118 @@ import {
   Check, 
   X, 
   Info, 
-  Sparkles, 
   HelpCircle, 
-  PhoneCall, 
   ChevronRight,
-  Send,
-  Layers,
   Globe,
   FileText,
-  Filter,
   TrendingUp,
   Mail,
   MessageSquare,
-  MessageCircle,
-  RotateCw,
   Users,
-  Settings,
-  Bot,
-  BarChart3,
-  GitFork,
+  Settings2,
   CheckCircle2,
-  Calendar
+  Calendar,
+  ShieldCheck,
+  BarChart3,
+  Edit3,
+  Video,
+  Sparkles,
+  Layers,
+  PhoneCall,
+  Store,
+  Star,
+  Tag,
+  Download,
+  MessageCircle,
+  Briefcase,
+  ExternalLink,
+  AlertCircle
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { Toast, ToastMessage } from './Toast';
-import { saveLocalAuditLead, submitLeadToGoogleWebApp, AuditSubmissionRecord } from '../lib/googleSheets';
+import { 
+  submitCustomPackageLeadToGoogleSheet, 
+  CustomPackageLeadRecord,
+  saveLocalAuditLead, 
+  submitLeadToGoogleWebApp, 
+  AuditSubmissionRecord 
+} from '../lib/googleSheets';
+import { generateAndDownloadInvoicePDF } from '../lib/pdfInvoice';
 
 interface CustomPackagePageProps {
   onBackToHome: () => void;
   onRequestAudit: () => void;
+  onNavigate?: (sectionId: string) => void;
 }
 
-interface ServiceItem {
+export interface CustomServiceDef {
   id: string;
   name: string;
-  category: 'digital-marketing' | 'advertising' | 'website' | 'engagement' | 'automation';
+  category: 'social-media' | 'advertising' | 'content' | 'website' | 'lead-gen' | 'advanced';
   price: number;
-  setupFee: number;
-  icon?: string;
-  brandBadges?: ('facebook' | 'instagram' | 'tiktok' | 'google' | 'meta' | 'linkedin')[];
-  description?: string;
-  recommendedFor?: string;
+  setupFee?: number;
+  description: string;
+  isPopular?: boolean;
+  iconType: 'meta-combo' | 'tiktok' | 'community' | 'meta-ads' | 'google-ads' | 'content-pen' | 'short-video' | 'website-globe' | 'landing-page' | 'gbp' | 'whatsapp' | 'email-mail' | 'seo-chart' | 'automation-cog';
 }
 
-const allServicesList: ServiceItem[] = [
-  // Digital Marketing
+export type CustomServiceItem = CustomServiceDef;
+
+export interface BusinessInfo {
+  businessName: string;
+  industry: string;
+  website: string;
+  primaryGoal: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  notes: string;
+}
+
+const customServicesData: CustomServiceDef[] = [
+  // 1. SOCIAL MEDIA
   {
-    id: 'social-media',
-    name: 'Social Media Management',
-    category: 'digital-marketing',
-    price: 20000,
+    id: 'meta-management',
+    name: 'Meta (Facebook & Instagram) Management',
+    category: 'social-media',
+    price: 25000,
     setupFee: 10000,
-    brandBadges: ['facebook', 'instagram', 'tiktok'],
-    description: '12 tailored graphic & video posts/mo, community moderation, and growth hashtags.'
+    description: 'Content creation, posting, community management & growth',
+    isPopular: true,
+    iconType: 'meta-combo'
   },
   {
-    id: 'content-creation',
-    name: 'Content Creation',
-    category: 'digital-marketing',
+    id: 'tiktok-management',
+    name: 'TikTok Management',
+    category: 'social-media',
+    price: 20000,
+    setupFee: 10000,
+    description: 'Content strategy, video creation, posting & growth',
+    isPopular: true,
+    iconType: 'tiktok'
+  },
+  {
+    id: 'community-management',
+    name: 'Community Management',
+    category: 'social-media',
     price: 15000,
     setupFee: 5000,
-    description: 'High-converting ad copy, visual assets, banners, and reels editing.'
-  },
-  {
-    id: 'seo',
-    name: 'SEO',
-    category: 'digital-marketing',
-    price: 25000,
-    setupFee: 15000,
-    description: 'Local keyword ranking, on-page optimization, and technical site audit.'
-  },
-  {
-    id: 'google-business-profile',
-    name: 'Google Business Profile',
-    category: 'digital-marketing',
-    price: 10000,
-    setupFee: 5000,
-    description: 'Map pack optimization, citation building, and review management.'
+    description: 'Respond to comments, DMs & customer enquiries',
+    isPopular: false,
+    iconType: 'community'
   },
 
-  // Advertising
-  {
-    id: 'google-ads',
-    name: 'Google Ads',
-    category: 'advertising',
-    price: 25000,
-    setupFee: 10000,
-    brandBadges: ['google'],
-    description: 'Search intent keyword ads, negative keyword pruning, and conversion tracking.'
-  },
+  // 2. ADVERTISING
   {
     id: 'meta-ads',
-    name: 'Meta Ads',
+    name: 'Meta Ads (Facebook & Instagram)',
     category: 'advertising',
-    price: 20000,
+    price: 30000,
     setupFee: 10000,
-    brandBadges: ['meta'],
-    description: 'Facebook & Instagram lead generation, retargeting funnels, and CAPI setup.'
+    description: 'Targeted ads to reach more customers and generate leads',
+    isPopular: true,
+    iconType: 'meta-ads'
   },
   {
     id: 'tiktok-ads',
@@ -111,155 +124,147 @@ const allServicesList: ServiceItem[] = [
     category: 'advertising',
     price: 20000,
     setupFee: 10000,
-    brandBadges: ['tiktok'],
-    description: 'Engaging Spark Ads, influencer amplification, and vertical video funnels.'
+    description: 'Reach new audiences and drive engagement with TikTok ads',
+    isPopular: false,
+    iconType: 'tiktok'
   },
   {
-    id: 'linkedin-ads',
-    name: 'LinkedIn Ads',
+    id: 'google-ads',
+    name: 'Google Ads',
     category: 'advertising',
-    price: 30000,
-    setupFee: 15000,
-    brandBadges: ['linkedin'],
-    description: 'B2B executive targeting, account-based marketing, and lead forms.'
+    price: 25000,
+    setupFee: 10000,
+    description: 'Get discovered on Google Search and Maps',
+    isPopular: true,
+    iconType: 'google-ads'
   },
 
-  // Website & Conversion
+  // 3. CONTENT & CREATIVE
+  {
+    id: 'content-creation',
+    name: 'Content Creation',
+    category: 'content',
+    price: 15000,
+    setupFee: 5000,
+    description: 'High-quality graphics, captions and branded content',
+    isPopular: false,
+    iconType: 'content-pen'
+  },
+  {
+    id: 'short-form-video',
+    name: 'Short-form Video (Reels & TikToks)',
+    category: 'content',
+    price: 20000,
+    setupFee: 8000,
+    description: 'Engaging short videos that drive views and engagement',
+    isPopular: false,
+    iconType: 'short-video'
+  },
+
+  // 4. WEBSITE & PRESENCE
   {
     id: 'business-website',
     name: 'Business Website',
     category: 'website',
-    price: 40000,
-    setupFee: 20000,
-    icon: 'desktop',
-    description: 'Fast, modern, mobile-responsive website tailored to your brand identity.'
+    price: 35000,
+    setupFee: 15000,
+    description: 'Professional, mobile-friendly website that converts visitors',
+    isPopular: false,
+    iconType: 'website-globe'
   },
   {
     id: 'landing-page',
     name: 'Landing Page',
     category: 'website',
-    price: 12000,
+    price: 15000,
     setupFee: 8000,
-    icon: 'page',
-    description: 'High-converting landing pages increase lead generation by up to 55%.'
+    description: 'High-converting landing pages for campaigns',
+    isPopular: false,
+    iconType: 'landing-page'
   },
   {
-    id: 'lead-generation-funnel',
-    name: 'Lead Generation Funnel',
+    id: 'google-business-profile',
+    name: 'Google Business Profile Setup',
     category: 'website',
-    price: 22000,
-    setupFee: 10000,
-    icon: 'funnel',
-    description: 'Multi-step lead capture quizzes, calculators, and automated booking.'
-  },
-  {
-    id: 'conversion-optimisation',
-    name: 'Conversion Optimisation',
-    category: 'website',
-    price: 18000,
-    setupFee: 8000,
-    icon: 'target',
-    description: 'Heatmaps, user recording analysis, and A/B split-testing.'
+    price: 10000,
+    setupFee: 5000,
+    description: 'Optimize and manage your Google Business Profile',
+    isPopular: false,
+    iconType: 'gbp'
   },
 
-  // Customer Engagement
+  // 5. LEAD GENERATION & AUTOMATION
+  {
+    id: 'whatsapp-business',
+    name: 'WhatsApp Business Setup',
+    category: 'lead-gen',
+    price: 15000,
+    setupFee: 5000,
+    description: 'Professional setup with automated greetings & quick replies',
+    isPopular: false,
+    iconType: 'whatsapp'
+  },
   {
     id: 'email-marketing',
     name: 'Email Marketing',
-    category: 'engagement',
-    price: 10000,
-    setupFee: 5000,
-    icon: 'mail',
-    description: 'Targeted nurture sequences, weekly newsletters, and list hygiene.'
-  },
-  {
-    id: 'sms-campaigns',
-    name: 'SMS Campaigns',
-    category: 'engagement',
-    price: 12000,
-    setupFee: 5000,
-    icon: 'message',
-    description: 'Direct high-open promotional broadcasts and instant booking confirmations.'
-  },
-  {
-    id: 'whatsapp-marketing',
-    name: 'WhatsApp Marketing',
-    category: 'engagement',
-    price: 18000,
-    setupFee: 8000,
-    icon: 'whatsapp',
-    description: 'WhatsApp Business API verified broadcasting and click-to-chat automation.'
-  },
-  {
-    id: 'customer-reactivation',
-    name: 'Customer Reactivation',
-    category: 'engagement',
+    category: 'lead-gen',
     price: 15000,
-    setupFee: 6000,
-    icon: 'reactivation',
-    description: 'Dormant database re-engagement campaigns that generate immediate cashflow.'
+    setupFee: 5000,
+    description: 'Email campaigns that nurture leads and increase sales',
+    isPopular: false,
+    iconType: 'email-mail'
   },
 
-  // AI & Automation
+  // 6. ADVANCED GROWTH (OPTIONAL)
   {
-    id: 'crm-setup',
-    name: 'CRM Setup',
-    category: 'automation',
-    price: 20000,
-    setupFee: 12000,
-    icon: 'users',
-    description: 'HubSpot, Zoho, or Pipedrive integration with sales pipeline stages.'
+    id: 'seo',
+    name: 'SEO (Search Engine Optimization)',
+    category: 'advanced',
+    price: 25000,
+    setupFee: 10000,
+    description: 'Improve rankings and get more organic traffic',
+    isPopular: false,
+    iconType: 'seo-chart'
   },
   {
     id: 'marketing-automation',
     name: 'Marketing Automation',
-    category: 'automation',
-    price: 18000,
+    category: 'advanced',
+    price: 20000,
     setupFee: 10000,
-    icon: 'gear',
-    description: 'Zapier & Make automations that sync leads across email, CRM, and WhatsApp.'
-  },
-  {
-    id: 'ai-chatbot',
-    name: 'AI Chatbot',
-    category: 'automation',
-    price: 22000,
-    setupFee: 15000,
-    icon: 'bot',
-    description: '24/7 intelligent conversational bot trained on your products and pricing.'
-  },
-  {
-    id: 'reporting-dashboard',
-    name: 'Reporting Dashboard',
-    category: 'automation',
-    price: 15000,
-    setupFee: 8000,
-    icon: 'dashboard',
-    description: 'Live Looker Studio executive dashboard tracking ROI, CAC, and leads.'
-  },
-  {
-    id: 'workflow-automation',
-    name: 'Workflow Automation',
-    category: 'automation',
-    price: 16000,
-    setupFee: 8000,
-    icon: 'workflow',
-    description: 'Automated invoice generation, calendar bookings, and staff notifications.'
+    description: 'Automate follow-ups and save time with smart workflows',
+    isPopular: false,
+    iconType: 'automation-cog'
   }
 ];
 
-export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
-  onBackToHome,
-  onRequestAudit
+export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({ 
+  onBackToHome, 
+  onRequestAudit,
+  onNavigate
 }) => {
-  // Step state (1: Business Info, 2: Services, 3: Add-ons, 4: Summary, 5: Review & Submit)
-  const [currentStep, setCurrentStep] = useState<number>(2);
+  const handleNav = (sectionId: string) => {
+    if (onNavigate) {
+      onNavigate(sectionId);
+    } else if (sectionId === 'home') {
+      onBackToHome();
+    } else if (sectionId === 'packages') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      onBackToHome();
+    }
+  };
 
-  // Business info fields
+  // Navigation step state: 1: Choose Services, 2: Business Details & Submit
+  const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+
+  // Default to empty selection so user can choose their desired services from scratch
+  const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
+
+  // Form State
   const [businessInfo, setBusinessInfo] = useState({
-    businessName: 'Acme Interiors Ltd',
-    industry: 'Home & Living',
-    employeeCount: '11 – 50',
+    businessName: '',
+    industry: 'Technology & SaaS',
     website: '',
     primaryGoal: 'Generate more leads',
     contactName: '',
@@ -268,22 +273,39 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
     notes: ''
   });
 
-  // Selected services (Initialized with the 5 default services from design image)
-  const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([
-    'social-media',
-    'google-ads',
-    'meta-ads',
-    'business-website',
-    'email-marketing'
-  ]);
+  const [emailError, setEmailError] = useState<string>('');
+  const [phoneError, setPhoneError] = useState<string>('');
 
-  // Selected add-ons
-  const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
+  const validateEmail = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) {
+      return 'Email address is required';
+    }
+    if (!trimmed.includes('@')) {
+      return 'Invalid email address: Missing "@" symbol';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmed)) {
+      return 'Invalid email address (e.g. name@company.co.ke)';
+    }
+    return '';
+  };
 
-  // Submission state
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const validatePhone = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) {
+      return 'Phone number is required';
+    }
+    if (trimmed.length < 9) {
+      return 'Please enter a valid 9 or 10 digit phone number';
+    }
+    return '';
+  };
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [toast, setToast] = useState<ToastMessage | null>(null);
+  const [showCompareModal, setShowCompareModal] = useState(false);
 
   // Toggle single service
   const toggleService = (id: string) => {
@@ -294,195 +316,758 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
     }
   };
 
-  // Toggle all services
-  const areAllServicesSelected = selectedServiceIds.length === allServicesList.length;
-  const toggleSelectAll = () => {
-    if (areAllServicesSelected) {
-      setSelectedServiceIds([]);
+  // Toggle Category
+  const toggleCategory = (categoryKey: CustomServiceDef['category']) => {
+    const catServices = customServicesData.filter(s => s.category === categoryKey);
+    const catIds = catServices.map(s => s.id);
+    const allCatSelected = catIds.every(id => selectedServiceIds.includes(id));
+
+    if (allCatSelected) {
+      // Deselect all in category
+      setSelectedServiceIds(selectedServiceIds.filter(id => !catIds.includes(id)));
     } else {
-      setSelectedServiceIds(allServicesList.map(s => s.id));
+      // Select all in category
+      const unique = Array.from(new Set([...selectedServiceIds, ...catIds]));
+      setSelectedServiceIds(unique);
     }
   };
 
-  // Selected service objects
+  // Selected Services objects
   const selectedServices = useMemo(() => {
-    return allServicesList.filter(s => selectedServiceIds.includes(s.id));
+    return customServicesData.filter(s => selectedServiceIds.includes(s.id));
   }, [selectedServiceIds]);
 
-  // Monthly investment sum
-  const monthlyTotal = useMemo(() => {
+  // Subtotal calculation
+  const subtotal = useMemo(() => {
     return selectedServices.reduce((sum, s) => sum + s.price, 0);
   }, [selectedServices]);
 
-  // One-time setup fee
+  const monthlyTotal = subtotal;
+
+  // Setup fee total
   const setupFeeTotal = useMemo(() => {
-    // Proportional capped discount setup fee as in the mockup (e.g. 45,000)
-    if (selectedServices.length === 0) return 0;
-    const rawSetup = selectedServices.reduce((sum, s) => sum + s.setupFee, 0);
-    return Math.min(rawSetup, 45000 + (selectedServices.length > 5 ? (selectedServices.length - 5) * 5000 : 0));
+    return selectedServices.reduce((sum, s) => sum + (s.setupFee || 0), 0);
   }, [selectedServices]);
 
-  // Handle final submission
-  const handleFinalSubmit = (e: React.FormEvent) => {
+  // Render Service Brand Icon
+  const renderServiceIcon = (type: CustomServiceDef['iconType']) => {
+    switch (type) {
+      case 'meta-combo':
+        return (
+          <div className="flex items-center gap-1 shrink-0">
+            <div className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+              f
+            </div>
+            <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#FF512F] via-[#DD2476] to-[#7928CA] text-white flex items-center justify-center shadow-xs">
+              <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </div>
+          </div>
+        );
+      case 'tiktok':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-black text-white flex items-center justify-center shrink-0 shadow-xs relative overflow-hidden">
+            <svg className="w-4 h-4 fill-white" viewBox="0 0 24 24">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.86-4.49V8.62a8.28 8.28 0 0 0 3.91 1.07V6.69z"/>
+            </svg>
+          </div>
+        );
+      case 'community':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100/80">
+            <MessageSquare className="w-4 h-4" />
+          </div>
+        );
+      case 'meta-ads':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-blue-50 text-[#0081FB] flex items-center justify-center shrink-0 border border-blue-100">
+            <svg className="w-4 h-4 fill-[#0081FB]" viewBox="0 0 24 24">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.3 12.3c-.9 0-1.6-.4-2.1-1.1-.3-.4-.5-.9-.6-1.4-.3.9-.9 1.8-1.9 2.2-.5.2-1.1.3-1.6.3-1.9 0-3.1-1.4-3.1-3.3 0-2 1.3-3.4 3.2-3.4 1 0 1.9.4 2.4 1.2.3.4.5.9.6 1.4.3-.9.9-1.8 1.9-2.2.5-.2 1.1-.3 1.6-.3 1.9 0 3.1 1.4 3.1 3.3 0 1.9-1.2 3.3-3.1 3.3z" />
+            </svg>
+          </div>
+        );
+      case 'google-ads':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-amber-50/80 flex items-center justify-center shrink-0 border border-amber-100">
+            <svg className="w-4 h-4" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M12.24 10.285L6.96 1L1 11.33h5.28l5.96-1.045z"/>
+              <path fill="#FBBC05" d="M12.24 10.285l5.28-9.285 5.96 10.33h-5.28l-5.96-1.045z"/>
+              <path fill="#34A853" d="M17.52 10.285L12.24 19.57 6.96 10.285h10.56z"/>
+            </svg>
+          </div>
+        );
+      case 'content-pen':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+            <Edit3 className="w-4 h-4" />
+          </div>
+        );
+      case 'short-video':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
+            <Video className="w-4 h-4" />
+          </div>
+        );
+      case 'website-globe':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+            <Globe className="w-4 h-4" />
+          </div>
+        );
+      case 'landing-page':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+            <FileText className="w-4 h-4" />
+          </div>
+        );
+      case 'gbp':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100 font-bold text-xs">
+            <Store className="w-4 h-4 text-blue-600" />
+          </div>
+        );
+      case 'whatsapp':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-xs">
+            <PhoneCall className="w-3.5 h-3.5" />
+          </div>
+        );
+      case 'email-mail':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+            <Mail className="w-4 h-4" />
+          </div>
+        );
+      case 'seo-chart':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
+            <TrendingUp className="w-4 h-4" />
+          </div>
+        );
+      case 'automation-cog':
+        return (
+          <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+            <Settings2 className="w-4 h-4" />
+          </div>
+        );
+      default:
+        return (
+          <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+            <Check className="w-4 h-4" />
+          </div>
+        );
+    }
+  };
+
+  // Submit Handler
+  const handleFinalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate email (must contain @)
+    const emailErr = validateEmail(businessInfo.email);
+    if (emailErr) {
+      setEmailError(emailErr);
+      return;
+    }
+
+    // Validate phone (numeric, 9-10 digits)
+    const phoneErr = validatePhone(businessInfo.phone);
+    if (phoneErr) {
+      setPhoneError(phoneErr);
+      return;
+    }
+
     setIsSubmitting(true);
     
-    const leadRecord: AuditSubmissionRecord = {
+    const formattedPhone = `+254 ${businessInfo.phone.trim()}`;
+
+    // 1. Prepare custom package lead record targeting "Custom Package Leads" sheet tab
+    const customLead: CustomPackageLeadRecord = {
       timestamp: new Date().toISOString(),
-      fullName: businessInfo.contactName.trim() || 'Custom Package Lead',
       businessName: businessInfo.businessName.trim() || 'Custom Package SME',
+      contactName: businessInfo.contactName.trim() || 'Custom Package Lead',
       email: businessInfo.email.trim(),
+      phone: formattedPhone,
+      website: businessInfo.website.trim(),
+      industry: businessInfo.industry || 'Other SME',
+      primaryGoal: businessInfo.primaryGoal || 'Custom Marketing Package',
+      selectedServices: selectedServices.map(s => s.name),
+      serviceCount: selectedServices.length,
+      monthlyTotal: monthlyTotal,
+      setupFeeTotal: setupFeeTotal,
+      notes: businessInfo.notes?.trim() || '',
+      status: 'Invoice Generated / New Lead'
+    };
+
+    // 2. Submit to Google Sheets under "Custom Package Leads" tab (and save locally)
+    submitCustomPackageLeadToGoogleSheet(customLead).catch(console.error);
+
+    // 3. Backward compatibility for audit leads storage
+    const leadRecord: AuditSubmissionRecord = {
+      timestamp: customLead.timestamp,
+      fullName: customLead.contactName,
+      businessName: customLead.businessName,
+      email: customLead.email,
       phoneCode: '+254',
       phone: businessInfo.phone.trim(),
-      website: '',
-      industry: businessInfo.industry || 'Other SME',
+      website: customLead.website,
+      industry: customLead.industry,
       primaryGoal: `Custom Package: ${selectedServices.map(s => s.name).join(', ')}`,
       challenges: selectedServices.map(s => s.name),
       marketingBudget: `KSh ${monthlyTotal.toLocaleString()} / mo (Setup: KSh ${setupFeeTotal.toLocaleString()})`,
       referralSource: 'Custom Package Builder',
-      additionalNotes: businessInfo.notes?.trim() || `Selected ${selectedServices.length} services: ${selectedServices.map(s => s.name).join(', ')}`,
+      additionalNotes: customLead.notes || `Selected ${selectedServices.length} services: ${selectedServices.map(s => s.name).join(', ')}`,
       status: 'Pending Audit'
     };
+    saveLocalAuditLead(leadRecord);
+    submitLeadToGoogleWebApp(leadRecord).catch(console.error);
 
-    const saved = saveLocalAuditLead(leadRecord);
-    submitLeadToGoogleWebApp(saved).catch(console.error);
-
-    // Trigger immediate toast notification
     setToast({
       type: 'success',
-      title: 'Quote Request Submitted!',
-      message: `Thank you! Your custom proposal for ${businessInfo.businessName || 'your business'} (KSh ${monthlyTotal.toLocaleString()}/mo) has been sent to our growth strategy team.`,
-      duration: 6000
+      title: 'Proposal & Invoice Ready!',
+      message: `Your customized package for ${businessInfo.businessName || 'your business'} is ready.`
     });
 
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 1000);
+    }, 600);
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800">
+    <div className="min-h-screen bg-slate-50/50 flex flex-col selection:bg-blue-600 selection:text-white font-sans">
       
-      {/* Top Navigation */}
+      {/* Main Website Header Navigation Bar */}
       <Navbar 
         activeSection="packages"
         onRequestAudit={onRequestAudit}
-        onNavigate={(sectionId) => {
-          if (sectionId === 'packages' || sectionId === 'services' || sectionId === 'home' || sectionId === 'how-it-works' || sectionId === 'about-us') {
-            onBackToHome();
-          }
-        }}
+        onNavigate={handleNav}
       />
 
-      {/* Hero Header for Custom Package Builder (Dark Navy matching design) */}
-      <section className="bg-[#0B132B] text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-slate-800">
-        
-        {/* Glowing backdrop elements */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Multi-Step Stepper Subheader */}
+      <div className="bg-white border-b border-slate-200 relative z-30 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-center">
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-          
-          {/* Left Column: Heading & Subtitle */}
-          <div className="lg:col-span-8">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-3">
-              Build Your Custom Package
-            </h1>
-
-            <p className="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-              Select only the services your business needs. We'll instantly estimate your monthly investment and provide a tailored proposal.
-            </p>
-          </div>
-
-          {/* Right Column: Isometric Connected Nodes Graphic */}
-          <div className="hidden lg:flex lg:col-span-4 justify-center items-center relative">
-            <div className="relative w-64 h-48">
-              {/* Central glow point */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-blue-500 shadow-[0_0_25px_#3b82f6] animate-pulse" />
-              
-              {/* Dotted connection paths */}
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 260 200" fill="none">
-                <path d="M60 40 L130 100 L200 40" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-                <path d="M60 160 L130 100 L200 160" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-                <path d="M60 40 L60 160" stroke="#3b82f6" strokeWidth="1" strokeDasharray="2 4" opacity="0.3" />
-                <path d="M200 40 L200 160" stroke="#3b82f6" strokeWidth="1" strokeDasharray="2 4" opacity="0.3" />
-              </svg>
-
-              {/* Node 1: Top Left - Megaphone */}
-              <div className="absolute top-2 left-6 bg-white rounded-xl p-3 shadow-lg shadow-blue-500/20 transform -rotate-3 hover:scale-110 transition-transform">
-                <Send className="w-5 h-5 text-blue-600" />
+          {/* Stepper Progress Indicator */}
+          <div className="flex items-center gap-4 sm:gap-8 text-xs">
+            
+            {/* Step 1 */}
+            <div 
+              onClick={() => setCurrentStep(1)}
+              className="flex items-center gap-2.5 cursor-pointer relative pb-1 group"
+            >
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-colors ${
+                currentStep === 1 
+                  ? 'bg-blue-600 text-white shadow-xs' 
+                  : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
+              }`}>
+                1
               </div>
-
-              {/* Node 2: Top Right - Analytics Chart */}
-              <div className="absolute top-2 right-6 bg-white rounded-xl p-3 shadow-lg shadow-blue-500/20 transform rotate-6 hover:scale-110 transition-transform">
-                <TrendingUp className="w-5 h-5 text-blue-600" />
+              <div className="text-left hidden sm:block">
+                <div className={`font-bold leading-tight ${currentStep === 1 ? 'text-blue-600' : 'text-slate-700'}`}>
+                  Choose Services
+                </div>
+                <div className="text-[11px] text-slate-400">
+                  Build your package
+                </div>
               </div>
-
-              {/* Node 3: Bottom Left - User Avatar */}
-              <div className="absolute bottom-2 left-6 bg-white rounded-xl p-3 shadow-lg shadow-blue-500/20 transform rotate-3 hover:scale-110 transition-transform">
-                <Users className="w-5 h-5 text-blue-600" />
-              </div>
-
-              {/* Node 4: Bottom Right - Gear */}
-              <div className="absolute bottom-2 right-6 bg-white rounded-xl p-3 shadow-lg shadow-blue-500/20 transform -rotate-6 hover:scale-110 transition-transform">
-                <Settings className="w-5 h-5 text-blue-600" />
-              </div>
+              {currentStep === 1 && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+              )}
             </div>
+
+            <div className="w-4 sm:w-8 h-px bg-slate-200" />
+
+            {/* Step 2 */}
+            <div 
+              onClick={() => selectedServices.length > 0 && setCurrentStep(2)}
+              className={`flex items-center gap-2.5 relative pb-1 ${
+                selectedServices.length > 0 ? 'cursor-pointer group' : 'opacity-60 cursor-not-allowed'
+              }`}
+            >
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-colors ${
+                currentStep === 2 
+                  ? 'bg-blue-600 text-white shadow-xs' 
+                  : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
+              }`}>
+                2
+              </div>
+              <div className="text-left hidden sm:block">
+                <div className={`font-bold leading-tight ${currentStep === 2 ? 'text-blue-600' : 'text-slate-700'}`}>
+                  Business Details
+                </div>
+                <div className="text-[11px] text-slate-400">
+                  Tell us about your business
+                </div>
+              </div>
+              {currentStep === 2 && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+              )}
+            </div>
+
           </div>
 
         </div>
-      </section>
+      </div>
 
-      {/* Main Content: Two Columns Layout (Left Options + Right Sticky Summary) */}
-      <main className="flex-1 max-w-6xl w-full mx-auto py-8 sm:py-10 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Left Column: Form Cards & Service Selector */}
-          <div className="lg:col-span-8 space-y-6">
+      {/* Main Content Area */}
+      <main className={`flex-1 max-w-7xl w-full mx-auto ${currentStep === 2 ? 'py-3 sm:py-5 px-4 sm:px-6' : 'py-8 sm:py-10 px-4 sm:px-6 lg:px-8'}`}>
+        
+        {/* STEP 1: CHOOSE SERVICES (Identical to reference screenshot) */}
+        {currentStep === 1 && (
+          <div className="space-y-8">
             
-            {/* Card 1: Tell us about your business */}
-            <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-xs border border-slate-200/90">
+            {/* Header Title & Subtitle */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+                  Choose the services you need
+                </h1>
+                <p className="text-slate-600 text-xs sm:text-sm lg:text-base mt-1.5">
+                  Select the services that will help your business grow. You can add or remove anytime.
+                </p>
+              </div>
+            </div>
+
+            {/* Two Column Grid: Left 6 Categories (2x3) + Right Static Summary */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
               
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                  <Building2 className="w-5 h-5" />
+              {/* Left Column: 6 Service Category Cards (8 cols on desktop) */}
+              <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+                
+                {/* 1. SOCIAL MEDIA */}
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs flex flex-col justify-between">
+                  <div>
+                    <div className="mb-4 pb-2 border-b border-slate-100">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-blue-600">
+                        SOCIAL MEDIA
+                      </h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      {customServicesData.filter(s => s.category === 'social-media').map((srv) => {
+                        const isChecked = selectedServiceIds.includes(srv.id);
+                        return (
+                          <div
+                            key={srv.id}
+                            onClick={() => toggleService(srv.id)}
+                            className="flex items-start gap-3 cursor-pointer group select-none"
+                          >
+                            <div className={`w-4 h-4 rounded mt-0.5 shrink-0 flex items-center justify-center transition-colors ${
+                              isChecked ? 'bg-blue-600 text-white' : 'border border-slate-300 bg-white group-hover:border-slate-400'
+                            }`}>
+                              {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+                            {renderServiceIcon(srv.iconType)}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 transition-colors">
+                                  {srv.name}
+                                </span>
+                              </div>
+                              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                {srv.description}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight">
-                    Tell us about your business
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    This helps us calibrate team sizing and ROI expectations.
-                  </p>
+
+                {/* 2. ADVERTISING */}
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs flex flex-col justify-between">
+                  <div>
+                    <div className="mb-4 pb-2 border-b border-slate-100">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-indigo-600">
+                        ADVERTISING
+                      </h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      {customServicesData.filter(s => s.category === 'advertising').map((srv) => {
+                        const isChecked = selectedServiceIds.includes(srv.id);
+                        return (
+                          <div
+                            key={srv.id}
+                            onClick={() => toggleService(srv.id)}
+                            className="flex items-start gap-3 cursor-pointer group select-none"
+                          >
+                            <div className={`w-4 h-4 rounded mt-0.5 shrink-0 flex items-center justify-center transition-colors ${
+                              isChecked ? 'bg-blue-600 text-white' : 'border border-slate-300 bg-white group-hover:border-slate-400'
+                            }`}>
+                              {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+                            {renderServiceIcon(srv.iconType)}
+                            <div className="flex-1 min-w-0">
+                              <span className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 transition-colors block">
+                                {srv.name}
+                              </span>
+                              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                {srv.description}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
+
+                {/* 3. CONTENT & CREATIVE */}
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs flex flex-col justify-between">
+                  <div>
+                    <div className="mb-4 pb-2 border-b border-slate-100">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-emerald-600">
+                        CONTENT & CREATIVE
+                      </h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      {customServicesData.filter(s => s.category === 'content').map((srv) => {
+                        const isChecked = selectedServiceIds.includes(srv.id);
+                        return (
+                          <div
+                            key={srv.id}
+                            onClick={() => toggleService(srv.id)}
+                            className="flex items-start gap-3 cursor-pointer group select-none"
+                          >
+                            <div className={`w-4 h-4 rounded mt-0.5 shrink-0 flex items-center justify-center transition-colors ${
+                              isChecked ? 'bg-blue-600 text-white' : 'border border-slate-300 bg-white group-hover:border-slate-400'
+                            }`}>
+                              {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+                            {renderServiceIcon(srv.iconType)}
+                            <div className="flex-1 min-w-0">
+                              <span className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 transition-colors block">
+                                {srv.name}
+                              </span>
+                              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                {srv.description}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. WEBSITE & PRESENCE */}
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs flex flex-col justify-between">
+                  <div>
+                    <div className="mb-4 pb-2 border-b border-slate-100">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-amber-500">
+                        WEBSITE & PRESENCE
+                      </h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      {customServicesData.filter(s => s.category === 'website').map((srv) => {
+                        const isChecked = selectedServiceIds.includes(srv.id);
+                        return (
+                          <div
+                            key={srv.id}
+                            onClick={() => toggleService(srv.id)}
+                            className="flex items-start gap-3 cursor-pointer group select-none"
+                          >
+                            <div className={`w-4 h-4 rounded mt-0.5 shrink-0 flex items-center justify-center transition-colors ${
+                              isChecked ? 'bg-blue-600 text-white' : 'border border-slate-300 bg-white group-hover:border-slate-400'
+                            }`}>
+                              {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+                            {renderServiceIcon(srv.iconType)}
+                            <div className="flex-1 min-w-0">
+                              <span className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 transition-colors block">
+                                {srv.name}
+                              </span>
+                              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                {srv.description}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 5. LEAD GENERATION & AUTOMATION */}
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs flex flex-col justify-between">
+                  <div>
+                    <div className="mb-4 pb-2 border-b border-slate-100">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-blue-600">
+                        LEAD GENERATION & AUTOMATION
+                      </h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      {customServicesData.filter(s => s.category === 'lead-gen').map((srv) => {
+                        const isChecked = selectedServiceIds.includes(srv.id);
+                        return (
+                          <div
+                            key={srv.id}
+                            onClick={() => toggleService(srv.id)}
+                            className="flex items-start gap-3 cursor-pointer group select-none"
+                          >
+                            <div className={`w-4 h-4 rounded mt-0.5 shrink-0 flex items-center justify-center transition-colors ${
+                              isChecked ? 'bg-blue-600 text-white' : 'border border-slate-300 bg-white group-hover:border-slate-400'
+                            }`}>
+                              {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+                            {renderServiceIcon(srv.iconType)}
+                            <div className="flex-1 min-w-0">
+                              <span className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 transition-colors block">
+                                {srv.name}
+                              </span>
+                              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                {srv.description}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 6. ADVANCED GROWTH (OPTIONAL) */}
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs flex flex-col justify-between">
+                  <div>
+                    <div className="mb-4 pb-2 border-b border-slate-100">
+                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-rose-600">
+                        ADVANCED GROWTH (OPTIONAL)
+                      </h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      {customServicesData.filter(s => s.category === 'advanced').map((srv) => {
+                        const isChecked = selectedServiceIds.includes(srv.id);
+                        return (
+                          <div
+                            key={srv.id}
+                            onClick={() => toggleService(srv.id)}
+                            className="flex items-start gap-3 cursor-pointer group select-none"
+                          >
+                            <div className={`w-4 h-4 rounded mt-0.5 shrink-0 flex items-center justify-center transition-colors ${
+                              isChecked ? 'bg-blue-600 text-white' : 'border border-slate-300 bg-white group-hover:border-slate-400'
+                            }`}>
+                              {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                            </div>
+                            {renderServiceIcon(srv.iconType)}
+                            <div className="flex-1 min-w-0">
+                              <span className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 transition-colors block">
+                                {srv.name}
+                              </span>
+                              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                {srv.description}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                {/* Business Name */}
+              {/* Right Column: "Your Selected Package" Summary Sidebar (4 cols on desktop) */}
+              <div className="lg:col-span-4 space-y-5">
+                
+                {/* Selected Package Card */}
+                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                  
+                  <div className="flex items-center justify-between mb-5">
+                    <h2 className="text-lg font-black text-slate-900">
+                      Your Selected Package
+                    </h2>
+                    <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
+                      {selectedServices.length} {selectedServices.length === 1 ? 'service' : 'services'}
+                    </span>
+                  </div>
+
+                  {/* Selected Services Itemized List */}
+                  <div className="space-y-3 mb-6 max-h-[300px] overflow-y-auto pr-1">
+                    {selectedServices.length === 0 ? (
+                      <div className="text-center py-8 text-xs text-slate-400 border border-dashed border-slate-200 rounded-xl px-4">
+                        No services selected yet. Pick services on the left to calculate your monthly investment.
+                      </div>
+                    ) : (
+                      selectedServices.map((srv) => (
+                        <div key={srv.id} className="flex items-center justify-between gap-3 text-xs sm:text-sm bg-slate-50/70 p-2.5 rounded-xl border border-slate-100 group">
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            {renderServiceIcon(srv.iconType)}
+                            <div className="min-w-0">
+                              <div className="font-bold text-slate-800 truncate text-xs">
+                                {srv.name}
+                              </div>
+                              <div className="text-slate-500 text-[11px]">
+                                KSh {srv.price.toLocaleString()} <span className="text-slate-400">/mo</span>
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => toggleService(srv.id)}
+                            className="text-slate-400 hover:text-slate-700 p-1 rounded-lg border border-slate-200/80 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
+                            title="Remove service"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  {/* Monthly Total */}
+                  <div className="pt-4 border-t border-slate-100 mb-4 flex items-baseline justify-between">
+                    <span className="text-sm font-bold text-slate-900">
+                      Monthly Total
+                    </span>
+                    <div className="text-right">
+                      <span className="text-2xl font-black text-slate-900">
+                        KSh {monthlyTotal.toLocaleString()}
+                      </span>
+                      <span className="text-xs font-normal text-slate-500 ml-1">/mo</span>
+                    </div>
+                  </div>
+
+                  {/* Main CTA */}
+                  <button
+                    type="button"
+                    disabled={selectedServices.length === 0}
+                    onClick={() => setCurrentStep(2)}
+                    className="w-full py-3.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 text-white font-bold text-sm transition-all shadow-md shadow-blue-500/10 flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  >
+                    <span>Get My Custom Quote</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  {/* Trust Micro-Bullets */}
+                  <div className="mt-4 space-y-2 text-xs text-slate-600">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                      <span>Free strategy call included</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                      <span>No obligation • Cancel anytime</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                      <span>Setup fee may apply for some services</span>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Need Help Choosing Card */}
+                <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
+                    <Calendar className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm">
+                      Need help choosing?
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                      Book a free strategy call and we'll recommend the best services for you.
+                    </p>
+                    <a
+                      href="https://calendar.app.google/i9YT96iwcduZDF8Q8"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 mt-2.5 cursor-pointer"
+                    >
+                      <span>Book Free Call</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        )}
+
+        {/* STEP 2: BUSINESS DETAILS & SUBMISSION */}
+        {currentStep === 2 && (
+          <div className="w-full max-w-7xl mx-auto bg-white rounded-2xl p-4 sm:p-6 lg:p-7 border border-slate-200 shadow-2xs animate-in fade-in duration-150">
+            
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3.5 border-b border-slate-100 gap-2">
+              <div>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 block mb-0.5">
+                  STEP 2 OF 2
+                </span>
+                <h1 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
+                  Business Details & Contact Info
+                </h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-500 font-semibold">Total Monthly:</span>
+                <span className="text-lg sm:text-xl font-black text-blue-600">
+                  KSh {monthlyTotal.toLocaleString()}/mo
+                </span>
+              </div>
+            </div>
+
+            {/* Configured Package Recap - Compact Bar */}
+            <div className="bg-slate-50 rounded-xl p-3 border border-slate-200/80 mb-4 flex flex-col md:flex-row md:items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2 flex-wrap text-xs">
+                <span className="font-bold text-slate-800 shrink-0 text-xs">
+                  {selectedServices.length} Selected Services:
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedServices.map(s => (
+                    <span key={s.id} className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs font-semibold text-slate-800 inline-flex items-center gap-1.5 shadow-2xs">
+                      <Check className="w-3.5 h-3.5 text-blue-600" />
+                      <span>{s.name}</span>
+                      <span className="text-slate-400 font-normal">· KSh {s.price.toLocaleString()}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="shrink-0 text-xs text-slate-500 font-medium md:text-right hidden sm:block">
+                No lock-in contracts • Cancel anytime
+              </div>
+            </div>
+
+            <form onSubmit={handleFinalSubmit} className="space-y-3.5">
+              
+              {/* Row 1: Business Name, Industry, Full Name */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Business Name
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Business Name <span className="text-blue-600">*</span>
                   </label>
                   <input
                     type="text"
+                    required
                     value={businessInfo.businessName}
                     onChange={(e) => setBusinessInfo({ ...businessInfo, businessName: e.target.value })}
                     placeholder="e.g. Acme Interiors Ltd"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   />
                 </div>
 
-                {/* Industry Dropdown */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Industry
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Industry / Niche
                   </label>
                   <select
                     value={businessInfo.industry}
                     onChange={(e) => setBusinessInfo({ ...businessInfo, industry: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all cursor-pointer"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-900 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none cursor-pointer"
                   >
+                    <option value="Technology & SaaS">Technology & SaaS</option>
                     <option value="Home & Living">Home & Living</option>
                     <option value="Healthcare & Wellness">Healthcare & Wellness</option>
                     <option value="Real Estate & Property">Real Estate & Property</option>
@@ -490,35 +1075,109 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                     <option value="E-commerce & Retail">E-commerce & Retail</option>
                     <option value="Hospitality & Tourism">Hospitality & Tourism</option>
                     <option value="Manufacturing & Logistics">Manufacturing & Logistics</option>
-                    <option value="Technology / Software">Technology / Software</option>
                   </select>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Website (optional) */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                    Website <span className="text-slate-600 font-normal">(optional)</span>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Your Full Name <span className="text-blue-600">*</span>
                   </label>
                   <input
                     type="text"
-                    value={businessInfo.website}
-                    onChange={(e) => setBusinessInfo({ ...businessInfo, website: e.target.value })}
-                    placeholder="www.yourwebsite.com"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    required
+                    placeholder="John Kamau"
+                    value={businessInfo.contactName}
+                    onChange={(e) => setBusinessInfo({ ...businessInfo, contactName: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   />
                 </div>
+              </div>
 
-                {/* Primary Goal */}
+              {/* Row 2: Work Email, Phone/WhatsApp, Primary Goal */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Work Email <span className="text-blue-600">*</span>
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      required
+                      placeholder="john@acme.co.ke"
+                      value={businessInfo.email}
+                      onChange={(e) => {
+                        const val = e.target.value.trim();
+                        setBusinessInfo({ ...businessInfo, email: val });
+                        if (emailError) {
+                          setEmailError(validateEmail(val));
+                        }
+                      }}
+                      onBlur={() => {
+                        if (businessInfo.email) {
+                          setEmailError(validateEmail(businessInfo.email));
+                        }
+                      }}
+                      className={`w-full px-3.5 py-2 rounded-xl border ${emailError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus:ring-2 focus:ring-blue-500'} text-xs sm:text-sm text-slate-900 focus:outline-none transition-all`}
+                    />
+                  </div>
+                  {emailError && (
+                    <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                      <span>{emailError}</span>
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Phone / WhatsApp <span className="text-blue-600">*</span>
+                  </label>
+                  <div className={`flex rounded-xl border ${phoneError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500'} overflow-hidden bg-white transition-all`}>
+                    <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 sm:px-3 border-r border-slate-300 text-xs sm:text-sm font-semibold text-slate-700 shrink-0 select-none">
+                      <span className="text-base" role="img" aria-label="Kenya Flag">🇰🇪</span>
+                      <span>+254</span>
+                    </div>
+                    <input
+                      type="tel"
+                      required
+                      inputMode="numeric"
+                      maxLength={10}
+                      placeholder="700000000"
+                      value={businessInfo.phone}
+                      onChange={(e) => {
+                        // Numbers only, no letters, no spacing, max 10 digits
+                        const numericOnly = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+                        setBusinessInfo({ ...businessInfo, phone: numericOnly });
+                        if (phoneError) setPhoneError('');
+                      }}
+                      onBlur={() => {
+                        if (businessInfo.phone) {
+                          setPhoneError(validatePhone(businessInfo.phone));
+                        }
+                      }}
+                      className="w-full px-3 py-2 text-xs sm:text-sm text-slate-900 focus:outline-none placeholder:text-slate-400"
+                    />
+                  </div>
+                  {phoneError ? (
+                    <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                      <span>{phoneError}</span>
+                    </p>
+                  ) : (
+                    <p className="text-[10px] text-slate-400 mt-1">
+                      Numbers only (up to 10 digits, e.g. 712345678)
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
                     Primary Goal
                   </label>
                   <select
                     value={businessInfo.primaryGoal}
                     onChange={(e) => setBusinessInfo({ ...businessInfo, primaryGoal: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all cursor-pointer"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-900 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none cursor-pointer"
                   >
                     <option value="Generate more leads">Generate more leads</option>
                     <option value="Increase online conversions">Increase online conversions</option>
@@ -529,646 +1188,243 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                 </div>
               </div>
 
-            </div>
-
-            {/* Card 2: Choose your services */}
-            <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-xs border border-slate-200/90">
-              
-              {/* Header */}
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-extrabold text-sm flex items-center justify-center shadow-xs">
-                    2
-                  </div>
-                  <div>
-                    <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight">
-                      Choose your services
-                    </h2>
-                    <p className="text-xs text-slate-500">
-                      Select the services you need. You can add or remove anytime.
-                    </p>
-                  </div>
+              {/* Row 3: Website and Notes */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Website or Social Profile <span className="text-slate-400 font-normal">(optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={businessInfo.website}
+                    onChange={(e) => setBusinessInfo({ ...businessInfo, website: e.target.value })}
+                    placeholder="e.g. www.acme.co.ke"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
                 </div>
 
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Specific Requirements or Bottlenecks <span className="text-slate-400 font-normal">(optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. We want to scale TikTok ads and set up WhatsApp automations."
+                    value={businessInfo.notes}
+                    onChange={(e) => setBusinessInfo({ ...businessInfo, notes: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Action Bar */}
+              <div className="pt-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-end gap-3">
                 <button
-                  type="button"
-                  onClick={toggleSelectAll}
-                  className="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50/80 hover:bg-blue-100/80 border border-blue-200 px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer"
+                  type="submit"
+                  disabled={isSubmitting || !businessInfo.businessName.trim() || !businessInfo.contactName.trim() || !businessInfo.email.trim() || !businessInfo.phone.trim()}
+                  className="w-full sm:w-auto px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
-                  {areAllServicesSelected ? 'Deselect All' : 'Select All'}
+                  {isSubmitting ? (
+                    <span>Generating Invoice...</span>
+                  ) : (
+                    <>
+                      <span>Generate Invoice</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </div>
 
-              {/* 5 Categorized Service Columns / Grid */}
-              <div className="space-y-6">
-                
-                {/* Top Row: 3 Categories (Digital Marketing, Advertising, Website & Conversion) */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  
-                  {/* Category 1: Digital Marketing */}
-                  <div className="bg-slate-50/70 rounded-xl p-4 border border-slate-200/70 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-blue-600 mb-3">
-                        Digital Marketing
-                      </h3>
-                      <div className="space-y-2.5">
-                        {allServicesList.filter(s => s.category === 'digital-marketing').map((srv) => {
-                          const isChecked = selectedServiceIds.includes(srv.id);
-                          return (
-                            <label
-                              key={srv.id}
-                              className={`flex items-start gap-2.5 p-2 rounded-lg cursor-pointer transition-colors ${
-                                isChecked ? 'bg-blue-50/80' : 'hover:bg-slate-100/70'
-                              }`}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={() => toggleService(srv.id)}
-                                className="mt-0.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
-                              />
-                              <div className="text-xs">
-                                <span className={`font-semibold block ${isChecked ? 'text-blue-950 font-bold' : 'text-slate-800'}`}>
-                                  {srv.name}
-                                </span>
-                                {srv.brandBadges && (
-                                  <div className="flex items-center gap-1.5 mt-1 text-slate-500">
-                                    <span className="w-3.5 h-3.5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[8px] font-bold">f</span>
-                                    <span className="w-3.5 h-3.5 rounded-full bg-pink-600 text-white flex items-center justify-center text-[8px] font-bold">ig</span>
-                                    <span className="w-3.5 h-3.5 rounded-full bg-black text-white flex items-center justify-center text-[8px] font-bold">tk</span>
-                                  </div>
-                                )}
-                              </div>
-                            </label>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Category 2: Advertising */}
-                  <div className="bg-slate-50/70 rounded-xl p-4 border border-slate-200/70 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-blue-600 mb-3">
-                        Advertising
-                      </h3>
-                      <div className="space-y-2.5">
-                        {allServicesList.filter(s => s.category === 'advertising').map((srv) => {
-                          const isChecked = selectedServiceIds.includes(srv.id);
-                          return (
-                            <label
-                              key={srv.id}
-                              className={`flex items-start gap-2.5 p-2 rounded-lg cursor-pointer transition-colors ${
-                                isChecked ? 'bg-blue-50/80' : 'hover:bg-slate-100/70'
-                              }`}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={() => toggleService(srv.id)}
-                                className="mt-0.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
-                              />
-                              <div className="text-xs flex items-center gap-2">
-                                {srv.id === 'google-ads' && (
-                                  <span className="w-4 h-4 flex items-center justify-center font-black text-blue-500">G</span>
-                                )}
-                                {srv.id === 'meta-ads' && (
-                                  <span className="w-4 h-4 flex items-center justify-center font-bold text-[#0081FB]">∞</span >
-                                )}
-                                {srv.id === 'tiktok-ads' && (
-                                  <span className="w-4 h-4 flex items-center justify-center font-bold text-slate-900">♪</span>
-                                )}
-                                {srv.id === 'linkedin-ads' && (
-                                  <span className="w-4 h-4 flex items-center justify-center font-bold text-[#0A66C2]">in</span>
-                                )}
-                                <span className={`font-semibold ${isChecked ? 'text-blue-950 font-bold' : 'text-slate-800'}`}>
-                                  {srv.name}
-                                </span>
-                              </div>
-                            </label>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Category 3: Website & Conversion */}
-                  <div className="bg-slate-50/70 rounded-xl p-4 border border-slate-200/70 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xs font-extrabold uppercase tracking-wider text-blue-600 mb-3">
-                        Website & Conversion
-                      </h3>
-                      <div className="space-y-2.5">
-                        {allServicesList.filter(s => s.category === 'website').map((srv) => {
-                          const isChecked = selectedServiceIds.includes(srv.id);
-                          return (
-                            <label
-                              key={srv.id}
-                              className={`flex items-start gap-2.5 p-2 rounded-lg cursor-pointer transition-colors ${
-                                isChecked ? 'bg-blue-50/80' : 'hover:bg-slate-100/70'
-                              }`}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={() => toggleService(srv.id)}
-                                className="mt-0.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer"
-                              />
-                              <div className="text-xs flex items-center gap-2">
-                                {srv.id === 'business-website' && <Globe className="w-4 h-4 text-blue-600" />}
-                                {srv.id === 'landing-page' && <FileText className="w-4 h-4 text-blue-600" />}
-                                {srv.id === 'lead-generation-funnel' && <Filter className="w-4 h-4 text-slate-500" />}
-                                {srv.id === 'conversion-optimisation' && <TrendingUp className="w-4 h-4 text-slate-500" />}
-                                <span className={`font-semibold ${isChecked ? 'text-blue-950 font-bold' : 'text-slate-800'}`}>
-                                  {srv.name}
-                                </span>
-                              </div>
-                            </label>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                {/* Bottom Row: 2 Categories (Customer Engagement, AI & Automation) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  
-                  {/* Category 4: Customer Engagement */}
-                  <div className="bg-slate-50/70 rounded-xl p-4 border border-slate-200/70">
-                    <h3 className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 mb-3">
-                      Customer Engagement
-                    </h3>
-                    <div className="space-y-2.5">
-                      {allServicesList.filter(s => s.category === 'engagement').map((srv) => {
-                        const isChecked = selectedServiceIds.includes(srv.id);
-                        return (
-                          <label
-                            key={srv.id}
-                            className={`flex items-start gap-2.5 p-2 rounded-lg cursor-pointer transition-colors ${
-                              isChecked ? 'bg-emerald-50/80' : 'hover:bg-slate-100/70'
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              onChange={() => toggleService(srv.id)}
-                              className="mt-0.5 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 cursor-pointer"
-                            />
-                            <div className="text-xs flex items-center gap-2">
-                              {srv.id === 'email-marketing' && <Mail className="w-4 h-4 text-emerald-600" />}
-                              {srv.id === 'sms-campaigns' && <MessageSquare className="w-4 h-4 text-emerald-600" />}
-                              {srv.id === 'whatsapp-marketing' && <MessageCircle className="w-4 h-4 text-emerald-600" />}
-                              {srv.id === 'customer-reactivation' && <RotateCw className="w-4 h-4 text-slate-500" />}
-                              <span className={`font-semibold ${isChecked ? 'text-emerald-950 font-bold' : 'text-slate-800'}`}>
-                                {srv.name}
-                              </span>
-                            </div>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Category 5: AI & Automation */}
-                  <div className="bg-slate-50/70 rounded-xl p-4 border border-slate-200/70">
-                    <h3 className="text-xs font-extrabold uppercase tracking-wider text-purple-600 mb-3">
-                      AI & Automation
-                    </h3>
-                    <div className="space-y-2.5">
-                      {allServicesList.filter(s => s.category === 'automation').map((srv) => {
-                        const isChecked = selectedServiceIds.includes(srv.id);
-                        return (
-                          <label
-                            key={srv.id}
-                            className={`flex items-start gap-2.5 p-2 rounded-lg cursor-pointer transition-colors ${
-                              isChecked ? 'bg-purple-50/80' : 'hover:bg-slate-100/70'
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              onChange={() => toggleService(srv.id)}
-                              className="mt-0.5 w-4 h-4 rounded text-purple-600 focus:ring-purple-500 border-slate-300 cursor-pointer"
-                            />
-                            <div className="text-xs flex items-center gap-2">
-                              {srv.id === 'crm-setup' && <Users className="w-4 h-4 text-purple-600" />}
-                              {srv.id === 'marketing-automation' && <Settings className="w-4 h-4 text-slate-500" />}
-                              {srv.id === 'ai-chatbot' && <Bot className="w-4 h-4 text-slate-500" />}
-                              {srv.id === 'reporting-dashboard' && <BarChart3 className="w-4 h-4 text-slate-500" />}
-                              {srv.id === 'workflow-automation' && <GitFork className="w-4 h-4 text-slate-500" />}
-                              <span className={`font-semibold ${isChecked ? 'text-purple-950 font-bold' : 'text-slate-800'}`}>
-                                {srv.name}
-                              </span>
-                            </div>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* Get A Quote Button */}
-              <div className="flex justify-end mt-8 pt-4 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCurrentStep(4);
-                    setTimeout(() => {
-                      const quoteForm = document.getElementById('quote-form-section');
-                      if (quoteForm) {
-                        quoteForm.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }, 100);
-                  }}
-                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-sm font-bold transition-all shadow-md active:scale-95 cursor-pointer"
-                >
-                  <span>Get A Quote</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-
-            </div>
-
-            {/* Additional Step 3: Add-ons & Extra Scaling Modules */}
-            {currentStep >= 3 && (
-              <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-xs border border-slate-200/90 animate-in fade-in duration-300">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-extrabold text-sm flex items-center justify-center">
-                    3
-                  </div>
-                  <div>
-                    <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight">
-                      Recommended Growth Add-ons
-                    </h2>
-                    <p className="text-xs text-slate-500">
-                      Supercharge your package with specialized execution modules.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <div 
-                    onClick={() => {
-                      if (selectedAddons.includes('speed-audit')) {
-                        setSelectedAddons(selectedAddons.filter(a => a !== 'speed-audit'));
-                      } else {
-                        setSelectedAddons([...selectedAddons, 'speed-audit']);
-                      }
-                    }}
-                    className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                      selectedAddons.includes('speed-audit')
-                        ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600'
-                        : 'border-slate-200 hover:border-slate-300 bg-white'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-bold text-sm text-slate-900">48-Hour Rapid Setup Sprint</h4>
-                      <span className="text-xs font-bold text-blue-600">+ KSh 15,000</span>
-                    </div>
-                    <p className="text-xs text-slate-500">
-                      Priority onboarding team bypasses the queue to launch all campaigns within 48 hours.
-                    </p>
-                  </div>
-
-                  <div 
-                    onClick={() => {
-                      if (selectedAddons.includes('crm-migration')) {
-                        setSelectedAddons(selectedAddons.filter(a => a !== 'crm-migration'));
-                      } else {
-                        setSelectedAddons([...selectedAddons, 'crm-migration']);
-                      }
-                    }}
-                    className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                      selectedAddons.includes('crm-migration')
-                        ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600'
-                        : 'border-slate-200 hover:border-slate-300 bg-white'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-bold text-sm text-slate-900">Legacy Contact Cleanse</h4>
-                      <span className="text-xs font-bold text-blue-600">+ KSh 8,000</span>
-                    </div>
-                    <p className="text-xs text-slate-500">
-                      Cleanse, deduplicate, and verify deliverability for up to 10,000 past email & phone records.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() => setCurrentStep(4)}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer"
-                  >
-                    <span>Proceed to Proposal Review</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 4 & 5: Submission & Review Details */}
-            {currentStep >= 4 && (
-              <div id="quote-form-section" className="bg-white rounded-2xl p-6 sm:p-7 shadow-xs border border-slate-200/90 animate-in fade-in duration-300">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-extrabold text-sm flex items-center justify-center">
-                    4
-                  </div>
-                  <div>
-                    <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight">
-                      Review & Submit Custom Proposal
-                    </h2>
-                    <p className="text-xs text-slate-500">
-                      Where should our senior growth partner send the full breakdown & agreement?
-                    </p>
-                  </div>
-                </div>
-
-                <form onSubmit={handleFinalSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Your Full Name <span className="text-blue-600">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="John Kamau"
-                        value={businessInfo.contactName}
-                        onChange={(e) => setBusinessInfo({ ...businessInfo, contactName: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Work Email <span className="text-blue-600">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="john@acmeinteriors.com"
-                        value={businessInfo.email}
-                        onChange={(e) => setBusinessInfo({ ...businessInfo, email: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Phone / WhatsApp <span className="text-blue-600">*</span>
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="+254 700 000 000"
-                        value={businessInfo.phone}
-                        onChange={(e) => setBusinessInfo({ ...businessInfo, phone: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Specific requirements or current bottlenecks
-                    </label>
-                    <textarea
-                      rows={2}
-                      placeholder="e.g. We want to scale our Instagram and Google Search ads while setting up WhatsApp automations for our 3 showrooms."
-                      value={businessInfo.notes}
-                      onChange={(e) => setBusinessInfo({ ...businessInfo, notes: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
-                    />
-                  </div>
-
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting || selectedServices.length === 0}
-                      className="w-full py-3.5 px-6 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm sm:text-base transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                    >
-                      {isSubmitting ? (
-                        <span>Generating custom proposal...</span>
-                      ) : (
-                        <>
-                          <span>Submit Custom Proposal Request (KSh {monthlyTotal.toLocaleString()}/mo)</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
-
-            {/* Need Help Choosing Callout Card */}
-            <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-xs border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3.5 text-center sm:text-left">
-                <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                  <HelpCircle className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 text-sm sm:text-base">
-                    Need help choosing the right services?
-                  </h4>
-                  <p className="text-xs text-slate-500">
-                    Book a free consultation with our growth experts.
-                  </p>
-                </div>
-              </div>
-
-              <a
-                href="https://wa.me/254700000000?text=Hi%20Aceso%20Solutions,%20I%20need%20help%20building%20my%20custom%20package"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 font-bold text-xs sm:text-sm transition-colors whitespace-nowrap cursor-pointer"
-              >
-                Book a Call
-              </a>
-            </div>
+            </form>
 
           </div>
+        )}
 
-          {/* Right Column: Static / Sticky Summary Sidebar */}
-          <div className="lg:col-span-4 lg:sticky lg:top-24 lg:self-start space-y-6 z-20">
-            
-            {/* Card 1: Your Package Summary */}
-            <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-slate-200/90 max-h-[calc(100vh-7.5rem)] flex flex-col">
-              
-              <div className="flex items-center justify-between mb-4 shrink-0">
-                <h3 className="text-lg font-black text-slate-900">
-                  Your Package
-                </h3>
-                <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
-                  {selectedServices.length} {selectedServices.length === 1 ? 'service' : 'services'} selected
-                </span>
-              </div>
-
-              {/* Selected Services Itemized List (Scrolls cleanly if long) */}
-              <div className="space-y-2.5 mb-5 overflow-y-auto pr-1 flex-1 min-h-[100px] max-h-[220px]">
-                {selectedServices.length === 0 ? (
-                  <div className="text-center py-6 text-xs text-slate-400 border border-dashed border-slate-200 rounded-xl px-4">
-                    No services selected yet. Pick services from the left to calculate your plan.
-                  </div>
-                ) : (
-                  selectedServices.map((srv) => (
-                    <div key={srv.id} className="flex items-center justify-between text-xs sm:text-sm group bg-slate-50/60 p-2 rounded-lg border border-slate-100">
-                      <div className="flex items-center gap-2 min-w-0 pr-2">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 stroke-[2.5]" />
-                        <span className="text-slate-800 font-semibold truncate text-xs">
-                          {srv.name}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="font-bold text-slate-900 text-xs">
-                          KSh {srv.price.toLocaleString()}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => toggleService(srv.id)}
-                          className="text-slate-400 hover:text-red-500 p-0.5 rounded transition-colors cursor-pointer"
-                          title="Remove service"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-
-              {/* Totals Section */}
-              <div className="pt-4 border-t border-slate-100 space-y-3.5 shrink-0">
-                
-                {/* Estimated Monthly Investment */}
-                <div>
-                  <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium mb-1">
-                    <span>Estimated Monthly Investment</span>
-                    <Info className="w-3.5 h-3.5 text-slate-400" />
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-black text-blue-600 tracking-tight">
-                    KSh {monthlyTotal.toLocaleString()}
-                    <span className="text-xs font-bold text-slate-400 ml-1">/mo</span>
-                  </div>
-                </div>
-
-                {/* One-time Setup Fee */}
-                <div>
-                  <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium mb-1">
-                    <span>One-time Setup Fee</span>
-                    <Info className="w-3.5 h-3.5 text-slate-400" />
-                  </div>
-                  <div className="text-base sm:text-lg font-extrabold text-slate-900">
-                    KSh {setupFeeTotal.toLocaleString()}
-                  </div>
-                </div>
-
-                {/* Included Standard Perks (Light Green Box matching design) */}
-                <div className="bg-emerald-50/60 rounded-xl p-3.5 border border-emerald-100 space-y-1.5 text-xs text-slate-700 font-medium">
-                  <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
-                    <span>Strategy & campaign planning</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
-                    <span>Monthly performance reporting</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
-                    <span>Dedicated account manager</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 stroke-[2.5]" />
-                    <span>Ongoing optimization</span>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
       </main>
 
-      {/* Mobile Sticky Floating Summary Bar (Visible only on < lg screens) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-        <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
-          <div>
-            <div className="text-[11px] font-semibold text-slate-500 flex items-center gap-1.5">
-              <span>Your Package</span>
-              <span className="w-1 h-1 rounded-full bg-slate-300" />
-              <span className="text-blue-600 font-bold">{selectedServices.length} selected</span>
-            </div>
-            <div className="text-base font-black text-slate-900 leading-tight">
-              KSh {monthlyTotal.toLocaleString()}
-              <span className="text-[11px] font-normal text-slate-500 ml-1">/mo</span>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => {
-              setCurrentStep(4);
-              setTimeout(() => {
-                const quoteForm = document.getElementById('quote-form-section');
-                if (quoteForm) {
-                  quoteForm.scrollIntoView({ behavior: 'smooth' });
-                }
-              }, 100);
-            }}
-            className="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer flex items-center gap-1.5"
-          >
-            <span>Get A Quote</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
-
-      {/* Footer without the top accelerate CTA banner */}
-      <Footer 
-        onNavigate={onBackToHome}
-        onRequestAudit={onRequestAudit}
-        hideTopBanner={true}
-      />
-
-      {/* Immediate Toast Notification */}
-      <Toast toast={toast} onClose={() => setToast(null)} />
-
-      {/* Submission Success Modal */}
-      {isSubmitted && (
+      {/* Compare Packages Modal */}
+      {showCompareModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl border border-slate-200">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="w-8 h-8" />
-            </div>
-            <h3 className="text-xl font-black text-slate-900 mb-2">
-              Custom Proposal Generated!
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600 mb-6">
-              Thank you! Our growth lead has received your custom configuration for <strong>{businessInfo.businessName}</strong> ({selectedServices.length} services totaling <strong>KSh {monthlyTotal.toLocaleString()}/mo</strong>).
-            </p>
-            <div className="flex gap-3">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-slate-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6 pb-3 border-b border-slate-100">
+              <h3 className="text-xl font-black text-slate-900">
+                Package Comparison Overview
+              </h3>
               <button
-                onClick={() => {
-                  setIsSubmitted(false);
-                  onBackToHome();
-                }}
-                className="w-full py-2.5 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer"
+                type="button"
+                onClick={() => setShowCompareModal(false)}
+                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100"
               >
-                Back to Home
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4 text-xs sm:text-sm">
+              <div className="p-4 rounded-xl bg-blue-50/70 border border-blue-100 flex justify-between items-center">
+                <div>
+                  <div className="font-bold text-blue-900 text-base">Essential (KSh 10,000/mo)</div>
+                  <div className="text-blue-700 text-xs">1 Platform, 8 Posts, Basic Graphics & Community Moderation</div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-100 flex justify-between items-center">
+                <div>
+                  <div className="font-bold text-emerald-900 text-base">Growth (KSh 20,000/mo)</div>
+                  <div className="text-emerald-700 text-xs">2 Platforms, 12-16 Posts, 4 Videos, Strategy Call & Reports</div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-purple-50/70 border border-purple-100 flex justify-between items-center">
+                <div>
+                  <div className="font-bold text-purple-900 text-base">Business (KSh 35,000/mo)</div>
+                  <div className="text-purple-700 text-xs">Up to 3 Platforms, 20 Posts, 8 Videos, Paid Ads & Full Strategy</div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-100 border border-slate-200 flex justify-between items-center">
+                <div>
+                  <div className="font-bold text-slate-900 text-base">Custom Package (Tailored to You)</div>
+                  <div className="text-slate-600 text-xs">Pick the exact services, volume & integrations you need</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowCompareModal(false)}
+                className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs sm:text-sm hover:bg-blue-700"
+              >
+                Close Comparison
               </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* Proposal Ready Pop-up Modal (matching reference image) */}
+      {isSubmitted && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-7 sm:p-9 text-center shadow-2xl border border-slate-100 relative animate-in zoom-in-95 duration-200">
+            
+            {/* Top-right close button */}
+            <button
+              type="button"
+              onClick={() => setIsSubmitted(false)}
+              className="absolute top-5 right-5 text-slate-400 hover:text-slate-600 p-2 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Festive Celebration Icon with sparkle dots */}
+            <div className="relative w-20 h-20 mx-auto mt-1 mb-2 flex items-center justify-center">
+              {/* Confetti & sparkle accents */}
+              <span className="absolute -top-1 left-3 w-1.5 h-1.5 rounded-full bg-indigo-400 opacity-80" />
+              <span className="absolute top-1 right-3 w-1.5 h-1.5 rounded-full bg-purple-400 opacity-80" />
+              <span className="absolute bottom-2 -left-1 w-2 h-2 rounded-full bg-purple-500 opacity-70" />
+              <span className="absolute -bottom-1 right-5 w-1.5 h-1.5 rounded-full bg-emerald-400 opacity-80" />
+              <span className="absolute top-7 -left-3 w-1.5 h-1.5 rounded-full bg-emerald-500 opacity-75" />
+              <span className="absolute top-5 -right-3 w-2 h-2 rounded-full bg-blue-400 opacity-80" />
+              <span className="absolute bottom-6 right-2 w-1.5 h-1.5 rounded-full bg-pink-400 opacity-70" />
+
+              {/* Main Green Check Circle */}
+              <div className="w-16 h-16 rounded-full bg-white border-2 border-emerald-500 flex items-center justify-center shadow-xs">
+                <Check className="w-8 h-8 text-emerald-500 stroke-[2.5]" />
+              </div>
+            </div>
+
+            {/* Modal Heading */}
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+              Proposal ready
+            </h3>
+
+            {/* Subtitle */}
+            <div className="text-slate-600 text-xs sm:text-sm mb-4">
+              Your custom package for{' '}
+              <span className="font-bold text-slate-900 block text-sm sm:text-base mt-0.5">
+                {businessInfo.businessName || 'Your Business'}
+              </span>
+            </div>
+
+            {/* Service count and Price pill stats */}
+            <div className="flex items-center justify-center gap-3 sm:gap-4 my-4 py-1 text-xs sm:text-sm font-semibold text-slate-700">
+              <div className="flex items-center gap-1.5">
+                <Briefcase className="w-4 h-4 text-blue-600" />
+                <span>{selectedServices.length} {selectedServices.length === 1 ? 'service' : 'services'}</span>
+              </div>
+              <div className="h-4 w-px bg-slate-300" />
+              <div className="flex items-center gap-1.5 text-emerald-700">
+                <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-black">$</span>
+                <span className="font-bold">KSh {monthlyTotal.toLocaleString()}/mo</span>
+              </div>
+            </div>
+
+            {/* Proposal and Invoice Ready Card */}
+            <div className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100/80 text-center mb-6">
+              {/* PDF Icon Badge */}
+              <div className="w-11 h-11 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-2.5 border border-blue-100">
+                <FileText className="w-5 h-5" />
+              </div>
+
+              <p className="text-xs text-slate-600 mb-2 leading-relaxed">
+                Your proposal and invoice are ready to download.
+              </p>
+
+              <button
+                type="button"
+                onClick={() => {
+                  generateAndDownloadInvoicePDF({
+                    businessInfo,
+                    selectedServices,
+                    monthlyTotal,
+                    setupFeeTotal
+                  });
+                }}
+                className="text-blue-600 hover:text-blue-700 font-bold text-xs sm:text-sm inline-flex items-center gap-1.5 cursor-pointer hover:underline"
+              >
+                <span>Download proposal & invoice</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* WhatsApp Contact Box */}
+            <div className="text-center">
+              <a
+                href={`https://wa.me/254758544241?text=${encodeURIComponent(
+                  `Hi Aceso Solutions, I just configured a custom package for ${businessInfo.businessName || 'my business'} (${selectedServices.length} services totaling KSh ${monthlyTotal.toLocaleString()}/mo). I would like to discuss next steps!`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 text-emerald-700 hover:text-emerald-800 font-bold text-sm sm:text-base transition-colors group cursor-pointer"
+              >
+                <MessageCircle className="w-5 h-5 text-emerald-600 group-hover:scale-110 transition-transform" />
+                <span>Chat with us on WhatsApp</span>
+                <ExternalLink className="w-4 h-4 opacity-70" />
+              </a>
+
+              <p className="text-slate-600 text-xs sm:text-sm font-semibold mt-1">
+                +254 758 544 241
+              </p>
+
+              <p className="text-slate-500 text-[11px] sm:text-xs mt-3 leading-relaxed max-w-xs mx-auto">
+                We'll be happy to discuss your package and answer any questions.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      <Toast toast={toast} onClose={() => setToast(null)} />
+
+      {/* Footer without the top banner */}
+      <Footer 
+        onNavigate={onBackToHome}
+        onRequestAudit={onRequestAudit}
+        hideTopBanner={true}
+      />
 
     </div>
   );

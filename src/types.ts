@@ -16,13 +16,14 @@ export interface SolutionItem {
 export interface PackageItem {
   id: string;
   name: string;
+  subBadge?: string;
   description: string;
   price: string;
   period: string;
   isPopular?: boolean;
   isCustom?: boolean;
   accentColor: string;
-  iconType: 'starter' | 'growth' | 'scale' | 'custom';
+  iconType: 'starter' | 'growth' | 'scale' | 'essential' | 'business' | 'custom';
   buttonText: string;
   buttonVariant: 'outline-blue' | 'outline-green' | 'outline-purple' | 'solid-dark';
   features: string[];

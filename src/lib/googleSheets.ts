@@ -484,3 +484,202 @@ export const appendLeadToGoogleSheet = async (
     };
   }
 };
+
+// ==========================================
+// CUSTOM PACKAGE LEADS & INVOICE SHEET SYNC
+// Target Tab: "Custom Package Leads" (gid: 1225199164)
+// ==========================================
+
+export interface CustomPackageLeadRecord {
+  id?: string;
+  timestamp: string;
+  businessName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  website?: string;
+  industry?: string;
+  primaryGoal?: string;
+  selectedServices: string[];
+  serviceCount: number;
+  monthlyTotal: number;
+  setupFeeTotal: number;
+  notes?: string;
+  status: string;
+  syncedToGoogleSheet?: boolean;
+}
+
+const CUSTOM_PACKAGE_STORAGE_KEY = 'aceso_custom_package_leads';
+export const CUSTOM_PACKAGE_TAB_NAME = 'Custom Package Leads';
+export const CUSTOM_PACKAGE_GID = '1225199164';
+
+export const getLocalCustomPackageLeads = (): CustomPackageLeadRecord[] => {
+  try {
+    const raw = localStorage.getItem(CUSTOM_PACKAGE_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+};
+
+export const saveLocalCustomPackageLead = (record: CustomPackageLeadRecord): CustomPackageLeadRecord => {
+  const leads = getLocalCustomPackageLeads();
+  const newRecord: CustomPackageLeadRecord = {
+    ...record,
+    id: record.id || `INV-${Date.now()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+    timestamp: record.timestamp || new Date().toISOString()
+  };
+  leads.unshift(newRecord);
+  try {
+    localStorage.setItem(CUSTOM_PACKAGE_STORAGE_KEY, JSON.stringify(leads));
+  } catch (e) {
+    console.error('Failed to save custom package lead locally:', e);
+  }
+  return newRecord;
+};
+
+// Submit Custom Package Lead directly to Google Sheet tab "Custom Package Leads"
+export const submitCustomPackageLeadToGoogleSheet = async (
+  record: CustomPackageLeadRecord,
+  token?: string
+): Promise<{ success: boolean; sheetUrl?: string; error?: string }> => {
+  try {
+    // 1. Save locally first
+    const savedRecord = saveLocalCustomPackageLead(record);
+
+    // 2. Redundancy: Send payload to Google Apps Script Web App
+    const scriptPayload = {
+      type: 'custom_package_lead',
+      tabName: CUSTOM_PACKAGE_TAB_NAME,
+      gid: CUSTOM_PACKAGE_GID,
+      id: savedRecord.id,
+      timestamp: savedRecord.timestamp,
+      businessName: savedRecord.businessName,
+      contactName: savedRecord.contactName,
+      email: savedRecord.email,
+      phone: savedRecord.phone,
+      website: savedRecord.website || 'N/A',
+      industry: savedRecord.industry || 'Not specified',
+      primaryGoal: savedRecord.primaryGoal || 'Custom Package',
+      selectedServices: savedRecord.selectedServices.join(', '),
+      serviceCount: savedRecord.serviceCount,
+      monthlyTotal: `KSh ${savedRecord.monthlyTotal.toLocaleString()}`,
+      setupFeeTotal: `KSh ${savedRecord.setupFeeTotal.toLocaleString()}`,
+      notes: savedRecord.notes || '',
+      status: savedRecord.status || 'Invoice Generated'
+    };
+
+    try {
+      await fetch(GOOGLE_APPS_SCRIPT_WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(scriptPayload),
+        mode: 'no-cors'
+      });
+    } catch (e) {
+      if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+        const blob = new Blob([JSON.stringify(scriptPayload)], { type: 'text/plain;charset=utf-8' });
+        navigator.sendBeacon(GOOGLE_APPS_SCRIPT_WEBAPP_URL, blob);
+      }
+    }
+
+    // 3. Direct Google Sheets API v4 Append if authenticated
+    let activeToken = token || getAccessToken();
+    const spreadsheetId = TARGET_SPREADSHEET_ID;
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit#gid=${CUSTOM_PACKAGE_GID}`;
+
+    if (activeToken) {
+      const formattedDate = new Date(savedRecord.timestamp).toLocaleString('en-KE', {
+        timeZone: 'Africa/Nairobi',
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      });
+
+      const rowValues = [
+        formattedDate,
+        savedRecord.id || `INV-${Date.now()}`,
+        savedRecord.businessName,
+        savedRecord.contactName,
+        savedRecord.email,
+        savedRecord.phone,
+        savedRecord.website || 'N/A',
+        savedRecord.industry || 'Not specified',
+        savedRecord.primaryGoal || 'Custom Package Builder',
+        savedRecord.selectedServices.join(', '),
+        savedRecord.serviceCount,
+        `KSh ${savedRecord.monthlyTotal.toLocaleString()}`,
+        `KSh ${savedRecord.setupFeeTotal.toLocaleString()}`,
+        savedRecord.notes || '',
+        savedRecord.status || 'Invoice Generated'
+      ];
+
+      // Ensure tab exists or append directly
+      const range = `'${CUSTOM_PACKAGE_TAB_NAME}'!A:O:append?valueInputOption=USER_ENTERED`;
+      const appendRes = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${activeToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            values: [rowValues]
+          })
+        }
+      );
+
+      if (!appendRes.ok) {
+        // Attempt creating header / verifying sheet tab if needed
+        try {
+          await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}:batchUpdate`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${activeToken}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              requests: [
+                {
+                  addSheet: {
+                    properties: {
+                      title: CUSTOM_PACKAGE_TAB_NAME,
+                      sheetId: parseInt(CUSTOM_PACKAGE_GID, 10) || undefined
+                    }
+                  }
+                }
+              ]
+            })
+          });
+
+          // Re-attempt append
+          await fetch(
+            `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}`,
+            {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${activeToken}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                values: [rowValues]
+              })
+            }
+          );
+        } catch {}
+      }
+    }
+
+    return {
+      success: true,
+      sheetUrl
+    };
+  } catch (err: any) {
+    console.error('Error submitting custom package lead:', err);
+    return {
+      success: false,
+      error: err.message || 'Failed to submit custom package lead'
+    };
+  }
+};
+

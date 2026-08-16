@@ -25,7 +25,8 @@ import {
   UserCheck, 
   Sparkles,
   Calendar,
-  Send
+  Send,
+  AlertCircle
 } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -62,6 +63,34 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedLead, setSubmittedLead] = useState<AuditSubmissionRecord | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
+  const [emailError, setEmailError] = useState<string>('');
+  const [phoneError, setPhoneError] = useState<string>('');
+
+  const validateEmail = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) {
+      return 'Email address is required';
+    }
+    if (!trimmed.includes('@')) {
+      return 'Invalid email address: Missing \'@\' symbol';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmed)) {
+      return 'Invalid email address (e.g. you@yourbusiness.com)';
+    }
+    return '';
+  };
+
+  const validatePhone = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) {
+      return 'Phone number is required';
+    }
+    if (trimmed.length < 9) {
+      return 'Phone number must be at least 9 digits';
+    }
+    return '';
+  };
 
   const goalOptions = [
     { id: 'leads', label: 'Generate more leads', icon: Target },
@@ -98,6 +127,19 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
 
   const handleAuditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const emailErr = validateEmail(formData.email);
+    if (emailErr) {
+      setEmailError(emailErr);
+      return;
+    }
+
+    const phoneErr = validatePhone(formData.phone);
+    if (phoneErr) {
+      setPhoneError(phoneErr);
+      return;
+    }
+
     setIsSubmitting(true);
 
     const leadRecord: AuditSubmissionRecord = {
@@ -179,10 +221,10 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
       <main className="flex-1">
         
         {/* Hero Section */}
-        <section className="bg-white border-b border-slate-200/80 pt-10 pb-12 sm:pt-14 sm:pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <section className="bg-white border-b border-slate-200/80 pt-6 pb-8 sm:pt-8 sm:pb-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
           
           {/* Subtle Dotted Pattern Background */}
-          <div className="absolute top-8 right-8 w-40 h-40 opacity-40 pointer-events-none hidden md:block">
+          <div className="absolute top-6 right-8 w-40 h-40 opacity-40 pointer-events-none hidden md:block">
             <div className="grid grid-cols-6 gap-2.5">
               {Array.from({ length: 36 }).map((_, i) => (
                 <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
@@ -190,15 +232,12 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
             </div>
           </div>
 
-          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
             {/* Left Column: Heading & Value Proposition */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-4">
               
               <div>
-                <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block mb-2">
-                  FREE GROWTH AUDIT
-                </span>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-[1.15]">
                   Get a Free <span className="text-blue-600">Growth Audit</span>
                 </h1>
@@ -209,7 +248,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
               </p>
 
               {/* 3 Blue Check Bullets */}
-              <div className="space-y-3 pt-1">
+              <div className="space-y-2.5 pt-0.5">
                 <div className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
@@ -239,16 +278,16 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
               </div>
 
               {/* Mobile Jump to Form Button */}
-              <div className="pt-2 lg:hidden">
+              <div className="pt-1 lg:hidden">
                 <button
                   type="button"
                   onClick={() => {
-                    const formEl = document.getElementById('audit-form-section');
+                    const formEl = document.getElementById('audit-form-start');
                     if (formEl) {
                       formEl.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="w-full py-3 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm"
+                  className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs cursor-pointer"
                 >
                   <span>Fill In Audit Form</span>
                   <ArrowRight className="w-4 h-4" />
@@ -257,61 +296,61 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
 
             </div>
 
-            {/* Right Column: "Your Growth Snapshot" Interactive Preview Card (Hidden on mobile or compact) */}
-            <div className="hidden lg:block lg:col-span-5">
-              <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-lg shadow-blue-500/5 border border-slate-200/90 relative">
+            {/* Right Column: "Your Growth Snapshot" Interactive Preview Card */}
+            <div className="block lg:col-span-5 mt-4 lg:mt-0">
+              <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-100 relative">
                 
                 {/* Header */}
-                <div className="flex items-center justify-between pb-5 border-b border-slate-100">
-                  <h3 className="text-base font-extrabold text-slate-900">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                     Your Growth Snapshot
                   </h3>
-                  <span className="text-[11px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-md">
+                  <span className="text-xs font-semibold text-blue-600 bg-blue-50/90 px-3 py-1 rounded-lg">
                     Sample Audit
                   </span>
                 </div>
 
                 {/* Score & Metrics Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 py-6 items-center">
+                <div className="grid grid-cols-12 gap-3 items-center mb-4">
                   
-                  {/* Semi-Circular Radial Gauge */}
-                  <div className="sm:col-span-6 flex flex-col items-center justify-center relative">
-                    <div className="relative w-36 h-36 flex items-center justify-center">
-                      <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
-                        {/* Background track */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="40"
-                          stroke="#e2e8f0"
-                          strokeWidth="8"
-                          fill="transparent"
-                          strokeDasharray="251.2"
-                          strokeDashoffset="62.8"
+                  {/* Semicircular Radial Gauge - Expanded width & circumference to fit label cleanly */}
+                  <div className="col-span-6 flex flex-col items-center justify-center relative">
+                    <div className="relative w-48 h-36 sm:w-52 sm:h-38 flex items-center justify-center">
+                      <svg viewBox="0 0 220 165" className="w-full h-full">
+                        <defs>
+                          <linearGradient id="gaugeBlueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#0052FF" />
+                            <stop offset="65%" stopColor="#2563EB" />
+                            <stop offset="100%" stopColor="#60A5FA" />
+                          </linearGradient>
+                        </defs>
+                        {/* Background Track */}
+                        <path
+                          d="M 36.4 152.5 A 85 85 0 1 1 183.6 152.5"
+                          fill="none"
+                          stroke="#EBF2FA"
+                          strokeWidth="12"
                           strokeLinecap="round"
                         />
-                        {/* Progress arc (72%) */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="40"
-                          stroke="#2563eb"
-                          strokeWidth="8"
-                          fill="transparent"
-                          strokeDasharray="251.2"
-                          strokeDashoffset="115.5"
+                        {/* Active Progress (72%) */}
+                        <path
+                          d="M 36.4 152.5 A 85 85 0 1 1 183.6 152.5"
+                          fill="none"
+                          stroke="url(#gaugeBlueGrad)"
+                          strokeWidth="12"
                           strokeLinecap="round"
+                          strokeDasharray="256.4 1000"
                         />
                       </svg>
                       
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                        <span className="text-[10px] uppercase font-bold text-slate-400">
+                      <div className="absolute inset-0 flex flex-col items-center justify-center pt-8 sm:pt-9 text-center select-none pointer-events-none">
+                        <span className="text-[11px] sm:text-xs font-semibold text-slate-700 tracking-tight whitespace-nowrap px-1">
                           Overall Growth Score
                         </span>
-                        <div className="text-2xl font-black text-slate-900 leading-none my-0.5">
-                          72<span className="text-xs text-slate-400 font-bold">/100</span>
+                        <div className="text-3xl sm:text-3.5xl font-black text-slate-900 leading-tight my-0.5">
+                          72<span className="text-base font-bold text-slate-700">/100</span>
                         </div>
-                        <span className="text-xs font-extrabold text-emerald-600">
+                        <span className="text-xs sm:text-sm font-bold text-emerald-600">
                           Good
                         </span>
                       </div>
@@ -319,85 +358,107 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                   </div>
 
                   {/* 5 Sub-Scores Breakdown */}
-                  <div className="sm:col-span-6 space-y-2.5">
+                  <div className="col-span-6 space-y-2.5">
                     
-                    <div className="flex items-center justify-between text-xs font-semibold">
-                      <div className="flex items-center gap-2 text-slate-600">
-                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                          <Eye className="w-3 h-3" />
+                    {/* Visibility */}
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2.5 text-slate-900 font-semibold">
+                        <div className="w-6.5 h-6.5 rounded-lg bg-slate-100/90 text-slate-700 flex items-center justify-center shrink-0">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <circle cx="12" cy="11" r="3" />
+                          </svg>
                         </div>
-                        <span>Visibility</span>
+                        <span className="text-slate-900 font-semibold text-xs sm:text-[13px]">Visibility</span>
                       </div>
-                      <span className="font-bold text-slate-900">75/100</span>
+                      <span className="font-semibold text-slate-700 text-xs sm:text-[13px]">75/100</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs font-semibold">
-                      <div className="flex items-center gap-2 text-slate-600">
-                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                          <BarChart2 className="w-3 h-3" />
+                    {/* Traffic */}
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2.5 text-slate-900 font-semibold">
+                        <div className="w-6.5 h-6.5 rounded-lg bg-slate-100/90 text-slate-700 flex items-center justify-center shrink-0">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                            <line x1="18" y1="20" x2="18" y2="10" />
+                            <line x1="12" y1="20" x2="12" y2="4" />
+                            <line x1="6" y1="20" x2="6" y2="14" />
+                            <path d="M3 9l6-5 6 4 6-5" strokeWidth="1.5" />
+                          </svg>
                         </div>
-                        <span>Traffic</span>
+                        <span className="text-slate-900 font-semibold text-xs sm:text-[13px]">Traffic</span>
                       </div>
-                      <span className="font-bold text-slate-900">68/100</span>
+                      <span className="font-semibold text-slate-700 text-xs sm:text-[13px]">68/100</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs font-semibold">
-                      <div className="flex items-center gap-2 text-slate-600">
-                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                          <User className="w-3 h-3" />
+                    {/* Leads */}
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2.5 text-slate-900 font-semibold">
+                        <div className="w-6.5 h-6.5 rounded-lg bg-slate-100/90 text-slate-700 flex items-center justify-center shrink-0">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                          </svg>
                         </div>
-                        <span>Leads</span>
+                        <span className="text-slate-900 font-semibold text-xs sm:text-[13px]">Leads</span>
                       </div>
-                      <span className="font-bold text-slate-900">70/100</span>
+                      <span className="font-semibold text-slate-700 text-xs sm:text-[13px]">70/100</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs font-semibold">
-                      <div className="flex items-center gap-2 text-slate-600">
-                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                          <MousePointerClick className="w-3 h-3" />
+                    {/* Conversion */}
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2.5 text-slate-900 font-semibold">
+                        <div className="w-6.5 h-6.5 rounded-lg bg-slate-100/90 text-slate-700 flex items-center justify-center shrink-0">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M12 8a4 4 0 1 0 3 3" />
+                          </svg>
                         </div>
-                        <span>Conversion</span>
+                        <span className="text-slate-900 font-semibold text-xs sm:text-[13px]">Conversion</span>
                       </div>
-                      <span className="font-bold text-slate-900">65/100</span>
+                      <span className="font-semibold text-slate-700 text-xs sm:text-[13px]">65/100</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs font-semibold">
-                      <div className="flex items-center gap-2 text-slate-600">
-                        <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                          <Users className="w-3 h-3" />
+                    {/* Retention */}
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2.5 text-slate-900 font-semibold">
+                        <div className="w-6.5 h-6.5 rounded-lg bg-slate-100/90 text-slate-700 flex items-center justify-center shrink-0">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M19 8v6M22 11h-6" strokeWidth="1.5" />
+                          </svg>
                         </div>
-                        <span>Retention</span>
+                        <span className="text-slate-900 font-semibold text-xs sm:text-[13px]">Retention</span>
                       </div>
-                      <span className="font-bold text-slate-900">80/100</span>
+                      <span className="font-semibold text-slate-700 text-xs sm:text-[13px]">80/100</span>
                     </div>
 
                   </div>
 
                 </div>
 
-                {/* Bottom Top Opportunity Box */}
-                <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 relative overflow-hidden">
-                  <div className="relative z-10">
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-900 block mb-1">
+                {/* Bottom Top Opportunity Box with Rising Sparkline */}
+                <div className="bg-[#F6F9FD] rounded-2xl p-3.5 sm:p-4 border border-blue-100/60 relative overflow-hidden">
+                  <div className="relative z-10 max-w-[210px] sm:max-w-[240px]">
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 mb-0.5">
                       Top Opportunity
-                    </span>
-                    <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                    </h4>
+                    <p className="text-xs text-slate-600 font-normal leading-relaxed">
                       Improve conversion rate on your website and turn more visitors into customers.
                     </p>
                   </div>
-                  
-                  {/* Subtle Ascending Sparkline Graphic */}
-                  <div className="mt-3 pt-2">
-                    <svg className="w-full h-8 overflow-visible" viewBox="0 0 200 30" fill="none">
+
+                  {/* Upward Growth Zig-Zag Line with Dot */}
+                  <div className="absolute right-2 bottom-0 w-32 sm:w-40 h-18 pointer-events-none">
+                    <svg viewBox="0 0 160 80" fill="none" className="w-full h-full overflow-visible">
                       <path
-                        d="M0 25 L40 22 L70 26 L100 18 L130 20 L160 8 L200 2"
-                        stroke="#2563eb"
+                        d="M 5 75 L 30 55 L 55 68 L 80 40 L 105 46 L 135 18 L 152 4"
+                        stroke="#1D4ED8"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
-                      <circle cx="200" cy="2" r="3.5" fill="#2563eb" className="animate-ping" />
-                      <circle cx="200" cy="2" r="3" fill="#2563eb" />
+                      <circle cx="152" cy="4" r="4.5" fill="#1D4ED8" />
                     </svg>
                   </div>
                 </div>
@@ -409,46 +470,28 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
         </section>
 
         {/* Audit Form Section with Left Form & Right Sticky Sidebar */}
-        <section id="audit-form-start" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <section id="audit-form-start" className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
           
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 pb-4 border-b border-slate-200">
+          <div className="mb-6 pb-3 border-b border-slate-200">
             <div>
-              <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 block mb-1">
-                FREE SME AUDIT & STRATEGY
-              </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 Tell us about your business
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
                 Submit your details to receive your customized growth audit and schedule your 1-on-1 Discovery Call.
               </p>
-            </div>
-
-            {/* 100% Secure Badge */}
-            <div className="inline-flex items-center gap-3 bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-2xs self-start md:self-auto">
-              <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                <Lock className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="text-xs font-bold text-slate-900 block leading-tight">
-                  100% Secure
-                </span>
-                <span className="text-[10px] text-slate-500">
-                  Your information is safe
-                </span>
-              </div>
             </div>
           </div>
 
           {/* Form Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
             
             {/* Left Column: Form Elements */}
-            <div className="lg:col-span-8 bg-white rounded-2xl p-6 sm:p-8 shadow-xs border border-slate-200">
+            <div className="lg:col-span-8 bg-white rounded-2xl p-5 sm:p-7 shadow-xs border border-slate-200">
               
               {/* Unified 1-Step Audit Form */}
-              <form onSubmit={handleAuditSubmit} className="space-y-6">
+              <form onSubmit={handleAuditSubmit} className="space-y-4 sm:space-y-5">
                 
                 {/* Row 1: Full Name + Business Name */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -502,34 +545,72 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                           <Mail className="w-4 h-4" />
                         </div>
                         <input
-                          type="email"
+                          type="text"
                           required
                           placeholder="you@yourbusiness.com"
                           value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                          onChange={(e) => {
+                            const val = e.target.value.trim();
+                            setFormData({ ...formData, email: val });
+                            if (emailError) {
+                              setEmailError(validateEmail(val));
+                            }
+                          }}
+                          onBlur={() => {
+                            if (formData.email) {
+                              setEmailError(validateEmail(formData.email));
+                            }
+                          }}
+                          className={`w-full pl-10 pr-3.5 py-2.5 rounded-lg border ${emailError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'} text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none transition-all`}
                         />
                       </div>
+                      {emailError && (
+                        <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                          <span>{emailError}</span>
+                        </p>
+                      )}
                     </div>
 
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                         Phone Number <span className="text-red-500">*</span>
                       </label>
-                      <div className="flex rounded-lg border border-slate-300 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500">
-                        <div className="flex items-center gap-1 bg-slate-50 px-3 border-r border-slate-300 text-xs font-semibold text-slate-700 shrink-0">
-                          <span>🇰🇪</span>
+                      <div className={`flex rounded-lg border ${phoneError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500'} overflow-hidden transition-all bg-white`}>
+                        <div className="flex items-center gap-1.5 bg-slate-50 px-3 border-r border-slate-300 text-xs font-semibold text-slate-700 shrink-0 select-none">
+                          <span role="img" aria-label="Kenya Flag">🇰🇪</span>
                           <span>{formData.phoneCode}</span>
                         </div>
                         <input
                           type="tel"
                           required
-                          placeholder="712 345 678"
+                          inputMode="numeric"
+                          maxLength={10}
+                          placeholder="700000000"
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          onChange={(e) => {
+                            const numericOnly = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+                            setFormData({ ...formData, phone: numericOnly });
+                            if (phoneError) setPhoneError('');
+                          }}
+                          onBlur={() => {
+                            if (formData.phone) {
+                              setPhoneError(validatePhone(formData.phone));
+                            }
+                          }}
                           className="w-full px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
                         />
                       </div>
+                      {phoneError ? (
+                        <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                          <span>{phoneError}</span>
+                        </p>
+                      ) : (
+                        <p className="text-[10px] text-slate-400 mt-1">
+                          Numbers only (up to 10 digits, e.g. 712345678)
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -801,19 +882,6 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                     </div>
                   </div>
 
-                </div>
-              </div>
-
-              {/* Card 2: Time Estimate */}
-              <div className="bg-white rounded-2xl p-5 shadow-xs border border-slate-200 flex items-start gap-3.5">
-                <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
-                  <Clock className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-slate-900">Takes less than 2 minutes</h4>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Get your personalized audit report within 24–48 hours.
-                  </p>
                 </div>
               </div>
 

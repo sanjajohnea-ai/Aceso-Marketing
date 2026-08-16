@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { MetricsBar } from './components/MetricsBar';
 import { BrandLogos } from './components/BrandLogos';
 import { Solutions } from './components/Solutions';
 import { Packages } from './components/Packages';
@@ -16,6 +15,26 @@ import { SolutionDetailsModal } from './components/SolutionDetailsModal';
 import { LeadDetailsModal } from './components/LeadDetailsModal';
 import { PackageItem, SolutionItem } from './types';
 
+// SEO Page Metadata Configuration
+const pageMetadata = {
+  home: {
+    title: 'Aceso Solutions | Digital Marketing, Ads & Automation for SMEs',
+    description: 'Digital solutions that drive real growth for small and medium-sized businesses. Essential, Growth & Business packages with social media, paid ads, and automation.'
+  },
+  'custom-package': {
+    title: 'Custom Package Builder | Aceso Solutions',
+    description: 'Build your custom digital marketing package with Aceso Solutions. Select social media management, Meta & TikTok ads, web design, SEO, and WhatsApp automation.'
+  },
+  'free-audit': {
+    title: 'Free Digital Growth Audit | Aceso Solutions',
+    description: 'Request a free digital marketing and customer acquisition audit for your business. Uncover quick wins, fix funnel leaks, and accelerate revenue.'
+  },
+  services: {
+    title: 'Digital Marketing & Growth Services | Aceso Solutions',
+    description: 'Comprehensive digital solutions for SMEs: Customer Acquisition, Retention & Reactivation, and Revenue Automation systems.'
+  }
+};
+
 export default function App() {
   const [currentView, setCurrentView] = useState<'home' | 'custom-package' | 'free-audit' | 'services'>('home');
   const [activeSection, setActiveSection] = useState<string>('home');
@@ -24,6 +43,28 @@ export default function App() {
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
   const [selectedSolution, setSelectedSolution] = useState<SolutionItem | null>(null);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
+
+  // Dynamic SEO meta tags update based on current page/view
+  useEffect(() => {
+    const meta = pageMetadata[currentView] || pageMetadata.home;
+    document.title = meta.title;
+
+    // Update meta description tag
+    let descTag = document.querySelector('meta[name="description"]');
+    if (descTag) {
+      descTag.setAttribute('content', meta.description);
+    }
+
+    // Update OpenGraph Title & Description
+    let ogTitleTag = document.querySelector('meta[property="og:title"]');
+    if (ogTitleTag) {
+      ogTitleTag.setAttribute('content', meta.title);
+    }
+    let ogDescTag = document.querySelector('meta[property="og:description"]');
+    if (ogDescTag) {
+      ogDescTag.setAttribute('content', meta.description);
+    }
+  }, [currentView]);
 
   // Smooth scroll handler
   const scrollToSection = (sectionId: string) => {
@@ -121,6 +162,7 @@ export default function App() {
       <CustomPackagePage 
         onBackToHome={handleBackToHome}
         onRequestAudit={handleRequestAudit}
+        onNavigate={scrollToSection}
       />
     );
   }
@@ -174,9 +216,6 @@ export default function App() {
           onViewPackages={() => scrollToSection('packages')}
           onOpenLeadModal={() => setIsLeadModalOpen(true)}
         />
-
-        {/* 3 Metrics Proof Bar */}
-        <MetricsBar />
 
         {/* Brand Logos */}
         <BrandLogos />

@@ -15,7 +15,7 @@ export const processSteps: ProcessStep[] = [
     title: 'Request Free Audit',
     description: 'Tell us about your business and your goals.',
     color: 'text-blue-600',
-    bgColor: 'bg-blue-600',
+    bgColor: 'bg-blue-50',
     iconType: 'audit',
   },
   {
@@ -23,7 +23,7 @@ export const processSteps: ProcessStep[] = [
     title: 'We Analyze',
     description: 'We audit your current marketing and identify growth opportunities.',
     color: 'text-emerald-600',
-    bgColor: 'bg-emerald-500',
+    bgColor: 'bg-emerald-50',
     iconType: 'analyze',
   },
   {
@@ -31,7 +31,7 @@ export const processSteps: ProcessStep[] = [
     title: 'Get Recommendations',
     description: 'We share a clear, tailored plan to help you grow.',
     color: 'text-purple-600',
-    bgColor: 'bg-purple-600',
+    bgColor: 'bg-purple-50',
     iconType: 'recommend',
   },
   {
@@ -39,7 +39,7 @@ export const processSteps: ProcessStep[] = [
     title: 'We Implement',
     description: 'Our team executes the plan and sets everything up.',
     color: 'text-amber-600',
-    bgColor: 'bg-amber-500',
+    bgColor: 'bg-amber-50',
     iconType: 'implement',
   },
   {
@@ -47,44 +47,43 @@ export const processSteps: ProcessStep[] = [
     title: 'You Grow',
     description: 'We monitor, optimize, and help you scale.',
     color: 'text-blue-600',
-    bgColor: 'bg-blue-600',
+    bgColor: 'bg-blue-50',
     iconType: 'grow',
   },
 ];
 
 export const Process: React.FC = () => {
   return (
-    <section id="how-it-works" className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="how-it-works" className="py-6 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       
       {/* Section Header */}
-      <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-        <p className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">
+      <div className="text-center mb-5 sm:mb-8 lg:mb-10">
+        <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-blue-600 mb-1.5 sm:mb-2">
           OUR PROCESS
         </p>
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+        <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
           A simple process. Real results.
         </h2>
+        <p className="text-slate-600 text-xs sm:text-sm lg:text-base max-w-2xl mx-auto mt-1.5 sm:mt-2 leading-relaxed">
+          From first audit to systematic execution, here is how we partner with your business to unlock predictable revenue growth.
+        </p>
       </div>
 
-      {/* 5-Step Process Stepper */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-4 relative">
+      {/* 5-Step Process Stepper - Optimized for minimal mobile scroll with a clean responsive grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-4 relative">
         {processSteps.map((step, idx) => {
+          const isLastOnMobile = idx === processSteps.length - 1;
           return (
             <div 
               key={idx} 
-              className="flex sm:flex-col items-center sm:items-center text-left sm:text-center p-3.5 sm:p-0 bg-white sm:bg-transparent rounded-xl sm:rounded-none border sm:border-0 border-slate-100 shadow-2xs sm:shadow-none gap-4 sm:gap-0 relative group"
+              className={`flex flex-col items-center text-center p-3.5 sm:p-4 bg-white rounded-2xl border border-slate-100/90 shadow-xs hover:shadow-md transition-all group ${
+                isLastOnMobile ? 'col-span-2 sm:col-span-1' : ''
+              }`}
             >
               
-              {/* Top Numbered Pill + Icon Circle Container */}
-              <div className="relative sm:mb-5 flex items-center justify-center shrink-0">
-                
-                {/* Number Badge */}
-                <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full ${step.bgColor} text-white font-extrabold text-[11px] sm:text-xs flex items-center justify-center shadow-md ring-4 ring-white z-10`}>
-                  {step.step}
-                </div>
-
-                {/* Subdued Icon Circle behind or underneath */}
-                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-slate-50 border border-slate-200/80 flex items-center justify-center text-slate-700 ml-1.5 sm:ml-2 group-hover:scale-105 transition-transform">
+              {/* Icon Container (Numbers removed, leaving refined branded icons) */}
+              <div className="relative mb-2.5 sm:mb-4 flex items-center justify-center">
+                <div className={`w-11 h-11 sm:w-13 sm:h-13 rounded-2xl ${step.bgColor} border border-slate-100 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-xs`}>
                   {step.iconType === 'audit' && <ClipboardCheck className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />}
                   {step.iconType === 'analyze' && <Search className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />}
                   {step.iconType === 'recommend' && <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />}
@@ -92,9 +91,9 @@ export const Process: React.FC = () => {
                   {step.iconType === 'grow' && <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />}
                 </div>
 
-                {/* Dotted connector arrow between steps (hidden on mobile and last item) */}
+                {/* Dotted connector arrow between steps on desktop */}
                 {idx < processSteps.length - 1 && (
-                  <div className="hidden lg:flex items-center absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 w-12 z-0">
+                  <div className="hidden lg:flex items-center absolute left-[calc(100%+10px)] top-1/2 -translate-y-1/2 w-8 xl:w-12 z-0">
                     <div className="w-full border-t-2 border-dotted border-slate-300" />
                     <div className="w-1.5 h-1.5 border-t-2 border-r-2 border-slate-400 rotate-45 -ml-1" />
                   </div>
@@ -102,14 +101,14 @@ export const Process: React.FC = () => {
               </div>
 
               {/* Step Copy */}
-              <div className="flex-1 sm:flex-none">
+              <div>
                 {/* Step Title */}
-                <h3 className="font-bold text-slate-900 text-sm sm:text-base mb-0.5 sm:mb-2">
+                <h3 className="font-bold text-slate-900 text-xs sm:text-sm lg:text-base mb-1 leading-snug">
                   {step.title}
                 </h3>
 
                 {/* Step Description */}
-                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-[200px]">
+                <p className="text-slate-600 text-[11px] sm:text-xs lg:text-sm leading-relaxed max-w-[200px]">
                   {step.description}
                 </p>
               </div>

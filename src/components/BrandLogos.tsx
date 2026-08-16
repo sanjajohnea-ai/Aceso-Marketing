@@ -2,13 +2,13 @@ import React from 'react';
 
 export const BrandLogos: React.FC = () => {
   return (
-    <section className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 border-y border-slate-100 bg-white/60">
+    <section className="py-3.5 sm:py-7 px-4 sm:px-6 lg:px-8 border-y border-slate-100 bg-white/60">
       <div className="max-w-6xl mx-auto">
-        <p className="text-center text-[11px] sm:text-xs font-bold uppercase tracking-widest text-blue-600 mb-6 sm:mb-8">
+        <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-blue-600 mb-2.5 sm:mb-5">
           BRANDS & PLATFORMS WE WORK WITH
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 md:gap-12 lg:gap-16 opacity-90 grayscale-[20%] hover:grayscale-0 transition-all duration-300">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-10 md:gap-12 lg:gap-16 opacity-90 grayscale-[20%] hover:grayscale-0 transition-all duration-300">
           {/* Meta */}
           <div className="flex items-center gap-2 text-slate-800 hover:text-blue-600 transition-colors">
             <svg className="w-6 h-6 fill-current text-[#0081FB]" viewBox="0 0 24 24">

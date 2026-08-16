@@ -149,72 +149,72 @@ export const Hero: React.FC<HeroProps> = ({
     : '';
 
   return (
-    <section className="relative pt-4 sm:pt-10 pb-12 sm:pb-16 lg:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+    <section className="relative pt-3 sm:pt-6 pb-4 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
       {/* Subtle background decoration grid */}
-      <div className="absolute top-10 right-0 w-[320px] sm:w-[550px] h-[320px] sm:h-[550px] bg-gradient-to-bl from-blue-50/70 via-indigo-50/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-6 right-0 w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] bg-gradient-to-bl from-blue-50/70 via-indigo-50/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-8 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-8 items-center">
         
         {/* Left Column: Hero Copy & Value Proposition */}
         <div className="lg:col-span-6 flex flex-col items-start text-left">
           
           {/* Main Title */}
-          <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-slate-900 leading-[1.15] sm:leading-[1.12] tracking-tight mb-4 sm:mb-5">
+          <h1 className="text-2xl sm:text-5xl lg:text-[50px] font-extrabold text-slate-900 leading-[1.18] sm:leading-[1.12] tracking-tight mb-2 sm:mb-4">
             Digital solutions <br className="hidden sm:inline" />
             that drive <span className="text-blue-600">real growth</span>
           </h1>
 
           {/* Subheading */}
-          <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 max-w-xl">
+          <p className="text-xs sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3.5 sm:mb-6 max-w-xl">
             We help small and medium-sized businesses attract more customers, reactivate existing ones, and automate their marketing for sustainable growth.
           </p>
 
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto mb-8 sm:mb-10">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 w-full sm:w-auto mb-3.5 sm:mb-6">
             <button
               id="hero-request-audit-btn"
               onClick={onRequestAudit}
-              className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm sm:text-base transition-all shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 active:scale-[0.99] cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-base transition-all shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 active:scale-[0.99] cursor-pointer"
             >
               <span>Request Free Growth Audit</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
             </button>
 
             <button
               id="hero-view-packages-btn"
               onClick={onViewPackages}
-              className="inline-flex items-center justify-center px-6 sm:px-7 py-3.5 rounded-lg bg-white border border-blue-600 text-blue-600 hover:bg-blue-50/70 font-semibold text-sm sm:text-base transition-all shadow-xs active:scale-[0.99] cursor-pointer"
+              className="inline-flex items-center justify-center px-5 sm:px-7 py-2.5 sm:py-3 rounded-lg bg-white border border-blue-600 text-blue-600 hover:bg-blue-50/70 font-semibold text-xs sm:text-base transition-all shadow-xs active:scale-[0.99] cursor-pointer"
             >
               View Our Packages
             </button>
           </div>
 
           {/* 4 Trust & Guarantee Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 border-t border-slate-100 w-full text-slate-700 text-[11px] sm:text-xs font-semibold">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-2.5 sm:pt-3.5 border-t border-slate-100 w-full text-slate-700 text-[10px] sm:text-xs font-semibold">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                <Target className="w-3 h-3 sm:w-4 sm:h-4" />
               </div>
               <span className="leading-tight">Strategy-first approach</span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
               </div>
               <span className="leading-tight">Data-driven results</span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
               </div>
               <span className="leading-tight">Transparent reporting</span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <FileCheck2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+                <FileCheck2 className="w-3 h-3 sm:w-4 sm:h-4" />
               </div>
               <span className="leading-tight">No long-term contracts</span>
             </div>
@@ -223,17 +223,17 @@ export const Hero: React.FC<HeroProps> = ({
         </div>
 
         {/* Right Column: Interactive Dashboard & Floating Lead Component */}
-        <div className="lg:col-span-6 relative flex justify-center lg:justify-end mt-4 lg:mt-0">
+        <div className="lg:col-span-6 relative flex justify-center lg:justify-end mt-2 sm:mt-4 lg:mt-0">
           
           {/* Subtle dot matrix background */}
           <div className="absolute -top-6 -right-6 w-36 sm:w-48 h-36 sm:h-48 opacity-30 bg-[radial-gradient(#2563eb_1.5px,transparent_1.5px)] [background-size:12px_12px] -z-10" />
 
           {/* Main Growth Overview Card */}
-          <div className="w-full max-w-[490px] bg-white rounded-2xl p-4 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 relative">
+          <div className="w-full max-w-[490px] bg-white rounded-2xl p-3 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 relative">
             
             {/* Top Bar of Card */}
-            <div className="flex items-center justify-between mb-4 sm:mb-5">
-              <h2 className="text-sm sm:text-base lg:text-lg font-bold text-slate-900">
+            <div className="flex items-center justify-between mb-2.5 sm:mb-5">
+              <h2 className="text-xs sm:text-base lg:text-lg font-bold text-slate-900">
                 Growth Overview
               </h2>
 
@@ -241,10 +241,10 @@ export const Hero: React.FC<HeroProps> = ({
               <div className="relative">
                 <button
                   onClick={() => setShowTimeframeDropdown(!showTimeframeDropdown)}
-                  className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer"
+                  className="flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg transition-colors cursor-pointer"
                 >
                   <span>{currentData.label}</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                  <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-500" />
                 </button>
 
                 {showTimeframeDropdown && (
@@ -305,18 +305,18 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
 
             {/* Interactive SVG Chart */}
-            <div className="relative pt-2 pb-1">
+            <div className="relative pt-1 sm:pt-2 pb-1">
               
               {/* Peak Value Badge */}
               <div 
-                className="absolute top-0 right-4 bg-blue-600 text-white font-bold text-[10px] sm:text-[11px] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-md flex items-center gap-1 z-10 animate-bounce"
+                className="absolute top-0 right-4 bg-blue-600 text-white font-bold text-[9px] sm:text-[11px] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-md flex items-center gap-1 z-10 animate-bounce"
                 style={{ animationDuration: '3s' }}
               >
                 <span>{currentData.peakVal}</span>
               </div>
 
               {/* SVG Area and Line */}
-              <div className="relative h-[130px] sm:h-[150px] w-full">
+              <div className="relative h-[110px] sm:h-[150px] w-full">
                 {/* Y Axis Grid lines */}
                 <div className="absolute inset-0 flex flex-col justify-between text-[9px] sm:text-[10px] text-slate-400 font-medium pointer-events-none select-none">
                   <div className="flex items-center w-full">
@@ -383,7 +383,7 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* X Axis Labels */}
-              <div className="flex justify-between pl-6 sm:pl-8 pr-2 mt-1 text-[10px] sm:text-[11px] text-slate-500 font-medium select-none">
+              <div className="flex justify-between pl-6 sm:pl-8 pr-2 mt-1 text-[9px] sm:text-[11px] text-slate-500 font-medium select-none">
                 {currentData.points.map((p, idx) => (
                   <span 
                     key={idx} 
@@ -403,26 +403,26 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Floating Card: "New Lead - Sarah Wanjiku" (Positioned cleanly on bottom right) */}
           <div 
             onClick={onOpenLeadModal}
-            className="absolute -bottom-5 sm:-bottom-8 right-2 sm:right-2 w-[185px] sm:w-[230px] bg-white rounded-xl p-2.5 sm:p-4 shadow-xl shadow-blue-900/15 border border-slate-100 z-20 hover:scale-[1.03] transition-transform duration-200 cursor-pointer group"
+            className="absolute -bottom-3 sm:-bottom-8 right-2 sm:right-2 w-[160px] sm:w-[230px] bg-white rounded-xl p-2 sm:p-4 shadow-xl shadow-blue-900/15 border border-slate-100 z-20 hover:scale-[1.03] transition-transform duration-200 cursor-pointer group"
           >
             {/* Header */}
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500">New Lead</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="flex items-center justify-between mb-0.5 sm:mb-1">
+              <span className="text-[9px] sm:text-[11px] font-semibold text-slate-500">New Lead</span>
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
 
             {/* Lead Name & Info */}
-            <div className="mb-1.5 sm:mb-2">
-              <h3 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug group-hover:text-blue-600 transition-colors">
+            <div className="mb-1 sm:mb-2">
+              <h3 className="font-bold text-slate-900 text-[11px] sm:text-sm leading-snug group-hover:text-blue-600 transition-colors">
                 Sarah Wanjiku
               </h3>
-              <p className="text-[10px] sm:text-[11px] text-slate-500 truncate">
+              <p className="text-[9px] sm:text-[11px] text-slate-500 truncate">
                 Consultation Enquiry
               </p>
             </div>
 
             {/* WhatsApp Badge */}
-            <div className="inline-flex items-center gap-1 sm:gap-1.5 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md bg-[#25D366]/10 text-[#128C7E] font-semibold text-[10px] sm:text-[11px] mb-2 sm:mb-3">
+            <div className="inline-flex items-center gap-1 sm:gap-1.5 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md bg-[#25D366]/10 text-[#128C7E] font-semibold text-[9px] sm:text-[11px] mb-1.5 sm:mb-3">
               <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-[#25D366] flex items-center justify-center text-white">
                 <MessageCircle className="w-1.5 h-1.5 sm:w-2 sm:h-2 fill-current" />
               </div>
@@ -448,7 +448,7 @@ export const Hero: React.FC<HeroProps> = ({
                 e.stopPropagation();
                 onOpenLeadModal();
               }}
-              className="w-full py-1 sm:py-1.5 px-2.5 sm:px-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[11px] sm:text-xs rounded-lg transition-colors flex items-center justify-center gap-1 shadow-xs cursor-pointer"
+              className="w-full py-1 sm:py-1.5 px-2 sm:px-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[10px] sm:text-xs rounded-lg transition-colors flex items-center justify-center gap-1 shadow-xs cursor-pointer"
             >
               <span>View Lead</span>
               <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3" />

@@ -96,19 +96,13 @@ export const SolutionDetailsModal: React.FC<SolutionDetailsModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-5 sm:p-6 flex items-center justify-end gap-3">
-          <button
-            onClick={onClose}
-            className="px-4 py-2.5 rounded-lg border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-100 transition-colors cursor-pointer"
-          >
-            Close
-          </button>
+        <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 p-5 sm:p-6 flex items-center justify-end">
           <button
             onClick={() => {
               onRequestAuditForSolution(solution.title);
               onClose();
             }}
-            className="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>Request Audit for {solution.title}</span>
             <ArrowRight className="w-4 h-4" />
