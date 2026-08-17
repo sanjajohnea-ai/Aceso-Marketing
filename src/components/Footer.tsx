@@ -86,18 +86,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('packages')} 
+                  onClick={() => onNavigate('pricing')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Packages & Pricing
+                  Plans & Pricing
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('how-it-works')} 
+                  onClick={() => onNavigate('contact')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  How It Works
+                  Contact Us
                 </button>
               </li>
             </ul>
@@ -106,39 +106,39 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Solutions Links (lg: 3 cols) */}
           <div className="lg:col-span-3 lg:border-r lg:border-[#0d2244] lg:pr-6">
             <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-6">
-              SOLUTIONS
+              SERVICES & PRICING
             </h4>
             <ul className="space-y-4 text-sm">
               <li>
                 <button 
-                  onClick={() => onNavigate('services')} 
+                  onClick={() => onNavigate('pricing-web')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Customer Acquisition
+                  Web Design Pricing
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('services')} 
+                  onClick={() => onNavigate('pricing-seo')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Customer Reactivation
+                  SEO Pricing
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('services')} 
+                  onClick={() => onNavigate('pricing-social')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Marketing Automation
+                  Social Media Pricing
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('services')} 
+                  onClick={() => onNavigate('pricing-ppc')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Paid Advertising
+                  PPC Marketing Pricing
                 </button>
               </li>
             </ul>

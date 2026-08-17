@@ -58,11 +58,8 @@ export const Process: React.FC = () => {
       
       {/* Section Header */}
       <div className="text-center mb-5 sm:mb-8 lg:mb-10">
-        <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-blue-600 mb-1.5 sm:mb-2">
+        <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight uppercase">
           OUR PROCESS
-        </p>
-        <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-          A simple process. Real results.
         </h2>
         <p className="text-slate-600 text-xs sm:text-sm lg:text-base max-w-2xl mx-auto mt-1.5 sm:mt-2 leading-relaxed">
           From first audit to systematic execution, here is how we partner with your business to unlock predictable revenue growth.

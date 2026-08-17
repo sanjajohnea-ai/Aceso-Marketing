@@ -876,30 +876,30 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
 
               </div>
 
-              {/* Right Column: "Your Selected Package" Summary Sidebar (4 cols on desktop) */}
-              <div className="lg:col-span-4 space-y-5">
+              {/* Right Column: "Your Selected Package" Summary Sidebar (4 cols on desktop - sticky on scroll) */}
+              <div className="lg:col-span-4 lg:sticky lg:top-24 self-start space-y-5">
                 
                 {/* Selected Package Card */}
-                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-sm shadow-slate-200/50 hover:shadow-md transition-shadow">
                   
                   <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-lg font-black text-slate-900">
+                    <h2 className="text-lg font-black text-slate-900 tracking-tight">
                       Your Selected Package
                     </h2>
-                    <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
+                    <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100/80">
                       {selectedServices.length} {selectedServices.length === 1 ? 'service' : 'services'}
                     </span>
                   </div>
 
                   {/* Selected Services Itemized List */}
-                  <div className="space-y-3 mb-6 max-h-[300px] overflow-y-auto pr-1">
+                  <div className="space-y-2.5 mb-5 max-h-[340px] overflow-y-auto pr-1">
                     {selectedServices.length === 0 ? (
                       <div className="text-center py-8 text-xs text-slate-400 border border-dashed border-slate-200 rounded-xl px-4">
                         No services selected yet. Pick services on the left to calculate your monthly investment.
                       </div>
                     ) : (
                       selectedServices.map((srv) => (
-                        <div key={srv.id} className="flex items-center justify-between gap-3 text-xs sm:text-sm bg-slate-50/70 p-2.5 rounded-xl border border-slate-100 group">
+                        <div key={srv.id} className="flex items-center justify-between gap-3 text-xs sm:text-sm bg-slate-50/80 hover:bg-slate-50 p-2.5 rounded-xl border border-slate-100 group transition-colors">
                           <div className="flex items-center gap-2.5 min-w-0">
                             {renderServiceIcon(srv.iconType)}
                             <div className="min-w-0">
@@ -914,7 +914,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                           <button
                             type="button"
                             onClick={() => toggleService(srv.id)}
-                            className="text-slate-400 hover:text-slate-700 p-1 rounded-lg border border-slate-200/80 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
+                            className="text-slate-400 hover:text-red-500 hover:bg-red-50 p-1 rounded-lg border border-slate-200/80 transition-colors cursor-pointer shrink-0"
                             title="Remove service"
                           >
                             <X className="w-3.5 h-3.5" />
@@ -925,12 +925,12 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                   </div>
 
                   {/* Monthly Total */}
-                  <div className="pt-4 border-t border-slate-100 mb-4 flex items-baseline justify-between">
+                  <div className="pt-4 border-t border-slate-100 mb-5 flex items-baseline justify-between">
                     <span className="text-sm font-bold text-slate-900">
                       Monthly Total
                     </span>
                     <div className="text-right">
-                      <span className="text-2xl font-black text-slate-900">
+                      <span className="text-2xl font-black text-slate-900 tracking-tight">
                         KSh {monthlyTotal.toLocaleString()}
                       </span>
                       <span className="text-xs font-normal text-slate-500 ml-1">/mo</span>
@@ -942,7 +942,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                     type="button"
                     disabled={selectedServices.length === 0}
                     onClick={() => setCurrentStep(2)}
-                    className="w-full py-3.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 text-white font-bold text-sm transition-all shadow-md shadow-blue-500/10 flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                    className="w-full py-3.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 text-white font-bold text-sm transition-all shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                   >
                     <span>Get My Custom Quote</span>
                     <ArrowRight className="w-4 h-4" />

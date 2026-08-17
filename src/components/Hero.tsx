@@ -20,13 +20,11 @@ import { motion, AnimatePresence } from 'motion/react';
 
 interface HeroProps {
   onRequestAudit: () => void;
-  onViewPackages: () => void;
   onOpenLeadModal: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
   onRequestAudit,
-  onViewPackages,
   onOpenLeadModal,
 }) => {
   const [timeframe, setTimeframe] = useState<'30d' | '3m' | '6m' | '1y'>('6m');
@@ -165,32 +163,12 @@ export const Hero: React.FC<HeroProps> = ({
           </h1>
 
           {/* Subheading */}
-          <p className="text-xs sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-3.5 sm:mb-6 max-w-xl">
+          <p className="text-xs sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 max-w-xl">
             We help small and medium-sized businesses attract more customers, reactivate existing ones, and automate their marketing for sustainable growth.
           </p>
 
-          {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 w-full sm:w-auto mb-3.5 sm:mb-6">
-            <button
-              id="hero-request-audit-btn"
-              onClick={onRequestAudit}
-              className="inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-base transition-all shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 active:scale-[0.99] cursor-pointer"
-            >
-              <span>Request Free Growth Audit</span>
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
-            </button>
-
-            <button
-              id="hero-view-packages-btn"
-              onClick={onViewPackages}
-              className="inline-flex items-center justify-center px-5 sm:px-7 py-2.5 sm:py-3 rounded-lg bg-white border border-blue-600 text-blue-600 hover:bg-blue-50/70 font-semibold text-xs sm:text-base transition-all shadow-xs active:scale-[0.99] cursor-pointer"
-            >
-              View Our Packages
-            </button>
-          </div>
-
           {/* 4 Trust & Guarantee Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-2.5 sm:pt-3.5 border-t border-slate-100 w-full text-slate-700 text-[10px] sm:text-xs font-semibold">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-slate-100 w-full text-slate-700 text-[10px] sm:text-xs font-semibold">
             <div className="flex items-center gap-1.5 sm:gap-2">
               <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
                 <Target className="w-3 h-3 sm:w-4 sm:h-4" />

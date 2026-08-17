@@ -111,7 +111,8 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onSuccessSubmit }) =
   };
 
   return (
-    <section id="audit" className="py-6 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="audit" className="py-6 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto scroll-mt-20 relative">
+      <div id="contact" className="absolute -top-24 left-0 pointer-events-none" />
       <div className="bg-[#0B132B] rounded-2xl sm:rounded-3xl p-4 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden text-white border border-slate-800">
         
         {/* Ambient subtle glow background */}

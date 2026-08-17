@@ -3,13 +3,15 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BrandLogos } from './components/BrandLogos';
 import { Solutions } from './components/Solutions';
-import { Packages } from './components/Packages';
 import { Process } from './components/Process';
+import { HomeFAQ } from './components/HomeFAQ';
 import { AuditSection } from './components/AuditSection';
 import { Footer } from './components/Footer';
 import { CustomPackagePage } from './components/CustomPackagePage';
 import { FreeAuditPage } from './components/FreeAuditPage';
 import { ServicesPage } from './components/ServicesPage';
+import { PricingPage } from './components/PricingPage';
+import { ContactPage } from './components/ContactPage';
 import { PackageDetailsModal } from './components/PackageDetailsModal';
 import { SolutionDetailsModal } from './components/SolutionDetailsModal';
 import { LeadDetailsModal } from './components/LeadDetailsModal';
@@ -32,12 +34,21 @@ const pageMetadata = {
   services: {
     title: 'Digital Marketing & Growth Services | Aceso Solutions',
     description: 'Comprehensive digital solutions for SMEs: Customer Acquisition, Retention & Reactivation, and Revenue Automation systems.'
+  },
+  pricing: {
+    title: 'Transparent Pricing & Plans | Aceso Solutions',
+    description: 'Transparent pricing for Web Design, Social Media Marketing, SEO, and PPC Advertising designed for small and growing enterprises.'
+  },
+  contact: {
+    title: 'Contact Us | Aceso Solutions',
+    description: 'Get in touch with Aceso Solutions. Discuss your digital marketing, SEO, paid ads, web design, and automation goals with our growth strategy team.'
   }
 };
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'custom-package' | 'free-audit' | 'services'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'custom-package' | 'free-audit' | 'services' | 'pricing' | 'contact'>('home');
   const [activeSection, setActiveSection] = useState<string>('home');
+  const [pricingCategory, setPricingCategory] = useState<'all' | 'web' | 'social' | 'seo' | 'ppc'>('all');
   
   // Modal states
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
@@ -66,10 +77,36 @@ export default function App() {
     }
   }, [currentView]);
 
-  // Smooth scroll handler
+  // Smooth scroll & view navigation handler
   const scrollToSection = (sectionId: string) => {
     if (sectionId === 'services') {
       setCurrentView('services');
+      setActiveSection('services');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (sectionId === 'pricing' || sectionId === 'pricing-web' || sectionId === 'pricing-social' || sectionId === 'pricing-seo' || sectionId === 'pricing-ppc') {
+      if (sectionId === 'pricing-web') {
+        setPricingCategory('web');
+      } else if (sectionId === 'pricing-social') {
+        setPricingCategory('social');
+      } else if (sectionId === 'pricing-seo') {
+        setPricingCategory('seo');
+      } else if (sectionId === 'pricing-ppc') {
+        setPricingCategory('ppc');
+      } else {
+        setPricingCategory('all');
+      }
+      setCurrentView('pricing');
+      setActiveSection(sectionId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (sectionId === 'contact') {
+      setCurrentView('contact');
+      setActiveSection('contact');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -90,7 +127,8 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    const element = document.getElementById(sectionId);
+    const targetId = sectionId === 'contact' ? 'audit' : sectionId;
+    const element = document.getElementById(targetId) || document.getElementById(sectionId);
     if (element) {
       const navOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
@@ -102,12 +140,12 @@ export default function App() {
     }
   };
 
-  // Scroll spy to update active navbar item
+  // Scroll spy to update active navbar item on home view
   useEffect(() => {
     if (currentView !== 'home') return;
 
     const handleScroll = () => {
-      const sections = ['services', 'packages', 'how-it-works', 'audit'];
+      const sections = ['how-it-works', 'audit'];
       const scrollPosition = window.scrollY + 200;
 
       if (window.scrollY < 200) {
@@ -121,7 +159,7 @@ export default function App() {
           const top = el.offsetTop;
           const height = el.offsetHeight;
           if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
+            setActiveSection(section === 'audit' ? 'contact' : section);
             break;
           }
         }
@@ -139,6 +177,7 @@ export default function App() {
 
   const handleBackToHome = () => {
     setCurrentView('home');
+    setActiveSection('home');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -184,16 +223,36 @@ export default function App() {
       <ServicesPage 
         onBackToHome={handleBackToHome}
         onRequestAudit={handleRequestAudit}
+        onOpenCustomBuilder={handleOpenCustomPackagePage}
         onNavigate={(sectionId) => {
           if (sectionId === 'services') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else if (sectionId === 'home') {
-            handleBackToHome();
           } else {
-            setCurrentView('home');
-            setTimeout(() => performScroll(sectionId), 100);
+            scrollToSection(sectionId);
           }
         }}
+      />
+    );
+  }
+
+  if (currentView === 'pricing') {
+    return (
+      <PricingPage 
+        initialCategory={pricingCategory}
+        onBackToHome={handleBackToHome}
+        onRequestAudit={handleRequestAudit}
+        onOpenCustomBuilder={handleOpenCustomPackagePage}
+        onNavigate={scrollToSection}
+      />
+    );
+  }
+
+  if (currentView === 'contact') {
+    return (
+      <ContactPage 
+        onBackToHome={handleBackToHome}
+        onRequestAudit={handleRequestAudit}
+        onNavigate={scrollToSection}
       />
     );
   }
@@ -213,28 +272,25 @@ export default function App() {
         {/* Hero Section */}
         <Hero 
           onRequestAudit={handleRequestAudit}
-          onViewPackages={() => scrollToSection('packages')}
           onOpenLeadModal={() => setIsLeadModalOpen(true)}
         />
 
-        {/* Brand Logos */}
-        <BrandLogos />
-
-        {/* Core Solutions (3 Pillars) */}
+        {/* Core Solutions (3 Pillars) - White Background */}
         <Solutions 
           onSelectSolution={(sol) => setSelectedSolution(sol)}
+          onViewAllServices={() => scrollToSection('services')}
         />
 
-        {/* Packages & Pricing */}
-        <Packages 
-          onSelectPackage={(pkg) => setSelectedPackage(pkg)}
-          onOpenCustomBuilder={handleOpenCustomPackagePage}
-        />
+        {/* Brand Logos (Moved below Core Solutions & Animated) */}
+        <BrandLogos />
 
         {/* 5-Step Process */}
         <Process />
 
-        {/* Dark Navy Growth Audit Section */}
+        {/* Frequently Asked Questions */}
+        <HomeFAQ />
+
+        {/* Dark Navy Growth Audit / Contact Section */}
         <AuditSection />
       </main>
 

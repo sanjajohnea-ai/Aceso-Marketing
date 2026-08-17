@@ -1,9 +1,10 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { SolutionItem } from '../types';
 
 interface SolutionsProps {
   onSelectSolution: (solution: SolutionItem) => void;
+  onViewAllServices?: () => void;
 }
 
 export const solutionsData: SolutionItem[] = [
@@ -90,147 +91,170 @@ export const solutionsData: SolutionItem[] = [
   }
 ];
 
-export const Solutions: React.FC<SolutionsProps> = ({ onSelectSolution }) => {
+export const Solutions: React.FC<SolutionsProps> = ({ 
+  onSelectSolution, 
+  onViewAllServices
+}) => {
   return (
-    <section id="services" className="py-6 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="services" className="relative w-full overflow-hidden bg-white text-slate-900 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-slate-100">
       
-      {/* Section Header */}
-      <div className="text-center mb-4 sm:mb-8 lg:mb-10">
-        <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-blue-600 mb-1 sm:mb-2">
-          OUR CORE SOLUTIONS
-        </p>
-        <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-          Digital growth solutions built around your business
-        </h2>
-        <p className="text-slate-600 text-xs sm:text-sm lg:text-base max-w-3xl mx-auto mt-1.5 sm:mt-2 leading-relaxed">
-          We help SMEs attract more customers, reactivate existing ones, and automate marketing processes so you can grow sustainably and increase revenue.
-        </p>
-      </div>
+      {/* Subtle ambient light gradient */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-sky-50/40 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Solutions List */}
-      <div className="divide-y divide-slate-200/80">
+      <div className="relative z-10 max-w-6xl mx-auto">
         
-        {/* 01 Customer Acquisition */}
-        <div className="py-4 sm:py-8 first:pt-0 last:pb-0">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-6 lg:gap-8 items-start lg:items-center">
-            
-            {/* Number 01 */}
-            <div className="lg:col-span-2 flex items-center lg:items-start gap-2.5">
-              <span className="text-2xl sm:text-5xl lg:text-6xl font-black text-blue-600 tracking-tight">
-                01
-              </span>
-              <span className="lg:hidden text-base sm:text-2xl font-black text-slate-900 tracking-tight">
-                Customer Acquisition
-              </span>
+        {/* Section Header */}
+        <div className="text-center mb-12 sm:mb-16">
+          {/* Dotted Banner + Title */}
+          <div className="flex items-center justify-center gap-3 sm:gap-6 max-w-4xl mx-auto mb-3 sm:mb-4">
+            {/* Left 6 dots */}
+            <div className="hidden sm:flex items-center gap-1.5 text-blue-600 shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
             </div>
 
-            {/* Content (Title, Tagline, Paragraph) */}
-            <div className="lg:col-span-7 space-y-1">
-              <h3 className="hidden lg:block text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                Customer Acquisition
-              </h3>
-              <p className="text-xs sm:text-base font-bold text-blue-600">
-                Bring more of the right customers to your business.
-              </p>
-              <p className="text-slate-600 text-xs sm:text-sm lg:text-[15px] leading-relaxed">
-                We help you attract new customers through social media marketing, Meta and Google advertising, SEO, content marketing, landing pages, and lead generation. Our focus is turning attention into qualified enquiries and customers.
-              </p>
-            </div>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 uppercase tracking-tight leading-tight text-center">
+              OUR CORE SOLUTIONS
+            </h2>
 
-            {/* Explore Link */}
-            <div className="lg:col-span-3 flex lg:justify-end items-center pt-1.5 lg:pt-0">
-              <button
-                onClick={() => onSelectSolution(solutionsData[0])}
-                className="inline-flex items-center gap-1.5 text-xs sm:text-base font-bold text-blue-600 hover:text-blue-700 transition-colors group cursor-pointer"
-              >
-                <span>Explore Customer Acquisition</span>
-                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
-              </button>
+            {/* Right 6 dots */}
+            <div className="hidden sm:flex items-center gap-1.5 text-blue-600 shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
             </div>
-
           </div>
+
+          <p className="text-slate-600 text-xs sm:text-base max-w-3xl mx-auto leading-relaxed font-normal">
+            We help SMEs attract more customers, reactivate existing ones, and automate marketing processes so you can grow sustainably and increase revenue.
+          </p>
         </div>
 
-        {/* 02 Customer Reactivation */}
-        <div className="py-4 sm:py-8 first:pt-0 last:pb-0">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-6 lg:gap-8 items-start lg:items-center">
-            
-            {/* Number 02 */}
-            <div className="lg:col-span-2 flex items-center lg:items-start gap-2.5">
-              <span className="text-2xl sm:text-5xl lg:text-6xl font-black text-emerald-600 tracking-tight">
-                02
-              </span>
-              <span className="lg:hidden text-base sm:text-2xl font-black text-slate-900 tracking-tight">
-                Customer Reactivation
-              </span>
+        {/* 3 Core Solution Pillars with Hexagon Icons */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 mb-12 sm:mb-16">
+          
+          {/* 1. Customer Acquisition */}
+          <div 
+            onClick={() => onSelectSolution(solutionsData[0])}
+            className="group cursor-pointer flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10"
+          >
+            {/* Hexagon with Search & Pin Icon */}
+            <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
+                <polygon
+                  points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
+                  className="fill-blue-50 stroke-[#003B95] stroke-[2.5] transition-colors group-hover:fill-blue-100/60"
+                />
+              </svg>
+              
+              {/* Custom Search + Location Pin Icon */}
+              <div className="absolute inset-0 flex items-center justify-center text-[#003B95] group-hover:text-blue-700 transition-colors">
+                <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="10.5" cy="10.5" r="7.5" />
+                  <line x1="21" y1="21" x2="15.8" y2="15.8" />
+                  <path d="M10.5 7.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" fill="currentColor" />
+                  <path d="M10.5 7.5v4" strokeWidth="1.5" />
+                </svg>
+              </div>
             </div>
 
-            {/* Content (Title, Tagline, Paragraph) */}
-            <div className="lg:col-span-7 space-y-1">
-              <h3 className="hidden lg:block text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                Customer Reactivation
-              </h3>
-              <p className="text-xs sm:text-base font-bold text-emerald-600">
-                Turn existing and inactive customers into repeat business.
-              </p>
-              <p className="text-slate-600 text-xs sm:text-sm lg:text-[15px] leading-relaxed">
-                Your existing customer database can be one of your most valuable marketing assets. We identify opportunities to reconnect with past customers through email, SMS, WhatsApp campaigns, follow-ups, and targeted reactivation campaigns.
-              </p>
-            </div>
-
-            {/* Explore Link */}
-            <div className="lg:col-span-3 flex lg:justify-end items-center pt-1.5 lg:pt-0">
-              <button
-                onClick={() => onSelectSolution(solutionsData[1])}
-                className="inline-flex items-center gap-1.5 text-xs sm:text-base font-bold text-emerald-600 hover:text-emerald-700 transition-colors group cursor-pointer"
-              >
-                <span>Explore Customer Reactivation</span>
-                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
-
+            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#003B95] transition-colors">
+              CUSTOMER ACQUISITION
+            </h3>
+            <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
+              We help you attract the right people and turn them into new customers through data-driven strategies and compelling campaigns.
+            </p>
           </div>
+
+          {/* 2. Customer Reactivation */}
+          <div 
+            onClick={() => onSelectSolution(solutionsData[1])}
+            className="group cursor-pointer flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10"
+          >
+            {/* Hexagon with 2-Arrow Refresh Icon */}
+            <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
+                <polygon
+                  points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
+                  className="fill-blue-50 stroke-[#003B95] stroke-[2.5] transition-colors group-hover:fill-blue-100/60"
+                />
+              </svg>
+
+              {/* 2-Arrow Circular Loop Icon */}
+              <div className="absolute inset-0 flex items-center justify-center text-[#003B95] group-hover:text-blue-700 transition-colors">
+                <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                  <path d="M3 3v5h5" />
+                  <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+                  <path d="M16 21h5v-5" />
+                </svg>
+              </div>
+            </div>
+
+            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#003B95] transition-colors">
+              CUSTOMER REACTIVATION
+            </h3>
+            <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
+              We re-engage your existing customers and bring them back for more with personalized campaigns and smart communication.
+            </p>
+          </div>
+
+          {/* 3. Marketing Automation */}
+          <div 
+            onClick={() => onSelectSolution(solutionsData[2])}
+            className="group cursor-pointer flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10"
+          >
+            {/* Hexagon with Cursor Pointer Icon */}
+            <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
+                <polygon
+                  points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
+                  className="fill-blue-50 stroke-[#003B95] stroke-[2.5] transition-colors group-hover:fill-blue-100/60"
+                />
+              </svg>
+
+              {/* Cursor Mouse Arrow Icon */}
+              <div className="absolute inset-0 flex items-center justify-center text-[#003B95] group-hover:text-blue-700 transition-colors">
+                <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 3l7 18 3.5-7.5L21 10 3 3z" />
+                </svg>
+              </div>
+            </div>
+
+            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#003B95] transition-colors">
+              MARKETING AUTOMATION
+            </h3>
+            <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
+              We automate your marketing and sales processes to save time, reduce manual work, and improve results across every touchpoint.
+            </p>
+          </div>
+
         </div>
 
-        {/* 03 Marketing Automation */}
-        <div className="py-4 sm:py-8 first:pt-0 last:pb-0">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 sm:gap-6 lg:gap-8 items-start lg:items-center">
-            
-            {/* Number 03 */}
-            <div className="lg:col-span-2 flex items-center lg:items-start gap-2.5">
-              <span className="text-2xl sm:text-5xl lg:text-6xl font-black text-purple-600 tracking-tight">
-                03
-              </span>
-              <span className="lg:hidden text-base sm:text-2xl font-black text-slate-900 tracking-tight">
-                Marketing Automation
-              </span>
-            </div>
-
-            {/* Content (Title, Tagline, Paragraph) */}
-            <div className="lg:col-span-7 space-y-1">
-              <h3 className="hidden lg:block text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                Marketing Automation
-              </h3>
-              <p className="text-xs sm:text-base font-bold text-purple-600">
-                Make your marketing work harder with less manual effort.
-              </p>
-              <p className="text-slate-600 text-xs sm:text-sm lg:text-[15px] leading-relaxed">
-                We connect the tools your business already uses to automate lead nurturing, customer follow-ups, appointment reminders, reporting, CRM workflows, and other repetitive marketing processes.
-              </p>
-            </div>
-
-            {/* Explore Link */}
-            <div className="lg:col-span-3 flex lg:justify-end items-center pt-1.5 lg:pt-0">
-              <button
-                onClick={() => onSelectSolution(solutionsData[2])}
-                className="inline-flex items-center gap-1.5 text-xs sm:text-base font-bold text-purple-600 hover:text-purple-700 transition-colors group cursor-pointer"
-              >
-                <span>Explore Marketing Automation</span>
-                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
-
-          </div>
+        {/* Action Button: VIEW OUR SERVICES */}
+        <div className="flex items-center justify-center">
+          <button
+            type="button"
+            onClick={() => {
+              if (onViewAllServices) {
+                onViewAllServices();
+              } else {
+                onSelectSolution(solutionsData[0]);
+              }
+            }}
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#003B95] hover:bg-[#002D72] active:bg-[#001F4D] text-white font-bold text-sm sm:text-base uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+          >
+            <span>VIEW OUR SERVICES</span>
+            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+          </button>
         </div>
 
       </div>
@@ -238,4 +262,5 @@ export const Solutions: React.FC<SolutionsProps> = ({ onSelectSolution }) => {
     </section>
   );
 };
+
 
