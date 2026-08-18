@@ -79,6 +79,13 @@ export default function App() {
 
   // Smooth scroll & view navigation handler
   const scrollToSection = (sectionId: string) => {
+    if (sectionId === 'custom-package' || sectionId === 'pricing-custom') {
+      setCurrentView('custom-package');
+      setActiveSection('pricing');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (sectionId === 'services') {
       setCurrentView('services');
       setActiveSection('services');

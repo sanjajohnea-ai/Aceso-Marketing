@@ -3,6 +3,8 @@ import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { 
   Check, 
+  CheckCircle2,
+  MousePointerClick,
   ArrowRight, 
   Search, 
   Share2, 
@@ -48,6 +50,7 @@ export interface PricingCategory {
   description: string;
   icon: React.ElementType;
   tiers: PricingTier[];
+  footnote?: string;
 }
 
 export const pricingCategories: PricingCategory[] = [
@@ -178,28 +181,10 @@ export const pricingCategories: PricingCategory[] = [
         buttonText: 'START BUILDING'
       },
       {
-        id: 'smm-scale',
-        name: 'ENTERPRISE',
-        price: 'KSh 35,000',
-        period: '/month',
-        description: 'Comprehensive brand dominance with daily multi-format content and strategic ad integration.',
-        icon: Award,
-        features: [
-          'Up to 3 Social Platforms (Instagram, FB, TikTok, LinkedIn)',
-          '20–24 High-Impact Posts per month',
-          '8 Edited Short-Form Videos with Captions & Voiceovers',
-          'Full Community Management (Comments, DMs & Reviews)',
-          'Influencer & Local Partnership Outreach Support',
-          'Paid Post Boost & Ad Integration Tuning',
-          'Executive ROI & Customer Acquisition Dashboard'
-        ],
-        buttonText: 'START BUILDING'
-      },
-      {
         id: 'smm-custom',
         name: 'CUSTOM',
         price: 'Custom Pricing',
-        period: '/month',
+        period: '',
         description: 'Tailored enterprise campaigns with dedicated content creators, on-site shoots, and custom KPI targets.',
         icon: Edit3,
         features: [
@@ -262,28 +247,10 @@ export const pricingCategories: PricingCategory[] = [
         buttonText: 'START BUILDING'
       },
       {
-        id: 'seo-market-leader',
-        name: 'ENTERPRISE',
-        price: 'KSh 50,000',
-        period: '/month',
-        description: 'Aggressive organic market capture for regional and national industry leaders.',
-        icon: Award,
-        features: [
-          'Unlimited High-Intent & Long-Tail Keyword Clusters',
-          'Advanced Programmatic & Structured Schema Engineering',
-          '4 In-Depth Thought Leadership Content Pieces per month',
-          'Digital PR & Tier-1 Authority Backlink Outreach',
-          'Conversion Rate Optimization (CRO) Heatmap Audits',
-          'Competitor Keyword Hijack Strategy',
-          'Dedicated Senior SEO Strategist'
-        ],
-        buttonText: 'START BUILDING'
-      },
-      {
         id: 'seo-custom',
         name: 'CUSTOM',
         price: 'Custom Pricing',
-        period: '/month',
+        period: '',
         description: 'Tailored enterprise SEO for multi-branch organizations, e-commerce, and high-competition niches.',
         icon: Edit3,
         features: [
@@ -302,64 +269,46 @@ export const pricingCategories: PricingCategory[] = [
   {
     id: 'ppc',
     title: 'PPC (Pay-Per-Click Advertising) Pricing',
-    bannerTitle: 'OUR PAID ADVERTISING PACKAGES',
+    bannerTitle: 'OUR PPC PACKAGES',
     shortName: 'Paid Ads',
     subtitle: 'Immediate customer acquisition through hyper-targeted Google and Meta ad campaigns',
     description: 'Put your small business in front of ideal customers through Pay-Per-Click campaigns like Google Ads and Meta Ads with maximum visibility and minimum cost.',
     icon: TrendingUp,
+    footnote: 'Prices exclude ad spend paid directly to Google.',
     tiers: [
       {
         id: 'ppc-starter',
-        name: 'STARTER',
+        name: 'PPC STARTER',
         price: 'KSh 15,000',
-        period: '/month + ad spend',
-        description: 'Capture high-intent active buyers searching for your exact services on Google right now.',
-        icon: Search,
+        period: '/month',
+        description: 'Ideal for small businesses looking to generate leads and get quick visibility.',
+        icon: MousePointerClick,
         features: [
-          'Google Search & Local Services Ads (LSA) Management',
-          'Up to KSh 100,000 Monthly Ad Spend Management',
-          'High-Intent Keyword & Exact-Match Architecture',
-          'Aggressive Negative Keyword List to Eliminate Waste',
-          'Compelling Ad Copywriting & Responsive Ad Variations',
-          'Google Tag Manager & Conversion Tracking Setup',
-          'Monthly Cost-Per-Lead (CPL) Performance Report'
+          'Google Ads Account Setup & Management',
+          'Keyword Research & Competitor Analysis',
+          'Search Ads (Up to 15 Keywords)',
+          'Ad Copywriting & Extensions',
+          'Conversion Tracking Setup',
+          'Monthly Performance Report',
+          'Campaign Optimization'
         ],
         buttonText: 'START GROWING'
       },
       {
-        id: 'ppc-omni',
-        name: 'GROWTH',
-        isPopular: true,
-        price: 'KSh 28,000',
-        period: '/month + ad spend',
-        description: 'Google Search + Meta (Instagram & Facebook) funnel with retargeting to maximize conversion.',
-        icon: Megaphone,
+        id: 'ppc-growth',
+        name: 'PPC GROWTH',
+        price: 'KSh 30,000',
+        period: '/month',
+        description: 'For businesses ready to scale with high-performing ad campaigns.',
+        icon: TrendingUp,
         features: [
-          'Dual Platform Management: Google Ads + Meta Ads',
-          'Up to KSh 300,000 Monthly Ad Spend Management',
-          'Full-Funnel Setup: Cold Traffic + Retargeting Ads',
-          'Custom High-Converting Ad Creative & Video Graphics',
-          'Meta Pixel, Conversions API (CAPI) Tracking',
-          'A/B Split Testing on Headlines & Audiences',
-          'WhatsApp Instant Lead Routing Integration'
-        ],
-        buttonText: 'START GROWING'
-      },
-      {
-        id: 'ppc-scale',
-        name: 'ENTERPRISE',
-        price: 'KSh 45,000',
-        period: '/month + ad spend',
-        description: 'High-volume customer acquisition with multi-stage landing page optimization and scale.',
-        icon: Rocket,
-        features: [
-          'Multi-Channel: Google, Meta, TikTok & YouTube Ads',
-          'Unlimited Monthly Ad Spend Management',
-          'Dedicated High-Converting Landing Page Optimization',
-          'Continuous Multivariate Creative & Copy Testing',
-          'CRM Integration & Offline Conversion Tracking',
-          'Dynamic Bid Automation & Smart Bidding Tuning',
-          'Live 24/7 Real-Time ROAS Dashboard'
+          'Everything in PPC Starter',
+          'Advanced Keyword Strategy',
+          'Search & Display Campaigns',
+          'Retargeting Ads',
+          'Landing Page Recommendations',
+          'A/B Ad Testing',
+          'Weekly Optimization & Reporting'
         ],
         buttonText: 'START GROWING'
       },
@@ -367,17 +316,17 @@ export const pricingCategories: PricingCategory[] = [
         id: 'ppc-custom',
         name: 'CUSTOM',
         price: 'Custom Pricing',
-        period: '/month + ad spend',
-        description: 'Custom multi-million budget management with bespoke creative production and sales funnel optimization.',
-        icon: Edit3,
+        period: '',
+        description: 'Tailored enterprise campaigns with dedicated account management and custom ad funnels.',
+        icon: Sparkles,
         features: [
-          'Omnichannel media buying & creative studio',
-          'Custom video ad production & influencer UGC',
-          'Dedicated senior media buyer & copywriter',
-          'Custom CRM webhook routing & lead verification',
-          'Multi-touch revenue attribution modeling',
-          'Weekly strategy calls & profit tracking',
-          'Custom landing page design & dev included'
+          'Everything in PPC Growth',
+          'Multi-Channel Ad Campaigns (Google, Meta, TikTok)',
+          'Dedicated PPC Account Manager',
+          'Custom Landing Page Strategy & CRO',
+          'CRM Integration & Offline Conversion Tracking',
+          'Custom Audience & Retargeting Funnels',
+          'Bi-Weekly Strategy & ROI Review Calls'
         ],
         buttonText: 'START GROWING'
       }
@@ -1215,9 +1164,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
             <div className="divide-y divide-slate-100 border-y border-slate-100">
               {activeTier.features.map((feat, idx) => (
                 <div key={idx} className="py-2.5 flex items-start gap-2.5 text-xs text-slate-700">
-                  <div className="w-4 h-4 rounded-full bg-[#003B95] text-white flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-2.5 h-2.5 stroke-[3]" />
-                  </div>
+                  <CheckCircle2 className="w-4 h-4 text-[#003B95] shrink-0 mt-0.5" />
                   <span className="leading-snug">
                     {feat}
                   </span>
@@ -1232,15 +1179,21 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                 onClick={onRequestAudit}
                 className="w-full py-3.5 px-6 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs uppercase tracking-wider rounded-md shadow-xs transition-colors cursor-pointer block text-center"
               >
-                {activeTier.buttonText || 'START BUILDING'}
+                {activeTier.buttonText || 'START GROWING'}
               </button>
             </div>
           </div>
         </div>
+
+        {category.footnote && (
+          <p className="text-center text-xs text-slate-500 font-medium pt-3">
+            {category.footnote}
+          </p>
+        )}
       </div>
 
-      {/* DESKTOP & TABLET VIEW: 2x2 Grid Layout */}
-      <div className="hidden md:grid md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+      {/* DESKTOP & TABLET VIEW: Single Row for 3 Cards or 2-Col for 2/4 Cards */}
+      <div className={`hidden md:grid gap-6 lg:gap-8 mx-auto items-stretch ${category.tiers.length === 3 ? 'md:grid-cols-3 max-w-7xl' : 'md:grid-cols-2 max-w-5xl'}`}>
         {category.tiers.map((tier) => {
           const TierIcon = tier.icon;
 
@@ -1291,9 +1244,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                 <div className="divide-y divide-slate-100 border-y border-slate-100">
                   {tier.features.map((feat, idx) => (
                     <div key={idx} className="py-3 flex items-start gap-3 text-xs sm:text-sm text-slate-700">
-                      <div className="w-5 h-5 rounded-full bg-[#003B95] text-white flex items-center justify-center shrink-0 mt-0.5">
-                        <Check className="w-3 h-3 stroke-[3]" />
-                      </div>
+                      <CheckCircle2 className="w-5 h-5 text-[#003B95] shrink-0 mt-0.5" />
                       <span className="leading-snug">
                         {feat}
                       </span>
@@ -1308,7 +1259,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                     onClick={onRequestAudit}
                     className="w-full py-3.5 px-6 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-xs transition-colors cursor-pointer block text-center"
                   >
-                    {tier.buttonText || 'START BUILDING'}
+                    {tier.buttonText || 'START GROWING'}
                   </button>
                 </div>
               </div>
@@ -1316,6 +1267,12 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
           );
         })}
       </div>
+
+      {category.footnote && (
+        <p className="hidden md:block text-center text-xs sm:text-sm text-slate-500 font-medium pt-4 sm:pt-6">
+          {category.footnote}
+        </p>
+      )}
     </section>
   );
 };
@@ -1338,6 +1295,14 @@ export const PricingPage: React.FC<PricingPageProps> = ({
   }, [initialCategory]);
 
   const handleNav = (sectionId: string) => {
+    if (sectionId === 'pricing-custom' || sectionId === 'custom-package') {
+      if (onOpenCustomBuilder) {
+        onOpenCustomBuilder();
+      } else if (onNavigate) {
+        onNavigate('pricing-custom');
+      }
+      return;
+    }
     if (sectionId === 'pricing-web') {
       setActiveCategory('web');
       window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -71,45 +71,44 @@ const serviceModalData: Record<string, ServiceDetail> = {
     timeline: '3 - 6 Months for compounding momentum',
     idealFor: 'Local service businesses, medical practices, contractors, and boutique professional firms.'
   },
-  'web-design': {
-    id: 'web-design',
-    title: 'Web Design For Small Business',
-    category: 'Web Design',
-    badge: 'PERSUASIVE & CONVERSION-DRIVEN',
-    description: 'We build professional, personalized, and persuasive websites for small businesses at Aceso Solutions. Our web design services capture the value and voice of your company through design and content, providing you with an unmatched digital asset that you will always own.',
+  social: {
+    id: 'social',
+    title: 'Social Media Marketing & Management',
+    category: 'Social Media',
+    badge: 'AUTHENTIC ENGAGEMENT & GROWTH',
+    description: 'Build an influential and engaging digital presence where your prospective clients spend their time. At Aceso Solutions, our social media marketing services transform your social channels into consistent lead-generating engines, connecting you directly with your local community and target audience.',
     subServices: [
       {
-        title: 'Custom Responsive UI/UX Design',
-        description: 'Bespoke design created specifically for your demographic. 100% mobile, tablet, and desktop optimized.'
+        title: 'Custom Content Strategy & Monthly Calendars',
+        description: 'Tailored content themes, strategic educational posts, behind-the-scenes showcases, and conversion-focused promotions.'
       },
       {
-        title: 'WordPress & Modern CMS Development',
-        description: 'Clean, secure, and fast websites with drag-and-drop editing so you retain full control over your content.'
+        title: 'Graphic & Short-Form Video Production',
+        description: 'High-converting graphics, carousel slides, short-form reels, and stories crafted specifically for your brand voice.'
       },
       {
-        title: 'Conversion Rate Optimization (CRO)',
-        description: 'Strategic call-to-action placement, social proof triggers, and frictionless appointment booking forms.'
+        title: 'Community Engagement & Local Outreach',
+        description: 'Active comment moderation, direct messaging response support, and localized partner engagement to amplify organic reach.'
       },
       {
-        title: 'Speed & Core Web Vitals Tuning',
-        description: 'Sub-2-second load times engineered with next-gen image compression and clean semantic code.'
+        title: 'Audience Growth & Analytics Reporting',
+        description: 'Monthly KPI tracking across follower growth, post engagement, link clicks, and direct customer conversions.'
       }
     ],
     keyBenefits: [
-      '100% client ownership with zero hostage platform lock-in',
-      'High conversion design that turns visitors into paying clients',
-      'Pre-configured on-page SEO foundations ready to rank',
-      'Fast, mobile-first performance on every device'
+      'Consistent, professional brand presence across Instagram, Facebook & LinkedIn',
+      'Engaged local community that drives organic referrals and inquiries',
+      'Custom high-quality visuals and Reels without taking up your valuable time',
+      'Transparent monthly engagement and audience growth analytics'
     ],
     deliverables: [
-      'Custom Wireframes & Design Prototypes',
-      'Full Custom Web Development',
-      'Copywriting & High-Resolution Asset Integration',
-      'Google Analytics 4 & Meta Tracking Setup',
-      'CMS Training & 30-Day Post-Launch Support'
+      'Comprehensive Social Media Growth Strategy',
+      '12 - 20 Custom Branded Posts & Video Reels per Month',
+      'Profile & Bio Optimization Suite',
+      'Monthly Performance Review & Strategic Planning Session'
     ],
-    timeline: '3 - 5 Weeks from kickoff to launch',
-    idealFor: 'Small businesses with outdated websites or new ventures looking to launch with immediate credibility.'
+    timeline: 'Ongoing monthly management or campaign-based',
+    idealFor: 'Small businesses, clinics, contractors, and local brands wanting an active, polished social media presence without the headache.'
   },
   ppc: {
     id: 'ppc',
@@ -149,45 +148,6 @@ const serviceModalData: Record<string, ServiceDetail> = {
     ],
     timeline: 'Campaigns live in 5 - 7 business days',
     idealFor: 'Businesses needing immediate leads, seasonal service providers, and companies scaling client acquisition.'
-  },
-  social: {
-    id: 'social',
-    title: 'Social Media Marketing & Management',
-    category: 'Social Media',
-    badge: 'AUTHENTIC ENGAGEMENT & GROWTH',
-    description: 'Build an influential and engaging digital presence where your prospective clients spend their time. At Aceso Solutions, our social media marketing services transform your social channels into consistent lead-generating engines, connecting you directly with your local community and target audience.',
-    subServices: [
-      {
-        title: 'Custom Content Strategy & Monthly Calendars',
-        description: 'Tailored content themes, strategic educational posts, behind-the-scenes showcases, and conversion-focused promotions.'
-      },
-      {
-        title: 'Graphic & Short-Form Video Production',
-        description: 'High-converting graphics, carousel slides, short-form reels, and stories crafted specifically for your brand voice.'
-      },
-      {
-        title: 'Community Engagement & Local Outreach',
-        description: 'Active comment moderation, direct messaging response support, and localized partner engagement to amplify organic reach.'
-      },
-      {
-        title: 'Audience Growth & Analytics Reporting',
-        description: 'Monthly KPI tracking across follower growth, post engagement, link clicks, and direct customer conversions.'
-      }
-    ],
-    keyBenefits: [
-      'Consistent, professional brand presence across Instagram, Facebook & LinkedIn',
-      'Engaged local community that drives organic referrals and inquiries',
-      'Custom high-quality visuals and Reels without taking up your valuable time',
-      'Transparent monthly engagement and audience growth analytics'
-    ],
-    deliverables: [
-      'Comprehensive Social Media Growth Strategy',
-      '12 - 20 Custom Branded Posts & Video Reels per Month',
-      'Profile & Bio Optimization Suite',
-      'Monthly Performance Review & Strategic Planning Session'
-    ],
-    timeline: 'Ongoing monthly management or campaign-based',
-    idealFor: 'Small businesses, clinics, contractors, and local brands wanting an active, polished social media presence without the headache.'
   }
 };
 
@@ -289,7 +249,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
         {/* Intro Paragraph (Rephrased for Aceso Solutions) */}
         <p className="text-slate-700 text-xs sm:text-sm leading-relaxed max-w-4xl mx-auto">
-          Whether you are ready to scale to the next level, modernize your digital presence, or capture a steady stream of qualified customer inquiries, <span className="font-semibold text-slate-900">Aceso Solutions</span> is your dedicated growth partner. As a full-service <span className="text-[#003B95] underline cursor-pointer">digital marketing agency</span>, we specialize in high-performance <span className="text-[#003B95] underline cursor-pointer">search engine optimization (SEO)</span>, bespoke <span className="text-[#003B95] underline cursor-pointer">web design</span>, targeted <span className="text-[#003B95] underline cursor-pointer">paid advertising (PPC)</span>, and dynamic <span className="text-[#003B95] underline cursor-pointer">social media marketing</span> tailored specifically for small and growing enterprises. We combine deep technical mastery of search and social algorithms with persuasive conversion design to craft marketing systems that build lasting market authority and deliver measurable ROI.
+          Whether you are ready to scale to the next level, modernize your digital presence, or capture a steady stream of qualified customer inquiries, <span className="font-semibold text-slate-900">Aceso Solutions</span> is your dedicated growth partner. As a full-service <span className="text-[#003B95] underline cursor-pointer">digital marketing agency</span>, we specialize in high-performance <span className="text-[#003B95] underline cursor-pointer">search engine optimization (SEO)</span>, dynamic <span className="text-[#003B95] underline cursor-pointer">social media marketing</span>, and targeted <span className="text-[#003B95] underline cursor-pointer">paid advertising (PPC)</span> tailored specifically for small and growing enterprises. We combine deep technical mastery of search and social algorithms with persuasive conversion design to craft marketing systems that build lasting market authority and deliver measurable ROI.
         </p>
 
         {/* OUR WORK Button */}
@@ -305,7 +265,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       </section>
 
       {/* ========================================================= */}
-      {/* 4. ALTERNATING 50/50 FULL-WIDTH SERVICE BLOCKS */}
+      {/* 4. ALTERNATING 50/50 FULL-WIDTH SERVICE BLOCKS (EXACTLY 3 SERVICES) */}
       {/* ========================================================= */}
       <section className="w-full">
         
@@ -347,15 +307,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         </div>
 
         {/* ------------------------------------------------------- */}
-        {/* ROW 2: WEB DESIGN FOR SMALL BUSINESS (Image Left / White Right) */}
+        {/* ROW 2: SOCIAL MEDIA MARKETING (Image Left / White Right) */}
         {/* ------------------------------------------------------- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full min-h-[380px]">
           
-          {/* Photo (Left) */}
-          <div className="relative min-h-[280px] lg:min-h-full order-last lg:order-first">
+          {/* Photo (Left) - 3D Smartphone with Floating Social Icons */}
+          <div className="relative min-h-[300px] lg:min-h-full order-last lg:order-first bg-[#2b1055] overflow-hidden flex items-center justify-center">
             <img 
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" 
-              alt="Two women collaborating on web design and creative layout on laptop" 
+              src={socialMediaPhoneImg} 
+              alt="3D smartphone displaying social media creator with floating 3D social icons" 
               className="w-full h-full object-cover object-center"
               loading="lazy"
               referrerPolicy="no-referrer"
@@ -365,18 +325,18 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
           {/* White Box (Right) */}
           <div className="bg-white text-slate-800 p-8 sm:p-12 lg:p-16 flex flex-col justify-center items-start space-y-4">
             <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wider text-[#003B95]">
-              Web Design For Small Business
+              Social Media Marketing
             </h2>
             <p className="text-slate-700 text-xs sm:text-sm leading-relaxed max-w-xl">
-              We build professional, personalized, and persuasive websites for small businesses at Aceso Solutions. The best part? Our web design services capture the value and voice of your company through design and content, providing you with an unmatched digital asset that you will always own. Whether you run a medical clinic, contractor service, or boutique consultancy, we’ll build you a website that embodies your mission and converts visitors into lifelong clients.
+              Build an active, loyal community where your target audience spends their time every single day. The Aceso Solutions team delivers custom social media marketing and management services tailored specifically for growing businesses. From bespoke graphic designs, trending Reels, and monthly content calendars to proactive community engagement and targeted promotions, we establish a commanding presence that turns social followers into qualified leads.
             </p>
             <div className="pt-2">
               <button
                 type="button"
-                onClick={() => setActiveModal(serviceModalData['web-design'])}
+                onClick={() => setActiveModal(serviceModalData['social'])}
                 className="px-6 py-2 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs uppercase tracking-wider rounded-xs shadow-xs transition-colors cursor-pointer"
               >
-                Web Design
+                Social Media
               </button>
             </div>
           </div>
@@ -416,43 +376,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               loading="lazy"
               referrerPolicy="no-referrer"
             />
-          </div>
-
-        </div>
-
-        {/* ------------------------------------------------------- */}
-        {/* ROW 4: SOCIAL MEDIA MARKETING (Matched 3D Phone Image Left / White Right) */}
-        {/* ------------------------------------------------------- */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 w-full min-h-[380px]">
-          
-          {/* Photo (Left) - 3D Smartphone with Floating Social Icons */}
-          <div className="relative min-h-[300px] lg:min-h-full order-last lg:order-first bg-[#2b1055] overflow-hidden flex items-center justify-center">
-            <img 
-              src={socialMediaPhoneImg} 
-              alt="3D smartphone displaying social media creator with floating 3D social icons" 
-              className="w-full h-full object-cover object-center"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-
-          {/* White Box (Right) */}
-          <div className="bg-white text-slate-800 p-8 sm:p-12 lg:p-16 flex flex-col justify-center items-start space-y-4">
-            <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wider text-[#003B95]">
-              Social Media Marketing
-            </h2>
-            <p className="text-slate-700 text-xs sm:text-sm leading-relaxed max-w-xl">
-              Build an active, loyal community where your target audience spends their time every single day. The Aceso Solutions team delivers custom social media marketing and management services tailored specifically for growing businesses. From bespoke graphic designs, trending Reels, and monthly content calendars to proactive community engagement and targeted promotions, we establish a commanding presence that turns social followers into qualified leads.
-            </p>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setActiveModal(serviceModalData['social'])}
-                className="px-6 py-2 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs uppercase tracking-wider rounded-xs shadow-xs transition-colors cursor-pointer"
-              >
-                Social Media
-              </button>
-            </div>
           </div>
 
         </div>

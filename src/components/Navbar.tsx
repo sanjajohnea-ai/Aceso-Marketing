@@ -151,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </button>
                     <button
                       type="button"
-                      onClick={() => handlePricingSubClick('pricing')}
+                      onClick={() => handlePricingSubClick('pricing-custom')}
                       className="w-full text-left px-6 py-3.5 text-sm font-medium text-white hover:bg-[#002766] transition-colors cursor-pointer block"
                     >
                       Custom Package Pricing
@@ -269,7 +269,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     Google Ads & PPC Pricing
                   </button>
                   <button
-                    onClick={() => handlePricingSubClick('pricing')}
+                    onClick={() => handlePricingSubClick('pricing-custom')}
                     className="w-full text-left px-4 py-2.5 text-xs font-medium text-white hover:bg-[#002766] transition-colors cursor-pointer block"
                   >
                     Custom Package Pricing
