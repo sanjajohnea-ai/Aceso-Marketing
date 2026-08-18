@@ -147,36 +147,6 @@ export default function App() {
     }
   };
 
-  // Scroll spy to update active navbar item on home view
-  useEffect(() => {
-    if (currentView !== 'home') return;
-
-    const handleScroll = () => {
-      const sections = ['how-it-works', 'audit'];
-      const scrollPosition = window.scrollY + 200;
-
-      if (window.scrollY < 200) {
-        setActiveSection('home');
-        return;
-      }
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section === 'audit' ? 'contact' : section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [currentView]);
-
   const handleOpenCustomPackagePage = () => {
     setCurrentView('custom-package');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -217,10 +187,8 @@ export default function App() {
     return (
       <FreeAuditPage 
         onBackToHome={handleBackToHome}
-        onNavigateToPackages={() => {
-          setCurrentView('home');
-          setTimeout(() => performScroll('packages'), 100);
-        }}
+        onNavigate={scrollToSection}
+        onNavigateToPackages={() => scrollToSection('pricing')}
       />
     );
   }
@@ -294,11 +262,11 @@ export default function App() {
         {/* 5-Step Process */}
         <Process />
 
-        {/* Frequently Asked Questions */}
-        <HomeFAQ />
-
         {/* Dark Navy Growth Audit / Contact Section */}
         <AuditSection />
+
+        {/* Frequently Asked Questions */}
+        <HomeFAQ />
       </main>
 
       {/* Footer */}

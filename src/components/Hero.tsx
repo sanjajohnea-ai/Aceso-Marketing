@@ -147,67 +147,32 @@ export const Hero: React.FC<HeroProps> = ({
     : '';
 
   return (
-    <section className="relative pt-3 sm:pt-6 pb-4 sm:pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
+    <section className="relative pt-3 sm:pt-5 pb-5 sm:pb-7 lg:pb-9 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden w-full">
       {/* Subtle background decoration grid */}
       <div className="absolute top-6 right-0 w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] bg-gradient-to-bl from-blue-50/70 via-indigo-50/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-8 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center w-full">
         
         {/* Left Column: Hero Copy & Value Proposition */}
-        <div className="lg:col-span-6 flex flex-col items-start text-left">
+        <div className="lg:col-span-6 flex flex-col items-start text-left w-full">
           
           {/* Main Title */}
-          <h1 className="text-2xl sm:text-5xl lg:text-[50px] font-extrabold text-slate-900 leading-[1.18] sm:leading-[1.12] tracking-tight mb-2 sm:mb-4">
+          <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-extrabold text-slate-900 leading-[1.15] tracking-tight mb-3 sm:mb-4">
             Digital solutions <br className="hidden sm:inline" />
             that drive <span className="text-blue-600">real growth</span>
           </h1>
 
           {/* Subheading */}
-          <p className="text-xs sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 max-w-xl">
+          <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed w-full">
             We help small and medium-sized businesses attract more customers, reactivate existing ones, and automate their marketing for sustainable growth.
           </p>
-
-          {/* 4 Trust & Guarantee Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-slate-100 w-full text-slate-700 text-[10px] sm:text-xs font-semibold">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <Target className="w-3 h-3 sm:w-4 sm:h-4" />
-              </div>
-              <span className="leading-tight">Strategy-first approach</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4" />
-              </div>
-              <span className="leading-tight">Data-driven results</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-              </div>
-              <span className="leading-tight">Transparent reporting</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                <FileCheck2 className="w-3 h-3 sm:w-4 sm:h-4" />
-              </div>
-              <span className="leading-tight">No long-term contracts</span>
-            </div>
-          </div>
 
         </div>
 
         {/* Right Column: Interactive Dashboard & Floating Lead Component */}
-        <div className="lg:col-span-6 relative flex justify-center lg:justify-end mt-2 sm:mt-4 lg:mt-0">
-          
-          {/* Subtle dot matrix background */}
-          <div className="absolute -top-6 -right-6 w-36 sm:w-48 h-36 sm:h-48 opacity-30 bg-[radial-gradient(#2563eb_1.5px,transparent_1.5px)] [background-size:12px_12px] -z-10" />
-
+        <div className="lg:col-span-6 relative flex justify-center lg:justify-end mt-2 sm:mt-4 lg:mt-0 w-full">
           {/* Main Growth Overview Card */}
-          <div className="w-full max-w-[490px] bg-white rounded-2xl p-3 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 relative">
+          <div className="w-full bg-white rounded-2xl p-3 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 relative">
             
             {/* Top Bar of Card */}
             <div className="flex items-center justify-between mb-2.5 sm:mb-5">

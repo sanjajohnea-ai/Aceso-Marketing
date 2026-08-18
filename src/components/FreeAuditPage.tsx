@@ -37,11 +37,13 @@ import { getAccessToken } from '../lib/googleAuth';
 
 interface FreeAuditPageProps {
   onBackToHome: () => void;
+  onNavigate?: (sectionId: string) => void;
   onNavigateToPackages?: () => void;
 }
 
 export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
   onBackToHome,
+  onNavigate,
   onNavigateToPackages
 }) => {
   // Form Fields
@@ -198,10 +200,19 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
       <DiscoveryBookingPage 
         leadData={submittedLead}
         onBackToHome={onBackToHome}
+        onNavigate={onNavigate || onBackToHome}
         onNavigateToPackages={onNavigateToPackages || onBackToHome}
       />
     );
   }
+
+  const handleNav = (sectionId: string) => {
+    if (onNavigate) {
+      onNavigate(sectionId);
+    } else {
+      onBackToHome();
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
@@ -212,9 +223,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
         onRequestAudit={() => {
           window.scrollTo({ top: 350, behavior: 'smooth' });
         }}
-        onNavigate={(section) => {
-          onBackToHome();
-        }}
+        onNavigate={handleNav}
       />
 
       {/* Main Container */}
@@ -895,9 +904,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
 
       {/* Footer */}
       <Footer 
-        onNavigate={(section) => {
-          onBackToHome();
-        }}
+        onNavigate={handleNav}
         onRequestAudit={() => {
           window.scrollTo({ top: 380, behavior: 'smooth' });
         }}

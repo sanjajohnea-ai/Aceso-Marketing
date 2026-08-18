@@ -96,50 +96,34 @@ export const Solutions: React.FC<SolutionsProps> = ({
   onViewAllServices
 }) => {
   return (
-    <section id="services" className="relative w-full overflow-hidden bg-white text-slate-900 py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-slate-100">
+    <section id="services" className="relative w-full overflow-hidden bg-white text-slate-900 py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 border-y border-slate-100">
       
       {/* Subtle ambient light gradient */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-sky-50/40 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="relative z-10 max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         
-        {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16">
-          {/* Dotted Banner + Title */}
-          <div className="flex items-center justify-center gap-3 sm:gap-6 max-w-4xl mx-auto mb-3 sm:mb-4">
-            {/* Left 6 dots */}
-            <div className="hidden sm:flex items-center gap-1.5 text-blue-600 shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-            </div>
-
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 uppercase tracking-tight leading-tight text-center">
-              OUR CORE SOLUTIONS
-            </h2>
-
-            {/* Right 6 dots */}
-            <div className="hidden sm:flex items-center gap-1.5 text-blue-600 shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-            </div>
+        {/* Section Header (Centered) */}
+        <div className="text-center mb-8 sm:mb-10 max-w-3xl mx-auto">
+          {/* Eyebrow */}
+          <div className="text-xs font-bold uppercase tracking-wider text-[#3b82f6] mb-2 sm:mb-3">
+            OUR CORE SOLUTIONS
           </div>
 
-          <p className="text-slate-600 text-xs sm:text-base max-w-3xl mx-auto leading-relaxed font-normal">
+          {/* Main Heading */}
+          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-serif font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
+            Strategic marketing. Sustainable growth.
+          </h2>
+
+          {/* Subheading */}
+          <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
             We help SMEs attract more customers, reactivate existing ones, and automate marketing processes so you can grow sustainably and increase revenue.
           </p>
         </div>
 
         {/* 3 Core Solution Pillars with Hexagon Icons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 mb-12 sm:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mb-8 sm:mb-12">
           
           {/* 1. Customer Acquisition */}
           <div 
@@ -250,7 +234,7 @@ export const Solutions: React.FC<SolutionsProps> = ({
                 onSelectSolution(solutionsData[0]);
               }
             }}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#003B95] hover:bg-[#002D72] active:bg-[#001F4D] text-white font-bold text-sm sm:text-base uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#162235] hover:bg-[#1f2e45] active:bg-[#131b2b] text-white border border-[#1e2e46] font-bold text-sm sm:text-base uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
           >
             <span>VIEW OUR SERVICES</span>
             <ArrowRight className="w-4 h-4 stroke-[2.5]" />

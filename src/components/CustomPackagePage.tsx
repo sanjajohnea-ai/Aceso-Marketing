@@ -548,7 +548,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
       />
 
       {/* Multi-Step Stepper Subheader */}
-      <div className="bg-white border-b border-slate-200 relative z-30 shadow-2xs">
+      <div className="bg-white border-b border-slate-200 relative z-10 shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-center">
 
           {/* Stepper Progress Indicator */}
@@ -895,7 +895,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                   <div className="space-y-2.5 mb-5 max-h-[340px] overflow-y-auto pr-1">
                     {selectedServices.length === 0 ? (
                       <div className="text-center py-8 text-xs text-slate-400 border border-dashed border-slate-200 rounded-xl px-4">
-                        No services selected yet. Pick services on the left to calculate your monthly investment.
+                        No services selected yet. Pick services on the left to build your custom package.
                       </div>
                     ) : (
                       selectedServices.map((srv) => (
@@ -907,7 +907,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                                 {srv.name}
                               </div>
                               <div className="text-slate-500 text-[11px]">
-                                KSh {srv.price.toLocaleString()} <span className="text-slate-400">/mo</span>
+                                {srv.description}
                               </div>
                             </div>
                           </div>
@@ -924,19 +924,6 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                     )}
                   </div>
 
-                  {/* Monthly Total */}
-                  <div className="pt-4 border-t border-slate-100 mb-5 flex items-baseline justify-between">
-                    <span className="text-sm font-bold text-slate-900">
-                      Monthly Total
-                    </span>
-                    <div className="text-right">
-                      <span className="text-2xl font-black text-slate-900 tracking-tight">
-                        KSh {monthlyTotal.toLocaleString()}
-                      </span>
-                      <span className="text-xs font-normal text-slate-500 ml-1">/mo</span>
-                    </div>
-                  </div>
-
                   {/* Main CTA */}
                   <button
                     type="button"
@@ -944,7 +931,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                     onClick={() => setCurrentStep(2)}
                     className="w-full py-3.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 text-white font-bold text-sm transition-all shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                   >
-                    <span>Get My Custom Quote</span>
+                    <span>Proceed to Business Details</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
 
@@ -952,15 +939,11 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                   <div className="mt-4 space-y-2 text-xs text-slate-600">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                      <span>Free strategy call included</span>
+                      <span>Free strategy call & audit included</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
                       <span>No obligation • Cancel anytime</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
-                      <span>Setup fee may apply for some services</span>
                     </div>
                   </div>
 

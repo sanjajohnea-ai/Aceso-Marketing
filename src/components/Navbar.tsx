@@ -17,7 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [pricingDropdownOpen, setPricingDropdownOpen] = useState(false);
-  const [mobilePricingExpanded, setMobilePricingExpanded] = useState(true);
+  const [mobilePricingExpanded, setMobilePricingExpanded] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const pricingSubmenuItems = [
@@ -63,9 +63,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="static w-full bg-white border-b border-slate-100 shadow-2xs z-30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
           
           {/* Logo */}
           <div className="flex-shrink-0">
@@ -125,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               {/* Pricing Dropdown Menu - Clean Solid Screenshot Style */}
               {pricingDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 w-64 shadow-2xl z-50 animate-in fade-in slide-in-from-top-1 duration-150 overflow-hidden bg-[#003580] rounded-lg">
+                <div className="absolute top-full left-0 mt-1 w-64 shadow-2xl z-[100] animate-in fade-in slide-in-from-top-1 duration-150 overflow-hidden bg-[#003580] rounded-lg">
                   {/* Body Items List */}
                   <div className="divide-y divide-white/10">
                     <button
@@ -182,7 +183,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-request-audit-btn"
               onClick={onRequestAudit}
-              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all shadow-xs hover:shadow-md hover:shadow-blue-500/20 active:scale-[0.98] cursor-pointer flex items-center gap-2"
+              className="bg-[#162235] hover:bg-[#1f2e45] text-white border border-[#1e2e46] text-sm font-semibold px-5 py-2.5 rounded-lg transition-all shadow-xs hover:shadow-md active:scale-[0.98] cursor-pointer flex items-center gap-2"
             >
               <span>{ctaLabel}</span>
               <ArrowRight className="w-4 h-4" />
@@ -238,39 +239,43 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             {/* Pricing Expandable Section */}
-            <div className="overflow-hidden bg-[#003580] rounded-lg">
+            <div className="rounded-lg overflow-hidden">
               <button
                 type="button"
                 onClick={() => setMobilePricingExpanded(!mobilePricingExpanded)}
-                className="w-full flex items-center justify-between px-4 py-3 text-sm font-bold text-white bg-[#0047B3] cursor-pointer"
+                className={`w-full flex items-center justify-between px-4 py-2.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                  activeSection.startsWith('pricing')
+                    ? 'bg-blue-50 text-blue-600 font-bold'
+                    : 'text-slate-700 hover:bg-slate-50'
+                }`}
               >
                 <span>Pricing</span>
-                <ChevronDown className={`w-4 h-4 text-white transition-transform ${mobilePricingExpanded ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${mobilePricingExpanded ? 'rotate-180 text-blue-600' : ''}`} />
               </button>
 
               {mobilePricingExpanded && (
-                <div className="divide-y divide-white/10">
+                <div className="mt-1 pl-3 pr-1 py-1 space-y-1 bg-slate-50/80 rounded-lg border border-slate-100">
                   <button
                     onClick={() => handlePricingSubClick('pricing-seo')}
-                    className="w-full text-left px-4 py-2.5 text-xs font-medium text-white hover:bg-[#002766] transition-colors cursor-pointer block"
+                    className="w-full text-left px-3 py-2 text-xs font-medium text-slate-700 hover:text-blue-600 hover:bg-white rounded-md transition-colors cursor-pointer block"
                   >
                     SEO Pricing
                   </button>
                   <button
                     onClick={() => handlePricingSubClick('pricing-social')}
-                    className="w-full text-left px-4 py-2.5 text-xs font-medium text-white hover:bg-[#002766] transition-colors cursor-pointer block"
+                    className="w-full text-left px-3 py-2 text-xs font-medium text-slate-700 hover:text-blue-600 hover:bg-white rounded-md transition-colors cursor-pointer block"
                   >
                     Social Media Pricing
                   </button>
                   <button
                     onClick={() => handlePricingSubClick('pricing-ppc')}
-                    className="w-full text-left px-4 py-2.5 text-xs font-medium text-white hover:bg-[#002766] transition-colors cursor-pointer block"
+                    className="w-full text-left px-3 py-2 text-xs font-medium text-slate-700 hover:text-blue-600 hover:bg-white rounded-md transition-colors cursor-pointer block"
                   >
                     Google Ads & PPC Pricing
                   </button>
                   <button
                     onClick={() => handlePricingSubClick('pricing-custom')}
-                    className="w-full text-left px-4 py-2.5 text-xs font-medium text-white hover:bg-[#002766] transition-colors cursor-pointer block"
+                    className="w-full text-left px-3 py-2 text-xs font-medium text-slate-700 hover:text-blue-600 hover:bg-white rounded-md transition-colors cursor-pointer block"
                   >
                     Custom Package Pricing
                   </button>
@@ -300,7 +305,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onRequestAudit();
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+              className="w-full py-3 bg-[#162235] hover:bg-[#1f2e45] text-white border border-[#1e2e46] font-semibold text-sm rounded-lg transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
             >
               <span>Request Free Audit</span>
               <ArrowRight className="w-4 h-4" />
@@ -308,6 +313,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
       )}
-    </header>
+      </header>
+      {/* Structural layout spacer preserving exact document flow under fixed header */}
+      <div className="h-20 w-full shrink-0" aria-hidden="true" />
+    </>
   );
 };

@@ -94,9 +94,9 @@ const brands = [
 
 export const BrandLogos: React.FC = () => {
   return (
-    <section className="py-6 sm:py-9 px-4 sm:px-6 lg:px-8 border-b border-slate-100 bg-[#f8fafc] overflow-hidden">
+    <section className="py-5 sm:py-7 px-4 sm:px-6 lg:px-8 border-b border-slate-100 bg-[#f8fafc] overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#003B95] mb-5 sm:mb-7">
+        <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#003B95] mb-4 sm:mb-5">
           BRANDS & PLATFORMS WE WORK WITH
         </p>
 

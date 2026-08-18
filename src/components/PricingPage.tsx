@@ -1361,8 +1361,25 @@ export const PricingPage: React.FC<PricingPageProps> = ({
 
       {/* Hero Section */}
       {activeCategory === 'social' ? (
-        // Dedicated Social Media Hero matching user screenshot
-        <section className="relative overflow-hidden bg-gradient-to-r from-[#002B70] via-[#003B95] to-[#0055D4] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 shadow-sm">
+        // Dedicated Social Media Hero matching user screenshot with rich gradient & accents
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#04142d] via-[#003B95] to-[#0284c7] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 shadow-md">
+          {/* Subtle Geometric Grid Pattern */}
+          <div className="absolute inset-0 pointer-events-none opacity-20">
+            <svg className="w-full h-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="social-hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" />
+                  <circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.5)" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#social-hero-grid)" />
+            </svg>
+          </div>
+
+          {/* Ambient Glows */}
+          <div className="absolute -bottom-24 -left-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 right-1/4 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
+
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Heading & Subheading */}
@@ -1384,8 +1401,25 @@ export const PricingPage: React.FC<PricingPageProps> = ({
           </div>
         </section>
       ) : activeCategory === 'ppc' ? (
-        // Dedicated Google Ads & PPC Hero matching user screenshot
-        <section className="relative overflow-hidden bg-gradient-to-r from-[#002B70] via-[#003B95] to-[#0055D4] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 shadow-sm">
+        // Dedicated Google Ads & PPC Hero matching user screenshot with rich gradient & accents
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#04142d] via-[#003B95] to-[#0284c7] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 shadow-md">
+          {/* Subtle Geometric Grid Pattern */}
+          <div className="absolute inset-0 pointer-events-none opacity-20">
+            <svg className="w-full h-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="ppc-hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" />
+                  <circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.5)" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#ppc-hero-grid)" />
+            </svg>
+          </div>
+
+          {/* Ambient Glows */}
+          <div className="absolute -bottom-24 -left-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 right-1/4 w-80 h-80 bg-amber-400/15 rounded-full blur-3xl pointer-events-none" />
+
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Heading & Subheading */}

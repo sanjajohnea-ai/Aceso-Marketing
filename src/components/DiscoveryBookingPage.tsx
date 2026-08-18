@@ -18,15 +18,25 @@ import { AuditSubmissionRecord } from '../lib/googleSheets';
 interface DiscoveryBookingPageProps {
   leadData: AuditSubmissionRecord;
   onBackToHome: () => void;
+  onNavigate?: (sectionId: string) => void;
   onNavigateToPackages: () => void;
 }
 
 export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
   leadData,
   onBackToHome,
+  onNavigate,
   onNavigateToPackages
 }) => {
   const CALENDAR_URL = 'https://calendar.app.google/i9YT96iwcduZDF8Q8';
+
+  const handleNav = (sectionId: string) => {
+    if (onNavigate) {
+      onNavigate(sectionId);
+    } else {
+      onBackToHome();
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
@@ -34,9 +44,7 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
       <Navbar 
         activeSection="audit"
         onRequestAudit={() => {}}
-        onNavigate={() => {
-          onBackToHome();
-        }}
+        onNavigate={handleNav}
       />
 
       <main className="flex-1 py-10 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
@@ -223,9 +231,8 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
 
       {/* Footer */}
       <Footer 
-        onNavigate={onBackToHome}
+        onNavigate={handleNav}
         onRequestAudit={() => {}}
-        onExplorePackages={onNavigateToPackages}
       />
     </div>
   );

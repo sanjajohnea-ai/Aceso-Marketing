@@ -12,49 +12,57 @@ import {
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
-  onRequestAudit: () => void;
+  onRequestAudit?: () => void;
   hideTopBanner?: boolean;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="bg-[#03132B] text-slate-400 text-sm border-t border-[#0d2244]">
+    <footer className="bg-[#061224] text-slate-400 border-t border-[#0d2244]">
       
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto py-14 sm:py-16 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+      <div className="max-w-7xl mx-auto py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8">
           
           {/* Brand Col (lg: 4 cols) */}
-          <div className="lg:col-span-4 space-y-5">
+          <div className="lg:col-span-4 space-y-4 sm:space-y-5">
             <AcesoLogo variant="light" size="md" onClick={() => onNavigate('home')} />
-            <p className="text-slate-300 text-sm leading-relaxed max-w-sm">
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-sm">
               Digital growth partner for small and medium businesses. We help businesses attract customers, reactivate existing ones, and build smarter marketing systems.
             </p>
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-3 pt-1 sm:pt-2">
               <a 
-                href="#" 
-                className="w-10 h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
+                href="https://linkedin.com" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-4 h-4" />
               </a>
               <a 
-                href="#" 
-                className="w-10 h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
+                href="https://twitter.com" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
                 aria-label="Twitter"
               >
                 <Twitter className="w-4 h-4" />
               </a>
               <a 
-                href="#" 
-                className="w-10 h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
+                href="https://instagram.com" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
                 aria-label="Instagram"
               >
                 <Instagram className="w-4 h-4" />
               </a>
               <a 
-                href="#" 
-                className="w-10 h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
+                href="https://facebook.com" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
                 aria-label="Facebook"
               >
                 <Facebook className="w-4 h-4" />
@@ -64,10 +72,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Company Links (lg: 2 cols) */}
           <div className="lg:col-span-2 lg:border-r lg:border-[#0d2244] lg:pr-6">
-            <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-6">
+            <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-3 sm:mb-5">
               COMPANY
             </h4>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
               <li>
                 <button 
                   onClick={() => onNavigate('home')} 
@@ -103,12 +111,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </ul>
           </div>
 
-          {/* Solutions Links (lg: 3 cols) */}
+          {/* Services & Pricing Links (lg: 3 cols) */}
           <div className="lg:col-span-3 lg:border-r lg:border-[#0d2244] lg:pr-6">
-            <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-6">
+            <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-3 sm:mb-5">
               SERVICES & PRICING
             </h4>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
               <li>
                 <button 
                   onClick={() => onNavigate('pricing-web')} 
@@ -146,24 +154,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Have Questions? (lg: 3 cols) */}
           <div className="lg:col-span-3">
-            <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-5">
+            <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-3 sm:mb-5">
               HAVE QUESTIONS?
             </h4>
             
             {/* WhatsApp Us Button */}
-            <div className="mb-6">
+            <div className="mb-5 sm:mb-6">
               <a
                 href="https://wa.me/254758544241?text=Hi%20Aceso%20Solutions,%20I'd%20like%20to%20inquire%20about%20your%20digital%20growth%20services"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full max-w-[200px] inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-[#00a859] hover:bg-[#00964f] active:bg-[#008546] text-white text-sm font-bold transition-all shadow-xs cursor-pointer"
+                className="w-full max-w-[200px] inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl bg-[#00a859] hover:bg-[#00964f] active:bg-[#008546] text-white text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer"
               >
-                <MessageCircle className="w-5 h-5 shrink-0 fill-current" />
+                <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 fill-current" />
                 <span>WhatsApp Us</span>
               </a>
             </div>
 
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
               <li className="flex items-center gap-3 text-slate-200">
                 <Phone className="w-4 h-4 text-[#38bdf8] shrink-0" />
                 <span>+254 758 544 241</span>
@@ -179,15 +187,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       </div>
 
       {/* Bottom Legal bar */}
-      <div className="border-t border-[#0d2244] py-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div className="flex items-center gap-2.5 flex-wrap">
+      <div className="border-t border-[#0d2244] py-5 sm:py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-[11px] sm:text-xs text-slate-400 text-center md:text-left">
+          <div className="flex items-center gap-2 flex-wrap justify-center md:justify-start">
             <span>© 2026 Aceso Solutions. All rights reserved.</span>
-            <span className="text-slate-600">|</span>
+            <span className="text-slate-600 hidden sm:inline">|</span>
             <span>Digital Growth Partner for SMEs.</span>
           </div>
 
-          <div className="flex items-center gap-2.5 flex-wrap">
+          <div className="flex items-center gap-2.5 flex-wrap justify-center md:justify-end">
             <button onClick={() => onNavigate('home')} className="hover:text-slate-200 transition-colors cursor-pointer">
               Privacy Policy
             </button>
@@ -206,4 +214,3 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     </footer>
   );
 };
-

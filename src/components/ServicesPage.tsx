@@ -164,8 +164,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   onNavigate
 }) => {
   const [activeModal, setActiveModal] = useState<ServiceDetail | null>(null);
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [newsletterSuccess, setNewsletterSuccess] = useState(false);
 
   const handleNav = (sectionId: string) => {
     if (onNavigate) {
@@ -177,15 +175,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
     } else {
       onBackToHome();
     }
-  };
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newsletterEmail.trim()) return;
-    setNewsletterSuccess(true);
-    setTimeout(() => {
-      setNewsletterEmail('');
-    }, 3000);
   };
 
   return (
@@ -202,35 +191,43 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       />
 
       {/* ========================================================= */}
-      {/* 2. HERO BANNER (Royal Blue Gradient with Geometric Patterns) */}
+      {/* 2. HERO BANNER (Modern Color Gradient with Geometric Patterns) */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-[#002D72] via-[#003B95] to-[#0D47A1] text-white py-20 sm:py-28 px-4 sm:px-6 lg:px-12 shadow-sm">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#04142d] via-[#003B95] to-[#0284c7] text-white py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 shadow-md">
         
-        {/* SVG Geometric Dot Matrix & Grid Pattern */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
+        {/* SVG Geometric Grid & Dot Pattern */}
+        <div className="absolute inset-0 pointer-events-none opacity-25">
           <svg className="w-full h-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="services-grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-                <circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.6)" />
+              <pattern id="services-pattern-grid" width="36" height="36" patternUnits="userSpaceOnUse">
+                <path d="M 36 0 L 0 0 0 36" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.75" />
+                <circle cx="18" cy="18" r="1.5" fill="rgba(255,255,255,0.6)" />
               </pattern>
+              <linearGradient id="patternFade" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
+                <stop offset="60%" stopColor="#ffffff" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0.1" />
+              </linearGradient>
+              <mask id="patternMask">
+                <rect width="100%" height="100%" fill="url(#patternFade)" />
+              </mask>
             </defs>
-            <rect width="100%" height="100%" fill="url(#services-grid-pattern)" />
+            <rect width="100%" height="100%" fill="url(#services-pattern-grid)" mask="url(#patternMask)" />
           </svg>
         </div>
 
-        {/* Abstract Digital Waves / Geometric Curves */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full border-[30px] border-white/10 blur-[1px] pointer-events-none" />
-        <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full border-[40px] border-blue-400/10 blur-[2px] pointer-events-none" />
-        <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient Gradient Glow Accents */}
+        <div className="absolute -top-24 -right-20 w-96 h-96 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-28 -left-20 w-[420px] h-[420px] bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-indigo-500/15 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-5xl mx-auto md:ml-auto md:mr-12 lg:mr-20 text-left md:text-left space-y-4">
+        <div className="relative z-10 max-w-5xl mx-auto w-full text-left space-y-4">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wider text-white leading-tight font-sans">
             Digital Marketing Services<br />
             Made For The Small Business
           </h1>
-          <p className="text-white/95 text-xs sm:text-sm lg:text-base max-w-2xl leading-relaxed font-normal">
-            At Aceso Solutions, we believe that <span className="underline decoration-white/70 underline-offset-2">small businesses</span> deserve every chance to grow, compete, and succeed. That’s why we provide comprehensive digital marketing services and strategies engineered to scale small businesses online. With every website we build, every campaign we optimize, and every ad we run, we craft <span className="underline decoration-white/70 underline-offset-2">digital marketing</span> assets as unique as the entrepreneurs themselves, all optimized for maximum visibility and sustainable revenue.
+          <p className="text-white/95 text-xs sm:text-sm lg:text-base max-w-3xl leading-relaxed font-normal">
+            At Aceso Solutions, we believe every small business deserves the opportunity to grow, compete, and thrive in today’s digital marketplace. We provide practical, results-driven digital marketing strategies designed to help small businesses attract more customers, strengthen their online presence, and increase revenue. From the websites we build to the campaigns we manage and the ads we optimize, every solution is tailored to your business, your audience, and your goals, with a focus on measurable growth and long-term results.
           </p>
         </div>
       </section>
@@ -248,19 +245,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         </div>
 
         {/* Intro Paragraph (Rephrased for Aceso Solutions) */}
-        <p className="text-slate-700 text-xs sm:text-sm leading-relaxed max-w-4xl mx-auto">
-          Whether you are ready to scale to the next level, modernize your digital presence, or capture a steady stream of qualified customer inquiries, <span className="font-semibold text-slate-900">Aceso Solutions</span> is your dedicated growth partner. As a full-service <span className="text-[#003B95] underline cursor-pointer">digital marketing agency</span>, we specialize in high-performance <span className="text-[#003B95] underline cursor-pointer">search engine optimization (SEO)</span>, dynamic <span className="text-[#003B95] underline cursor-pointer">social media marketing</span>, and targeted <span className="text-[#003B95] underline cursor-pointer">paid advertising (PPC)</span> tailored specifically for small and growing enterprises. We combine deep technical mastery of search and social algorithms with persuasive conversion design to craft marketing systems that build lasting market authority and deliver measurable ROI.
-        </p>
-
-        {/* OUR WORK Button */}
-        <div className="pt-2">
-          <button
-            type="button"
-            onClick={onRequestAudit}
-            className="px-6 py-2.5 bg-[#003B95] hover:bg-[#002D72] active:bg-[#002255] text-white text-xs font-bold uppercase tracking-wider rounded-xs shadow-xs transition-colors cursor-pointer"
-          >
-            Our Work
-          </button>
+        <div className="text-slate-700 text-xs sm:text-sm leading-relaxed max-w-4xl mx-auto space-y-4 text-center">
+          <p>
+            Whether your goal is to scale your business, strengthen your online presence, or generate a consistent flow of qualified leads, Aceso Solutions is here to help you grow. We are a full-service digital marketing agency specializing in SEO, social media marketing, and targeted PPC advertising, with strategies built specifically for small and growing businesses.
+          </p>
+          <p>
+            We combine data-driven marketing, strong creative execution, and a deep understanding of how customers search, engage, and make purchasing decisions online. Every campaign is designed to increase your visibility, attract the right audience, convert more opportunities, and deliver measurable results and meaningful ROI.
+          </p>
         </div>
       </section>
 
@@ -282,22 +273,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             <p className="text-white/95 text-xs sm:text-sm leading-relaxed max-w-xl">
               With our unique SEO strategy, we get your small business visibility online. As experts in the algorithms behind platforms like Google, we take a comprehensive approach to getting your small business SEEN by the billions of searches that happen each day. With SEO, we position your business right in front of your ideal clients, exactly where they are looking for you. If you’re ready to increase your leads, close more sales, and have a digital presence that you’re proud of, Aceso Solutions is your partner.
             </p>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setActiveModal(serviceModalData['seo'])}
-                className="px-6 py-2 bg-white text-[#003B95] hover:bg-blue-50 active:bg-blue-100 font-bold text-xs uppercase tracking-wider rounded-xs shadow-xs transition-colors cursor-pointer"
-              >
-                SEO
-              </button>
-            </div>
           </div>
 
           {/* Photo (Right) */}
           <div className="relative min-h-[280px] lg:min-h-full">
             <img 
-              src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80" 
-              alt="Person reviewing search engine optimization and digital analytics on tablet" 
+              src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?auto=format&fit=crop&w=1200&q=80" 
+              alt="African digital marketing professionals collaborating on search engine strategy and analytics" 
               className="w-full h-full object-cover object-center"
               loading="lazy"
               referrerPolicy="no-referrer"
@@ -317,7 +299,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               src={socialMediaPhoneImg} 
               alt="3D smartphone displaying social media creator with floating 3D social icons" 
               className="w-full h-full object-cover object-center"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -330,15 +314,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             <p className="text-slate-700 text-xs sm:text-sm leading-relaxed max-w-xl">
               Build an active, loyal community where your target audience spends their time every single day. The Aceso Solutions team delivers custom social media marketing and management services tailored specifically for growing businesses. From bespoke graphic designs, trending Reels, and monthly content calendars to proactive community engagement and targeted promotions, we establish a commanding presence that turns social followers into qualified leads.
             </p>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setActiveModal(serviceModalData['social'])}
-                className="px-6 py-2 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs uppercase tracking-wider rounded-xs shadow-xs transition-colors cursor-pointer"
-              >
-                Social Media
-              </button>
-            </div>
           </div>
 
         </div>
@@ -356,22 +331,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             <p className="text-white/95 text-xs sm:text-sm leading-relaxed max-w-xl">
               If you’re interested in running advertisements for your small business, you’ve come to the right place. Aceso Solutions contains the tools and assets to put your small business in front of ideal customers through Pay-Per-Click campaigns like Google Ads and Meta Ads. With a deep understanding of ad platforms and algorithms, combined with consumer psychology, we create strategic campaigns designed to convert while maximizing visibility and minimizing your cost.
             </p>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setActiveModal(serviceModalData['ppc'])}
-                className="px-6 py-2 bg-white text-[#003B95] hover:bg-blue-50 active:bg-blue-100 font-bold text-xs uppercase tracking-wider rounded-xs shadow-xs transition-colors cursor-pointer"
-              >
-                Paid Advertising
-              </button>
-            </div>
           </div>
 
           {/* Photo (Right) */}
           <div className="relative min-h-[280px] lg:min-h-full">
             <img 
-              src="https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&fit=crop&w=1200&q=80" 
-              alt="Woman working on laptop with phone analyzing paid advertising performance" 
+              src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80" 
+              alt="African business and marketing professionals collaborating in tech workspace analyzing paid campaigns" 
               className="w-full h-full object-cover object-center"
               loading="lazy"
               referrerPolicy="no-referrer"
@@ -383,50 +349,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       </section>
 
       {/* ========================================================= */}
-      {/* 5. NEWSLETTER BANNER: BECOME THE MARKETING EXPERT */}
-      {/* ========================================================= */}
-      <section className="bg-gradient-to-r from-[#003B95] via-[#0D47A1] to-[#1565C0] text-white py-6 px-4 sm:px-8 lg:px-12 shadow-inner">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="space-y-1 text-center md:text-left">
-            <h3 className="text-sm sm:text-base font-bold uppercase tracking-wider text-white">
-              Become The Marketing Expert Your Business Needs
-            </h3>
-            <p className="text-white/90 text-xs sm:text-xs">
-              Level up your <span className="underline decoration-white/70">small business</span> marketing skills in just 5 minutes per week with the Aceso Solutions newsletter!
-            </p>
-          </div>
-
-          {/* Interactive Sign Up Input / Button */}
-          <form onSubmit={handleNewsletterSubmit} className="flex items-center gap-2 w-full md:w-auto">
-            {newsletterSuccess ? (
-              <div className="px-5 py-2 bg-white text-[#003B95] font-bold text-xs uppercase rounded-xs flex items-center gap-1.5 shadow-xs">
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span>You're Subscribed!</span>
-              </div>
-            ) : (
-              <>
-                <input 
-                  type="email"
-                  required
-                  placeholder="Enter your email"
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="px-3.5 py-2 bg-white/95 text-slate-800 text-xs rounded-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-white w-full sm:w-64"
-                />
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-white text-[#003B95] hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-xs shadow-xs transition-colors cursor-pointer whitespace-nowrap"
-                >
-                  Sign Up!
-                </button>
-              </>
-            )}
-          </form>
-        </div>
-      </section>
-
-      {/* ========================================================= */}
-      {/* 6. OUR MARKETING PHILOSOPHY SECTION */}
+      {/* 5. OUR MARKETING PHILOSOPHY SECTION */}
       {/* ========================================================= */}
       <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center space-y-6">
         
@@ -439,23 +362,12 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
         {/* Philosophy Paragraph */}
         <p className="text-slate-700 text-xs sm:text-sm leading-relaxed max-w-4xl mx-auto">
-          At Aceso Solutions, we bridge the gap between the algorithms and the audience. With our expertise rooted in search engine optimization (SEO), paid search, and social platforms, we understand the complex algorithms behind Google, Meta, and beyond to make your small business discoverable to ideal clients. We combine this technical proficiency with authentic storytelling, high-converting design, and transparent communication to empower your business to compete and win.
+          At Aceso Solutions, we connect the right businesses with the right customers. Our expertise spans SEO, paid advertising, and social media marketing, helping small businesses improve their visibility across Google, Meta, and other digital platforms. We combine data-driven strategy with compelling content, strong creative, and conversion-focused campaigns to attract the right audience and turn attention into real business opportunities. Through clear communication and measurable results, we help businesses compete confidently and grow sustainably.
         </p>
-
-        {/* Discovery Call Button */}
-        <div className="pt-4">
-          <button
-            type="button"
-            onClick={onRequestAudit}
-            className="px-8 py-3 bg-[#003B95] hover:bg-[#002D72] active:bg-[#002255] text-white font-bold text-xs uppercase tracking-wider rounded-xs shadow-md transition-colors cursor-pointer"
-          >
-            Schedule A Discovery Call
-          </button>
-        </div>
       </section>
 
       {/* ========================================================= */}
-      {/* 7. MATCHING FOOTER (From Home Page) */}
+      {/* 6. MATCHING FOOTER (From Home Page) */}
       {/* ========================================================= */}
       <Footer 
         onNavigate={handleNav}

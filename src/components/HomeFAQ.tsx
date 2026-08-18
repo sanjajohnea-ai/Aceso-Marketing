@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { Plus, Minus } from 'lucide-react';
 
 interface FAQItem {
   id: string;
   question: string;
-  answer: string;
+  answer: string | string[];
 }
 
 const faqData: FAQItem[] = [
@@ -16,7 +16,10 @@ const faqData: FAQItem[] = [
   {
     id: 'faq-2',
     question: 'Is hiring a digital marketing agency worth it?',
-    answer: 'Digital marketing requires more than posting on social media or running an occasional advert. It takes the right strategy, consistent execution, ongoing testing, and the ability to understand what the data is telling you. At Aceso Solutions, we bring social media marketing, SEO, and PPC advertising together to help you attract the right customers and turn your digital presence into a growth channel. Instead of spending your time trying to figure out what to post or which keywords to target, you have a dedicated team focused on making your marketing work harder for your business.'
+    answer: [
+      'Digital marketing requires more than posting on social media or running an occasional advert. It takes the right strategy, consistent execution, ongoing testing, and the ability to understand what the data is telling you. At Aceso Solutions, we bring social media marketing, SEO, and PPC advertising together to help you attract the right customers and turn your digital presence into a growth channel. Instead of spending your time trying to figure out what to post or which keywords to target, you have a dedicated team focused on making your marketing work harder for your business.',
+      'With Aceso Solutions, you gain access to an entire team of specialists working together, each an expert in their field, which is usually more cost-effective to hire and manage in-house.'
+    ]
   },
   {
     id: 'faq-3',
@@ -41,14 +44,7 @@ const faqData: FAQItem[] = [
 ];
 
 export const HomeFAQ: React.FC = () => {
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({
-    'faq-1': true,
-    'faq-2': false,
-    'faq-3': false,
-    'faq-4': false,
-    'faq-5': false,
-    'faq-6': false
-  });
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
   const toggleItem = (id: string) => {
     setOpenItems(prev => ({
@@ -58,59 +54,73 @@ export const HomeFAQ: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50/50 border-t border-slate-100">
-      <div className="max-w-4xl mx-auto">
+    <section id="faq" className="py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+      <div className="w-full">
         
-        {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-14 space-y-3">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase text-slate-900 tracking-wider">
+        {/* Section Header (Centered) */}
+        <div className="text-center mb-8 sm:mb-10 max-w-3xl mx-auto">
+          {/* Eyebrow */}
+          <div className="text-xs font-bold uppercase tracking-wider text-[#3b82f6] mb-2 sm:mb-3">
             FREQUENTLY ASKED QUESTIONS
+          </div>
+
+          {/* Main Heading */}
+          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-serif font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
+            Frequently asked questions.
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+
+          {/* Subheading */}
+          <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
             Clear answers to common questions about our pricing, timelines, and commitments.
           </p>
         </div>
 
         {/* Accordion FAQ List */}
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4 w-full">
           {faqData.map((item) => {
             const isOpen = !!openItems[item.id];
 
             return (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs transition-all duration-200"
+                className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-2xs transition-all duration-200"
               >
                 {/* Question Header */}
-                <div className={isOpen ? 'p-2 sm:p-2.5 pb-0' : ''}>
-                  <button
-                    type="button"
-                    onClick={() => toggleItem(item.id)}
-                    className={`w-full text-left px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 cursor-pointer transition-all duration-200 ${
-                      isOpen
-                        ? 'border border-[#003B95] rounded-xl sm:rounded-2xl bg-white'
-                        : 'hover:bg-slate-50/60'
-                    }`}
-                    aria-expanded={isOpen}
-                  >
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-                      {item.question}
-                    </h3>
+                <button
+                  type="button"
+                  onClick={() => toggleItem(item.id)}
+                  className="w-full text-left px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 cursor-pointer transition-colors duration-200 hover:bg-slate-50/70 focus:outline-none focus:ring-0 select-none"
+                  aria-expanded={isOpen}
+                >
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+                    {item.question}
+                  </h3>
 
-                    <ChevronDown
-                      className={`w-4 h-4 shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'text-[#003B95] rotate-180' : 'text-slate-400'
-                      }`}
-                    />
-                  </button>
-                </div>
+                  <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-colors">
+                    {isOpen ? (
+                      <Minus className="w-4 h-4 text-slate-900" />
+                    ) : (
+                      <Plus className="w-4 h-4 text-slate-600" />
+                    )}
+                  </div>
+                </button>
 
                 {/* Accordion Answer Body */}
                 {isOpen && (
-                  <div className="px-6 sm:px-8 pt-4 pb-6 sm:pb-7">
-                    <p className="text-xs sm:text-sm md:text-[15px] text-slate-600 leading-relaxed font-normal">
-                      {item.answer}
-                    </p>
+                  <div className="px-5 sm:px-6 pt-0 pb-5 sm:pb-6 border-t border-slate-100">
+                    {Array.isArray(item.answer) ? (
+                      <div className="space-y-3 pt-3.5">
+                        {item.answer.map((para, idx) => (
+                          <p key={idx} className="text-xs sm:text-sm md:text-[15px] text-slate-600 leading-relaxed font-normal">
+                            {para}
+                          </p>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-xs sm:text-sm md:text-[15px] text-slate-600 leading-relaxed font-normal pt-3.5">
+                        {item.answer}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
@@ -122,4 +132,3 @@ export const HomeFAQ: React.FC = () => {
     </section>
   );
 };
-
