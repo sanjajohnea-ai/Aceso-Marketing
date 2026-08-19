@@ -105,6 +105,21 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </button>
 
+            {/* Industries */}
+            <button
+              onClick={() => onNavigate('industries')}
+              className={`relative px-4 py-2 text-sm font-semibold transition-colors rounded-lg cursor-pointer ${
+                activeSection === 'industries'
+                  ? 'text-blue-600 font-bold'
+                  : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50/80'
+              }`}
+            >
+              Industries
+              {activeSection === 'industries' && (
+                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-blue-600 rounded-full" />
+              )}
+            </button>
+
               {/* Pricing with Popover / Dropdown (Matching Screenshot Style) */}
             <div className="relative" ref={dropdownRef}>
               <button
@@ -236,6 +251,21 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               Services
+            </button>
+
+            {/* Industries */}
+            <button
+              onClick={() => {
+                onNavigate('industries');
+                setMobileMenuOpen(false);
+              }}
+              className={`text-left px-4 py-2.5 text-sm font-semibold rounded-lg transition-colors cursor-pointer ${
+                activeSection === 'industries'
+                  ? 'bg-blue-50 text-blue-600 font-bold'
+                  : 'text-slate-700 hover:bg-slate-50'
+              }`}
+            >
+              Industries
             </button>
 
             {/* Pricing Expandable Section */}

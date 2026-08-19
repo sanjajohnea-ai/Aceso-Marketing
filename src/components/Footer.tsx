@@ -78,14 +78,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
               <li>
                 <button 
-                  onClick={() => onNavigate('home')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  About Us
-                </button>
-              </li>
-              <li>
-                <button 
                   onClick={() => onNavigate('services')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
@@ -94,7 +86,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('pricing')} 
+                  onClick={() => onNavigate('industries')} 
+                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                >
+                  Industries We Work With
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('pricing-social')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
                   Plans & Pricing
@@ -119,10 +119,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
               <li>
                 <button 
-                  onClick={() => onNavigate('pricing-web')} 
+                  onClick={() => onNavigate('pricing-social')} 
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Web Design Pricing
+                  Social Media Pricing
                 </button>
               </li>
               <li>
@@ -131,14 +131,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
                 >
                   SEO Pricing
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('pricing-social')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  Social Media Pricing
                 </button>
               </li>
               <li>
@@ -202,10 +194,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <span className="text-slate-600">|</span>
             <button onClick={() => onNavigate('home')} className="hover:text-slate-200 transition-colors cursor-pointer">
               Terms of Use
-            </button>
-            <span className="text-slate-600">|</span>
-            <button onClick={() => onNavigate('home')} className="hover:text-slate-200 transition-colors cursor-pointer">
-              Cookie Policy
             </button>
           </div>
         </div>

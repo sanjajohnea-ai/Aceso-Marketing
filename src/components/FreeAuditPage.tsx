@@ -32,8 +32,7 @@ import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { Toast, ToastMessage } from './Toast';
 import { DiscoveryBookingPage } from './DiscoveryBookingPage';
-import { saveLocalAuditLead, appendLeadToGoogleSheet, submitToGoogleForm, submitLeadToGoogleWebApp, AuditSubmissionRecord } from '../lib/googleSheets';
-import { getAccessToken } from '../lib/googleAuth';
+import { saveLocalAuditLead, submitToGoogleForm, AuditSubmissionRecord } from '../lib/googleSheets';
 
 interface FreeAuditPageProps {
   onBackToHome: () => void;
@@ -74,7 +73,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
       return 'Email address is required';
     }
     if (!trimmed.includes('@')) {
-      return 'Invalid email address: Missing \'@\' symbol';
+      return 'Invalid email address - missing @';
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(trimmed)) {
@@ -87,6 +86,9 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
     const trimmed = val.trim();
     if (!trimmed) {
       return 'Phone number is required';
+    }
+    if (trimmed.length > 13) {
+      return 'Phone number must not exceed 13 characters';
     }
     if (trimmed.length < 9) {
       return 'Phone number must be at least 9 digits';
@@ -164,34 +166,14 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
     // Save lead record in local store
     const savedRecord = saveLocalAuditLead(leadRecord);
 
-    // 1. Submit directly to Google Apps Script Web App (instantly appends to Google Sheet)
-    submitLeadToGoogleWebApp(savedRecord).catch(console.error);
-
-    // 2. Submit directly to connected Google Form fallback
+    // Submit directly to connected Google Form / Web App (appends to Google Sheet)
     submitToGoogleForm(savedRecord).catch(console.error);
-
-    // 3. Try background append via REST API if token exists
-    const token = getAccessToken();
-    if (token) {
-      appendLeadToGoogleSheet(savedRecord, token).then((res) => {
-        if (res.success && res.sheetUrl) {
-          savedRecord.syncedToGoogleSheet = true;
-        }
-      }).catch(console.error);
-    }
-
-    setToast({
-      type: 'success',
-      title: 'Details Submitted Successfully!',
-      message: 'Your Growth Audit is being generated. Please proceed to book your 1-on-1 Discovery Call.',
-      duration: 5000
-    });
 
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmittedLead(savedRecord);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 600);
+    }, 400);
   };
 
   // If details submitted, show the dedicated Discovery Booking page (Next Page)

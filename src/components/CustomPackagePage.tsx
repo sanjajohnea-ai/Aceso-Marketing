@@ -39,7 +39,6 @@ import {
   submitCustomPackageLeadToGoogleSheet, 
   CustomPackageLeadRecord,
   saveLocalAuditLead, 
-  submitLeadToGoogleWebApp, 
   AuditSubmissionRecord 
 } from '../lib/googleSheets';
 import { generateAndDownloadInvoicePDF } from '../lib/pdfInvoice';
@@ -282,7 +281,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
       return 'Email address is required';
     }
     if (!trimmed.includes('@')) {
-      return 'Invalid email address: Missing "@" symbol';
+      return 'Invalid email address - missing @';
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(trimmed)) {
@@ -295,6 +294,9 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
     const trimmed = val.trim();
     if (!trimmed) {
       return 'Phone number is required';
+    }
+    if (trimmed.length > 13) {
+      return 'Phone number must not exceed 13 characters';
     }
     if (trimmed.length < 9) {
       return 'Please enter a valid 9 or 10 digit phone number';
@@ -523,7 +525,6 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
       status: 'Pending Audit'
     };
     saveLocalAuditLead(leadRecord);
-    submitLeadToGoogleWebApp(leadRecord).catch(console.error);
 
     setToast({
       type: 'success',
@@ -995,9 +996,8 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                 </h1>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-500 font-semibold">Total Monthly:</span>
-                <span className="text-lg sm:text-xl font-black text-blue-600">
-                  KSh {monthlyTotal.toLocaleString()}/mo
+                <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100/80">
+                  {selectedServices.length} {selectedServices.length === 1 ? 'service' : 'services'} selected
                 </span>
               </div>
             </div>
@@ -1013,7 +1013,6 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                     <span key={s.id} className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-xs font-semibold text-slate-800 inline-flex items-center gap-1.5 shadow-2xs">
                       <Check className="w-3.5 h-3.5 text-blue-600" />
                       <span>{s.name}</span>
-                      <span className="text-slate-400 font-normal">· KSh {s.price.toLocaleString()}</span>
                     </span>
                   ))}
                 </div>
@@ -1208,10 +1207,10 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                   className="w-full sm:w-auto px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {isSubmitting ? (
-                    <span>Generating Invoice...</span>
+                    <span>Submitting Request...</span>
                   ) : (
                     <>
-                      <span>Generate Invoice</span>
+                      <span>Submit Custom Package Request</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -1330,20 +1329,13 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
               </span>
             </div>
 
-            {/* Service count and Price pill stats */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 my-4 py-1 text-xs sm:text-sm font-semibold text-slate-700">
-              <div className="flex items-center gap-1.5">
-                <Briefcase className="w-4 h-4 text-blue-600" />
-                <span>{selectedServices.length} {selectedServices.length === 1 ? 'service' : 'services'}</span>
-              </div>
-              <div className="h-4 w-px bg-slate-300" />
-              <div className="flex items-center gap-1.5 text-emerald-700">
-                <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-black">$</span>
-                <span className="font-bold">KSh {monthlyTotal.toLocaleString()}/mo</span>
-              </div>
+            {/* Service count stat */}
+            <div className="flex items-center justify-center gap-2 my-4 py-1 text-xs sm:text-sm font-semibold text-slate-700">
+              <Briefcase className="w-4 h-4 text-blue-600" />
+              <span>{selectedServices.length} {selectedServices.length === 1 ? 'service' : 'services'} selected</span>
             </div>
 
-            {/* Proposal and Invoice Ready Card */}
+            {/* Proposal Ready Card */}
             <div className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100/80 text-center mb-6">
               {/* PDF Icon Badge */}
               <div className="w-11 h-11 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-2.5 border border-blue-100">
@@ -1351,7 +1343,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
               </div>
 
               <p className="text-xs text-slate-600 mb-2 leading-relaxed">
-                Your proposal and invoice are ready to download.
+                Your custom package proposal is ready to download.
               </p>
 
               <button
@@ -1366,7 +1358,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                 }}
                 className="text-blue-600 hover:text-blue-700 font-bold text-xs sm:text-sm inline-flex items-center gap-1.5 cursor-pointer hover:underline"
               >
-                <span>Download proposal & invoice</span>
+                <span>Download custom proposal</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -1375,7 +1367,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
             <div className="text-center">
               <a
                 href={`https://wa.me/254758544241?text=${encodeURIComponent(
-                  `Hi Aceso Solutions, I just configured a custom package for ${businessInfo.businessName || 'my business'} (${selectedServices.length} services totaling KSh ${monthlyTotal.toLocaleString()}/mo). I would like to discuss next steps!`
+                  `Hi Aceso Solutions, I just configured a custom package for ${businessInfo.businessName || 'my business'} with ${selectedServices.length} selected services (${selectedServices.map(s => s.name).join(', ')}). I would like to discuss next steps!`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

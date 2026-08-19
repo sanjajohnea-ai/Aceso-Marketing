@@ -146,29 +146,6 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
               </div>
             </div>
 
-            {/* Quick Agenda Card */}
-            <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs space-y-4">
-              <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-blue-600" />
-                <span>What We'll Cover in Your Session:</span>
-              </h3>
-              
-              <ul className="space-y-2.5 text-xs text-slate-600">
-                <li className="flex items-start gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-blue-50 text-blue-700 font-bold flex items-center justify-center shrink-0 text-[11px]">1</span>
-                  <span><strong>Audit Breakdown:</strong> Uncover the #1 bottleneck preventing consistent lead generation in {leadData.industry || 'your niche'}.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-blue-50 text-blue-700 font-bold flex items-center justify-center shrink-0 text-[11px]">2</span>
-                  <span><strong>Actionable Fixes:</strong> 3 immediate tweaks to your funnel, ads, or website to boost conversions this month.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-blue-50 text-blue-700 font-bold flex items-center justify-center shrink-0 text-[11px]">3</span>
-                  <span><strong>Custom Strategy Alignment:</strong> Practical recommendations tailored strictly to your marketing budget.</span>
-                </li>
-              </ul>
-            </div>
-
           </div>
 
           {/* Right Column: Submitted Details Summary (5 cols) */}

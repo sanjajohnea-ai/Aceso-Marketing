@@ -18,8 +18,10 @@ import {
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { Toast, ToastMessage } from './Toast';
-import { saveLocalAuditLead, appendLeadToGoogleSheet, submitToGoogleForm, submitLeadToGoogleWebApp, AuditSubmissionRecord } from '../lib/googleSheets';
-import { getAccessToken } from '../lib/googleAuth';
+import { 
+  submitContactMessageToGoogleSheet, 
+  ContactMessageRecord 
+} from '../lib/googleSheets';
 
 interface ContactPageProps {
   onBackToHome: () => void;
@@ -73,8 +75,17 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const validateEmail = (val: string) => {
     const trimmed = val.trim();
     if (!trimmed) return 'Email is required';
+    if (!trimmed.includes('@')) return 'Invalid email address - missing @';
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(trimmed)) return 'Please enter a valid email address';
+    if (!regex.test(trimmed)) return 'Invalid email address';
+    return '';
+  };
+
+  const validatePhone = (val: string) => {
+    const trimmed = val.trim();
+    if (trimmed.length > 13) {
+      return 'Phone number cannot exceed 13 characters';
+    }
     return '';
   };
 
@@ -101,6 +112,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       setEmailError('');
     }
 
+    const phErr = validatePhone(formData.phone);
+    if (phErr) {
+      setPhoneError(phErr);
+      hasError = true;
+    } else {
+      setPhoneError('');
+    }
+
     if (!formData.message.trim()) {
       setMessageError('Please tell us what you need help with');
       hasError = true;
@@ -119,49 +138,36 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
     setIsSubmitting(true);
 
-    const submissionRecord: AuditSubmissionRecord = {
-      id: `CONTACT-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
-      timestamp: new Date().toISOString(),
-      fullName: formData.fullName,
-      businessName: formData.businessName || 'N/A',
-      email: formData.email,
-      phoneCode: '+254',
-      phone: formData.phone,
-      website: formData.website || 'N/A',
-      industry: 'General Inquiry',
-      primaryGoal: formData.services.join(', ') || 'General Contact',
-      challenges: formData.services,
-      marketingBudget: formData.budget || 'Not specified',
-      referralSource: 'Contact Us Page',
-      additionalNotes: formData.message,
-      status: 'Pending Audit'
+    const formattedDateTime = new Date().toLocaleString('en-KE', {
+      timeZone: 'Africa/Nairobi',
+      dateStyle: 'medium',
+      timeStyle: 'short'
+    });
+
+    const contactRecord: ContactMessageRecord = {
+      submissionDateTime: formattedDateTime,
+      fullName: formData.fullName.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      services: formData.services,
+      message: formData.message.trim()
     };
 
-    try {
-      saveLocalAuditLead(submissionRecord);
-      const token = getAccessToken();
-      if (token) {
-        await appendLeadToGoogleSheet(submissionRecord, token).catch(() => {});
-      }
-      await submitToGoogleForm(submissionRecord).catch(() => {});
-      await submitLeadToGoogleWebApp(submissionRecord).catch(() => {});
+    // Fire background submission to Google Apps Script Web App immediately
+    submitContactMessageToGoogleSheet(contactRecord).catch((err) => {
+      console.warn('Background sheet sync:', err);
+    });
 
+    // Provide instant feedback in ~250ms
+    setTimeout(() => {
+      setIsSubmitting(false);
       setIsSubmitted(true);
       setToast({
         type: 'success',
         title: 'Message Sent Successfully',
-        description: 'Thank you! Our growth team will get back to you within 24 business hours.'
+        description: 'Thank you! Your enquiry has been received and recorded.'
       });
-    } catch {
-      setIsSubmitted(true);
-      setToast({
-        type: 'success',
-        title: 'Message Received',
-        description: 'Thank you! We will get in touch with you shortly.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    }, 250);
   };
 
   return (
@@ -212,7 +218,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   Enquiry Received!
                 </h3>
                 <p className="text-slate-600 text-sm max-w-md mx-auto leading-relaxed">
-                  Thank you for reaching out. We have received your details and will come back with your free growth audit and recommended package within one business day.
+                  Thank you for reaching out. We have received your details and will come back with the next steps within one business day.
                 </p>
                 <button
                   type="button"
@@ -273,8 +279,16 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                     required
                     value={formData.email}
                     onChange={(e) => {
-                      setFormData({ ...formData, email: e.target.value });
-                      setEmailError('');
+                      const val = e.target.value;
+                      setFormData({ ...formData, email: val });
+                      if (emailError) {
+                        setEmailError(validateEmail(val));
+                      }
+                    }}
+                    onBlur={() => {
+                      if (formData.email) {
+                        setEmailError(validateEmail(formData.email));
+                      }
                     }}
                     placeholder="jane@business.co.ke"
                     className={`w-full px-4 py-3 text-xs sm:text-sm font-normal text-slate-600 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
@@ -291,13 +305,26 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   </label>
                   <input
                     type="tel"
+                    maxLength={13}
                     value={formData.phone}
                     onChange={(e) => {
-                      setFormData({ ...formData, phone: e.target.value });
-                      setPhoneError('');
+                      const val = e.target.value;
+                      if (val.length <= 13) {
+                        setFormData({ ...formData, phone: val });
+                        setPhoneError('');
+                      } else {
+                        setPhoneError('Phone number cannot exceed 13 characters');
+                      }
+                    }}
+                    onBlur={() => {
+                      if (formData.phone) {
+                        setPhoneError(validatePhone(formData.phone));
+                      }
                     }}
                     placeholder="+254 758 544 241"
-                    className="w-full px-4 py-3 text-xs sm:text-sm font-normal text-slate-600 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all"
+                    className={`w-full px-4 py-3 text-xs sm:text-sm font-normal text-slate-600 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
+                      phoneError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
+                    }`}
                   />
                   {phoneError && <p className="text-xs text-red-500 mt-1">{phoneError}</p>}
                 </div>

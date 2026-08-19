@@ -10,6 +10,7 @@ import { Footer } from './components/Footer';
 import { CustomPackagePage } from './components/CustomPackagePage';
 import { FreeAuditPage } from './components/FreeAuditPage';
 import { ServicesPage } from './components/ServicesPage';
+import { IndustriesPage } from './components/IndustriesPage';
 import { PricingPage } from './components/PricingPage';
 import { ContactPage } from './components/ContactPage';
 import { PackageDetailsModal } from './components/PackageDetailsModal';
@@ -35,6 +36,10 @@ const pageMetadata = {
     title: 'Digital Marketing & Growth Services | Aceso Solutions',
     description: 'Comprehensive digital solutions for SMEs: Customer Acquisition, Retention & Reactivation, and Revenue Automation systems.'
   },
+  industries: {
+    title: 'Industries We Work With | Aceso Solutions',
+    description: 'Purpose-built digital customer acquisition and revenue automation systems for Real Estate, Healthcare, Law, E-commerce, Hospitality, Trades, Tech & Education.'
+  },
   pricing: {
     title: 'Transparent Pricing & Plans | Aceso Solutions',
     description: 'Transparent pricing for Web Design, Social Media Marketing, SEO, and PPC Advertising designed for small and growing enterprises.'
@@ -46,7 +51,7 @@ const pageMetadata = {
 };
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'custom-package' | 'free-audit' | 'services' | 'pricing' | 'contact'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'custom-package' | 'free-audit' | 'services' | 'industries' | 'pricing' | 'contact'>('home');
   const [activeSection, setActiveSection] = useState<string>('home');
   const [pricingCategory, setPricingCategory] = useState<'all' | 'web' | 'social' | 'seo' | 'ppc'>('all');
   
@@ -93,6 +98,13 @@ export default function App() {
       return;
     }
 
+    if (sectionId === 'industries') {
+      setCurrentView('industries');
+      setActiveSection('industries');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (sectionId === 'pricing' || sectionId === 'pricing-web' || sectionId === 'pricing-social' || sectionId === 'pricing-seo' || sectionId === 'pricing-ppc') {
       if (sectionId === 'pricing-web') {
         setPricingCategory('web');
@@ -103,7 +115,7 @@ export default function App() {
       } else if (sectionId === 'pricing-ppc') {
         setPricingCategory('ppc');
       } else {
-        setPricingCategory('all');
+        setPricingCategory('social');
       }
       setCurrentView('pricing');
       setActiveSection(sectionId);
@@ -173,126 +185,128 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (currentView === 'custom-package') {
-    return (
-      <CustomPackagePage 
-        onBackToHome={handleBackToHome}
-        onRequestAudit={handleRequestAudit}
-        onNavigate={scrollToSection}
-      />
-    );
-  }
-
-  if (currentView === 'free-audit') {
-    return (
-      <FreeAuditPage 
-        onBackToHome={handleBackToHome}
-        onNavigate={scrollToSection}
-        onNavigateToPackages={() => scrollToSection('pricing')}
-      />
-    );
-  }
-
-  if (currentView === 'services') {
-    return (
-      <ServicesPage 
-        onBackToHome={handleBackToHome}
-        onRequestAudit={handleRequestAudit}
-        onOpenCustomBuilder={handleOpenCustomPackagePage}
-        onNavigate={(sectionId) => {
-          if (sectionId === 'services') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            scrollToSection(sectionId);
-          }
-        }}
-      />
-    );
-  }
-
-  if (currentView === 'pricing') {
-    return (
-      <PricingPage 
-        initialCategory={pricingCategory}
-        onBackToHome={handleBackToHome}
-        onRequestAudit={handleRequestAudit}
-        onOpenCustomBuilder={handleOpenCustomPackagePage}
-        onNavigate={scrollToSection}
-      />
-    );
-  }
-
-  if (currentView === 'contact') {
-    return (
-      <ContactPage 
-        onBackToHome={handleBackToHome}
-        onRequestAudit={handleRequestAudit}
-        onNavigate={scrollToSection}
-      />
-    );
-  }
-
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
-      
-      {/* Navigation Bar */}
-      <Navbar 
-        activeSection={activeSection}
-        onRequestAudit={handleRequestAudit}
-        onNavigate={scrollToSection}
-      />
-
-      {/* Main Content Area */}
-      <main className="flex-1">
-        {/* Hero Section */}
-        <Hero 
+    <>
+      {currentView === 'custom-package' && (
+        <CustomPackagePage 
+          onBackToHome={handleBackToHome}
           onRequestAudit={handleRequestAudit}
-          onOpenLeadModal={() => setIsLeadModalOpen(true)}
+          onNavigate={scrollToSection}
         />
+      )}
 
-        {/* Core Solutions (3 Pillars) - White Background */}
-        <Solutions 
-          onSelectSolution={(sol) => setSelectedSolution(sol)}
-          onViewAllServices={() => scrollToSection('services')}
+      {currentView === 'free-audit' && (
+        <FreeAuditPage 
+          onBackToHome={handleBackToHome}
+          onNavigate={scrollToSection}
+          onNavigateToPackages={() => scrollToSection('pricing')}
         />
+      )}
 
-        {/* Brand Logos (Moved below Core Solutions & Animated) */}
-        <BrandLogos />
+      {currentView === 'services' && (
+        <ServicesPage 
+          onBackToHome={handleBackToHome}
+          onRequestAudit={handleRequestAudit}
+          onOpenCustomBuilder={handleOpenCustomPackagePage}
+          onNavigate={(sectionId) => {
+            if (sectionId === 'services') {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              scrollToSection(sectionId);
+            }
+          }}
+        />
+      )}
 
-        {/* 5-Step Process */}
-        <Process />
+      {currentView === 'industries' && (
+        <IndustriesPage 
+          onBackToHome={handleBackToHome}
+          onRequestAudit={handleRequestAudit}
+          onNavigate={scrollToSection}
+        />
+      )}
 
-        {/* Dark Navy Growth Audit / Contact Section */}
-        <AuditSection />
+      {currentView === 'pricing' && (
+        <PricingPage 
+          initialCategory={pricingCategory}
+          onBackToHome={handleBackToHome}
+          onRequestAudit={handleRequestAudit}
+          onOpenCustomBuilder={handleOpenCustomPackagePage}
+          onNavigate={scrollToSection}
+        />
+      )}
 
-        {/* Frequently Asked Questions */}
-        <HomeFAQ />
-      </main>
+      {currentView === 'contact' && (
+        <ContactPage 
+          onBackToHome={handleBackToHome}
+          onRequestAudit={handleRequestAudit}
+          onNavigate={scrollToSection}
+        />
+      )}
 
-      {/* Footer */}
-      <Footer 
-        onNavigate={scrollToSection}
-        onRequestAudit={handleRequestAudit}
-      />
+      {currentView === 'home' && (
+        <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
+          
+          {/* Navigation Bar */}
+          <Navbar 
+            activeSection={activeSection}
+            onRequestAudit={handleRequestAudit}
+            onNavigate={scrollToSection}
+          />
 
-      {/* Modals & Drawers */}
-      <PackageDetailsModal
-        pkg={selectedPackage}
-        onClose={() => setSelectedPackage(null)}
-        onSelectPackageForAudit={handleSelectPackageForAudit}
-      />
+          {/* Main Content Area */}
+          <main className="flex-1">
+            {/* Hero Section */}
+            <Hero 
+              onRequestAudit={handleRequestAudit}
+              onOpenLeadModal={() => setIsLeadModalOpen(true)}
+            />
 
-      <SolutionDetailsModal
-        solution={selectedSolution}
-        onClose={() => setSelectedSolution(null)}
-        onRequestAuditForSolution={handleSolutionToAudit}
-      />
+            {/* Core Solutions (3 Pillars) - White Background */}
+            <Solutions 
+              onSelectSolution={(sol) => setSelectedSolution(sol)}
+              onViewAllServices={() => scrollToSection('services')}
+            />
 
-      <LeadDetailsModal
-        isOpen={isLeadModalOpen}
-        onClose={() => setIsLeadModalOpen(false)}
-      />
+            {/* Brand Logos (Moved below Core Solutions & Animated) */}
+            <BrandLogos />
 
-    </div>
+            {/* 5-Step Process */}
+            <Process />
+
+            {/* Dark Navy Growth Audit / Contact Section */}
+            <AuditSection />
+
+            {/* Frequently Asked Questions */}
+            <HomeFAQ />
+          </main>
+
+          {/* Footer */}
+          <Footer 
+            onNavigate={scrollToSection}
+            onRequestAudit={handleRequestAudit}
+          />
+
+          {/* Modals & Drawers */}
+          <PackageDetailsModal
+            pkg={selectedPackage}
+            onClose={() => setSelectedPackage(null)}
+            onSelectPackageForAudit={handleSelectPackageForAudit}
+          />
+
+          <SolutionDetailsModal
+            solution={selectedSolution}
+            onClose={() => setSelectedSolution(null)}
+            onRequestAuditForSolution={handleSolutionToAudit}
+          />
+
+          <LeadDetailsModal
+            isOpen={isLeadModalOpen}
+            onClose={() => setIsLeadModalOpen(false)}
+          />
+
+        </div>
+      )}
+    </>
   );
 }
