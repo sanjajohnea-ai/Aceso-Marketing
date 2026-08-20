@@ -13,7 +13,9 @@ import {
   Globe, 
   ShieldCheck,
   Check,
-  Calendar
+  Calendar,
+  RotateCcw,
+  AlertTriangle
 } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -47,6 +49,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');
@@ -137,6 +140,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
     }
 
     setIsSubmitting(true);
+    setSubmissionError(null);
 
     const formattedDateTime = new Date().toLocaleString('en-KE', {
       timeZone: 'Africa/Nairobi',
@@ -153,13 +157,22 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       message: formData.message.trim()
     };
 
-    // Fire background submission to Google Apps Script Web App immediately
-    submitContactMessageToGoogleSheet(contactRecord).catch((err) => {
-      console.warn('Background sheet sync:', err);
-    });
+    try {
+      const res = await submitContactMessageToGoogleSheet(contactRecord);
+      
+      if (!res.success) {
+        setIsSubmitting(false);
+        const errMsg = res.error || 'Unable to record your enquiry in Google Sheets. Please check your connection.';
+        setSubmissionError(errMsg);
+        setToast({
+          type: 'error',
+          title: 'Enquiry Submission Failed',
+          description: 'Failed to record in Google Sheets. Please click retry below.'
+        });
+        return;
+      }
 
-    // Provide instant feedback in ~250ms
-    setTimeout(() => {
+      setSubmissionError(null);
       setIsSubmitting(false);
       setIsSubmitted(true);
       setToast({
@@ -167,7 +180,17 @@ export const ContactPage: React.FC<ContactPageProps> = ({
         title: 'Message Sent Successfully',
         description: 'Thank you! Your enquiry has been received and recorded.'
       });
-    }, 250);
+    } catch (err: any) {
+      console.error('Contact submission error:', err);
+      setIsSubmitting(false);
+      const errMsg = err?.message || 'Network error: Could not reach Google Sheets server.';
+      setSubmissionError(errMsg);
+      setToast({
+        type: 'error',
+        title: 'Submission Error',
+        description: 'Could not send enquiry. Please click retry below.'
+      });
+    }
   };
 
   return (
@@ -241,7 +264,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} noValidate className="space-y-5">
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wide text-slate-900">
                     TALK TO US
@@ -256,13 +279,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   <input
                     type="text"
                     required
+                    autoComplete="name"
                     value={formData.fullName}
                     onChange={(e) => {
                       setFormData({ ...formData, fullName: e.target.value });
                       setNameError('');
                     }}
                     placeholder="Jane Wanjiku"
-                    className={`w-full px-4 py-3 text-xs sm:text-sm font-normal text-slate-600 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
+                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
                       nameError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
                     }`}
                   />
@@ -277,6 +301,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   <input
                     type="email"
                     required
+                    inputMode="email"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={(e) => {
                       const val = e.target.value;
@@ -291,7 +317,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       }
                     }}
                     placeholder="jane@business.co.ke"
-                    className={`w-full px-4 py-3 text-xs sm:text-sm font-normal text-slate-600 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
+                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
                       emailError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
                     }`}
                   />
@@ -305,6 +331,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   </label>
                   <input
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     maxLength={13}
                     value={formData.phone}
                     onChange={(e) => {
@@ -322,7 +350,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       }
                     }}
                     placeholder="+254 758 544 241"
-                    className={`w-full px-4 py-3 text-xs sm:text-sm font-normal text-slate-600 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
+                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
                       phoneError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
                     }`}
                   />
@@ -342,7 +370,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           type="button"
                           key={service}
                           onClick={() => toggleService(service)}
-                          className={`px-3.5 py-2.5 rounded-lg border text-xs sm:text-sm font-normal text-left transition-all flex items-center justify-between cursor-pointer ${
+                          className={`min-h-[44px] px-3.5 py-2.5 rounded-lg border text-xs sm:text-sm font-normal text-left transition-all flex items-center justify-between cursor-pointer select-none touch-manipulation active:scale-[0.99] ${
                             isSelected
                               ? 'border-[#003B95] bg-blue-50/80 text-[#003B95] ring-1 ring-[#003B95]'
                               : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600'
@@ -374,20 +402,68 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       setMessageError('');
                     }}
                     placeholder="Tell us about your business and goals"
-                    className={`w-full px-4 py-3 text-xs sm:text-sm font-normal text-slate-600 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 resize-none leading-relaxed transition-all ${
+                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 resize-none leading-relaxed transition-all ${
                       messageError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
                     }`}
                   />
                   {messageError && <p className="text-xs text-red-500 mt-1">{messageError}</p>}
                 </div>
 
+                {/* Error Banner with Retry */}
+                {submissionError && (
+                  <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-in fade-in">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <AlertTriangle className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs sm:text-sm font-bold text-red-900">
+                          Google Sheet Submission Failed
+                        </h4>
+                        <p className="text-xs text-red-700 mt-0.5 leading-relaxed">
+                          {submissionError}
+                        </p>
+                        <p className="text-[11px] text-red-600 mt-1 font-medium">
+                          Your message is intact. Click retry to resubmit.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="px-4 py-2 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-xs rounded-lg shadow-xs flex items-center gap-1.5 cursor-pointer transition-colors disabled:opacity-50"
+                      >
+                        <RotateCcw className={`w-3.5 h-3.5 ${isSubmitting ? 'animate-spin' : ''}`} />
+                        <span>{isSubmitting ? 'Retrying...' : 'Retry Submission'}</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 px-6 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-xs transition-colors cursor-pointer block text-center disabled:opacity-75"
+                  className={`w-full min-h-[48px] py-3.5 px-6 ${
+                    submissionError 
+                      ? 'bg-red-600 hover:bg-red-700 active:bg-red-800' 
+                      : 'bg-[#003B95] hover:bg-[#002D72] active:bg-[#002255]'
+                  } text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-xs transition-all cursor-pointer block text-center disabled:opacity-75 touch-manipulation active:scale-[0.99] flex items-center justify-center gap-2`}
                 >
-                  {isSubmitting ? 'SENDING ENQUIRY...' : 'SEND ENQUIRY'}
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <RotateCcw className="w-4 h-4 animate-spin" />
+                      <span>SENDING ENQUIRY...</span>
+                    </span>
+                  ) : submissionError ? (
+                    <span className="flex items-center gap-2">
+                      <RotateCcw className="w-4 h-4" />
+                      <span>RETRY SENDING ENQUIRY</span>
+                    </span>
+                  ) : (
+                    'SEND ENQUIRY'
+                  )}
                 </button>
               </form>
             )}

@@ -343,58 +343,42 @@ export const Hero: React.FC<HeroProps> = ({
 
           </div>
 
-          {/* Floating Card: "New Lead - Sarah Wanjiku" (Positioned cleanly on bottom right) */}
+          {/* Floating Card: "New Lead - Sarah Wanjiku" (Shifted to bottom-left / corner so the graph and curve are unobstructed) */}
           <div 
-            onClick={onOpenLeadModal}
-            className="absolute -bottom-3 sm:-bottom-8 right-2 sm:right-2 w-[160px] sm:w-[230px] bg-white rounded-xl p-2 sm:p-4 shadow-xl shadow-blue-900/15 border border-slate-100 z-20 hover:scale-[1.03] transition-transform duration-200 cursor-pointer group"
+            className="absolute -bottom-5 sm:-bottom-7 left-3 sm:-left-6 w-[170px] sm:w-[220px] bg-white rounded-xl p-2.5 sm:p-3.5 shadow-xl shadow-slate-900/10 border border-slate-100 z-20"
           >
             {/* Header */}
-            <div className="flex items-center justify-between mb-0.5 sm:mb-1">
-              <span className="text-[9px] sm:text-[11px] font-semibold text-slate-500">New Lead</span>
-              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500">New Lead</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
 
             {/* Lead Name & Info */}
-            <div className="mb-1 sm:mb-2">
-              <h3 className="font-bold text-slate-900 text-[11px] sm:text-sm leading-snug group-hover:text-blue-600 transition-colors">
+            <div className="mb-1.5">
+              <h3 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug">
                 Sarah Wanjiku
               </h3>
-              <p className="text-[9px] sm:text-[11px] text-slate-500 truncate">
+              <p className="text-[10px] sm:text-[11px] text-slate-500 truncate">
                 Consultation Enquiry
               </p>
             </div>
 
             {/* WhatsApp Badge */}
-            <div className="inline-flex items-center gap-1 sm:gap-1.5 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md bg-[#25D366]/10 text-[#128C7E] font-semibold text-[9px] sm:text-[11px] mb-1.5 sm:mb-3">
-              <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-[#25D366] flex items-center justify-center text-white">
-                <MessageCircle className="w-1.5 h-1.5 sm:w-2 sm:h-2 fill-current" />
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-[#25D366]/10 text-[#128C7E] font-semibold text-[10px] sm:text-[11px] mb-2 sm:mb-2.5">
+              <div className="w-3.5 h-3.5 rounded-full bg-[#25D366] flex items-center justify-center text-white">
+                <MessageCircle className="w-2 h-2 fill-current" />
               </div>
               <span>WhatsApp</span>
             </div>
 
-            {/* Details row */}
-            <div className="hidden sm:flex items-center justify-between text-[10px] text-slate-500 border-t border-slate-100 pt-2 mb-3">
-              <div>
-                <span className="text-slate-400 block">Lead Status</span>
-                <span className="font-bold text-slate-800 bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">New</span>
-              </div>
-              <div className="text-right">
-                <span className="text-slate-400 block">Source</span>
-                <span className="font-bold text-slate-800">Website</span>
-              </div>
-            </div>
-
-            {/* Action Button */}
+            {/* Action Button - Disabled */}
             <button
               id="hero-view-lead-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpenLeadModal();
-              }}
-              className="w-full py-1 sm:py-1.5 px-2 sm:px-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[10px] sm:text-xs rounded-lg transition-colors flex items-center justify-center gap-1 shadow-xs cursor-pointer"
+              disabled
+              className="w-full py-1 sm:py-1.5 px-2 sm:px-3 bg-slate-100 text-slate-400 font-semibold text-[10px] sm:text-xs rounded-lg flex items-center justify-center gap-1 cursor-not-allowed border border-slate-200/80"
             >
               <span>View Lead</span>
-              <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+              <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 opacity-50" />
             </button>
           </div>
 

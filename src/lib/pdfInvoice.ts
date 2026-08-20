@@ -1,4 +1,4 @@
-import jsPDF from 'jspdf';
+import type { jsPDF } from 'jspdf';
 import { CustomServiceItem, BusinessInfo } from '../components/CustomPackagePage';
 
 export interface GenerateInvoiceParams {
@@ -9,14 +9,16 @@ export interface GenerateInvoiceParams {
   invoiceNumber?: string;
 }
 
-export function generateAndDownloadInvoicePDF({
+export async function generateAndDownloadInvoicePDF({
   businessInfo,
   selectedServices,
   monthlyTotal,
   setupFeeTotal,
   invoiceNumber = `ACE-${Math.floor(100000 + Math.random() * 900000)}`
-}: GenerateInvoiceParams): jsPDF {
-  const doc = new jsPDF({
+}: GenerateInvoiceParams): Promise<jsPDF> {
+  const { default: jsPDFClass } = await import('jspdf');
+  
+  const doc = new jsPDFClass({
     orientation: 'portrait',
     unit: 'mm',
     format: 'a4'

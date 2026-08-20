@@ -176,6 +176,7 @@ export const submitToGoogleForm = async (lead: AuditSubmissionRecord): Promise<{
 
 // ==========================================
 // CUSTOM PACKAGE LEADS & INVOICE SHEET SYNC
+// Target Dedicated Sheet URL: https://docs.google.com/spreadsheets/d/149YVJtgR_xChIxsspLOMGlKBQDt7G7iufErd5S3gicw/edit?gid=0#gid=0
 // ==========================================
 
 export interface CustomPackageLeadRecord {
@@ -198,8 +199,10 @@ export interface CustomPackageLeadRecord {
 }
 
 const CUSTOM_PACKAGE_STORAGE_KEY = 'aceso_custom_package_leads';
-export const CUSTOM_PACKAGE_TAB_NAME = 'Custom Package Leads';
-export const CUSTOM_PACKAGE_GID = '1225199164';
+export const CUSTOM_PACKAGE_SPREADSHEET_ID = '149YVJtgR_xChIxsspLOMGlKBQDt7G7iufErd5S3gicw';
+export const CUSTOM_PACKAGE_SHEET_GID = '0';
+export const CUSTOM_PACKAGE_SHEET_URL = `https://docs.google.com/spreadsheets/d/${CUSTOM_PACKAGE_SPREADSHEET_ID}/edit?gid=${CUSTOM_PACKAGE_SHEET_GID}#gid=${CUSTOM_PACKAGE_SHEET_GID}`;
+export const CUSTOM_PACKAGE_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxEP7N0WFcbVN8Z3aRT1GeRujKNeroDtkXjMCCEYvbwXrR9YZ44BAUOQkBSTcg5IAno/exec';
 
 export const getLocalCustomPackageLeads = (): CustomPackageLeadRecord[] => {
   try {
@@ -228,88 +231,102 @@ export const saveLocalCustomPackageLead = (record: CustomPackageLeadRecord): Cus
 
 export const submitCustomPackageLeadToGoogleSheet = async (
   record: CustomPackageLeadRecord
-): Promise<{ success: boolean; sheetUrl?: string; error?: string }> => {
+): Promise<{ success: boolean; sheetUrl: string; error?: string }> => {
   try {
     const savedRecord = saveLocalCustomPackageLead(record);
 
-    const fullPhone = savedRecord.phone;
+    const fullPhone = savedRecord.phone.trim();
     const servicesStr = savedRecord.selectedServices.join(', ');
-    const notesStr = `Monthly: KSh ${savedRecord.monthlyTotal.toLocaleString()} | Setup: KSh ${savedRecord.setupFeeTotal.toLocaleString()} | ${savedRecord.notes || ''}`;
+    const formattedDateTime = savedRecord.timestamp
+      ? new Date(savedRecord.timestamp).toLocaleString('en-KE', { timeZone: 'Africa/Nairobi', dateStyle: 'medium', timeStyle: 'short' })
+      : new Date().toLocaleString('en-KE', { timeZone: 'Africa/Nairobi', dateStyle: 'medium', timeStyle: 'short' });
 
-    const fieldPairs: Array<[string, string]> = [
-      ['entry.1668860375', savedRecord.contactName],
-      ['entry.433709509', savedRecord.businessName],
-      ['entry.1766097410', savedRecord.email],
-      ['entry.1871152956', fullPhone],
-      ['entry.1619825275', savedRecord.website || 'N/A'],
-      ['entry.724343250', savedRecord.industry || 'Other SME'],
-      ['entry.1931951336', 'Custom Package Quote'],
-      ['entry.1288868283', `KSh ${savedRecord.monthlyTotal.toLocaleString()}`],
-      ['entry.1595124604', 'Custom Package Calculator'],
-      ['entry.2011061417', notesStr],
-      ['fvv', '1'],
-      ['pageHistory', '0']
+    const rowValues = [
+      formattedDateTime,
+      savedRecord.contactName.trim(),
+      savedRecord.businessName.trim(),
+      savedRecord.email.trim(),
+      fullPhone,
+      (savedRecord.website || 'N/A').trim(),
+      savedRecord.industry || 'Other SME',
+      savedRecord.primaryGoal || 'Custom Marketing Package',
+      servicesStr,
+      savedRecord.serviceCount || savedRecord.selectedServices.length,
+      `KSh ${savedRecord.monthlyTotal.toLocaleString()}`,
+      `KSh ${savedRecord.setupFeeTotal.toLocaleString()}`,
+      savedRecord.notes?.trim() || ''
     ];
 
-    savedRecord.selectedServices.forEach(s => {
-      fieldPairs.push(['entry.1281264565', s]);
+    const scriptPayload: Record<string, any> = {
+      rowValues,
+      values: rowValues,
+      data: rowValues,
+      timestamp: formattedDateTime,
+      submissionDateTime: formattedDateTime,
+      date: formattedDateTime,
+      contactName: savedRecord.contactName.trim(),
+      fullName: savedRecord.contactName.trim(),
+      name: savedRecord.contactName.trim(),
+      businessName: savedRecord.businessName.trim(),
+      company: savedRecord.businessName.trim(),
+      email: savedRecord.email.trim(),
+      phone: fullPhone,
+      phoneNumber: fullPhone,
+      website: (savedRecord.website || 'N/A').trim(),
+      industry: savedRecord.industry || 'Other SME',
+      primaryGoal: savedRecord.primaryGoal || 'Custom Marketing Package',
+      selectedServices: servicesStr,
+      services: servicesStr,
+      serviceCount: savedRecord.serviceCount || savedRecord.selectedServices.length,
+      monthlyTotal: savedRecord.monthlyTotal,
+      monthlyTotalFormatted: `KSh ${savedRecord.monthlyTotal.toLocaleString()}`,
+      setupFeeTotal: savedRecord.setupFeeTotal,
+      setupFeeTotalFormatted: `KSh ${savedRecord.setupFeeTotal.toLocaleString()}`,
+      notes: savedRecord.notes?.trim() || '',
+      additionalNotes: savedRecord.notes?.trim() || '',
+      status: savedRecord.status || 'New Custom Package Request'
+    };
+
+    // Build full URL query parameters so Apps Script can read either e.parameter or e.postData.contents
+    const urlWithParams = new URL(CUSTOM_PACKAGE_WEBAPP_URL);
+    urlWithParams.searchParams.set('timestamp', formattedDateTime);
+    urlWithParams.searchParams.set('date', formattedDateTime);
+    urlWithParams.searchParams.set('contactName', savedRecord.contactName.trim());
+    urlWithParams.searchParams.set('fullName', savedRecord.contactName.trim());
+    urlWithParams.searchParams.set('name', savedRecord.contactName.trim());
+    urlWithParams.searchParams.set('businessName', savedRecord.businessName.trim());
+    urlWithParams.searchParams.set('company', savedRecord.businessName.trim());
+    urlWithParams.searchParams.set('email', savedRecord.email.trim());
+    urlWithParams.searchParams.set('phone', fullPhone);
+    urlWithParams.searchParams.set('phoneNumber', fullPhone);
+    urlWithParams.searchParams.set('website', (savedRecord.website || 'N/A').trim());
+    urlWithParams.searchParams.set('industry', savedRecord.industry || 'Other SME');
+    urlWithParams.searchParams.set('primaryGoal', savedRecord.primaryGoal || 'Custom Marketing Package');
+    urlWithParams.searchParams.set('selectedServices', servicesStr);
+    urlWithParams.searchParams.set('services', servicesStr);
+    urlWithParams.searchParams.set('serviceCount', String(savedRecord.serviceCount || savedRecord.selectedServices.length));
+    urlWithParams.searchParams.set('monthlyTotal', `KSh ${savedRecord.monthlyTotal.toLocaleString()}`);
+    urlWithParams.searchParams.set('setupFeeTotal', `KSh ${savedRecord.setupFeeTotal.toLocaleString()}`);
+    urlWithParams.searchParams.set('notes', savedRecord.notes?.trim() || '');
+
+    // Send a single POST request directly to the dedicated Custom Package Web App
+    await fetch(urlWithParams.toString(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(scriptPayload),
+      mode: 'no-cors'
     });
-
-    if (typeof document !== 'undefined') {
-      const iframeName = `gform_pkg_${Date.now()}`;
-      const iframe = document.createElement('iframe');
-      iframe.name = iframeName;
-      iframe.id = iframeName;
-      iframe.style.display = 'none';
-      iframe.style.position = 'absolute';
-      iframe.style.left = '-9999px';
-      document.body.appendChild(iframe);
-
-      const form = document.createElement('form');
-      form.target = iframeName;
-      form.action = GOOGLE_FORM_RESPONSE_URL;
-      form.method = 'POST';
-      form.style.display = 'none';
-
-      fieldPairs.forEach(([name, value]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = name;
-        input.value = value;
-        form.appendChild(input);
-      });
-
-      document.body.appendChild(form);
-      form.submit();
-
-      setTimeout(() => {
-        try {
-          document.body.removeChild(form);
-          document.body.removeChild(iframe);
-        } catch {}
-      }, 6000);
-    }
-
-    try {
-      const urlParams = new URLSearchParams();
-      fieldPairs.forEach(([k, v]) => urlParams.append(k, v));
-      await fetch(GOOGLE_FORM_RESPONSE_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: urlParams.toString()
-      });
-    } catch {}
 
     return {
       success: true,
-      sheetUrl: `https://docs.google.com/spreadsheets/d/${TARGET_SPREADSHEET_ID}/edit?resourcekey=&gid=${TARGET_SHEET_GID}#gid=${TARGET_SHEET_GID}`
+      sheetUrl: CUSTOM_PACKAGE_SHEET_URL
     };
   } catch (err: any) {
     console.error('Error submitting custom package lead:', err);
     return {
       success: false,
-      error: err.message || 'Failed to submit custom package lead'
+      sheetUrl: CUSTOM_PACKAGE_SHEET_URL,
+      error: err?.message || 'Unable to connect to Google Sheets server. Please check your network connection.'
     };
   }
 };
@@ -418,9 +435,14 @@ export const submitContactMessageToGoogleSheet = async (
       body: JSON.stringify(scriptPayload),
       mode: 'no-cors'
     });
-  } catch (err) {
-    console.warn('Web App fetch error:', err);
-  }
 
-  return { success: true, sheetUrl };
+    return { success: true, sheetUrl };
+  } catch (err: any) {
+    console.error('Contact message Web App fetch error:', err);
+    return { 
+      success: false, 
+      sheetUrl, 
+      error: err?.message || 'Unable to connect to Google Sheets server. Please check your connection.' 
+    };
+  }
 };

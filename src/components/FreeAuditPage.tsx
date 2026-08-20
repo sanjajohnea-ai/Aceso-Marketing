@@ -26,7 +26,9 @@ import {
   Sparkles,
   Calendar,
   Send,
-  AlertCircle
+  AlertCircle,
+  RotateCcw,
+  AlertTriangle
 } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -63,6 +65,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedLead, setSubmittedLead] = useState<AuditSubmissionRecord | null>(null);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const [emailError, setEmailError] = useState<string>('');
   const [phoneError, setPhoneError] = useState<string>('');
@@ -145,6 +148,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
     }
 
     setIsSubmitting(true);
+    setSubmissionError(null);
 
     const leadRecord: AuditSubmissionRecord = {
       timestamp: new Date().toISOString(),
@@ -166,14 +170,36 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
     // Save lead record in local store
     const savedRecord = saveLocalAuditLead(leadRecord);
 
-    // Submit directly to connected Google Form / Web App (appends to Google Sheet)
-    submitToGoogleForm(savedRecord).catch(console.error);
+    try {
+      const res = await submitToGoogleForm(savedRecord);
+      
+      if (!res.success) {
+        setIsSubmitting(false);
+        const errMsg = res.error || 'Unable to record your details in Google Sheets. Please check your connection.';
+        setSubmissionError(errMsg);
+        setToast({
+          type: 'error',
+          title: 'Submission Failed',
+          description: 'Failed to record in Google Sheets. Please click retry below.'
+        });
+        return;
+      }
 
-    setTimeout(() => {
+      setSubmissionError(null);
       setIsSubmitting(false);
       setSubmittedLead(savedRecord);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 400);
+    } catch (err: any) {
+      console.error('Audit submission error:', err);
+      setIsSubmitting(false);
+      const errMsg = err?.message || 'Network error: Failed to reach Google Sheets server.';
+      setSubmissionError(errMsg);
+      setToast({
+        type: 'error',
+        title: 'Submission Error',
+        description: 'Could not submit audit request. Please click retry below.'
+      });
+    }
   };
 
   // If details submitted, show the dedicated Discovery Booking page (Next Page)
@@ -783,17 +809,58 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                     </div>
                   </div>
 
+                  {/* Submission Error & Retry Banner */}
+                  {submissionError && (
+                    <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-in fade-in">
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center shrink-0 mt-0.5">
+                          <AlertTriangle className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h4 className="text-xs sm:text-sm font-bold text-red-900">
+                            Google Sheet Submission Failed
+                          </h4>
+                          <p className="text-xs text-red-700 mt-0.5 leading-relaxed">
+                            {submissionError}
+                          </p>
+                          <p className="text-[11px] text-red-600 mt-1 font-medium">
+                            Your filled answers are safe. Click retry to submit again.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="px-4 py-2 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-xs rounded-lg shadow-xs flex items-center gap-1.5 cursor-pointer transition-colors disabled:opacity-50"
+                        >
+                          <RotateCcw className={`w-3.5 h-3.5 ${isSubmitting ? 'animate-spin' : ''}`} />
+                          <span>{isSubmitting ? 'Retrying...' : 'Retry Submission'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Submit Button */}
                   <div>
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm sm:text-base transition-all shadow-md flex items-center justify-center gap-2.5 cursor-pointer active:scale-[0.99] disabled:opacity-70"
+                      className={`w-full py-4 rounded-xl ${
+                        submissionError 
+                          ? 'bg-red-600 hover:bg-red-700 active:bg-red-800' 
+                          : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+                      } text-white font-bold text-sm sm:text-base transition-all shadow-md flex items-center justify-center gap-2.5 cursor-pointer active:scale-[0.99] disabled:opacity-70`}
                     >
                       {isSubmitting ? (
                         <>
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <RotateCcw className="w-4 h-4 animate-spin" />
                           <span>Submitting Details...</span>
+                        </>
+                      ) : submissionError ? (
+                        <>
+                          <RotateCcw className="w-4 h-4" />
+                          <span>Retry Submitting Details</span>
                         </>
                       ) : (
                         <>

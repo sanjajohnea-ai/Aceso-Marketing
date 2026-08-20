@@ -30,7 +30,9 @@ import {
   MessageCircle,
   Briefcase,
   ExternalLink,
-  AlertCircle
+  AlertCircle,
+  RotateCcw,
+  AlertTriangle
 } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -306,6 +308,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
   const [showCompareModal, setShowCompareModal] = useState(false);
 
@@ -483,10 +486,11 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
     }
 
     setIsSubmitting(true);
+    setSubmissionError(null);
     
     const formattedPhone = `+254 ${businessInfo.phone.trim()}`;
 
-    // 1. Prepare custom package lead record targeting "Custom Package Leads" sheet tab
+    // 1. Prepare custom package lead record targeting dedicated Custom Package spreadsheet
     const customLead: CustomPackageLeadRecord = {
       timestamp: new Date().toISOString(),
       businessName: businessInfo.businessName.trim() || 'Custom Package SME',
@@ -504,38 +508,39 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
       status: 'Invoice Generated / New Lead'
     };
 
-    // 2. Submit to Google Sheets under "Custom Package Leads" tab (and save locally)
-    submitCustomPackageLeadToGoogleSheet(customLead).catch(console.error);
+    // 2. Submit directly to dedicated Google Sheet with explicit error check
+    try {
+      const res = await submitCustomPackageLeadToGoogleSheet(customLead);
+      
+      if (!res.success) {
+        setIsSubmitting(false);
+        const errMsg = res.error || 'Unable to sync submission to Google Sheets. Please check your internet connection and try again.';
+        setSubmissionError(errMsg);
+        setToast({
+          type: 'error',
+          title: 'Submission Failed',
+          message: 'Could not record your request in Google Sheets. Please click Retry below to try again.'
+        });
+        return;
+      }
 
-    // 3. Backward compatibility for audit leads storage
-    const leadRecord: AuditSubmissionRecord = {
-      timestamp: customLead.timestamp,
-      fullName: customLead.contactName,
-      businessName: customLead.businessName,
-      email: customLead.email,
-      phoneCode: '+254',
-      phone: businessInfo.phone.trim(),
-      website: customLead.website,
-      industry: customLead.industry,
-      primaryGoal: `Custom Package: ${selectedServices.map(s => s.name).join(', ')}`,
-      challenges: selectedServices.map(s => s.name),
-      marketingBudget: `KSh ${monthlyTotal.toLocaleString()} / mo (Setup: KSh ${setupFeeTotal.toLocaleString()})`,
-      referralSource: 'Custom Package Builder',
-      additionalNotes: customLead.notes || `Selected ${selectedServices.length} services: ${selectedServices.map(s => s.name).join(', ')}`,
-      status: 'Pending Audit'
-    };
-    saveLocalAuditLead(leadRecord);
+      setSubmissionError(null);
 
-    setToast({
-      type: 'success',
-      title: 'Proposal & Invoice Ready!',
-      message: `Your customized package for ${businessInfo.businessName || 'your business'} is ready.`
-    });
-
-    setTimeout(() => {
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      }, 400);
+    } catch (err: any) {
+      console.error('Submission error:', err);
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 600);
+      const errMsg = err?.message || 'Network error: Failed to reach Google Sheets server.';
+      setSubmissionError(errMsg);
+      setToast({
+        type: 'error',
+        title: 'Submission Failed',
+        message: 'Could not record your request in Google Sheets. Please click Retry below.'
+      });
+    }
   };
 
   return (
@@ -1199,20 +1204,61 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                 </div>
               </div>
 
+              {/* Submission Error & Retry Banner */}
+              {submissionError && (
+                <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-in fade-in">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-red-100 text-red-600 flex items-center justify-center shrink-0 mt-0.5">
+                      <AlertTriangle className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-bold text-red-900">
+                        Google Sheet Sync Failed
+                      </h4>
+                      <p className="text-xs text-red-700 mt-0.5 leading-relaxed">
+                        {submissionError}
+                      </p>
+                      <p className="text-[11px] text-red-600 mt-1 font-medium">
+                        All your entered business details are preserved. Click "Retry Submission" to try again.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="px-4 py-2 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-xs rounded-lg shadow-xs flex items-center gap-1.5 cursor-pointer transition-colors disabled:opacity-50"
+                    >
+                      <RotateCcw className={`w-3.5 h-3.5 ${isSubmitting ? 'animate-spin' : ''}`} />
+                      <span>{isSubmitting ? 'Retrying...' : 'Retry Submission'}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Action Bar */}
               <div className="pt-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-end gap-3">
                 <button
                   type="submit"
                   disabled={isSubmitting || !businessInfo.businessName.trim() || !businessInfo.contactName.trim() || !businessInfo.email.trim() || !businessInfo.phone.trim()}
-                  className="w-full sm:w-auto px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className={`w-full sm:w-auto px-8 py-3 rounded-xl ${
+                    submissionError 
+                      ? 'bg-red-600 hover:bg-red-700 active:bg-red-800' 
+                      : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+                  } text-white font-bold text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50`}
                 >
                   {isSubmitting ? (
-                    <span>Submitting Request...</span>
-                  ) : (
+                    <span className="flex items-center gap-2">
+                      <RotateCcw className="w-4 h-4 animate-spin" />
+                      <span>Submitting Request...</span>
+                    </span>
+                  ) : submissionError ? (
                     <>
-                      <span>Submit Custom Package Request</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <RotateCcw className="w-4 h-4" />
+                      <span>Retry Submission</span>
                     </>
+                  ) : (
+                    <span>Submit Custom Package Request</span>
                   )}
                 </button>
               </div>

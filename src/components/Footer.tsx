@@ -4,6 +4,7 @@ import {
   Phone, 
   MapPin, 
   MessageCircle, 
+  Mail,
   Linkedin,
   Twitter,
   Instagram,
@@ -164,6 +165,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
 
             <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
+              <li className="flex items-center gap-3 text-slate-200">
+                <Mail className="w-4 h-4 text-[#38bdf8] shrink-0" />
+                <a 
+                  href="mailto:support@acesosolutions.co.ke" 
+                  className="hover:text-white transition-colors break-all"
+                >
+                  support@acesosolutions.co.ke
+                </a>
+              </li>
               <li className="flex items-center gap-3 text-slate-200">
                 <Phone className="w-4 h-4 text-[#38bdf8] shrink-0" />
                 <span>+254 758 544 241</span>

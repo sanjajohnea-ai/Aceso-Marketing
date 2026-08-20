@@ -227,7 +227,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             Made For The Small Business
           </h1>
           <p className="text-white/95 text-xs sm:text-sm lg:text-base max-w-3xl leading-relaxed font-normal">
-            At Aceso Solutions, we believe every small business deserves the opportunity to grow, compete, and thrive in today’s digital marketplace. We provide practical, results-driven digital marketing strategies designed to help small businesses attract more customers, strengthen their online presence, and increase revenue. From the websites we build to the campaigns we manage and the ads we optimize, every solution is tailored to your business, your audience, and your goals, with a focus on measurable growth and long-term results.
+            At Aceso Solutions, we believe every small business deserves the opportunity to grow, compete, and thrive in today’s digital marketplace. From the websites we build to the campaigns we manage and the ads we optimize, every solution is tailored to your business, your audience, and your goals, with a focus on measurable growth and long-term results.
           </p>
         </div>
       </section>
@@ -282,6 +282,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               alt="African digital marketing professionals collaborating on search engine strategy and analytics" 
               className="w-full h-full object-cover object-center"
               loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -299,9 +300,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               src={socialMediaPhoneImg} 
               alt="3D smartphone displaying social media creator with floating 3D social icons" 
               className="w-full h-full object-cover object-center"
-              loading="eager"
+              loading="lazy"
               decoding="async"
-              fetchPriority="high"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -340,6 +340,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               alt="African business and marketing professionals collaborating in tech workspace analyzing paid campaigns" 
               className="w-full h-full object-cover object-center"
               loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
             />
           </div>

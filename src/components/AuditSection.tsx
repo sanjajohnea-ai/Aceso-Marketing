@@ -64,7 +64,7 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
                   src={teamSpecialistsImg} 
                   alt="Aceso Solutions team of marketing specialists collaborating"
                   className="w-full h-full object-cover object-center"
-                  loading="eager"
+                  loading="lazy"
                   decoding="async"
                 />
                 
