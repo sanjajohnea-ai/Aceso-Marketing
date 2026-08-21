@@ -7,7 +7,6 @@ import {
   UserCheck,
   ArrowRight
 } from 'lucide-react';
-import teamSpecialistsImg from '../assets/images/team_of_specialists_1787045033717.jpg';
 
 interface AuditSectionProps {
   onRequestAudit?: () => void;
@@ -61,11 +60,12 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
               {/* Team Photo Container */}
               <div className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/3] w-full bg-[#162235]">
                 <img 
-                  src={teamSpecialistsImg} 
-                  alt="Aceso Solutions team of marketing specialists collaborating"
+                  src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80" 
+                  alt="Aceso Solutions Kenyan digital marketing specialist and growth team collaborating"
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
                   decoding="async"
+                  referrerPolicy="no-referrer"
                 />
                 
                 {/* Subtle soft dark gradient overlay at bottom for badge contrast */}
