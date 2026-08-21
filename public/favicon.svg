@@ -1,0 +1,12 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aceso-blue-gradient" x1="8" y1="8" x2="92" y2="88" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563EB" />
+      <stop offset="1" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+  <!-- Main bold geometric triangular A shape -->
+  <path d="M50 8L8 88H32L50 50L68 88H92L50 8Z" fill="url(#aceso-blue-gradient)" />
+  <!-- Inner accent cutout fold -->
+  <path d="M50 36L35 70H65L50 36Z" fill="#FFFFFF" />
+</svg>
