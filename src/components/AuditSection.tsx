@@ -4,9 +4,12 @@ import {
   ThumbsUp, 
   MousePointerClick, 
   Pencil, 
-  UserCheck,
+  UserCheck, 
   ArrowRight
 } from 'lucide-react';
+
+// Real authentic photography of African professionals collaborating in modern office setting
+const teamSpecialistsRealPhoto = 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80';
 
 interface AuditSectionProps {
   onRequestAudit?: () => void;
@@ -60,8 +63,8 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
               {/* Team Photo Container */}
               <div className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/3] w-full bg-[#162235]">
                 <img 
-                  src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80" 
-                  alt="Aceso Solutions Kenyan digital marketing specialist and growth team collaborating"
+                  src={teamSpecialistsRealPhoto} 
+                  alt="Aceso Solutions team of marketing specialists collaborating"
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
                   decoding="async"

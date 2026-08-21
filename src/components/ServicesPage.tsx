@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import socialMediaPhoneImg from '../assets/images/social_media_3d_phone_1786954171422.jpg';
 import { 
   CheckCircle2, 
   ArrowRight, 
@@ -277,7 +278,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
           {/* Photo (Right) */}
           <div className="relative min-h-[280px] lg:min-h-full">
             <img 
-              src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&w=1200&q=80" 
+              src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?auto=format&fit=crop&w=1200&q=80" 
               alt="African digital marketing professionals collaborating on search engine strategy and analytics" 
               className="w-full h-full object-cover object-center"
               loading="lazy"
@@ -293,11 +294,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         {/* ------------------------------------------------------- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full min-h-[380px]">
           
-          {/* Photo (Left) - African social media marketer creating content */}
-          <div className="relative min-h-[300px] lg:min-h-full order-last lg:order-first bg-[#0b1320] overflow-hidden flex items-center justify-center">
+          {/* Photo (Left) - 3D Smartphone with Floating Social Icons */}
+          <div className="relative min-h-[300px] lg:min-h-full order-last lg:order-first bg-[#2b1055] overflow-hidden flex items-center justify-center">
             <img 
-              src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80" 
-              alt="African digital content creator and social media manager strategizing campaigns" 
+              src={socialMediaPhoneImg} 
+              alt="3D smartphone displaying social media creator with floating 3D social icons" 
               className="w-full h-full object-cover object-center"
               loading="lazy"
               decoding="async"
