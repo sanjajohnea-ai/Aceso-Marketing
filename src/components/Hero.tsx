@@ -164,7 +164,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* Subheading */}
           <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed w-full">
-            We help small and medium-sized businesses attract more customers, reactivate existing ones, and automate their marketing for sustainable growth.
+            Attract more customers. Re-engage your audience. Grow your business with smarter marketing.
           </p>
 
         </div>

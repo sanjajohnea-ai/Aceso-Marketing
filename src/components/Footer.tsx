@@ -4,11 +4,7 @@ import {
   Phone, 
   MapPin, 
   MessageCircle, 
-  Mail,
-  Linkedin,
-  Twitter,
-  Instagram,
-  Facebook
+  Mail
 } from 'lucide-react';
 
 interface FooterProps {
@@ -31,44 +27,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-sm">
               Digital growth partner for small and medium businesses. We help businesses attract customers, reactivate existing ones, and build smarter marketing systems.
             </p>
-            <div className="flex items-center gap-3 pt-1 sm:pt-2">
-              <a 
-                href="https://linkedin.com" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
-                aria-label="Twitter"
-              >
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a 
-                href="https://instagram.com" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a 
-                href="https://facebook.com" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#0e213d] hover:bg-[#1a3866] text-slate-300 hover:text-white flex items-center justify-center transition-colors" 
-                aria-label="Facebook"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-            </div>
           </div>
 
           {/* Company Links (lg: 2 cols) */}
@@ -198,11 +156,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
 
           <div className="flex items-center gap-2.5 flex-wrap justify-center md:justify-end">
-            <button onClick={() => onNavigate('home')} className="hover:text-slate-200 transition-colors cursor-pointer">
+            <button 
+              id="footer-privacy-link"
+              onClick={() => onNavigate('privacy-policy')} 
+              className="hover:text-slate-200 transition-colors cursor-pointer"
+            >
               Privacy Policy
             </button>
             <span className="text-slate-600">|</span>
-            <button onClick={() => onNavigate('home')} className="hover:text-slate-200 transition-colors cursor-pointer">
+            <button 
+              id="footer-terms-link"
+              onClick={() => onNavigate('terms-of-use')} 
+              className="hover:text-slate-200 transition-colors cursor-pointer"
+            >
               Terms of Use
             </button>
           </div>

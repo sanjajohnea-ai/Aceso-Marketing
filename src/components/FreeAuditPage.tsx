@@ -67,8 +67,18 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
   const [submittedLead, setSubmittedLead] = useState<AuditSubmissionRecord | null>(null);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [toast, setToast] = useState<ToastMessage | null>(null);
+  const [nameError, setNameError] = useState<string>('');
   const [emailError, setEmailError] = useState<string>('');
   const [phoneError, setPhoneError] = useState<string>('');
+  const [websiteError, setWebsiteError] = useState<string>('');
+
+  const validateName = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) {
+      return 'Full name is required';
+    }
+    return '';
+  };
 
   const validateEmail = (val: string) => {
     const trimmed = val.trim();
@@ -95,6 +105,17 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
     }
     if (trimmed.length < 9) {
       return 'Phone number must be at least 9 digits';
+    }
+    return '';
+  };
+
+  const validateWebsite = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) {
+      return 'Website / Social link is required';
+    }
+    if (trimmed.length < 3) {
+      return 'Please enter a valid website URL or social media handle/link';
     }
     return '';
   };
@@ -135,6 +156,12 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
   const handleAuditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const nameErr = validateName(formData.fullName);
+    if (nameErr) {
+      setNameError(nameErr);
+      return;
+    }
+
     const emailErr = validateEmail(formData.email);
     if (emailErr) {
       setEmailError(emailErr);
@@ -147,18 +174,24 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
       return;
     }
 
+    const webErr = validateWebsite(formData.website);
+    if (webErr) {
+      setWebsiteError(webErr);
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmissionError(null);
 
     const leadRecord: AuditSubmissionRecord = {
       timestamp: new Date().toISOString(),
       fullName: formData.fullName.trim(),
-      businessName: formData.businessName.trim(),
+      businessName: formData.website.trim() || formData.fullName.trim(),
       email: formData.email.trim(),
       phoneCode: formData.phoneCode,
       phone: formData.phone.trim(),
       website: formData.website.trim(),
-      industry: formData.industry,
+      industry: '',
       primaryGoal: formData.primaryGoal,
       challenges: formData.challenges,
       marketingBudget: formData.marketingBudget,
@@ -223,7 +256,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
       
       {/* Top Navbar */}
       <Navbar 
@@ -510,171 +543,156 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
               {/* Unified 1-Step Audit Form */}
               <form onSubmit={handleAuditSubmit} className="space-y-4 sm:space-y-5">
                 
-                {/* Row 1: Full Name + Business Name */}
+                {/* Row 1: Full Name */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                      <User className="w-4 h-4" />
+                    </div>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Your full name"
+                      value={formData.fullName}
+                      onChange={(e) => {
+                        setFormData({ ...formData, fullName: e.target.value });
+                        if (nameError) setNameError('');
+                      }}
+                      onBlur={() => {
+                        if (formData.fullName) setNameError(validateName(formData.fullName));
+                      }}
+                      className={`w-full pl-10 pr-3.5 py-2.5 rounded-lg border ${nameError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'} text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none transition-all`}
+                    />
+                  </div>
+                  {nameError && (
+                    <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                      <span>{nameError}</span>
+                    </p>
+                  )}
+                </div>
+
+                {/* Row 2: Email Address + Phone Number */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Full Name <span className="text-red-500">*</span>
+                      Email Address <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                        <User className="w-4 h-4" />
+                        <Mail className="w-4 h-4" />
                       </div>
                       <input
                         type="text"
                         required
-                        placeholder="Your full name"
-                        value={formData.fullName}
-                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                        placeholder="you@yourbusiness.com"
+                        value={formData.email}
+                        onChange={(e) => {
+                          const val = e.target.value.trim();
+                          setFormData({ ...formData, email: val });
+                          if (emailError) {
+                            setEmailError(validateEmail(val));
+                          }
+                        }}
+                        onBlur={() => {
+                          if (formData.email) {
+                            setEmailError(validateEmail(formData.email));
+                          }
+                        }}
+                        className={`w-full pl-10 pr-3.5 py-2.5 rounded-lg border ${emailError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'} text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none transition-all`}
                       />
                     </div>
+                    {emailError && (
+                      <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                        <span>{emailError}</span>
+                      </p>
+                    )}
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Business Name <span className="text-red-500">*</span>
+                      Phone Number <span className="text-red-500">*</span>
                     </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                        <Building2 className="w-4 h-4" />
+                    <div className={`flex rounded-lg border ${phoneError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500'} overflow-hidden transition-all bg-white`}>
+                      <div className="flex items-center gap-1.5 bg-slate-50 px-3 border-r border-slate-300 text-xs font-semibold text-slate-700 shrink-0 select-none">
+                        <span role="img" aria-label="Kenya Flag">🇰🇪</span>
+                        <span>{formData.phoneCode}</span>
                       </div>
                       <input
-                        type="text"
+                        type="tel"
                         required
-                        placeholder="Your business name"
-                        value={formData.businessName}
-                        onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                        className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                        inputMode="numeric"
+                        maxLength={10}
+                        placeholder="700000000"
+                        value={formData.phone}
+                        onChange={(e) => {
+                          const numericOnly = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+                          setFormData({ ...formData, phone: numericOnly });
+                          if (phoneError) setPhoneError('');
+                        }}
+                        onBlur={() => {
+                          if (formData.phone) {
+                            setPhoneError(validatePhone(formData.phone));
+                          }
+                        }}
+                        className="w-full px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
                       />
                     </div>
+                    {phoneError ? (
+                      <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                        <span>{phoneError}</span>
+                      </p>
+                    ) : (
+                      <p className="text-[10px] text-slate-400 mt-1">
+                        Numbers only (up to 10 digits, e.g. 712345678)
+                      </p>
+                    )}
                   </div>
                 </div>
 
-                  {/* Row 2: Email Address + Phone Number */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Email Address <span className="text-red-500">*</span>
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                          <Mail className="w-4 h-4" />
-                        </div>
-                        <input
-                          type="text"
-                          required
-                          placeholder="you@yourbusiness.com"
-                          value={formData.email}
-                          onChange={(e) => {
-                            const val = e.target.value.trim();
-                            setFormData({ ...formData, email: val });
-                            if (emailError) {
-                              setEmailError(validateEmail(val));
-                            }
-                          }}
-                          onBlur={() => {
-                            if (formData.email) {
-                              setEmailError(validateEmail(formData.email));
-                            }
-                          }}
-                          className={`w-full pl-10 pr-3.5 py-2.5 rounded-lg border ${emailError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'} text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none transition-all`}
-                        />
-                      </div>
-                      {emailError && (
-                        <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
-                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                          <span>{emailError}</span>
-                        </p>
-                      )}
+                {/* Row 3: Website / Social Link (Compulsory) */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                    Website/Social link <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                      <Globe className="w-4 h-4" />
                     </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Phone Number <span className="text-red-500">*</span>
-                      </label>
-                      <div className={`flex rounded-lg border ${phoneError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500'} overflow-hidden transition-all bg-white`}>
-                        <div className="flex items-center gap-1.5 bg-slate-50 px-3 border-r border-slate-300 text-xs font-semibold text-slate-700 shrink-0 select-none">
-                          <span role="img" aria-label="Kenya Flag">🇰🇪</span>
-                          <span>{formData.phoneCode}</span>
-                        </div>
-                        <input
-                          type="tel"
-                          required
-                          inputMode="numeric"
-                          maxLength={10}
-                          placeholder="700000000"
-                          value={formData.phone}
-                          onChange={(e) => {
-                            const numericOnly = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
-                            setFormData({ ...formData, phone: numericOnly });
-                            if (phoneError) setPhoneError('');
-                          }}
-                          onBlur={() => {
-                            if (formData.phone) {
-                              setPhoneError(validatePhone(formData.phone));
-                            }
-                          }}
-                          className="w-full px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                        />
-                      </div>
-                      {phoneError ? (
-                        <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
-                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                          <span>{phoneError}</span>
-                        </p>
-                      ) : (
-                        <p className="text-[10px] text-slate-400 mt-1">
-                          Numbers only (up to 10 digits, e.g. 712345678)
-                        </p>
-                      )}
-                    </div>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. yourwebsite.com or instagram.com/yourbusiness"
+                      value={formData.website}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setFormData({ ...formData, website: val });
+                        if (websiteError) setWebsiteError('');
+                      }}
+                      onBlur={() => {
+                        if (formData.website) {
+                          setWebsiteError(validateWebsite(formData.website));
+                        }
+                      }}
+                      className={`w-full pl-10 pr-3.5 py-2.5 rounded-lg border ${websiteError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'} text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none transition-all`}
+                    />
                   </div>
-
-                  {/* Row 3: Website + Industry */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Website <span className="text-slate-500 font-normal">(Optional)</span>
-                      </label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                          <Globe className="w-4 h-4" />
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="www.yourwebsite.com"
-                          value={formData.website}
-                          onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                          className="w-full pl-10 pr-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                        Industry <span className="text-red-500">*</span>
-                      </label>
-                      <select
-                        required
-                        value={formData.industry}
-                        onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all cursor-pointer"
-                      >
-                        <option value="">Select your industry</option>
-                        <option value="Home & Living / Interiors">Home & Living / Interiors</option>
-                        <option value="Real Estate & Property">Real Estate & Property</option>
-                        <option value="Healthcare & Wellness Clinics">Healthcare & Wellness Clinics</option>
-                        <option value="Professional & Financial Services">Professional & Financial Services</option>
-                        <option value="E-commerce & Retail">E-commerce & Retail</option>
-                        <option value="Hospitality, Events & Tours">Hospitality, Events & Tours</option>
-                        <option value="Automotive & Logistics">Automotive & Logistics</option>
-                        <option value="Education & Training">Education & Training</option>
-                        <option value="Technology & SaaS">Technology & SaaS</option>
-                        <option value="Other SME">Other SME</option>
-                      </select>
-                    </div>
-                  </div>
+                  {websiteError ? (
+                    <p className="text-[11px] font-semibold text-red-500 mt-1 flex items-center gap-1">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                      <span>{websiteError}</span>
+                    </p>
+                  ) : (
+                    <p className="text-[10px] text-slate-400 mt-1">
+                      Provide your website address, Instagram handle, Facebook page, or TikTok profile URL.
+                    </p>
+                  )}
+                </div>
 
                   {/* Primary Business Goal Cards */}
                   <div>

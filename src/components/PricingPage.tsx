@@ -26,7 +26,9 @@ import {
   Layers,
   Smartphone,
   Video,
-  Award
+  Award,
+  PhoneCall,
+  MessageSquare
 } from 'lucide-react';
 
 export interface PricingTier {
@@ -66,7 +68,7 @@ export const pricingCategories: PricingCategory[] = [
       {
         id: 'web-starter',
         name: 'SMALL BUSINESS STARTER SITE',
-        price: 'KSh 10,000',
+        price: 'From KSh 10,000',
         period: '/one-time',
         description: 'Get everything you need to start strong online with a five-page website template customized for your business.',
         icon: Rocket,
@@ -78,12 +80,12 @@ export const pricingCategories: PricingCategory[] = [
           'Basic on-page SEO setup',
           'Google Analytics, Google Tag, and Search Console integration'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'web-hosting-pro',
         name: 'SUCCEEDING SMALL HOSTING & MANAGEMENT',
-        price: 'KSh 15,000',
+        price: 'From KSh 15,000',
         period: '/year',
         description: 'Fast, secure, and stress-free website performance. We keep your website healthy, fast, and functional so you can focus on running your business.',
         icon: Server,
@@ -95,12 +97,12 @@ export const pricingCategories: PricingCategory[] = [
           'Secure hosting, SSL certification, and site management',
           'Daily backups and malware scanning'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'web-hosting-basic',
         name: 'BASIC WEBSITE HOSTING & MANAGEMENT',
-        price: 'KSh 7,500',
+        price: 'From KSh 7,500',
         period: '/year',
         description: 'Reliable hosting with essential maintenance. Get secure hosting and monthly updates that keep your site running smoothly.',
         icon: Cloud,
@@ -112,7 +114,7 @@ export const pricingCategories: PricingCategory[] = [
           'Basic technical support',
           'Email support response within 24–48 hours'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'web-custom',
@@ -130,7 +132,7 @@ export const pricingCategories: PricingCategory[] = [
           'Training and handover documentation',
           'Ongoing support available (optional)'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       }
     ]
   },
@@ -146,57 +148,63 @@ export const pricingCategories: PricingCategory[] = [
       {
         id: 'smm-starter',
         name: 'STARTER',
-        price: 'KSh 10,000',
+        price: 'From KSh 10,000',
         period: '/month',
-        description: 'Consistent, professional brand presence for emerging local businesses ready to establish credibility.',
+        description: 'Build your presence.',
         icon: Rocket,
         features: [
-          '1 Social Platform (Instagram or Facebook)',
-          '8 Custom Branded Posts per month',
-          'Professional Graphic Design & Color Palette',
-          'High-Intent Caption Writing & Hashtag Strategy',
-          'Optimal Peak-Time Scheduling & Distribution',
+          '1 Social Platform (Instagram or Facebook, or TikTok)',
+          '8 Custom Branded Posts per month (upto 6 reels)',
+          'Monthly Content Calendar',
+          'Social Media Strategy',
+          'Short-Form Video Content - Basic editing of client-provided videos',
+          'Strategic Caption & Hashtag Writing',
+          'Optimal Peak-Time Scheduling & Publishing',
           'Community Comment & DM Monitoring Assistance',
-          'Monthly Performance Analytics Report'
+          'Monthly Performance Report'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'smm-growth',
         name: 'GROWTH',
         isPopular: true,
-        price: 'KSh 20,000',
+        price: 'From KSh 20,000',
         period: '/month',
-        description: 'High-engagement multi-channel system with viral short-form video Reels and audience building.',
+        description: 'Grow your reach and engagement.',
         icon: Video,
         features: [
+          'Everything in Starter',
+          '12-16 Custom Branded Posts per month',
           '2 Social Platforms (Meta, TikTok or LinkedIn)',
-          '12–16 Custom Branded Posts per month',
-          '4 High-Retention Short-Form Videos (Reels / TikToks)',
-          'Engaging Carousels & Educational Infographics',
-          'Proactive Local Community Outreach & Engagement',
-          'Story Strategy & Highlight Organization',
-          'Monthly 1-on-1 Strategy & Conversion Consultation'
+          'Professional Photography & Videography',
+          'Includes upto 3 on-location shoots',
+          'Deeper + ongoing optimization strategy',
+          'Paid Ads A/B Testing + Paid Advertising Management',
+          'Weekly Performance Updates + Monthly Report'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'smm-custom',
         name: 'CUSTOM',
         price: 'Custom Pricing',
         period: '',
-        description: 'Tailored enterprise campaigns with dedicated content creators, on-site shoots, and custom KPI targets.',
+        description: 'Built around your goals.',
         icon: Edit3,
         features: [
-          'Custom platform coverage across all channels',
-          'On-site photo/video shooting & production sprints',
-          'Dedicated creative director and social manager',
-          'WhatsApp & CRM direct routing integration',
-          'Custom brand influencer campaigns',
-          'Weekly strategy calls & real-time analytics',
-          'Reputation and review management'
+          'Custom Social Media Strategy',
+          'Custom Platform Selection',
+          'Custom Content Production',
+          'Photography & Videography',
+          'Paid Advertising',
+          'Influencer Campaigns',
+          'SEO',
+          'Community Management',
+          'Campaign Management',
+          'Custom Reporting'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       }
     ]
   },
@@ -212,7 +220,7 @@ export const pricingCategories: PricingCategory[] = [
       {
         id: 'seo-local',
         name: 'STARTER',
-        price: 'KSh 15,000',
+        price: 'From KSh 15,000',
         period: '/month',
         description: 'Dominate local neighborhood search and Google Maps inquiries to capture nearby buyers.',
         icon: Target,
@@ -225,13 +233,13 @@ export const pricingCategories: PricingCategory[] = [
           'Weekly Geo-Tagged Google Business Posts',
           'Monthly Google Maps Discovery & Call Report'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'seo-growth',
         name: 'GROWTH',
         isPopular: true,
-        price: 'KSh 30,000',
+        price: 'From KSh 30,000',
         period: '/month',
         description: 'Comprehensive on-page, technical, and content SEO to beat major competitors across search engines.',
         icon: Rocket,
@@ -244,7 +252,7 @@ export const pricingCategories: PricingCategory[] = [
           'Local & Industry Backlink Acquisition Outreach',
           'Google Search Console & GA4 Funnel Tracking'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'seo-custom',
@@ -262,7 +270,7 @@ export const pricingCategories: PricingCategory[] = [
           'Full site migration & architecture protection',
           '24/7 rank monitoring & alerts'
         ],
-        buttonText: 'START BUILDING'
+        buttonText: 'GET STARTED'
       }
     ]
   },
@@ -279,7 +287,7 @@ export const pricingCategories: PricingCategory[] = [
       {
         id: 'ppc-starter',
         name: 'PPC STARTER',
-        price: 'KSh 15,000',
+        price: 'From KSh 15,000',
         period: '/month',
         description: 'Ideal for small businesses looking to generate leads and get quick visibility.',
         icon: MousePointerClick,
@@ -292,12 +300,12 @@ export const pricingCategories: PricingCategory[] = [
           'Monthly Performance Report',
           'Campaign Optimization'
         ],
-        buttonText: 'START GROWING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'ppc-growth',
         name: 'PPC GROWTH',
-        price: 'KSh 30,000',
+        price: 'From KSh 30,000',
         period: '/month',
         description: 'For businesses ready to scale with high-performing ad campaigns.',
         icon: TrendingUp,
@@ -310,7 +318,7 @@ export const pricingCategories: PricingCategory[] = [
           'A/B Ad Testing',
           'Weekly Optimization & Reporting'
         ],
-        buttonText: 'START GROWING'
+        buttonText: 'GET STARTED'
       },
       {
         id: 'ppc-custom',
@@ -328,7 +336,7 @@ export const pricingCategories: PricingCategory[] = [
           'Custom Audience & Retargeting Funnels',
           'Bi-Weekly Strategy & ROI Review Calls'
         ],
-        buttonText: 'START GROWING'
+        buttonText: 'GET STARTED'
       }
     ]
   }
@@ -1027,11 +1035,13 @@ const GoogleAdsHeroGraphic: React.FC = () => {
 interface CategoryPricingSectionProps {
   category: PricingCategory;
   onRequestAudit: () => void;
+  onOpenCustomBuilder?: () => void;
 }
 
 const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
   category,
-  onRequestAudit
+  onRequestAudit,
+  onOpenCustomBuilder
 }) => {
   const [activeTierIdx, setActiveTierIdx] = useState(0);
   const activeTier = category.tiers[activeTierIdx] || category.tiers[0];
@@ -1176,10 +1186,18 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
             <div className="pt-1 text-center">
               <button
                 type="button"
-                onClick={onRequestAudit}
+                onClick={() => {
+                  if (activeTier.id.includes('custom') || activeTier.name.toLowerCase().includes('custom')) {
+                    if (onOpenCustomBuilder) {
+                      onOpenCustomBuilder();
+                      return;
+                    }
+                  }
+                  onRequestAudit();
+                }}
                 className="w-full py-3.5 px-6 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs uppercase tracking-wider rounded-md shadow-xs transition-colors cursor-pointer block text-center"
               >
-                {activeTier.buttonText || 'START GROWING'}
+                {activeTier.buttonText || 'GET STARTED'}
               </button>
             </div>
           </div>
@@ -1203,7 +1221,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
               className="rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-200 border border-slate-200/80 bg-white flex flex-col justify-between"
             >
               {/* Card Blue Header */}
-              <div className="bg-[#003B95] text-white p-6 sm:p-7 flex items-center gap-4 sm:gap-5 min-h-[110px]">
+              <div className="bg-[#003B95] text-white p-6 sm:p-7 flex items-center gap-4 sm:gap-5 min-h-[115px]">
                 <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white">
                   <TierIcon className="w-6 h-6 text-white" />
                 </div>
@@ -1225,9 +1243,9 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
               </div>
 
               {/* Card White Body */}
-              <div className="p-6 sm:p-8 bg-white flex flex-col justify-between flex-1 space-y-6">
+              <div className="p-5 sm:p-7 bg-white flex flex-col justify-between flex-1 space-y-4">
                 {/* Price Callout */}
-                <div className="text-center pt-2">
+                <div className="text-center pt-1 min-h-[44px] flex items-center justify-center">
                   <div className="inline-flex items-baseline gap-1.5 justify-center flex-wrap">
                     <span className="text-3xl sm:text-4xl font-extrabold text-[#003B95] tracking-tight">
                       {tier.price}
@@ -1243,8 +1261,8 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                 {/* Feature Checklist with Horizontal Separators & Blue Checkmark Badges */}
                 <div className="divide-y divide-slate-100 border-y border-slate-100">
                   {tier.features.map((feat, idx) => (
-                    <div key={idx} className="py-3 flex items-start gap-3 text-xs sm:text-sm text-slate-700">
-                      <CheckCircle2 className="w-5 h-5 text-[#003B95] shrink-0 mt-0.5" />
+                    <div key={idx} className="py-2.5 min-h-[46px] flex items-center gap-3 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-5 h-5 text-[#003B95] shrink-0" />
                       <span className="leading-snug">
                         {feat}
                       </span>
@@ -1256,10 +1274,18 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                 <div className="pt-2 text-center">
                   <button
                     type="button"
-                    onClick={onRequestAudit}
+                    onClick={() => {
+                      if (tier.id.includes('custom') || tier.name.toLowerCase().includes('custom')) {
+                        if (onOpenCustomBuilder) {
+                          onOpenCustomBuilder();
+                          return;
+                        }
+                      }
+                      onRequestAudit();
+                    }}
                     className="w-full py-3.5 px-6 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-xs transition-colors cursor-pointer block text-center"
                   >
-                    {tier.buttonText || 'START GROWING'}
+                    {tier.buttonText || 'GET STARTED'}
                   </button>
                 </div>
               </div>
@@ -1349,7 +1375,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
       
       {/* Navbar */}
       <Navbar 
@@ -1480,48 +1506,47 @@ export const PricingPage: React.FC<PricingPageProps> = ({
             key={category.id} 
             category={category} 
             onRequestAudit={onRequestAudit} 
+            onOpenCustomBuilder={onOpenCustomBuilder}
           />
         ))}
 
-        {/* Custom Solution / Bundle Banner */}
+        {/* Custom Solution / Consultation Banner */}
         <section className="bg-gradient-to-r from-[#002D72] via-[#003B95] to-[#0D47A1] text-white rounded-2xl p-8 sm:p-12 shadow-md relative overflow-hidden max-w-5xl mx-auto">
-          {/* Subtle Grid Accent */}
-          <div className="absolute inset-0 opacity-15 pointer-events-none">
-            <svg className="w-full h-full" width="100%" height="100%">
-              <defs>
-                <pattern id="cta-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-                  <path d="M 30 0 L 0 0 0 30" fill="none" stroke="white" strokeWidth="0.75" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#cta-grid)" />
-            </svg>
-          </div>
-
           <div className="relative z-10 max-w-3xl space-y-4">
             <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-white">
-              Need A Custom Growth Package?
+              Not sure which package is right for you?
             </h3>
-            <p className="text-blue-100 text-xs sm:text-sm leading-relaxed max-w-2xl">
-              Combine Web Design, SEO, Paid Advertising, and Social Media into a single unified growth retainer with bundled volume savings.
+            <p className="text-blue-100 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl">
+              Book a free 30-minute strategy call. We&apos;ll review your business, identify the highest-ROI opportunity, and recommend the right starting point.
             </p>
-            <div className="pt-4 flex flex-wrap gap-4">
+            <div className="pt-4 flex flex-wrap gap-4 items-center">
+              <a
+                href="https://calendar.app.google/i9YT96iwcduZDF8Q8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3.5 bg-white text-[#003B95] hover:bg-blue-50 font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-md transition-colors cursor-pointer flex items-center gap-2"
+              >
+                <PhoneCall className="w-4 h-4 text-[#003B95]" />
+                <span>BOOK A CALL</span>
+              </a>
+              
+              <a
+                href="https://wa.me/254700000000?text=Hi%20there,%20I'd%20like%20to%20consult%20about%20your%20digital%20marketing%20packages"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-md transition-colors cursor-pointer flex items-center gap-2"
+              >
+                <MessageSquare className="w-4 h-4 text-white" />
+                <span>TALK ON WHATSAPP</span>
+              </a>
+
               <button
                 type="button"
                 onClick={onRequestAudit}
-                className="px-6 py-3 bg-white text-[#003B95] hover:bg-blue-50 font-bold text-xs uppercase tracking-wider rounded-md shadow-xs transition-colors cursor-pointer flex items-center gap-2"
+                className="px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md transition-colors cursor-pointer"
               >
-                <span>Request Free Growth Audit</span>
-                <ArrowRight className="w-4 h-4" />
+                GET A FREE AUDIT
               </button>
-              {onOpenCustomBuilder && (
-                <button
-                  type="button"
-                  onClick={onOpenCustomBuilder}
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors cursor-pointer"
-                >
-                  Build Custom Package
-                </button>
-              )}
             </div>
           </div>
         </section>

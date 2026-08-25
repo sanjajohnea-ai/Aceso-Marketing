@@ -66,7 +66,7 @@ const industriesData: IndustryItem[] = [
   },
   {
     id: 'tours-travel',
-    name: 'Tours & Travel Companies',
+    name: 'Tours & Travel',
     category: 'TOURS & TRAVEL',
     tagline: 'Safari bookings, group tour sales & destination marketing for African travel brands',
     iconEmoji: '✈️',
@@ -100,7 +100,7 @@ const industriesData: IndustryItem[] = [
   },
   {
     id: 'healthcare',
-    name: 'Healthcare, Clinics & Medical Practices',
+    name: 'Healthcare & Clinics',
     category: 'MEDICAL & WELLNESS',
     tagline: 'Patient acquisition, Google Maps local visibility & automated appointment bookings',
     iconEmoji: '🏥',
@@ -135,7 +135,7 @@ const industriesData: IndustryItem[] = [
   },
   {
     id: 'real-estate',
-    name: 'Real Estate & Property Developers',
+    name: 'Real Estate',
     category: 'HIGH-VALUE ASSET SALES',
     tagline: 'High-intent buyer acquisition, diaspora investor funnels & project launch marketing',
     iconEmoji: '🏗️',
@@ -233,7 +233,7 @@ const industriesData: IndustryItem[] = [
   },
   {
     id: 'education',
-    name: 'Education & Online Courses',
+    name: 'Education',
     category: 'EDTECH & TRAINING',
     tagline: 'Student intake marketing, open-day webinar funnels & enrollment follow-ups',
     iconEmoji: '🎓',
@@ -273,7 +273,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
   const activeIndustry = industriesData.find(i => i.id === selectedIndustryId) || industriesData[0];
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen flex flex-col justify-between bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
       
       {/* Navigation */}
       <Navbar 

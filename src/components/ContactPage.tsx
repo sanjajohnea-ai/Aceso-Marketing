@@ -194,7 +194,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
       
       {/* Navbar */}
       <Navbar 

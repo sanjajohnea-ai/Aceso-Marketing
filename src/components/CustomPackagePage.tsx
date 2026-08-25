@@ -544,7 +544,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 flex flex-col selection:bg-blue-600 selection:text-white font-sans">
+    <div className="min-h-screen bg-slate-50/50 flex flex-col selection:bg-blue-600 selection:text-white font-sans pb-16 md:pb-0">
       
       {/* Main Website Header Navigation Bar */}
       <Navbar 

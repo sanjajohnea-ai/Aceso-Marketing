@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { SolutionItem } from '../types';
 
 interface SolutionsProps {
-  onSelectSolution: (solution: SolutionItem) => void;
+  onSelectSolution?: (solution: SolutionItem) => void;
   onViewAllServices?: () => void;
 }
 
@@ -25,7 +25,7 @@ export const solutionsData: SolutionItem[] = [
       'Landing pages',
       'Lead generation'
     ],
-    detailedDescription: 'We help you attract new customers through social media marketing, Meta and Google advertising, SEO, content marketing, landing pages, and lead generation. Our focus is not simply increasing traffic, but turning attention into qualified enquiries and customers.',
+    detailedDescription: 'Attract new customers through social media marketing, Meta and Google advertising, SEO, content marketing, landing pages, and lead generation. Turn attention into qualified enquiries and customers.',
     deliverables: [
       'Meta & Google Ads Campaign Setup & Management',
       'Conversion-Optimized Landing Page Design',
@@ -52,7 +52,7 @@ export const solutionsData: SolutionItem[] = [
       'Customer reactivation',
       'Review & reputation campaigns'
     ],
-    detailedDescription: 'Your existing customer database can be one of your most valuable marketing assets. We identify opportunities to reconnect with past customers through email, SMS, WhatsApp campaigns, follow-ups, abandoned-lead recovery, and targeted reactivation campaigns.',
+    detailedDescription: 'Reconnect with past customers through email, SMS, WhatsApp campaigns, follow-ups, abandoned-lead recovery, and targeted reactivation campaigns to drive recurring revenue.',
     deliverables: [
       'WhatsApp Business API Multi-Broadcast Automations',
       'Targeted SMS Flash Offers & Dormancy Triggers',
@@ -79,7 +79,7 @@ export const solutionsData: SolutionItem[] = [
       'Reporting & analytics',
       'System integrations'
     ],
-    detailedDescription: 'We connect the tools your business already uses to automate lead nurturing, customer follow-ups, appointment reminders, reporting, CRM workflows, and other repetitive marketing processes.',
+    detailedDescription: 'Connect the tools your business already uses to automate lead nurturing, customer follow-ups, appointment reminders, reporting, CRM workflows, and repetitive marketing processes.',
     deliverables: [
       'HubSpot, Zoho, or Pipedrive CRM Implementation',
       'Zapier & Make (Integromat) API Pipelines',
@@ -118,7 +118,7 @@ export const Solutions: React.FC<SolutionsProps> = ({
 
           {/* Subheading */}
           <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-            We help SMEs attract more customers, reactivate existing ones, and automate marketing processes so you can grow sustainably and increase revenue.
+            Attract more customers, reactivate existing ones, and automate marketing workflows for sustainable growth and increased revenue.
           </p>
         </div>
 
@@ -127,8 +127,7 @@ export const Solutions: React.FC<SolutionsProps> = ({
           
           {/* 1. Customer Acquisition */}
           <div 
-            onClick={() => onSelectSolution(solutionsData[0])}
-            className="group cursor-pointer flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10"
+            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md"
           >
             {/* Hexagon with Search & Pin Icon */}
             <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
@@ -154,14 +153,13 @@ export const Solutions: React.FC<SolutionsProps> = ({
               CUSTOMER ACQUISITION
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              We help you attract the right people and turn them into new customers through data-driven strategies and compelling campaigns.
+              Attract the right audience and convert them into paying customers through data-driven strategies and compelling campaigns.
             </p>
           </div>
 
           {/* 2. Customer Reactivation */}
           <div 
-            onClick={() => onSelectSolution(solutionsData[1])}
-            className="group cursor-pointer flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10"
+            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md"
           >
             {/* Hexagon with 2-Arrow Refresh Icon */}
             <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
@@ -187,14 +185,13 @@ export const Solutions: React.FC<SolutionsProps> = ({
               CUSTOMER REACTIVATION
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              We re-engage your existing customers and bring them back for more with personalized campaigns and smart communication.
+              Re-engage existing customers and drive repeat business with personalized campaigns and smart communication.
             </p>
           </div>
 
           {/* 3. Marketing Automation */}
           <div 
-            onClick={() => onSelectSolution(solutionsData[2])}
-            className="group cursor-pointer flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/10"
+            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md"
           >
             {/* Hexagon with Cursor Pointer Icon */}
             <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
@@ -217,7 +214,7 @@ export const Solutions: React.FC<SolutionsProps> = ({
               MARKETING AUTOMATION
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              We automate your marketing and sales processes to save time, reduce manual work, and improve results across every touchpoint.
+              Automate marketing and sales workflows to save time, reduce manual effort, and scale results across every touchpoint.
             </p>
           </div>
 
@@ -227,13 +224,7 @@ export const Solutions: React.FC<SolutionsProps> = ({
         <div className="flex items-center justify-center">
           <button
             type="button"
-            onClick={() => {
-              if (onViewAllServices) {
-                onViewAllServices();
-              } else {
-                onSelectSolution(solutionsData[0]);
-              }
-            }}
+            onClick={onViewAllServices}
             className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#162235] hover:bg-[#1f2e45] active:bg-[#131b2b] text-white border border-[#1e2e46] font-bold text-sm sm:text-base uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
           >
             <span>VIEW OUR SERVICES</span>

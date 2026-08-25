@@ -9,6 +9,7 @@ import {
   Building2, 
   Mail, 
   Phone, 
+  Globe,
   Video
 } from 'lucide-react';
 import { Navbar } from './Navbar';
@@ -61,7 +62,7 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
                 Details Submitted! Now Let's Book Your Discovery Call.
               </h1>
               <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
-                Thank you, <strong>{leadData.fullName}</strong>. Our growth strategist team is analyzing <strong>{leadData.businessName}</strong>. 
+                Thank you, <strong>{leadData.fullName}</strong>. Our growth strategist team is preparing your custom growth analysis. 
                 Your tailored audit report will be dispatched to <strong>{leadData.email}</strong> and WhatsApp <strong>{leadData.phoneCode} {leadData.phone}</strong>.
               </p>
             </div>
@@ -104,7 +105,7 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
                 </div>
 
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Lock in a 30-minute strategic consultation with our Senior Growth Strategist to review your audit findings, walk through quick revenue opportunities, and clarify the best roadmap for {leadData.businessName}.
+                  Lock in a 30-minute strategic consultation with our Senior Growth Strategist to review your audit findings, walk through quick revenue opportunities, and clarify the best roadmap for your business.
                 </p>
 
                 {/* Session Highlights */}
@@ -165,18 +166,20 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
                   <span className="font-bold text-slate-900">{leadData.fullName}</span>
                 </div>
 
-                <div className="flex items-center justify-between pt-2.5">
-                  <span className="text-slate-500 flex items-center gap-1.5">
-                    <Building2 className="w-3.5 h-3.5" /> Business:
-                  </span>
-                  <span className="font-bold text-slate-900">{leadData.businessName}</span>
-                </div>
+                {leadData.website && (
+                  <div className="flex items-center justify-between pt-2.5">
+                    <span className="text-slate-500 flex items-center gap-1.5">
+                      <Globe className="w-3.5 h-3.5" /> Website / Social:
+                    </span>
+                    <span className="font-bold text-slate-900 truncate max-w-[200px]">{leadData.website}</span>
+                  </div>
+                )}
 
                 <div className="flex items-center justify-between pt-2.5">
                   <span className="text-slate-500 flex items-center gap-1.5">
                     <Mail className="w-3.5 h-3.5" /> Email:
                   </span>
-                  <span className="font-bold text-slate-900">{leadData.email}</span>
+                  <span className="font-bold text-slate-900 truncate max-w-[200px]">{leadData.email}</span>
                 </div>
 
                 <div className="flex items-center justify-between pt-2.5">
@@ -190,13 +193,6 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
                   <span className="text-slate-500">Primary Goal:</span>
                   <span className="font-bold text-blue-600">{leadData.primaryGoal}</span>
                 </div>
-
-                {leadData.industry && (
-                  <div className="flex items-center justify-between pt-2.5">
-                    <span className="text-slate-500">Industry:</span>
-                    <span className="font-semibold text-slate-800">{leadData.industry}</span>
-                  </div>
-                )}
               </div>
             </div>
 

@@ -18,7 +18,23 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [pricingDropdownOpen, setPricingDropdownOpen] = useState(false);
   const [mobilePricingExpanded, setMobilePricingExpanded] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Monitor scroll position for dynamic navbar box-shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 12) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const pricingSubmenuItems = [
     {
@@ -64,7 +80,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs">
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
+          isScrolled 
+            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-md shadow-slate-900/8' 
+            : 'bg-white/90 backdrop-blur-sm border-b border-slate-100/60 shadow-none'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
           

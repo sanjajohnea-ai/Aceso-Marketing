@@ -17,8 +17,9 @@ const faqData: FAQItem[] = [
     id: 'faq-2',
     question: 'Is hiring a digital marketing agency worth it?',
     answer: [
-      'Digital marketing requires more than posting on social media or running an occasional advert. It takes the right strategy, consistent execution, ongoing testing, and the ability to understand what the data is telling you. At Aceso Solutions, we bring social media marketing, SEO, and PPC advertising together to help you attract the right customers and turn your digital presence into a growth channel. Instead of spending your time trying to figure out what to post or which keywords to target, you have a dedicated team focused on making your marketing work harder for your business.',
-      'With Aceso Solutions, you gain access to an entire team of specialists working together, each an expert in their field, which is usually more cost-effective to hire and manage in-house.'
+      'Digital marketing requires more than posting on social media or running an occasional advert. It takes the right strategy, consistent execution, ongoing testing, and the ability to understand what the data is telling you. At Aceso Solutions, we bring social media marketing, SEO, and PPC advertising together to help you attract the right customers and turn your digital presence into a growth channel.',
+      'Instead of spending your time trying to figure out what to post or which keywords to target, you have a dedicated team focused on making your marketing work harder for your business.',
+      'With Aceso Solutions, you gain access to an entire team of specialists working together, each an expert in their field, which is usually more cost-effective than hiring and manage in-house.'
     ]
   },
   {
