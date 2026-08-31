@@ -247,10 +247,9 @@ export const Packages: React.FC<PackagesProps> = ({
       
       {/* Section Header */}
       <div className="text-center mb-8 sm:mb-10 lg:mb-12">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
+        <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#C25E00] mb-3 sm:mb-4">
           OUR SOCIAL MEDIA PACKAGES
-        </div>
+        </p>
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-2 sm:mb-3">
           Choose the package that fits your goals
         </h2>

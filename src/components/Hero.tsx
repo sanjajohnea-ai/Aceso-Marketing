@@ -156,16 +156,10 @@ export const Hero: React.FC<HeroProps> = ({
         {/* Left Column: Hero Copy & Value Proposition */}
         <div className="lg:col-span-6 flex flex-col items-start text-left w-full">
           
-          {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53] animate-pulse" />
-            HOSPITALITY & SME GROWTH PLATFORM
-          </div>
-
-          {/* Main Title */}
-          <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-extrabold text-slate-900 leading-[1.15] tracking-tight mb-3 sm:mb-4">
+          {/* Main Title - D-EDGE Bold Uppercase Style */}
+          <h1 className="text-2xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-extrabold uppercase tracking-tight text-[#2D1C59] leading-[1.18] mb-4 sm:mb-5">
             Digital solutions <br className="hidden sm:inline" />
-            that drive <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">real growth</span>
+            that drive real growth
           </h1>
 
           {/* Subheading */}
@@ -182,8 +176,7 @@ export const Hero: React.FC<HeroProps> = ({
             
             {/* Top Bar of Card */}
             <div className="flex items-center justify-between mb-2.5 sm:mb-5">
-              <h2 className="text-xs sm:text-base lg:text-lg font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#DE8E53]" />
+              <h2 className="text-xs sm:text-base lg:text-lg font-bold text-slate-900">
                 Growth Overview
               </h2>
 

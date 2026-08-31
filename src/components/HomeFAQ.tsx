@@ -61,10 +61,9 @@ export const HomeFAQ: React.FC = () => {
         {/* Section Header (Centered) */}
         <div className="text-center mb-8 sm:mb-10 max-w-3xl mx-auto">
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
+          <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#C25E00] mb-3 sm:mb-4">
             FREQUENTLY ASKED QUESTIONS
-          </div>
+          </p>
 
           {/* Main Heading */}
           <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">

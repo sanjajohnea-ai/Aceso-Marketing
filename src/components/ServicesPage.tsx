@@ -200,8 +200,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         <div className="absolute -bottom-28 -left-20 w-[420px] h-[420px] bg-[#DE8E53]/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-5xl mx-auto w-full text-left space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#DE8E53] text-xs font-bold uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#DE8E53] text-xs font-bold uppercase tracking-wider">
             FULL-SERVICE AGENCY
           </div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wider text-white leading-tight font-sans">
@@ -219,11 +218,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       {/* ========================================================= */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center space-y-6">
         
-        {/* Dotted Accent Header */}
-        <div className="flex items-center justify-center gap-3 text-[#C25E00] font-bold text-xs sm:text-sm uppercase tracking-widest">
-          <span className="tracking-[0.3em] font-mono text-xs opacity-70">••••••••••</span>
-          <span className="px-1">Full-Service Digital Marketing Agency</span>
-          <span className="tracking-[0.3em] font-mono text-xs opacity-70">••••••••••</span>
+        {/* Section Header */}
+        <div className="flex items-center justify-center text-[#C25E00] font-bold text-xs sm:text-sm uppercase tracking-widest">
+          <span>Full-Service Digital Marketing Agency</span>
         </div>
 
         {/* Intro Paragraph (Rephrased for Aceso Solutions) */}
@@ -345,11 +342,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       {/* ========================================================= */}
       <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center space-y-6">
         
-        {/* Dotted Accent Header */}
-        <div className="flex items-center justify-center gap-3 text-[#C25E00] font-bold text-xs sm:text-sm uppercase tracking-widest">
-          <span className="tracking-[0.3em] font-mono text-xs opacity-70">••••••••••</span>
-          <span className="px-1">Our Marketing Philosophy</span>
-          <span className="tracking-[0.3em] font-mono text-xs opacity-70">••••••••••</span>
+        {/* Section Header */}
+        <div className="flex items-center justify-center text-[#C25E00] font-bold text-xs sm:text-sm uppercase tracking-widest">
+          <span>Our Marketing Philosophy</span>
         </div>
 
         {/* Philosophy Paragraph */}

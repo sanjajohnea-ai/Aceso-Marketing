@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { VetClinicsDetailedSection } from './VetClinicsDetailedSection';
 import { 
   Check,
   X
@@ -130,6 +131,43 @@ const industriesData: IndustryItem[] = [
         num: '03',
         title: 'Doctor Authority Content',
         description: 'Educational video clips establishing clinical trust, safety, and modern treatment methods.'
+      }
+    ]
+  },
+  {
+    id: 'vet-clinics',
+    name: 'Vet Clinics',
+    category: 'VETERINARY & ANIMAL HOSPITALS',
+    tagline: 'High-Value Clinical Intent (HVCI) pet owner acquisition, Google Maps 3-Pack SEO & PIMS appointment booking automation',
+    iconEmoji: '🐾',
+    roadblocks: [
+      'Ineffective generalist marketing with broad ad spend that fails to understand pet-owner search behavior, urgency triggers, and clinical intent',
+      'The "Volume Trap" of low-value routine wellness visits exhausting veterinary staff while corporate consolidators drive up client acquisition costs',
+      'Online invisibility in local search: failing to rank in the Google Maps 3-Pack or be cited as a recommended animal hospital by AI tools like ChatGPT and Google AI Overviews',
+      'Fragmented booking workflows where phone tag, unconfirmed inquiries, and lack of PIMS software integration lead to empty exam slots'
+    ],
+    solutions: [
+      'High-Value Clinical Intent (HVCI) campaigns targeting pet owners seeking specialty surgery, advanced diagnostics, animal healthcare, and chronic disease management',
+      'Multi-channel veterinary advertising across Google Search Ads, Google Local Services Ads (LSA), Meta (Facebook & Instagram), and WhatsApp direct booking campaigns',
+      'Google Business Review Optimization & Maps 3-Pack positioning with automated 5-star review collection and reputation management',
+      'AI-First Veterinary SEO & Google Maps optimization with Neural Entity Mapping (NEM) so your hospital is cited by search engines and dominates "emergency vet near me"',
+      '100% transparent reporting on confirmed appointment inquiries, cost per new client, and direct clinical revenue attribution with full account ownership'
+    ],
+    deliverables: [
+      {
+        num: '01',
+        title: 'High-Value Clinical Intent (HVCI) Engine',
+        description: 'Engineered ad funnels on Google, Meta, and WhatsApp capturing high-production clinical cases like specialty surgery, animal care, and advanced diagnostics.'
+      },
+      {
+        num: '02',
+        title: 'AI-First Veterinary SEO & Local Maps 3-Pack',
+        description: 'Dominate local "emergency vet near me" map searches with Neural Entity Mapping that positions your animal hospital as the top cited choice in Google AI Overviews & ChatGPT.'
+      },
+      {
+        num: '03',
+        title: 'PIMS Direct Booking Integration',
+        description: 'Automated integration with Covetrus, IDEXX Neo, Cornerstone, or ezyVet converting high-intent pet owners into confirmed calendar exam appointments.'
       }
     ]
   },
@@ -312,93 +350,107 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
         {/* Detail Card Directly Underneath Top Selector */}
         <div className="w-full overflow-hidden">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndustry.id}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-6 sm:p-8 space-y-6"
-            >
-              {/* Header Info */}
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                  {activeIndustry.name}
-                </h2>
-                <p className="text-sm sm:text-base text-slate-600 mt-1.5 leading-relaxed max-w-4xl">
-                  {activeIndustry.tagline}
-                </p>
-              </div>
-
-              {/* Roadblocks vs How Aceso Solves It */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 py-5 border-t border-b border-slate-100">
-                
-                {/* Left: Common Roadblocks */}
-                <div className="lg:col-span-5 space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-500">
-                    <span className="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>
-                    <span>COMMON ROADBLOCKS</span>
-                  </div>
-
-                  <ul className="space-y-3 text-xs sm:text-sm text-slate-700 leading-snug">
-                    {activeIndustry.roadblocks.map((rb, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5">
-                        <span className="w-4 h-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center shrink-0 mt-0.5 text-[9px] font-bold">
-                          ✕
-                        </span>
-                        <span>{rb}</span>
-                      </li>
-                    ))}
-                  </ul>
+            {activeIndustry.id === 'vet-clinics' ? (
+              <motion.div
+                key="vet-clinics-detailed"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full"
+              >
+                <VetClinicsDetailedSection 
+                  onRequestAudit={onRequestAudit}
+                  onNavigate={onNavigate}
+                />
+              </motion.div>
+            ) : (
+              <motion.div
+                key={activeIndustry.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-6 sm:p-8 space-y-6"
+              >
+                {/* Header Info */}
+                <div>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    {activeIndustry.name}
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 mt-1.5 leading-relaxed max-w-4xl">
+                    {activeIndustry.tagline}
+                  </p>
                 </div>
 
-                {/* Right: How Aceso Solves It */}
-                <div className="lg:col-span-7 space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-slate-500">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-                    <span>HOW ACESO SOLVES IT</span>
-                  </div>
-
-                  <ul className="space-y-3 text-xs sm:text-sm text-slate-700 leading-snug">
-                    {activeIndustry.solutions.map((sol, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5">
-                        <span className="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">
-                          ✓
-                        </span>
-                        <span>{sol}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-              </div>
-
-              {/* Core Growth Deliverables */}
-              <div className="space-y-3 pt-1">
-                <h3 className="text-xs font-bold tracking-wider uppercase text-slate-400">
-                  CORE GROWTH DELIVERABLES
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
-                  {activeIndustry.deliverables.map((del, idx) => (
-                    <div key={idx} className="space-y-1.5 bg-slate-50/70 p-4 rounded-2xl border border-slate-100">
-                      <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-md bg-amber-500/15 text-[#C25E00] font-bold text-[11px] flex items-center justify-center shrink-0 font-mono">
-                          {del.num}
-                        </span>
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
-                          {del.title}
-                        </h4>
-                      </div>
-                      <p className="text-xs text-slate-500 leading-relaxed">
-                        {del.description}
-                      </p>
+                {/* Roadblocks vs How Aceso Solves It */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 py-5 border-t border-b border-slate-100">
+                  
+                  {/* Left: Common Roadblocks */}
+                  <div className="lg:col-span-5 space-y-3">
+                    <div className="text-xs font-bold tracking-wider uppercase text-slate-500">
+                      COMMON ROADBLOCKS
                     </div>
-                  ))}
-                </div>
-              </div>
 
-            </motion.div>
+                    <ul className="space-y-3 text-xs sm:text-sm text-slate-700 leading-snug">
+                      {activeIndustry.roadblocks.map((rb, idx) => (
+                        <li key={idx} className="flex items-start gap-2.5">
+                          <span className="w-4 h-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center shrink-0 mt-0.5 text-[9px] font-bold">
+                            ✕
+                          </span>
+                          <span>{rb}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Right: How Aceso Solves It */}
+                  <div className="lg:col-span-7 space-y-3">
+                    <div className="text-xs font-bold tracking-wider uppercase text-slate-500">
+                      HOW ACESO SOLVES IT
+                    </div>
+
+                    <ul className="space-y-3 text-xs sm:text-sm text-slate-700 leading-snug">
+                      {activeIndustry.solutions.map((sol, idx) => (
+                        <li key={idx} className="flex items-start gap-2.5">
+                          <span className="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">
+                            ✓
+                          </span>
+                          <span>{sol}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                </div>
+
+                {/* Core Growth Deliverables */}
+                <div className="space-y-3 pt-1">
+                  <h3 className="text-xs font-bold tracking-wider uppercase text-slate-400">
+                    CORE GROWTH DELIVERABLES
+                  </h3>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+                    {activeIndustry.deliverables.map((del, idx) => (
+                      <div key={idx} className="space-y-1.5 bg-slate-50/70 p-4 rounded-2xl border border-slate-100">
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-md bg-amber-500/15 text-[#C25E00] font-bold text-[11px] flex items-center justify-center shrink-0 font-mono">
+                            {del.num}
+                          </span>
+                          <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
+                            {del.title}
+                          </h4>
+                        </div>
+                        <p className="text-xs text-slate-500 leading-relaxed">
+                          {del.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </main>

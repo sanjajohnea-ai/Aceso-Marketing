@@ -37,10 +37,9 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
           <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
             
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#DE8E53] text-xs font-bold uppercase tracking-wider mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
+            <p className="text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#DE8E53] mb-2 sm:mb-3">
               WHY CHOOSE ACESO SOLUTIONS
-            </div>
+            </p>
 
             {/* Main Heading */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-white tracking-tight leading-[1.2] mb-2 sm:mb-3">

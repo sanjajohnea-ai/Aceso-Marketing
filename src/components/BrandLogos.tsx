@@ -89,6 +89,23 @@ const brands = [
       </svg>
     ),
     label: <span className="font-bold text-base sm:text-lg text-slate-800">LinkedIn</span>
+  },
+  {
+    name: 'Brevo',
+    icon: (
+      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-[#0B996F] flex items-center justify-center text-white shrink-0 shadow-xs">
+        <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z" opacity="0.1"/>
+          <path d="M4.5 12a7.5 7.5 0 0 1 12.8-5.3l-2.12 2.12A4.5 4.5 0 0 0 7.5 12c0 2.48 2.02 4.5 4.5 4.5a4.48 4.48 0 0 0 3.18-1.32l2.12 2.12A7.47 7.47 0 0 1 12 19.5a7.5 7.5 0 0 1-7.5-7.5z" fill="#FFFFFF"/>
+          <circle cx="12" cy="12" r="2.2" fill="#FFFFFF"/>
+        </svg>
+      </div>
+    ),
+    label: (
+      <div className="flex items-center">
+        <span className="font-extrabold text-base sm:text-lg text-[#0B996F] tracking-tight">brevo</span>
+      </div>
+    )
   }
 ];
 

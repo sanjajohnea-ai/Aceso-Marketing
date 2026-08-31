@@ -65,9 +65,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
 
             {/* Section 1 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">1</span>
-                Information We Collect
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                1. Information We Collect
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 When you interact with our website, request a digital growth audit, submit inquiries, or use our digital marketing services, we may collect the following types of information:
@@ -82,9 +81,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
 
             {/* Section 2 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">2</span>
-                How We Use Your Information
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                2. How We Use Your Information
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 We utilize the collected information strictly for legitimate business purposes:
@@ -111,9 +109,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
 
             {/* Section 3 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">3</span>
-                Data Sharing & Third-Party Platforms
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                3. Data Sharing & Third-Party Platforms
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 We do not sell, rent, or trade your data. We only share information with trusted third-party service providers necessary to operate our business and deliver services:
@@ -127,9 +124,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
 
             {/* Section 4 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">4</span>
-                Data Security & Storage
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                4. Data Security & Storage
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 We implement industry-standard administrative, technical, and physical security measures to protect your information against unauthorized access, alteration, disclosure, or destruction. Access to client databases and campaign assets is restricted strictly to authorized team members on a need-to-know basis.
@@ -138,9 +134,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
 
             {/* Section 5 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">5</span>
-                Your Rights & Choices
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                5. Your Rights & Choices
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 Under applicable data protection regulations, you have the right to:
@@ -155,9 +150,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
 
             {/* Section 6 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">6</span>
-                Cookies & Tracking Technologies
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                6. Cookies & Tracking Technologies
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 Our website uses standard browser cookies and tracking pixels to analyze traffic patterns, remember user preferences, and measure marketing campaign effectiveness. You can configure your browser to reject cookies, though some interactive features may experience limited functionality.
@@ -166,9 +160,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
 
             {/* Section 7 - Contact info */}
             <div className="pt-4 border-t border-slate-200 space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">7</span>
-                Contact Our Data Privacy Team
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                7. Contact Our Data Privacy Team
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 If you have questions, concerns, or requests regarding this Privacy Policy or how your data is handled, please contact us directly:

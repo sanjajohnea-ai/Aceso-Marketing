@@ -66,9 +66,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
 
             {/* Section 1 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">1</span>
-                Scope of Services
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                1. Scope of Services
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 Aceso Solutions provides digital marketing, customer acquisition, customer reactivation, and marketing automation solutions for small and medium-sized enterprises (SMEs). These services include, but are not limited to:
@@ -85,9 +84,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
 
             {/* Section 2 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">2</span>
-                Client Responsibilities & Account Access
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                2. Client Responsibilities & Account Access
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">To ensure timely and effective campaign execution, the client agrees to:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base">
@@ -112,9 +110,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
 
             {/* Section 3 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">3</span>
-                Fees, Invoicing & Payment Terms
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                3. Fees, Invoicing & Payment Terms
               </h2>
               <ul className="space-y-2 text-sm sm:text-base text-slate-600 list-disc list-inside pl-2">
                 <li><strong className="text-slate-800">Agency Service Fees:</strong> Service retainers and fixed package fees are invoiced in Kenyan Shillings (KES) or agreed currency prior to the commencement of each billing cycle.</li>
@@ -125,9 +122,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
 
             {/* Section 4 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">4</span>
-                Intellectual Property Rights
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                4. Intellectual Property Rights
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed mb-2">
                 <strong>Client Property:</strong> All client logos, trademarks, proprietary customer databases, and product data remain the exclusive property of the client.
@@ -139,9 +135,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
 
             {/* Section 5 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">5</span>
-                Performance & Marketing Disclaimers
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                5. Performance & Marketing Disclaimers
               </h2>
               <div className="p-4 sm:p-5 rounded-xl bg-amber-50/80 border border-amber-200/90 text-amber-900 text-sm sm:text-base flex items-start gap-3 leading-relaxed">
                 <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
@@ -153,9 +148,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
 
             {/* Section 6 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">6</span>
-                Cancellation & Termination
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                6. Cancellation & Termination
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 Either party may terminate a monthly recurring service agreement by providing written notice at least 14 days prior to the start of the next billing cycle. Prepaid agency fees for work already initiated or completed within the active billing month are non-refundable.
@@ -164,9 +158,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
 
             {/* Section 7 */}
             <div className="space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">7</span>
-                Governing Law & Jurisdiction
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                7. Governing Law & Jurisdiction
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 These Terms of Use and any disputes arising out of or related to our services shall be governed by and construed in accordance with the laws of the Republic of Kenya.
@@ -175,9 +168,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
 
             {/* Section 8 - Contact */}
             <div className="pt-4 border-t border-slate-200 space-y-3">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">8</span>
-                Questions & Legal Inquiries
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+                8. Questions & Legal Inquiries
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 If you have questions regarding these Terms of Use, please reach out to us:

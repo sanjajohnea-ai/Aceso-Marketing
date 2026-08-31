@@ -45,8 +45,8 @@ const pageMetadata = {
   },
   industries: {
     title: 'Industries We Work With | Aceso Solutions',
-    description: 'Purpose-built digital customer acquisition and revenue automation systems for Real Estate, Healthcare, Law, E-commerce, Hospitality, Trades, Tech & Education.',
-    keywords: 'hospitality marketing Kenya, hotel direct bookings Nairobi, medical clinic marketing Kenya, healthcare patient acquisition Nairobi, law firm marketing Kenya, legal SEO Nairobi, real estate digital marketing Kenya, property lead generation Nairobi, ecommerce marketing Kenya, Shopify ads Nairobi, home services marketing, contractor lead generation, B2B tech SaaS marketing Kenya, school enrollment marketing Nairobi, industry specific digital marketing, SME vertical growth agency Kenya'
+    description: 'Purpose-built digital customer acquisition and revenue automation systems for Vet Clinics, Healthcare, Hospitality, Real Estate, Law, E-commerce & Education.',
+    keywords: 'veterinary digital marketing agency, vet clinic patient acquisition, animal hospital SEO, hospitality marketing Kenya, hotel direct bookings Nairobi, medical clinic marketing Kenya, healthcare patient acquisition Nairobi, law firm marketing Kenya, legal SEO Nairobi, real estate digital marketing Kenya, property lead generation Nairobi, ecommerce marketing Kenya, Shopify ads Nairobi, SME vertical growth agency Kenya'
   },
   pricing: {
     title: 'Transparent Pricing & Plans | Aceso Solutions',

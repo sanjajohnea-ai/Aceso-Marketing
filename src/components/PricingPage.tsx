@@ -1049,29 +1049,11 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
 
   return (
     <section id={category.id} className="space-y-6 sm:space-y-8 scroll-mt-24">
-      {/* Dot Header (Matching D-EDGE copper style) */}
+      {/* Category Header */}
       <div className="text-center py-2 sm:py-4">
-        <div className="inline-flex items-center justify-center gap-2.5 sm:gap-4">
-          <span className="flex items-center gap-1 sm:gap-1.5 text-[#DE8E53]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-          </span>
-          
-          <h2 className="text-sm sm:text-lg lg:text-xl font-extrabold tracking-wider sm:tracking-widest uppercase text-[#0B132B] px-1 sm:px-2">
-            {category.bannerTitle}
-          </h2>
-
-          <span className="flex items-center gap-1 sm:gap-1.5 text-[#DE8E53]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
-          </span>
-        </div>
+        <h2 className="text-sm sm:text-lg lg:text-xl font-extrabold tracking-wider sm:tracking-widest uppercase text-[#0B132B] px-1 sm:px-2">
+          {category.bannerTitle}
+        </h2>
       </div>
 
       {/* MOBILE ONLY VIEW: Compact Segmented Plan Switcher */}

@@ -36,10 +36,9 @@ export const Process: React.FC = () => {
       {/* Section Header */}
       <div className="text-left mb-6 sm:mb-8 w-full">
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
+        <p className="text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#C25E00] mb-3 sm:mb-4">
           HOW WE WORK
-        </div>
+        </p>
 
         {/* Main Heading */}
         <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
