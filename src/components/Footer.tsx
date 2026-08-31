@@ -15,7 +15,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="bg-[#061224] text-slate-400 border-t border-[#0d2244]">
+    <footer className="bg-[#070D1E] text-slate-400 border-t border-slate-800">
       
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8">
@@ -25,12 +25,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="lg:col-span-4 space-y-4 sm:space-y-5">
             <AcesoLogo variant="light" size="md" onClick={() => onNavigate('home')} />
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Digital growth partner for small and medium businesses. We help businesses attract customers, reactivate existing ones, and build smarter marketing systems.
+              Digital growth partner for hospitality, clinics, and ambitious businesses. We help you attract high-intent customers and build automated marketing systems.
             </p>
           </div>
 
           {/* Company Links (lg: 2 cols) */}
-          <div className="lg:col-span-2 lg:border-r lg:border-[#0d2244] lg:pr-6">
+          <div className="lg:col-span-2 lg:border-r lg:border-slate-800 lg:pr-6">
             <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-3 sm:mb-5">
               COMPANY
             </h4>
@@ -38,7 +38,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button 
                   onClick={() => onNavigate('services')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
                   Our Services
                 </button>
@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button 
                   onClick={() => onNavigate('industries')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
                   Industries We Work With
                 </button>
@@ -54,7 +54,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button 
                   onClick={() => onNavigate('pricing-social')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
                   Plans & Pricing
                 </button>
@@ -62,7 +62,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button 
                   onClick={() => onNavigate('contact')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
                   Contact Us
                 </button>
@@ -71,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
 
           {/* Services & Pricing Links (lg: 3 cols) */}
-          <div className="lg:col-span-3 lg:border-r lg:border-[#0d2244] lg:pr-6">
+          <div className="lg:col-span-3 lg:border-r lg:border-slate-800 lg:pr-6">
             <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-3 sm:mb-5">
               SERVICES & PRICING
             </h4>
@@ -79,7 +79,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button 
                   onClick={() => onNavigate('pricing-social')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
                   Social Media Pricing
                 </button>
@@ -87,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button 
                   onClick={() => onNavigate('pricing-seo')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
                   SEO Pricing
                 </button>
@@ -95,7 +95,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button 
                   onClick={() => onNavigate('pricing-ppc')} 
-                  className="text-slate-300 hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
                   PPC Marketing Pricing
                 </button>
@@ -124,7 +124,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
             <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
               <li className="flex items-center gap-3 text-slate-200">
-                <Mail className="w-4 h-4 text-[#38bdf8] shrink-0" />
+                <Mail className="w-4 h-4 text-[#DE8E53] shrink-0" />
                 <a 
                   href="mailto:support@acesosolutions.co.ke" 
                   className="hover:text-white transition-colors break-all"
@@ -133,11 +133,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </a>
               </li>
               <li className="flex items-center gap-3 text-slate-200">
-                <Phone className="w-4 h-4 text-[#38bdf8] shrink-0" />
+                <Phone className="w-4 h-4 text-[#DE8E53] shrink-0" />
                 <span>+254 758 544 241</span>
               </li>
               <li className="flex items-center gap-3 text-slate-200">
-                <MapPin className="w-4 h-4 text-[#38bdf8] shrink-0" />
+                <MapPin className="w-4 h-4 text-[#DE8E53] shrink-0" />
                 <span>Mombasa, Kenya</span>
               </li>
             </ul>
@@ -147,7 +147,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       </div>
 
       {/* Bottom Legal bar */}
-      <div className="border-t border-[#0d2244] py-5 sm:py-6 px-4 sm:px-6 lg:px-8">
+      <div className="border-t border-slate-800 py-5 sm:py-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-[11px] sm:text-xs text-slate-400 text-center md:text-left">
           <div className="flex items-center gap-2 flex-wrap justify-center md:justify-start">
             <span>© 2026 Aceso Solutions. All rights reserved.</span>
@@ -159,7 +159,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <button 
               id="footer-privacy-link"
               onClick={() => onNavigate('privacy-policy')} 
-              className="hover:text-slate-200 transition-colors cursor-pointer"
+              className="hover:text-[#DE8E53] transition-colors cursor-pointer"
             >
               Privacy Policy
             </button>
@@ -167,7 +167,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <button 
               id="footer-terms-link"
               onClick={() => onNavigate('terms-of-use')} 
-              className="hover:text-slate-200 transition-colors cursor-pointer"
+              className="hover:text-[#DE8E53] transition-colors cursor-pointer"
             >
               Terms of Use
             </button>

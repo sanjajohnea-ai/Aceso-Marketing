@@ -40,7 +40,7 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#FAF9F6] text-slate-800 selection:bg-[#DE8E53] selection:text-white font-sans">
       {/* Top Navigation */}
       <Navbar 
         activeSection="audit"
@@ -76,21 +76,21 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
           <div className="lg:col-span-7 space-y-6">
             
             {/* Primary Appointment Card */}
-            <div className="bg-gradient-to-br from-blue-900 to-indigo-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-blue-800">
+            <div className="bg-gradient-to-br from-[#070D1E] via-[#0B132B] to-[#162235] rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-slate-800">
               
               {/* Background glows */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#DE8E53]/15 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
               <div className="relative z-10 space-y-6">
                 
                 <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/30 border border-blue-400/30 flex items-center justify-center text-blue-300">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-[#DE8E53]">
                       <Calendar className="w-5 h-5" />
                     </div>
                     <div>
-                      <span className="text-[11px] font-extrabold uppercase tracking-widest text-sky-300 block">
+                      <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#E5A958] block">
                         APPOINTMENT BOOKING
                       </span>
                       <h2 className="text-lg sm:text-xl font-black text-white">
@@ -111,7 +111,7 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
                 {/* Session Highlights */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-start gap-2.5">
-                    <Clock className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+                    <Clock className="w-4 h-4 text-[#DE8E53] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs font-bold text-white block">30 Minutes</span>
                       <span className="text-[11px] text-slate-300">Focused & high impact</span>
@@ -119,7 +119,7 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
                   </div>
 
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-start gap-2.5">
-                    <Video className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+                    <Video className="w-4 h-4 text-[#DE8E53] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs font-bold text-white block">Google Meet / Phone</span>
                       <span className="text-[11px] text-slate-300">Flexible direct call</span>
@@ -133,11 +133,11 @@ export const DiscoveryBookingPage: React.FC<DiscoveryBookingPageProps> = ({
                     href={CALENDAR_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-4 px-6 rounded-2xl bg-blue-500 hover:bg-blue-400 active:bg-blue-600 text-white font-black text-sm sm:text-base transition-all shadow-lg flex items-center justify-center gap-3 cursor-pointer group active:scale-[0.99]"
+                    className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] active:from-[#944700] active:to-[#803d00] text-white font-black text-sm sm:text-base transition-all shadow-lg flex items-center justify-center gap-3 cursor-pointer group active:scale-[0.99]"
                   >
                     <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     <span>Select Time & Book on Google Calendar</span>
-                    <ArrowUpRight className="w-5 h-5 text-sky-200" />
+                    <ArrowUpRight className="w-5 h-5 text-amber-200" />
                   </a>
                   <p className="text-[11px] text-slate-400 text-center mt-2.5">
                     Instant automated calendar confirmation & invitation link sent to your email.

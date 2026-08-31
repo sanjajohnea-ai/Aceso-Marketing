@@ -138,20 +138,20 @@ export const Packages: React.FC<PackagesProps> = ({
         key={pkg.id}
         className={`bg-white rounded-2xl p-6 sm:p-7 shadow-md hover:shadow-xl transition-all duration-300 border flex flex-col justify-between relative group ${
           isPopular
-            ? 'border-2 border-[#003B95] shadow-lg ring-4 ring-[#003B95]/5'
+            ? 'border-2 border-[#DE8E53] shadow-xl shadow-amber-500/10 ring-4 ring-[#DE8E53]/10'
             : isCustom
-            ? 'border border-slate-300 shadow-sm'
-            : 'border border-slate-200 hover:border-slate-300'
+            ? 'border border-slate-200/90 hover:border-slate-300 shadow-sm'
+            : 'border border-slate-200/90 hover:border-amber-300/80'
         }`}
       >
         {/* Top Badges */}
         {isPopular && (
-          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#003B95] text-white font-extrabold text-[10px] sm:text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm whitespace-nowrap z-10">
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white font-extrabold text-[10px] sm:text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md whitespace-nowrap z-10">
             MOST POPULAR
           </div>
         )}
         {isCustom && (
-          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-slate-900 text-white font-extrabold text-[10px] sm:text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm whitespace-nowrap z-10">
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#0B132B] text-white font-extrabold text-[10px] sm:text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm whitespace-nowrap z-10 border border-[#DE8E53]/30">
             MOST FLEXIBLE
           </div>
         )}
@@ -166,7 +166,7 @@ export const Packages: React.FC<PackagesProps> = ({
               {pkg.subBadge && (
                 <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full ${
                   isPopular
-                    ? 'bg-blue-50 text-[#003B95]'
+                    ? 'bg-amber-50 text-[#C25E00] border border-amber-200'
                     : isCustom
                     ? 'bg-slate-100 text-slate-700'
                     : 'bg-slate-100 text-slate-700'
@@ -185,7 +185,7 @@ export const Packages: React.FC<PackagesProps> = ({
           {/* Price Callout */}
           <div className="my-4 py-3.5 border-y border-slate-100 min-h-[64px] flex items-center">
             <div className="flex items-baseline gap-1.5 flex-wrap">
-              <span className="text-2xl sm:text-3xl font-extrabold text-[#003B95] tracking-tight">
+              <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 {pkg.price}
               </span>
               {pkg.period && (
@@ -200,7 +200,7 @@ export const Packages: React.FC<PackagesProps> = ({
           <div className="space-y-2.5 mb-6 flex-1">
             {pkg.features.map((feat, idx) => (
               <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
-                <CheckCircle2 className="w-4 h-4 text-[#003B95] shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0 mt-0.5" />
                 <span className="leading-snug font-medium text-slate-700">
                   {feat}
                 </span>
@@ -215,7 +215,7 @@ export const Packages: React.FC<PackagesProps> = ({
             <button
               id="package-custom-builder-btn"
               onClick={onOpenCustomBuilder}
-              className="w-full py-3.5 px-6 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-xs cursor-pointer active:scale-[0.99] text-center"
+              className="w-full py-3.5 px-6 rounded-xl bg-[#0B132B] hover:bg-[#16223D] text-white border border-[#DE8E53]/40 font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm cursor-pointer active:scale-[0.99] text-center"
             >
               {pkg.buttonText}
             </button>
@@ -223,7 +223,7 @@ export const Packages: React.FC<PackagesProps> = ({
             <button
               id={`package-${pkg.id}-details-btn`}
               onClick={() => onSelectPackage(pkg)}
-              className="w-full py-3.5 px-6 rounded-xl bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-md cursor-pointer active:scale-[0.99] text-center"
+              className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e5985e] hover:to-[#b85600] text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-md hover:shadow-lg hover:shadow-amber-500/20 cursor-pointer active:scale-[0.99] text-center"
             >
               {pkg.buttonText}
             </button>
@@ -231,7 +231,7 @@ export const Packages: React.FC<PackagesProps> = ({
             <button
               id={`package-${pkg.id}-details-btn`}
               onClick={() => onSelectPackage(pkg)}
-              className="w-full py-3.5 px-6 rounded-xl border-2 border-[#003B95] text-[#003B95] hover:bg-[#003B95] hover:text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all cursor-pointer active:scale-[0.99] text-center bg-transparent"
+              className="w-full py-3.5 px-6 rounded-xl border-2 border-[#DE8E53] text-[#C25E00] hover:bg-[#DE8E53] hover:text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all cursor-pointer active:scale-[0.99] text-center bg-transparent"
             >
               {pkg.buttonText}
             </button>
@@ -247,9 +247,10 @@ export const Packages: React.FC<PackagesProps> = ({
       
       {/* Section Header */}
       <div className="text-center mb-8 sm:mb-10 lg:mb-12">
-        <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-[#003B95] mb-2">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
           OUR SOCIAL MEDIA PACKAGES
-        </p>
+        </div>
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-2 sm:mb-3">
           Choose the package that fits your goals
         </h2>
@@ -292,17 +293,17 @@ export const Packages: React.FC<PackagesProps> = ({
       {/* Trust & Policy Micro-Badges */}
       <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-8 lg:gap-10 mt-8 sm:mt-10 text-xs sm:text-sm font-semibold text-slate-700">
         <div className="flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-[#003B95] shrink-0" />
+          <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0" />
           <span>No long-term contracts</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-[#003B95] shrink-0" />
+          <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0" />
           <span>Cancel anytime</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-[#003B95] shrink-0" />
+          <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0" />
           <span>Scalable as you grow</span>
         </div>
       </div>

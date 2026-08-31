@@ -273,7 +273,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
   const activeIndustry = industriesData.find(i => i.id === selectedIndustryId) || industriesData[0];
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen flex flex-col justify-between bg-[#FAF9F6] text-slate-800 selection:bg-[#DE8E53] selection:text-white pb-16 md:pb-0">
       
       {/* Navigation */}
       <Navbar 
@@ -297,7 +297,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
                   onClick={() => setSelectedIndustryId(ind.id)}
                   className={`snap-start shrink-0 flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer border select-none ${
                     isSelected
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-600/25 ring-2 ring-blue-600/20'
+                      ? 'bg-[#0B132B] text-[#DE8E53] border-[#0B132B] shadow-sm ring-2 ring-amber-500/30'
                       : 'bg-white text-slate-700 border-slate-200/90 hover:bg-slate-50 hover:border-slate-300'
                   }`}
                 >
@@ -383,7 +383,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
                   {activeIndustry.deliverables.map((del, idx) => (
                     <div key={idx} className="space-y-1.5 bg-slate-50/70 p-4 rounded-2xl border border-slate-100">
                       <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-md bg-blue-50 text-blue-600 font-bold text-[11px] flex items-center justify-center shrink-0 font-mono">
+                        <span className="w-5 h-5 rounded-md bg-amber-500/15 text-[#C25E00] font-bold text-[11px] flex items-center justify-center shrink-0 font-mono">
                           {del.num}
                         </span>
                         <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">

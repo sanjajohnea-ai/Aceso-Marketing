@@ -194,9 +194,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#FAF9F6] text-slate-800 font-sans antialiased selection:bg-[#DE8E53] selection:text-white pb-16 md:pb-0">
       
-      {/* Navbar */}
+      {/* Navigation */}
       <Navbar 
         activeSection="contact"
         onRequestAudit={onRequestAudit}
@@ -215,12 +215,25 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       )}
 
       {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-[#003B95] text-white py-16 sm:py-20 px-4 sm:px-6 lg:px-8 shadow-xs">
-        <div className="max-w-6xl mx-auto space-y-4">
+      <section className="relative overflow-hidden bg-gradient-to-r from-[#070D1E] via-[#0B132B] to-[#162235] text-white py-16 sm:py-20 px-4 sm:px-6 lg:px-8 shadow-xs">
+        {/* SVG Geometric Grid Pattern */}
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          <svg className="w-full h-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="contact-grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(222,142,83,0.4)" strokeWidth="1" />
+                <circle cx="20" cy="20" r="1.5" fill="rgba(222,142,83,0.6)" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#contact-grid-pattern)" />
+          </svg>
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto space-y-4">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white leading-tight">
             LET'S TALK GROWTH
           </h1>
-          <p className="text-white/90 text-sm sm:text-base max-w-2xl leading-relaxed font-normal">
+          <p className="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed font-normal">
             Tell us about your business and we'll come back with a free growth audit and a recommended package.
           </p>
         </div>
@@ -258,7 +271,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       message: ''
                     });
                   }}
-                  className="px-6 py-2.5 bg-[#003B95] text-white font-bold text-xs uppercase tracking-wider rounded-md hover:bg-[#002D72] transition-colors cursor-pointer"
+                  className="px-6 py-2.5 bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors cursor-pointer"
                 >
                   Send Another Enquiry
                 </button>
@@ -286,7 +299,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       setNameError('');
                     }}
                     placeholder="Jane Wanjiku"
-                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
+                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DE8E53] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
                       nameError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
                     }`}
                   />
@@ -317,7 +330,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       }
                     }}
                     placeholder="jane@business.co.ke"
-                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
+                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DE8E53] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
                       emailError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
                     }`}
                   />
@@ -350,7 +363,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       }
                     }}
                     placeholder="+254 758 544 241"
-                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
+                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DE8E53] focus:border-transparent placeholder:text-slate-400 leading-relaxed transition-all ${
                       phoneError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
                     }`}
                   />
@@ -372,13 +385,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           onClick={() => toggleService(service)}
                           className={`min-h-[44px] px-3.5 py-2.5 rounded-lg border text-xs sm:text-sm font-normal text-left transition-all flex items-center justify-between cursor-pointer select-none touch-manipulation active:scale-[0.99] ${
                             isSelected
-                              ? 'border-[#003B95] bg-blue-50/80 text-[#003B95] ring-1 ring-[#003B95]'
+                              ? 'border-[#DE8E53] bg-amber-500/10 text-slate-900 ring-1 ring-[#DE8E53]'
                               : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-600'
                           }`}
                         >
-                          <span>{service}</span>
+                          <span className={isSelected ? 'font-semibold text-slate-900' : ''}>{service}</span>
                           {isSelected ? (
-                            <CheckCircle2 className="w-4 h-4 text-[#003B95] shrink-0" />
+                            <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0" />
                           ) : (
                             <div className="w-4 h-4 rounded-full border border-slate-300 shrink-0" />
                           )}
@@ -402,7 +415,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       setMessageError('');
                     }}
                     placeholder="Tell us about your business and goals"
-                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#003B95] focus:border-transparent placeholder:text-slate-400 resize-none leading-relaxed transition-all ${
+                    className={`w-full px-4 py-3 text-base sm:text-sm font-normal text-slate-700 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DE8E53] focus:border-transparent placeholder:text-slate-400 resize-none leading-relaxed transition-all ${
                       messageError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-200'
                     }`}
                   />
@@ -448,7 +461,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   className={`w-full min-h-[48px] py-3.5 px-6 ${
                     submissionError 
                       ? 'bg-red-600 hover:bg-red-700 active:bg-red-800' 
-                      : 'bg-[#003B95] hover:bg-[#002D72] active:bg-[#002255]'
+                      : 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000]'
                   } text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-xs transition-all cursor-pointer block text-center disabled:opacity-75 touch-manipulation active:scale-[0.99] flex items-center justify-center gap-2`}
                 >
                   {isSubmitting ? (
@@ -474,7 +487,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             
             {/* Call us Card */}
             <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-blue-50 text-[#003B95] flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-full bg-amber-500/15 text-[#C25E00] flex items-center justify-center shrink-0">
                 <Phone className="w-5 h-5" />
               </div>
               <div>
@@ -483,7 +496,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 </h3>
                 <a 
                   href="tel:+254758544241" 
-                  className="text-xs sm:text-sm text-slate-600 hover:text-[#003B95] transition-colors"
+                  className="text-xs sm:text-sm text-slate-600 hover:text-[#DE8E53] transition-colors"
                 >
                   +254 758 544 241
                 </a>
@@ -492,7 +505,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
             {/* Office Card */}
             <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-blue-50 text-[#003B95] flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-full bg-amber-500/15 text-[#C25E00] flex items-center justify-center shrink-0">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>

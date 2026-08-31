@@ -61,12 +61,13 @@ export const HomeFAQ: React.FC = () => {
         {/* Section Header (Centered) */}
         <div className="text-center mb-8 sm:mb-10 max-w-3xl mx-auto">
           {/* Eyebrow */}
-          <div className="text-xs font-bold uppercase tracking-wider text-[#3b82f6] mb-2 sm:mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
             FREQUENTLY ASKED QUESTIONS
           </div>
 
           {/* Main Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-serif font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
             Frequently asked questions.
           </h2>
 
@@ -84,24 +85,30 @@ export const HomeFAQ: React.FC = () => {
             return (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-2xs transition-all duration-200"
+                className={`bg-white rounded-2xl border transition-all duration-200 ${
+                  isOpen 
+                    ? 'border-amber-400/60 shadow-md shadow-amber-500/5 ring-1 ring-amber-400/30' 
+                    : 'border-slate-200/90 hover:border-slate-300'
+                }`}
               >
                 {/* Question Header */}
                 <button
                   type="button"
                   onClick={() => toggleItem(item.id)}
-                  className="w-full text-left px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 cursor-pointer transition-colors duration-200 hover:bg-slate-50/70 focus:outline-none focus:ring-0 select-none"
+                  className="w-full text-left px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 cursor-pointer transition-colors duration-200 hover:bg-amber-50/20 focus:outline-none select-none rounded-2xl"
                   aria-expanded={isOpen}
                 >
                   <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
                     {item.question}
                   </h3>
 
-                  <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-colors">
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                    isOpen ? 'bg-amber-500/15 text-[#C25E00]' : 'bg-slate-100 text-slate-600'
+                  }`}>
                     {isOpen ? (
-                      <Minus className="w-4 h-4 text-slate-900" />
+                      <Minus className="w-4 h-4" />
                     ) : (
-                      <Plus className="w-4 h-4 text-slate-600" />
+                      <Plus className="w-4 h-4" />
                     )}
                   </div>
                 </button>

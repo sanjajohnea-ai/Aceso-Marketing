@@ -21,7 +21,7 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
   onNavigate
 }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0 font-sans">
+    <div className="min-h-screen flex flex-col bg-[#FAF9F6] text-slate-800 selection:bg-[#DE8E53] selection:text-white pb-16 md:pb-0 font-sans">
       {/* Header Navigation */}
       <Navbar 
         activeSection=""
@@ -33,8 +33,8 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
       <main className="flex-1 pt-24 pb-16 sm:pb-20">
         
         {/* Hero Header */}
-        <section className="bg-[#061224] text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-[#0d2244]">
-          <div className="absolute inset-0 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
+        <section className="bg-gradient-to-r from-[#070D1E] via-[#0B132B] to-[#162235] text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-slate-800">
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(222,142,83,0.15)_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
           
           <div className="max-w-4xl mx-auto relative z-10">
             <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-3">
@@ -54,9 +54,9 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
           <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-10 space-y-8 text-slate-700 text-sm sm:text-base leading-relaxed">
             
             {/* Quick Summary Card */}
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 sm:p-6 text-slate-800">
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-5 sm:p-6 text-slate-800">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-blue-600 shrink-0" />
+                <FileText className="w-5 h-5 text-[#C25E00] shrink-0" />
                 Agreement Overview
               </h2>
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -67,7 +67,7 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
             {/* Section 1 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">1</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">1</span>
                 Scope of Services
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -86,25 +86,25 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
             {/* Section 2 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">2</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">2</span>
                 Client Responsibilities & Account Access
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">To ensure timely and effective campaign execution, the client agrees to:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base">
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0 mt-1" />
                   <span>Provide accurate, lawful, and complete business information, assets, and branding guidelines.</span>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0 mt-1" />
                   <span>Grant necessary administrative or partner access to ad accounts, Google Business Profiles, and websites.</span>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0 mt-1" />
                   <span>Review and approve proposed ad copies, creatives, and strategies in a timely manner.</span>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0 mt-1" />
                   <span>Maintain an active, valid payment method directly with ad networks (Meta/Google) for media budgets.</span>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
             {/* Section 3 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">3</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">3</span>
                 Fees, Invoicing & Payment Terms
               </h2>
               <ul className="space-y-2 text-sm sm:text-base text-slate-600 list-disc list-inside pl-2">
@@ -126,7 +126,7 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
             {/* Section 4 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">4</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">4</span>
                 Intellectual Property Rights
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed mb-2">
@@ -140,7 +140,7 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
             {/* Section 5 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">5</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">5</span>
                 Performance & Marketing Disclaimers
               </h2>
               <div className="p-4 sm:p-5 rounded-xl bg-amber-50/80 border border-amber-200/90 text-amber-900 text-sm sm:text-base flex items-start gap-3 leading-relaxed">
@@ -154,7 +154,7 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
             {/* Section 6 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">6</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">6</span>
                 Cancellation & Termination
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -165,7 +165,7 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
             {/* Section 7 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">7</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">7</span>
                 Governing Law & Jurisdiction
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -176,7 +176,7 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
             {/* Section 8 - Contact */}
             <div className="pt-4 border-t border-slate-200 space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">8</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">8</span>
                 Questions & Legal Inquiries
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -185,15 +185,15 @@ export const TermsOfUsePage: React.FC<TermsOfUsePageProps> = ({
               
               <div className="bg-slate-50 rounded-xl p-5 border border-slate-200/80 space-y-2.5 text-sm sm:text-base text-slate-700">
                 <div className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Email: <a href="mailto:support@acesosolutions.co.ke" className="font-semibold text-blue-600 hover:underline">support@acesosolutions.co.ke</a></span>
+                  <Mail className="w-4 h-4 text-[#DE8E53] shrink-0" />
+                  <span>Email: <a href="mailto:support@acesosolutions.co.ke" className="font-semibold text-[#DE8E53] hover:underline">support@acesosolutions.co.ke</a></span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-blue-600 shrink-0" />
+                  <Phone className="w-4 h-4 text-[#DE8E53] shrink-0" />
                   <span>Phone: <strong className="text-slate-900">+254 758 544 241</strong></span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
+                  <MapPin className="w-4 h-4 text-[#DE8E53] shrink-0" />
                   <span>Location: <strong className="text-slate-900">Mombasa, Kenya</strong></span>
                 </div>
               </div>

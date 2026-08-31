@@ -50,20 +50,21 @@ export const AcesoLogo: React.FC<AcesoLogoProps> = ({
       {/* Stylized geometric 'A' Icon */}
       <div className={`relative flex items-center justify-center shrink-0 ${iconSizes[size]}`}>
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-sm">
-          {/* Main bold geometric triangular A shape */}
+          {/* Main bold geometric triangular A shape with D-EDGE warm copper gradient */}
           <path 
             d="M50 8L8 88H32L50 50L68 88H92L50 8Z" 
-            fill="url(#aceso-blue-gradient)" 
+            fill="url(#aceso-dedge-gradient)" 
           />
           {/* Inner accent cutout fold */}
           <path 
             d="M50 36L35 70H65L50 36Z" 
-            fill={isLight ? '#0B132B' : '#FFFFFF'} 
+            fill={isLight ? '#0B132B' : '#FAF9F6'} 
           />
           <defs>
-            <linearGradient id="aceso-blue-gradient" x1="8" y1="8" x2="92" y2="88" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#2563EB" />
-              <stop offset="1" stopColor="#1D4ED8" />
+            <linearGradient id="aceso-dedge-gradient" x1="8" y1="8" x2="92" y2="88" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#E29457" />
+              <stop offset="0.5" stopColor="#DE8E53" />
+              <stop offset="1" stopColor="#C25E00" />
             </linearGradient>
           </defs>
         </svg>

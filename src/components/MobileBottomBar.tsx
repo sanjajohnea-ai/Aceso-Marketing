@@ -37,9 +37,9 @@ export const MobileBottomBar: React.FC<MobileBottomBarProps> = ({
           id="mobile-get-audit-btn"
           type="button"
           onClick={onRequestAudit}
-          className="flex items-center justify-center gap-1.5 sm:gap-2 h-11 px-3 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 active:from-blue-800 active:to-indigo-800 text-white font-bold text-xs sm:text-sm tracking-wide shadow-xs active:scale-[0.98] transition-all cursor-pointer select-none"
+          className="flex items-center justify-center gap-1.5 sm:gap-2 h-11 px-3 rounded-xl bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] active:from-[#944700] active:to-[#803d00] text-white font-bold text-xs sm:text-sm tracking-wide shadow-xs active:scale-[0.98] transition-all cursor-pointer select-none"
         >
-          <Sparkles className="w-4 h-4 shrink-0 text-amber-300" />
+          <Sparkles className="w-4 h-4 shrink-0 text-white" />
           <span className="truncate">Get an Audit</span>
         </button>
       </div>

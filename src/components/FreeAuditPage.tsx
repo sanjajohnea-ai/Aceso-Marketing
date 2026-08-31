@@ -256,7 +256,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#FAF9F6] text-slate-800 selection:bg-[#DE8E53] selection:text-white pb-16 md:pb-0">
       
       {/* Top Navbar */}
       <Navbar 
@@ -277,7 +277,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
           <div className="absolute top-6 right-8 w-40 h-40 opacity-40 pointer-events-none hidden md:block">
             <div className="grid grid-cols-6 gap-2.5">
               {Array.from({ length: 36 }).map((_, i) => (
-                <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-300" />
+                <div key={i} className="w-1.5 h-1.5 rounded-full bg-amber-400/40" />
               ))}
             </div>
           </div>
@@ -289,7 +289,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
               
               <div>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-[1.15]">
-                  Get a Free <span className="text-blue-600">Growth Audit</span>
+                  Get a Free <span className="text-[#C25E00]">Growth Audit</span>
                 </h1>
               </div>
 
@@ -297,10 +297,10 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                 Discover what's holding your business back and get a clear, data-driven plan to grow more leads, increase sales and maximize ROI.
               </p>
 
-              {/* 3 Blue Check Bullets */}
+              {/* 3 Check Bullets */}
               <div className="space-y-2.5 pt-0.5">
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#0B132B] text-[#DE8E53] flex items-center justify-center shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span className="text-xs sm:text-sm font-semibold text-slate-800">
@@ -309,7 +309,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#0B132B] text-[#DE8E53] flex items-center justify-center shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span className="text-xs sm:text-sm font-semibold text-slate-800">
@@ -318,7 +318,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-[#0B132B] text-[#DE8E53] flex items-center justify-center shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                   <span className="text-xs sm:text-sm font-semibold text-slate-800">
@@ -337,7 +337,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                       formEl.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs cursor-pointer"
                 >
                   <span>Fill In Audit Form</span>
                   <ArrowRight className="w-4 h-4" />
@@ -355,7 +355,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                   <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                     Your Growth Snapshot
                   </h3>
-                  <span className="text-xs font-semibold text-blue-600 bg-blue-50/90 px-3 py-1 rounded-lg">
+                  <span className="text-xs font-semibold text-[#C25E00] bg-amber-500/15 px-3 py-1 rounded-lg">
                     Sample Audit
                   </span>
                 </div>
@@ -363,22 +363,22 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                 {/* Score & Metrics Grid */}
                 <div className="grid grid-cols-12 gap-3 items-center mb-4">
                   
-                  {/* Semicircular Radial Gauge - Expanded width & circumference to fit label cleanly */}
+                  {/* Semicircular Radial Gauge */}
                   <div className="col-span-6 flex flex-col items-center justify-center relative">
                     <div className="relative w-48 h-36 sm:w-52 sm:h-38 flex items-center justify-center">
                       <svg viewBox="0 0 220 165" className="w-full h-full">
                         <defs>
                           <linearGradient id="gaugeBlueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#0052FF" />
-                            <stop offset="65%" stopColor="#2563EB" />
-                            <stop offset="100%" stopColor="#60A5FA" />
+                            <stop offset="0%" stopColor="#C25E00" />
+                            <stop offset="65%" stopColor="#DE8E53" />
+                            <stop offset="100%" stopColor="#E5A958" />
                           </linearGradient>
                         </defs>
                         {/* Background Track */}
                         <path
                           d="M 36.4 152.5 A 85 85 0 1 1 183.6 152.5"
                           fill="none"
-                          stroke="#EBF2FA"
+                          stroke="#F5EFEA"
                           strokeWidth="12"
                           strokeLinecap="round"
                         />
@@ -813,8 +813,8 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                   </div>
 
                   {/* Delivery Notice to Email & WhatsApp */}
-                  <div className="bg-blue-50/75 border border-blue-200/90 rounded-xl p-4 flex items-start gap-3.5 text-slate-800">
-                    <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex items-start gap-3.5 text-slate-800">
+                    <div className="w-8 h-8 rounded-lg bg-[#0B132B] text-[#DE8E53] flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
                       <Send className="w-4 h-4" />
                     </div>
                     <div className="text-xs leading-relaxed">
@@ -867,7 +867,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                       className={`w-full py-4 rounded-xl ${
                         submissionError 
                           ? 'bg-red-600 hover:bg-red-700 active:bg-red-800' 
-                          : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+                          : 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000]'
                       } text-white font-bold text-sm sm:text-base transition-all shadow-md flex items-center justify-center gap-2.5 cursor-pointer active:scale-[0.99] disabled:opacity-70`}
                     >
                       {isSubmitting ? (
@@ -911,7 +911,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                 <div className="space-y-4">
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-lg bg-amber-500/15 text-[#C25E00] flex items-center justify-center shrink-0 mt-0.5">
                       <BarChart2 className="w-4 h-4" />
                     </div>
                     <div>
@@ -935,7 +935,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#0B132B] text-[#DE8E53] flex items-center justify-center shrink-0 mt-0.5">
                       <Layers className="w-4 h-4" />
                     </div>
                     <div>
@@ -947,7 +947,7 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-lg bg-amber-500/15 text-[#C25E00] flex items-center justify-center shrink-0 mt-0.5">
                       <Users className="w-4 h-4" />
                     </div>
                     <div>

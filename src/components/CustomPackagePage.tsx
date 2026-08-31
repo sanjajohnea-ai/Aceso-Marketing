@@ -544,7 +544,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 flex flex-col selection:bg-blue-600 selection:text-white font-sans pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#FAF9F6] flex flex-col selection:bg-[#DE8E53] selection:text-white font-sans pb-16 md:pb-0">
       
       {/* Main Website Header Navigation Bar */}
       <Navbar 
@@ -567,13 +567,13 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
             >
               <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-colors ${
                 currentStep === 1 
-                  ? 'bg-blue-600 text-white shadow-xs' 
+                  ? 'bg-[#0B132B] text-[#DE8E53] shadow-xs' 
                   : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
               }`}>
                 1
               </div>
               <div className="text-left hidden sm:block">
-                <div className={`font-bold leading-tight ${currentStep === 1 ? 'text-blue-600' : 'text-slate-700'}`}>
+                <div className={`font-bold leading-tight ${currentStep === 1 ? 'text-[#0B132B]' : 'text-slate-700'}`}>
                   Choose Services
                 </div>
                 <div className="text-[11px] text-slate-400">
@@ -581,7 +581,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                 </div>
               </div>
               {currentStep === 1 && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#DE8E53] rounded-full" />
               )}
             </div>
 
@@ -596,13 +596,13 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
             >
               <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-colors ${
                 currentStep === 2 
-                  ? 'bg-blue-600 text-white shadow-xs' 
+                  ? 'bg-[#0B132B] text-[#DE8E53] shadow-xs' 
                   : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
               }`}>
                 2
               </div>
               <div className="text-left hidden sm:block">
-                <div className={`font-bold leading-tight ${currentStep === 2 ? 'text-blue-600' : 'text-slate-700'}`}>
+                <div className={`font-bold leading-tight ${currentStep === 2 ? 'text-[#0B132B]' : 'text-slate-700'}`}>
                   Business Details
                 </div>
                 <div className="text-[11px] text-slate-400">
@@ -610,7 +610,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                 </div>
               </div>
               {currentStep === 2 && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#DE8E53] rounded-full" />
               )}
             </div>
 
@@ -935,7 +935,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                     type="button"
                     disabled={selectedServices.length === 0}
                     onClick={() => setCurrentStep(2)}
-                    className="w-full py-3.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 text-white font-bold text-sm transition-all shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                    className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] active:from-[#944700] active:to-[#803d00] disabled:opacity-50 text-white font-bold text-sm transition-all shadow-md shadow-amber-500/15 flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                   >
                     <span>Proceed to Business Details</span>
                     <ArrowRight className="w-4 h-4" />
@@ -944,11 +944,11 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                   {/* Trust Micro-Bullets */}
                   <div className="mt-4 space-y-2 text-xs text-slate-600">
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0" />
                       <span>Free strategy call & audit included</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0" />
                       <span>No obligation • Cancel anytime</span>
                     </div>
                   </div>
@@ -957,7 +957,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
 
                 {/* Need Help Choosing Card */}
                 <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs flex items-start gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-[#C25E00] flex items-center justify-center shrink-0 border border-amber-500/20">
                     <Calendar className="w-5 h-5" />
                   </div>
                   <div>
@@ -971,7 +971,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                       href="https://calendar.app.google/i9YT96iwcduZDF8Q8"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 mt-2.5 cursor-pointer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C25E00] hover:text-[#DE8E53] mt-2.5 cursor-pointer"
                     >
                       <span>Book Free Call</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -1244,7 +1244,7 @@ export const CustomPackagePage: React.FC<CustomPackagePageProps> = ({
                   className={`w-full sm:w-auto px-8 py-3 rounded-xl ${
                     submissionError 
                       ? 'bg-red-600 hover:bg-red-700 active:bg-red-800' 
-                      : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+                      : 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] active:from-[#944700] active:to-[#803d00]'
                   } text-white font-bold text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50`}
                 >
                   {isSubmitting ? (

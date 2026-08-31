@@ -1049,32 +1049,32 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
 
   return (
     <section id={category.id} className="space-y-6 sm:space-y-8 scroll-mt-24">
-      {/* Dot Header (Matching Image: • • • • • OUR SOCIAL MEDIA PACKAGES • • • • •) */}
+      {/* Dot Header (Matching D-EDGE copper style) */}
       <div className="text-center py-2 sm:py-4">
         <div className="inline-flex items-center justify-center gap-2.5 sm:gap-4">
-          <span className="flex items-center gap-1 sm:gap-1.5 text-blue-700">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
+          <span className="flex items-center gap-1 sm:gap-1.5 text-[#DE8E53]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
           </span>
           
-          <h2 className="text-sm sm:text-lg lg:text-xl font-extrabold tracking-wider sm:tracking-widest uppercase text-[#003B95] px-1 sm:px-2">
+          <h2 className="text-sm sm:text-lg lg:text-xl font-extrabold tracking-wider sm:tracking-widest uppercase text-[#0B132B] px-1 sm:px-2">
             {category.bannerTitle}
           </h2>
 
-          <span className="flex items-center gap-1 sm:gap-1.5 text-blue-700">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-700"></span>
+          <span className="flex items-center gap-1 sm:gap-1.5 text-[#DE8E53]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]"></span>
           </span>
         </div>
       </div>
 
-      {/* MOBILE ONLY VIEW: Compact Segmented Plan Switcher (Eliminates tedious scrolling on mobile!) */}
+      {/* MOBILE ONLY VIEW: Compact Segmented Plan Switcher */}
       <div className="block md:hidden space-y-3.5">
         {/* Touch-Friendly Plan Tabs */}
         <div className="bg-slate-200/90 p-1 rounded-xl flex items-center gap-1 overflow-x-auto scrollbar-none shadow-2xs">
@@ -1085,7 +1085,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
               onClick={() => setActiveTierIdx(idx)}
               className={`flex-1 min-w-[68px] py-2 px-2 rounded-lg text-[11px] font-black uppercase tracking-wider transition-all whitespace-nowrap text-center cursor-pointer ${
                 activeTierIdx === idx
-                  ? 'bg-[#003B95] text-white shadow-xs'
+                  ? 'bg-[#0B132B] text-[#DE8E53] shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 bg-transparent'
               }`}
             >
@@ -1099,7 +1099,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
           <button
             type="button"
             onClick={() => setActiveTierIdx(prev => (prev > 0 ? prev - 1 : category.tiers.length - 1))}
-            className="flex items-center gap-1 font-bold text-[#003B95] hover:text-[#002D72] cursor-pointer py-1 px-2 -ml-2 select-none"
+            className="flex items-center gap-1 font-bold text-[#DE8E53] hover:text-[#C25E00] cursor-pointer py-1 px-2 -ml-2 select-none"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Prev</span>
@@ -1113,7 +1113,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                 type="button"
                 onClick={() => setActiveTierIdx(dotIdx)}
                 className={`h-2 rounded-full transition-all cursor-pointer ${
-                  activeTierIdx === dotIdx ? 'bg-[#003B95] w-5' : 'bg-slate-300 w-2'
+                  activeTierIdx === dotIdx ? 'bg-[#0B132B] w-5' : 'bg-slate-300 w-2'
                 }`}
                 aria-label={`Select plan ${dotIdx + 1}`}
               />
@@ -1123,7 +1123,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
           <button
             type="button"
             onClick={() => setActiveTierIdx(prev => (prev < category.tiers.length - 1 ? prev + 1 : 0))}
-            className="flex items-center gap-1 font-bold text-[#003B95] hover:text-[#002D72] cursor-pointer py-1 px-2 -mr-2 select-none"
+            className="flex items-center gap-1 font-bold text-[#DE8E53] hover:text-[#C25E00] cursor-pointer py-1 px-2 -mr-2 select-none"
           >
             <span>Next</span>
             <ChevronRight className="w-4 h-4" />
@@ -1132,10 +1132,10 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
 
         {/* Single Active Mobile Plan Card */}
         <div className="rounded-xl overflow-hidden shadow-md border border-slate-200/80 bg-white flex flex-col justify-between transition-all duration-200">
-          {/* Card Blue Header */}
-          <div className="bg-[#003B95] text-white p-5 flex items-center gap-4 min-h-[90px]">
-            <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white">
-              <ActiveTierIcon className="w-5 h-5 text-white" />
+          {/* Card Obsidian Header */}
+          <div className="bg-[#0B132B] text-white p-5 flex items-center gap-4 min-h-[90px]">
+            <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#DE8E53]">
+              <ActiveTierIcon className="w-5 h-5 text-[#DE8E53]" />
             </div>
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
@@ -1143,12 +1143,12 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                   {activeTier.name}
                 </h3>
                 {activeTier.isPopular && (
-                  <span className="px-2 py-0.5 bg-amber-400 text-slate-900 text-[10px] font-black uppercase rounded-full">
+                  <span className="px-2 py-0.5 bg-gradient-to-r from-[#DE8E53] to-[#E5A958] text-[#070D1E] text-[10px] font-black uppercase rounded-full">
                     Popular
                   </span>
                 )}
               </div>
-              <p className="text-xs text-blue-100 font-normal leading-relaxed">
+              <p className="text-xs text-slate-300 font-normal leading-relaxed">
                 {activeTier.description}
               </p>
             </div>
@@ -1159,7 +1159,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
             {/* Price Callout */}
             <div className="text-center pt-1">
               <div className="inline-flex items-baseline gap-1.5 justify-center flex-wrap">
-                <span className="text-3xl font-extrabold text-[#003B95] tracking-tight">
+                <span className="text-3xl font-extrabold text-[#0B132B] tracking-tight">
                   {activeTier.price}
                 </span>
                 {activeTier.period && (
@@ -1170,11 +1170,11 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
               </div>
             </div>
 
-            {/* Feature Checklist with Blue Checkmark Badges */}
+            {/* Feature Checklist with Copper Checkmark Badges */}
             <div className="divide-y divide-slate-100 border-y border-slate-100">
               {activeTier.features.map((feat, idx) => (
                 <div key={idx} className="py-2.5 flex items-start gap-2.5 text-xs text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#003B95] shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#DE8E53] shrink-0 mt-0.5" />
                   <span className="leading-snug">
                     {feat}
                   </span>
@@ -1195,7 +1195,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                   }
                   onRequestAudit();
                 }}
-                className="w-full py-3.5 px-6 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs uppercase tracking-wider rounded-md shadow-xs transition-colors cursor-pointer block text-center"
+                className="w-full py-3.5 px-6 bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs uppercase tracking-wider rounded-md shadow-xs transition-all cursor-pointer block text-center"
               >
                 {activeTier.buttonText || 'GET STARTED'}
               </button>
@@ -1220,10 +1220,10 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
               key={tier.id}
               className="rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-200 border border-slate-200/80 bg-white flex flex-col justify-between"
             >
-              {/* Card Blue Header */}
-              <div className="bg-[#003B95] text-white p-6 sm:p-7 flex items-center gap-4 sm:gap-5 min-h-[115px]">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center shrink-0 text-white">
-                  <TierIcon className="w-6 h-6 text-white" />
+              {/* Card Obsidian Header */}
+              <div className="bg-[#0B132B] text-white p-6 sm:p-7 flex items-center gap-4 sm:gap-5 min-h-[115px]">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#DE8E53]">
+                  <TierIcon className="w-6 h-6 text-[#DE8E53]" />
                 </div>
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
@@ -1231,12 +1231,12 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                       {tier.name}
                     </h3>
                     {tier.isPopular && (
-                      <span className="px-2 py-0.5 bg-amber-400 text-slate-900 text-[10px] font-black uppercase rounded-full">
+                      <span className="px-2 py-0.5 bg-gradient-to-r from-[#DE8E53] to-[#E5A958] text-[#070D1E] text-[10px] font-black uppercase rounded-full">
                         Popular
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-blue-100 font-normal leading-relaxed">
+                  <p className="text-xs text-slate-300 font-normal leading-relaxed">
                     {tier.description}
                   </p>
                 </div>
@@ -1247,7 +1247,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                 {/* Price Callout */}
                 <div className="text-center pt-1 min-h-[44px] flex items-center justify-center">
                   <div className="inline-flex items-baseline gap-1.5 justify-center flex-wrap">
-                    <span className="text-3xl sm:text-4xl font-extrabold text-[#003B95] tracking-tight">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-[#0B132B] tracking-tight">
                       {tier.price}
                     </span>
                     {tier.period && (
@@ -1258,11 +1258,11 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                   </div>
                 </div>
 
-                {/* Feature Checklist with Horizontal Separators & Blue Checkmark Badges */}
+                {/* Feature Checklist with Horizontal Separators & Copper Checkmark Badges */}
                 <div className="divide-y divide-slate-100 border-y border-slate-100">
                   {tier.features.map((feat, idx) => (
                     <div key={idx} className="py-2.5 min-h-[46px] flex items-center gap-3 text-xs sm:text-sm text-slate-700">
-                      <CheckCircle2 className="w-5 h-5 text-[#003B95] shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-[#DE8E53] shrink-0" />
                       <span className="leading-snug">
                         {feat}
                       </span>
@@ -1283,7 +1283,7 @@ const CategoryPricingSection: React.FC<CategoryPricingSectionProps> = ({
                       }
                       onRequestAudit();
                     }}
-                    className="w-full py-3.5 px-6 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-xs transition-colors cursor-pointer block text-center"
+                    className="w-full py-3.5 px-6 bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-xs transition-all cursor-pointer block text-center"
                   >
                     {tier.buttonText || 'GET STARTED'}
                   </button>
@@ -1375,7 +1375,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#FAF9F6] text-slate-800 font-sans antialiased selection:bg-[#DE8E53] selection:text-white pb-16 md:pb-0">
       
       {/* Navbar */}
       <Navbar 
@@ -1387,15 +1387,15 @@ export const PricingPage: React.FC<PricingPageProps> = ({
 
       {/* Hero Section */}
       {activeCategory === 'social' ? (
-        // Dedicated Social Media Hero matching user screenshot with rich gradient & accents
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#04142d] via-[#003B95] to-[#0284c7] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 shadow-md">
+        // Dedicated Social Media Hero matching D-EDGE rich navy with warm amber accents
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#070D1E] via-[#0B132B] to-[#162235] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 shadow-md">
           {/* Subtle Geometric Grid Pattern */}
           <div className="absolute inset-0 pointer-events-none opacity-20">
             <svg className="w-full h-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <pattern id="social-hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" />
-                  <circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.5)" />
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(222,142,83,0.3)" strokeWidth="0.8" />
+                  <circle cx="20" cy="20" r="1.5" fill="rgba(222,142,83,0.5)" />
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#social-hero-grid)" />
@@ -1403,8 +1403,8 @@ export const PricingPage: React.FC<PricingPageProps> = ({
           </div>
 
           {/* Ambient Glows */}
-          <div className="absolute -bottom-24 -left-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -top-24 right-1/4 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 right-1/4 w-80 h-80 bg-[#DE8E53]/15 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
@@ -1414,12 +1414,12 @@ export const PricingPage: React.FC<PricingPageProps> = ({
                 SOCIAL MEDIA PACKAGES<br />THAT DRIVE REAL GROWTH
               </h1>
               
-              <p className="text-blue-100 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed font-normal">
+              <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed font-normal">
                 Choose the right social media marketing package for your business. Professional content, smart strategy, and consistent growth.
               </p>
             </div>
 
-            {/* Right Column: 3D Blue Device & Social Media Vector Illustration */}
+            {/* Right Column: 3D Vector Illustration */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end items-center">
               <SocialMediaHeroGraphic />
             </div>
@@ -1427,15 +1427,15 @@ export const PricingPage: React.FC<PricingPageProps> = ({
           </div>
         </section>
       ) : activeCategory === 'ppc' ? (
-        // Dedicated Google Ads & PPC Hero matching user screenshot with rich gradient & accents
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#04142d] via-[#003B95] to-[#0284c7] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 shadow-md">
+        // Dedicated Google Ads & PPC Hero matching D-EDGE rich navy with warm amber accents
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#070D1E] via-[#0B132B] to-[#162235] text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 shadow-md">
           {/* Subtle Geometric Grid Pattern */}
           <div className="absolute inset-0 pointer-events-none opacity-20">
             <svg className="w-full h-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <pattern id="ppc-hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" />
-                  <circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.5)" />
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(222,142,83,0.3)" strokeWidth="0.8" />
+                  <circle cx="20" cy="20" r="1.5" fill="rgba(222,142,83,0.5)" />
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#ppc-hero-grid)" />
@@ -1443,8 +1443,8 @@ export const PricingPage: React.FC<PricingPageProps> = ({
           </div>
 
           {/* Ambient Glows */}
-          <div className="absolute -bottom-24 -left-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -top-24 right-1/4 w-80 h-80 bg-amber-400/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 right-1/4 w-80 h-80 bg-[#DE8E53]/15 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
@@ -1454,12 +1454,12 @@ export const PricingPage: React.FC<PricingPageProps> = ({
                 GOOGLE ADS & PPC PRICING<br />PACKAGES
               </h1>
               
-              <p className="text-blue-100 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed font-normal">
+              <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed font-normal">
                 Performance-driven campaigns that put your business in front of the right people at the right time.
               </p>
             </div>
 
-            {/* Right Column: 3D Google Ads & Laptop Vector Illustration */}
+            {/* Right Column: 3D Vector Illustration */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end items-center">
               <GoogleAdsHeroGraphic />
             </div>
@@ -1468,14 +1468,14 @@ export const PricingPage: React.FC<PricingPageProps> = ({
         </section>
       ) : (
         // General Pricing Hero Header for other tabs
-        <section className="relative overflow-hidden bg-gradient-to-r from-[#002D72] via-[#003B95] to-[#0D47A1] text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 shadow-sm">
+        <section className="relative overflow-hidden bg-gradient-to-r from-[#070D1E] via-[#0B132B] to-[#162235] text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 shadow-sm">
           {/* SVG Geometric Dot Matrix & Grid Pattern */}
           <div className="absolute inset-0 pointer-events-none opacity-20">
             <svg className="w-full h-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <pattern id="pricing-grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-                  <circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.6)" />
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(222,142,83,0.4)" strokeWidth="1" />
+                  <circle cx="20" cy="20" r="1.5" fill="rgba(222,142,83,0.6)" />
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#pricing-grid-pattern)" />
@@ -1489,7 +1489,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
                 : 'Transparent Pricing For Real Business Growth'}
             </h1>
             
-            <p className="text-blue-100 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-normal">
+            <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-normal">
               {activeCategory === 'web' ? 'High-converting, responsive websites built for speed, SEO, and lead generation.'
                 : activeCategory === 'seo' ? 'Dominate Google Search and Google Maps for high-intent, compounding organic leads.'
                 : 'Choose specialized tiers for Web Design, Social Media, SEO, and Paid Advertising. Engineered specifically for small and growing enterprises with zero hidden fees.'}
@@ -1511,12 +1511,12 @@ export const PricingPage: React.FC<PricingPageProps> = ({
         ))}
 
         {/* Custom Solution / Consultation Banner */}
-        <section className="bg-gradient-to-r from-[#002D72] via-[#003B95] to-[#0D47A1] text-white rounded-2xl p-8 sm:p-12 shadow-md relative overflow-hidden max-w-5xl mx-auto">
+        <section className="bg-gradient-to-r from-[#070D1E] via-[#0B132B] to-[#162235] text-white rounded-2xl p-8 sm:p-12 shadow-md relative overflow-hidden max-w-5xl mx-auto border border-slate-800">
           <div className="relative z-10 max-w-3xl space-y-4">
             <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-white">
               Not sure which package is right for you?
             </h3>
-            <p className="text-blue-100 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl">
+            <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl">
               Book a free 30-minute strategy call. We&apos;ll review your business, identify the highest-ROI opportunity, and recommend the right starting point.
             </p>
             <div className="pt-4 flex flex-wrap gap-4 items-center">
@@ -1524,9 +1524,9 @@ export const PricingPage: React.FC<PricingPageProps> = ({
                 href="https://calendar.app.google/i9YT96iwcduZDF8Q8"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3.5 bg-white text-[#003B95] hover:bg-blue-50 font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-md transition-colors cursor-pointer flex items-center gap-2"
+                className="px-6 py-3.5 bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-md transition-all cursor-pointer flex items-center gap-2"
               >
-                <PhoneCall className="w-4 h-4 text-[#003B95]" />
+                <PhoneCall className="w-4 h-4 text-white" />
                 <span>BOOK A CALL</span>
               </a>
               
@@ -1574,7 +1574,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
                   className="w-full text-left p-4 sm:p-5 font-bold text-xs sm:text-sm text-slate-900 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50/70 transition-colors"
                 >
                   <span>{faq.q}</span>
-                  <ChevronRight className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${faqOpen === idx ? 'rotate-90 text-[#003B95]' : ''}`} />
+                  <ChevronRight className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${faqOpen === idx ? 'rotate-90 text-[#DE8E53]' : ''}`} />
                 </button>
                 {faqOpen === idx && (
                   <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">

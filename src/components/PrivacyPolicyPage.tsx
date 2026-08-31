@@ -20,7 +20,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
   onNavigate
 }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0 font-sans">
+    <div className="min-h-screen flex flex-col bg-[#FAF9F6] text-slate-800 selection:bg-[#DE8E53] selection:text-white pb-16 md:pb-0 font-sans">
       {/* Header Navigation */}
       <Navbar 
         activeSection=""
@@ -32,8 +32,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
       <main className="flex-1 pt-24 pb-16 sm:pb-20">
         
         {/* Hero Header */}
-        <section className="bg-[#061224] text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-[#0d2244]">
-          <div className="absolute inset-0 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
+        <section className="bg-gradient-to-r from-[#070D1E] via-[#0B132B] to-[#162235] text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-slate-800">
+          <div className="absolute inset-0 bg-[radial-gradient(rgba(222,142,83,0.15)_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
           
           <div className="max-w-4xl mx-auto relative z-10">
             <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-3">
@@ -53,9 +53,9 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
           <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-10 space-y-8 text-slate-700 text-sm sm:text-base leading-relaxed">
             
             {/* Quick Summary Card */}
-            <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-5 sm:p-6 text-slate-800">
-              <h2 className="text-base sm:text-lg font-bold text-blue-950 mb-2 flex items-center gap-2">
-                <Lock className="w-5 h-5 text-blue-600 shrink-0" />
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-5 sm:p-6 text-slate-800">
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
+                <Lock className="w-5 h-5 text-[#C25E00] shrink-0" />
                 Privacy Commitment Summary
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -66,7 +66,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
             {/* Section 1 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">1</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">1</span>
                 Information We Collect
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -83,7 +83,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
             {/* Section 2 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">2</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">2</span>
                 How We Use Your Information
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -91,19 +91,19 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base">
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-1" />
                   <span>Preparing and delivering customized Digital Growth Audits & strategy roadmaps.</span>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-1" />
                   <span>Scheduling and executing 1-on-1 strategy and discovery calls.</span>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-1" />
                   <span>Configuring and executing agreed marketing campaigns, SEO, and automation pipelines.</span>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0 mt-1" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-1" />
                   <span>Sending critical campaign performance reports, invoices, and service updates.</span>
                 </div>
               </div>
@@ -112,7 +112,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
             {/* Section 3 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">3</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">3</span>
                 Data Sharing & Third-Party Platforms
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -128,7 +128,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
             {/* Section 4 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">4</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">4</span>
                 Data Security & Storage
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -139,7 +139,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
             {/* Section 5 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">5</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">5</span>
                 Your Rights & Choices
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -156,7 +156,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
             {/* Section 6 */}
             <div className="space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">6</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">6</span>
                 Cookies & Tracking Technologies
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -167,7 +167,7 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
             {/* Section 7 - Contact info */}
             <div className="pt-4 border-t border-slate-200 space-y-3">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-800 text-xs font-bold flex items-center justify-center">7</span>
+                <span className="w-6 h-6 rounded-full bg-[#0B132B] text-[#DE8E53] text-xs font-bold flex items-center justify-center">7</span>
                 Contact Our Data Privacy Team
               </h2>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -176,15 +176,15 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({
               
               <div className="bg-slate-50 rounded-xl p-5 border border-slate-200/80 space-y-2.5 text-sm sm:text-base text-slate-700">
                 <div className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Email: <a href="mailto:support@acesosolutions.co.ke" className="font-semibold text-blue-600 hover:underline">support@acesosolutions.co.ke</a></span>
+                  <Mail className="w-4 h-4 text-[#DE8E53] shrink-0" />
+                  <span>Email: <a href="mailto:support@acesosolutions.co.ke" className="font-semibold text-[#DE8E53] hover:underline">support@acesosolutions.co.ke</a></span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-blue-600 shrink-0" />
+                  <Phone className="w-4 h-4 text-[#DE8E53] shrink-0" />
                   <span>Phone: <strong className="text-slate-900">+254 758 544 241</strong></span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
+                  <MapPin className="w-4 h-4 text-[#DE8E53] shrink-0" />
                   <span>Location: <strong className="text-slate-900">Mombasa, Kenya</strong></span>
                 </div>
               </div>

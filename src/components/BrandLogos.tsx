@@ -94,19 +94,19 @@ const brands = [
 
 export const BrandLogos: React.FC = () => {
   return (
-    <section className="py-5 sm:py-7 px-4 sm:px-6 lg:px-8 border-b border-slate-100 bg-[#f8fafc] overflow-hidden">
+    <section className="py-5 sm:py-7 px-4 sm:px-6 lg:px-8 border-b border-slate-200/80 bg-[#FAF9F6] overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#003B95] mb-4 sm:mb-5">
+        <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#C25E00] mb-4 sm:mb-5">
           BRANDS & PLATFORMS WE WORK WITH
         </p>
 
         {/* Animated Horizontal Marquee Container with Gradient Side Masks */}
         <div className="relative w-full overflow-hidden">
           {/* Left Fade Gradient */}
-          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-[#FAF9F6] to-transparent z-10 pointer-events-none" />
           
           {/* Right Fade Gradient */}
-          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-[#FAF9F6] to-transparent z-10 pointer-events-none" />
 
           {/* Continuous Sliding Ticker */}
           <div className="animate-marquee flex items-center gap-8 sm:gap-14 py-2 cursor-default">
@@ -114,7 +114,7 @@ export const BrandLogos: React.FC = () => {
             {brands.map((brand, idx) => (
               <div 
                 key={`brand-1-${idx}`}
-                className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/80 border border-slate-200/70 shadow-xs hover:shadow-sm hover:border-blue-300 transition-all shrink-0 select-none grayscale-[15%] hover:grayscale-0"
+                className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white border border-slate-200/80 shadow-xs hover:shadow-sm hover:border-amber-400/50 transition-all shrink-0 select-none grayscale-[15%] hover:grayscale-0"
               >
                 {brand.icon}
                 {brand.label}
@@ -125,7 +125,7 @@ export const BrandLogos: React.FC = () => {
             {brands.map((brand, idx) => (
               <div 
                 key={`brand-2-${idx}`}
-                className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/80 border border-slate-200/70 shadow-xs hover:shadow-sm hover:border-blue-300 transition-all shrink-0 select-none grayscale-[15%] hover:grayscale-0"
+                className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white border border-slate-200/80 shadow-xs hover:shadow-sm hover:border-amber-400/50 transition-all shrink-0 select-none grayscale-[15%] hover:grayscale-0"
               >
                 {brand.icon}
                 {brand.label}

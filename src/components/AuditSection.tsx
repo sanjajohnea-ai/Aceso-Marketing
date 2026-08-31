@@ -17,14 +17,14 @@ interface AuditSectionProps {
 
 export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) => {
   return (
-    <section id="audit" className="bg-[#0b1320] py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 text-white relative scroll-mt-20 overflow-hidden">
+    <section id="audit" className="bg-[#0B132B] py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 text-white relative scroll-mt-20 overflow-hidden">
       {/* Anchor for contact links */}
       <div id="contact" className="absolute -top-24 left-0 pointer-events-none" />
       <div id="why-choose-us" className="absolute -top-24 left-0 pointer-events-none" />
 
       {/* Subtle Background Lighting Accent */}
-      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#DE8E53]/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12 lg:space-y-14 w-full">
         
@@ -33,18 +33,19 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
         {/* ========================================================= */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Heading & Subheading (Matching OUR CORE SOLUTIONS Typography) */}
+          {/* Left Column: Heading & Subheading */}
           <div className="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
             
             {/* Eyebrow */}
-            <div className="text-xs font-bold uppercase tracking-wider text-[#38bdf8] mb-1.5 sm:mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#DE8E53] text-xs font-bold uppercase tracking-wider mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
               WHY CHOOSE ACESO SOLUTIONS
             </div>
 
             {/* Main Heading */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-serif font-bold text-white tracking-tight leading-[1.2] mb-2 sm:mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-white tracking-tight leading-[1.2] mb-2 sm:mb-3">
               You don’t get one marketer. <br className="hidden sm:inline" />
-              You get a <span className="text-[#38bdf8]">team of specialists.</span>
+              You get a <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">team of specialists.</span>
             </h2>
 
             {/* Subheading */}
@@ -57,11 +58,11 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
           {/* Right Column: Visual with African Specialists & Floating Analytics Badges */}
           <div className="lg:col-span-5 relative flex items-center justify-center pt-3 pb-2 sm:py-0">
             
-            {/* Ambient Back Glow & Blue Backdrop */}
-            <div className="relative w-full rounded-2xl sm:rounded-3xl p-2 sm:p-2.5 bg-gradient-to-tr from-blue-600/25 via-sky-500/10 to-transparent border border-blue-500/25 shadow-2xl">
+            {/* Ambient Back Glow & Copper Backdrop */}
+            <div className="relative w-full rounded-2xl sm:rounded-3xl p-2 sm:p-2.5 bg-gradient-to-tr from-[#DE8E53]/25 via-amber-500/10 to-transparent border border-[#DE8E53]/30 shadow-2xl">
               
               {/* Team Photo Container */}
-              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/3] w-full bg-[#162235]">
+              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/3] w-full bg-[#070D1E]">
                 <img 
                   src={teamSpecialistsRealPhoto} 
                   alt="Aceso Solutions team of marketing specialists collaborating"
@@ -72,11 +73,11 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
                 />
                 
                 {/* Subtle soft dark gradient overlay at bottom for badge contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1320]/60 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#070D1E]/80 via-transparent to-transparent pointer-events-none" />
               </div>
 
               {/* Floating Badge 1: Website Traffic (Top Left) */}
-              <div className="absolute -top-3 left-2 sm:-top-4 sm:-left-3 bg-[#162235]/95 backdrop-blur-md border border-[#1e2e46] px-2.5 py-1.5 sm:p-2.5 rounded-xl shadow-xl flex flex-col gap-0.5 sm:gap-1 z-10 select-none scale-90 sm:scale-100 origin-top-left">
+              <div className="absolute -top-3 left-2 sm:-top-4 sm:-left-3 bg-[#070D1E]/95 backdrop-blur-md border border-slate-700/80 px-2.5 py-1.5 sm:p-2.5 rounded-xl shadow-xl flex flex-col gap-0.5 sm:gap-1 z-10 select-none scale-90 sm:scale-100 origin-top-left">
                 <span className="text-[10px] sm:text-xs text-slate-400 font-medium">
                   Website Traffic
                 </span>
@@ -92,7 +93,7 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
               </div>
 
               {/* Floating Badge 2: Leads Generated (Top Right) */}
-              <div className="absolute -top-3 right-2 sm:-top-4 sm:-right-3 bg-[#162235]/95 backdrop-blur-md border border-[#1e2e46] px-2.5 py-1.5 sm:p-2.5 rounded-xl shadow-xl flex flex-col gap-0.5 sm:gap-1 z-10 select-none scale-90 sm:scale-100 origin-top-right">
+              <div className="absolute -top-3 right-2 sm:-top-4 sm:-right-3 bg-[#070D1E]/95 backdrop-blur-md border border-slate-700/80 px-2.5 py-1.5 sm:p-2.5 rounded-xl shadow-xl flex flex-col gap-0.5 sm:gap-1 z-10 select-none scale-90 sm:scale-100 origin-top-right">
                 <span className="text-[10px] sm:text-xs text-slate-400 font-medium">
                   Leads Generated
                 </span>
@@ -108,12 +109,12 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
               </div>
 
               {/* Floating Badge 3: ROAS 450% (Bottom Right) */}
-              <div className="absolute -bottom-3 right-2 sm:-bottom-4 sm:-right-3 bg-[#162235]/95 backdrop-blur-md border border-[#1e2e46] px-3 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl shadow-xl flex items-center gap-2.5 sm:gap-3 z-10 select-none scale-90 sm:scale-100 origin-bottom-right">
+              <div className="absolute -bottom-3 right-2 sm:-bottom-4 sm:-right-3 bg-[#070D1E]/95 backdrop-blur-md border border-slate-700/80 px-3 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl shadow-xl flex items-center gap-2.5 sm:gap-3 z-10 select-none scale-90 sm:scale-100 origin-bottom-right">
                 <div>
                   <span className="text-[10px] sm:text-xs text-slate-400 font-medium block">
                     ROAS
                   </span>
-                  <span className="text-xs sm:text-base font-extrabold text-blue-400">
+                  <span className="text-xs sm:text-base font-extrabold text-[#DE8E53]">
                     450%
                   </span>
                 </div>
@@ -121,13 +122,13 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
                 <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                   <svg className="w-6 h-6 sm:w-7 sm:h-7 -rotate-90" viewBox="0 0 36 36">
                     <path
-                      className="text-slate-700 stroke-current"
+                      className="text-slate-800 stroke-current"
                       strokeWidth="4"
                       fill="none"
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     />
                     <path
-                      className="text-blue-500 stroke-current"
+                      className="text-[#DE8E53] stroke-current"
                       strokeDasharray="80, 100"
                       strokeWidth="4"
                       strokeLinecap="round"
@@ -150,7 +151,7 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 lg:gap-4 relative">
           
           {/* Card 1: SEO Specialists */}
-          <div className="relative bg-[#162235] border border-[#1e2e46] hover:bg-[#1f2e45] rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
+          <div className="relative bg-[#070D1E] border border-slate-800 hover:border-[#DE8E53]/50 rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Circular Icon */}
               <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 transition-transform">
@@ -172,16 +173,16 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
             </div>
 
             {/* Desktop connecting arrow to next card */}
-            <div className="hidden lg:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-slate-500/60 pointer-events-none">
+            <div className="hidden lg:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-slate-600 pointer-events-none">
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </div>
 
           {/* Card 2: Social Media Specialists */}
-          <div className="relative bg-[#162235] border border-[#1e2e46] hover:bg-[#1f2e45] rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
+          <div className="relative bg-[#070D1E] border border-slate-800 hover:border-[#DE8E53]/50 rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Circular Icon */}
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-400 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-amber-500/15 border border-amber-500/30 text-[#DE8E53] flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 transition-transform">
                 <ThumbsUp className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
               </div>
 
@@ -190,8 +191,8 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
                 Social Media Specialists
               </h3>
 
-              {/* Blue Line Indicator */}
-              <div className="w-7 h-1 bg-blue-400 rounded-full mb-2.5" />
+              {/* Amber Line Indicator */}
+              <div className="w-7 h-1 bg-[#DE8E53] rounded-full mb-2.5" />
 
               {/* Description */}
               <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed font-normal">
@@ -200,13 +201,13 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
             </div>
 
             {/* Desktop connecting arrow to next card */}
-            <div className="hidden lg:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-slate-500/60 pointer-events-none">
+            <div className="hidden lg:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-slate-600 pointer-events-none">
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </div>
 
           {/* Card 3: PPC Specialists */}
-          <div className="relative bg-[#162235] border border-[#1e2e46] hover:bg-[#1f2e45] rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
+          <div className="relative bg-[#070D1E] border border-slate-800 hover:border-[#DE8E53]/50 rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Circular Icon */}
               <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-400 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 transition-transform">
@@ -228,16 +229,16 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
             </div>
 
             {/* Desktop connecting arrow to next card */}
-            <div className="hidden lg:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-slate-500/60 pointer-events-none">
+            <div className="hidden lg:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-slate-600 pointer-events-none">
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </div>
 
           {/* Card 4: Content & Creative Specialists */}
-          <div className="relative bg-[#162235] border border-[#1e2e46] hover:bg-[#1f2e45] rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
+          <div className="relative bg-[#070D1E] border border-slate-800 hover:border-[#DE8E53]/50 rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Circular Icon */}
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-orange-500/15 border border-orange-500/30 text-[#E5A958] flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 transition-transform">
                 <Pencil className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
               </div>
 
@@ -247,7 +248,7 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
               </h3>
 
               {/* Amber Line Indicator */}
-              <div className="w-7 h-1 bg-amber-400 rounded-full mb-2.5" />
+              <div className="w-7 h-1 bg-[#E5A958] rounded-full mb-2.5" />
 
               {/* Description */}
               <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed font-normal">
@@ -256,13 +257,13 @@ export const AuditSection: React.FC<AuditSectionProps> = ({ onRequestAudit }) =>
             </div>
 
             {/* Desktop connecting arrow to next card */}
-            <div className="hidden lg:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-slate-500/60 pointer-events-none">
+            <div className="hidden lg:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-20 text-slate-600 pointer-events-none">
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </div>
 
           {/* Card 5: Account Managers */}
-          <div className="relative bg-[#162235] border border-[#1e2e46] hover:bg-[#1f2e45] rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
+          <div className="relative bg-[#070D1E] border border-slate-800 hover:border-[#DE8E53]/50 rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-5 shadow-lg transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Circular Icon */}
               <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-105 transition-transform">

@@ -178,7 +178,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#FAF9F6] text-slate-800 font-sans antialiased selection:bg-[#DE8E53] selection:text-white pb-16 md:pb-0">
       
       {/* ========================================================= */}
       {/* 1. MATCHING MAIN NAVBAR (From Home Page) */}
@@ -191,43 +191,25 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       />
 
       {/* ========================================================= */}
-      {/* 2. HERO BANNER (Modern Color Gradient with Geometric Patterns) */}
+      {/* 2. HERO BANNER (D-EDGE Obsidian Navy with Copper/Amber Accents) */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#04142d] via-[#003B95] to-[#0284c7] text-white py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 shadow-md">
+      <section className="relative overflow-hidden bg-[#0B132B] text-white py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 shadow-md">
         
-        {/* SVG Geometric Grid & Dot Pattern */}
-        <div className="absolute inset-0 pointer-events-none opacity-25">
-          <svg className="w-full h-full" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="services-pattern-grid" width="36" height="36" patternUnits="userSpaceOnUse">
-                <path d="M 36 0 L 0 0 0 36" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.75" />
-                <circle cx="18" cy="18" r="1.5" fill="rgba(255,255,255,0.6)" />
-              </pattern>
-              <linearGradient id="patternFade" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
-                <stop offset="60%" stopColor="#ffffff" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#ffffff" stopOpacity="0.1" />
-              </linearGradient>
-              <mask id="patternMask">
-                <rect width="100%" height="100%" fill="url(#patternFade)" />
-              </mask>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#services-pattern-grid)" mask="url(#patternMask)" />
-          </svg>
-        </div>
-
         {/* Ambient Gradient Glow Accents */}
-        <div className="absolute -top-24 -right-20 w-96 h-96 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-28 -left-20 w-[420px] h-[420px] bg-blue-400/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-indigo-500/15 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -top-24 -right-20 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-28 -left-20 w-[420px] h-[420px] bg-[#DE8E53]/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-5xl mx-auto w-full text-left space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#DE8E53] text-xs font-bold uppercase tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
+            FULL-SERVICE AGENCY
+          </div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wider text-white leading-tight font-sans">
             Digital Marketing Services<br />
-            Made For The Small Business
+            Made For <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">Ambitious Businesses</span>
           </h1>
-          <p className="text-white/95 text-xs sm:text-sm lg:text-base max-w-3xl leading-relaxed font-normal">
-            At Aceso Solutions, we believe every small business deserves the opportunity to grow, compete, and thrive in today’s digital marketplace. From the websites we build to the campaigns we manage and the ads we optimize, every solution is tailored to your business, your audience, and your goals, with a focus on measurable growth and long-term results.
+          <p className="text-slate-300 text-xs sm:text-sm lg:text-base max-w-3xl leading-relaxed font-normal">
+            At Aceso Solutions, we believe every business deserves the opportunity to grow, compete, and thrive in today’s digital marketplace. From the campaigns we manage to the ads we optimize, every solution is tailored to your business, your audience, and your goals, with a focus on measurable growth and long-term results.
           </p>
         </div>
       </section>
@@ -238,7 +220,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center space-y-6">
         
         {/* Dotted Accent Header */}
-        <div className="flex items-center justify-center gap-3 text-[#003B95] font-bold text-xs sm:text-sm uppercase tracking-widest">
+        <div className="flex items-center justify-center gap-3 text-[#C25E00] font-bold text-xs sm:text-sm uppercase tracking-widest">
           <span className="tracking-[0.3em] font-mono text-xs opacity-70">••••••••••</span>
           <span className="px-1">Full-Service Digital Marketing Agency</span>
           <span className="tracking-[0.3em] font-mono text-xs opacity-70">••••••••••</span>
@@ -261,17 +243,20 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       <section className="w-full">
         
         {/* ------------------------------------------------------- */}
-        {/* ROW 1: SEARCH ENGINE OPTIMIZATION (Blue Left / Image Right) */}
+        {/* ROW 1: SEARCH ENGINE OPTIMIZATION (Obsidian Left / Image Right) */}
         {/* ------------------------------------------------------- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full min-h-[380px]">
           
-          {/* Blue Box (Left) */}
-          <div className="bg-gradient-to-r from-[#003B95] to-[#0D47A1] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-center items-start space-y-4">
+          {/* Obsidian Navy Box (Left) */}
+          <div className="bg-[#0B132B] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-center items-start space-y-4 border-b lg:border-b-0 lg:border-r border-slate-800">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#DE8E53]">
+              ORGANIC DISCOVERY
+            </span>
             <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wider text-white">
               Search Engine Optimization
             </h2>
-            <p className="text-white/95 text-xs sm:text-sm leading-relaxed max-w-xl">
-              With our unique SEO strategy, we get your small business visibility online. As experts in the algorithms behind platforms like Google, we take a comprehensive approach to getting your small business SEEN by the billions of searches that happen each day. With SEO, we position your business right in front of your ideal clients, exactly where they are looking for you. If you’re ready to increase your leads, close more sales, and have a digital presence that you’re proud of, Aceso Solutions is your partner.
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl">
+              With our unique SEO strategy, we get your small business visibility online. As experts in the algorithms behind platforms like Google, we take a comprehensive approach to getting your small business SEEN by the billions of searches that happen each day. With SEO, we position your business right in front of your ideal clients, exactly where they are looking for you.
             </p>
           </div>
 
@@ -295,7 +280,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full min-h-[380px]">
           
           {/* Photo (Left) - 3D Smartphone with Floating Social Icons */}
-          <div className="relative min-h-[300px] lg:min-h-full order-last lg:order-first bg-[#2b1055] overflow-hidden flex items-center justify-center">
+          <div className="relative min-h-[300px] lg:min-h-full order-last lg:order-first bg-[#070D1E] overflow-hidden flex items-center justify-center">
             <img 
               src={socialMediaPhoneImg} 
               alt="3D smartphone displaying social media creator with floating 3D social icons" 
@@ -307,8 +292,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
           </div>
 
           {/* White Box (Right) */}
-          <div className="bg-white text-slate-800 p-8 sm:p-12 lg:p-16 flex flex-col justify-center items-start space-y-4">
-            <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wider text-[#003B95]">
+          <div className="bg-[#FAF9F6] text-slate-800 p-8 sm:p-12 lg:p-16 flex flex-col justify-center items-start space-y-4 border-y lg:border-y-0 border-slate-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#C25E00]">
+              COMMUNITY & BRAND
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wider text-slate-900">
               Social Media Marketing
             </h2>
             <p className="text-slate-700 text-xs sm:text-sm leading-relaxed max-w-xl">
@@ -319,16 +307,19 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
         </div>
 
         {/* ------------------------------------------------------- */}
-        {/* ROW 3: PAID ADVERTISING (PPC) (Blue Left / Image Right) */}
+        {/* ROW 3: PAID ADVERTISING (PPC) (Obsidian Left / Image Right) */}
         {/* ------------------------------------------------------- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full min-h-[380px]">
           
-          {/* Blue Box (Left) */}
-          <div className="bg-gradient-to-r from-[#003B95] to-[#0D47A1] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-center items-start space-y-4">
+          {/* Obsidian Box (Left) */}
+          <div className="bg-[#0B132B] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-center items-start space-y-4 border-t lg:border-t-0 lg:border-r border-slate-800">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#DE8E53]">
+              PAID ACQUISITION & ROAS
+            </span>
             <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wider text-white">
               Paid Advertising (PPC)
             </h2>
-            <p className="text-white/95 text-xs sm:text-sm leading-relaxed max-w-xl">
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl">
               If you’re interested in running advertisements for your small business, you’ve come to the right place. Aceso Solutions contains the tools and assets to put your small business in front of ideal customers through Pay-Per-Click campaigns like Google Ads and Meta Ads. With a deep understanding of ad platforms and algorithms, combined with consumer psychology, we create strategic campaigns designed to convert while maximizing visibility and minimizing your cost.
             </p>
           </div>
@@ -355,7 +346,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center space-y-6">
         
         {/* Dotted Accent Header */}
-        <div className="flex items-center justify-center gap-3 text-[#003B95] font-bold text-xs sm:text-sm uppercase tracking-widest">
+        <div className="flex items-center justify-center gap-3 text-[#C25E00] font-bold text-xs sm:text-sm uppercase tracking-widest">
           <span className="tracking-[0.3em] font-mono text-xs opacity-70">••••••••••</span>
           <span className="px-1">Our Marketing Philosophy</span>
           <span className="tracking-[0.3em] font-mono text-xs opacity-70">••••••••••</span>
@@ -398,7 +389,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
             {/* Badge & Title */}
             <div className="space-y-1 mb-5">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#003B95]">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#C25E00]">
                 {activeModal.badge}
               </span>
               <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-sans">
@@ -427,15 +418,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </div>
 
             {/* Key Deliverables & Outcomes */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 p-4 bg-blue-50/60 rounded-xl border border-blue-100">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#003B95] mb-1">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#C25E00] mb-1">
                   Estimated Timeline
                 </p>
                 <p className="text-xs font-semibold text-slate-800">{activeModal.timeline}</p>
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#003B95] mb-1">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#C25E00] mb-1">
                   Ideal For
                 </p>
                 <p className="text-xs text-slate-700 leading-snug">{activeModal.idealFor}</p>
@@ -450,7 +441,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                   setActiveModal(null);
                   onRequestAudit();
                 }}
-                className="flex-1 py-3 bg-[#003B95] hover:bg-[#002D72] text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 py-3 bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Request Proposal & Pricing</span>
                 <ArrowRight className="w-4 h-4" />

@@ -98,22 +98,23 @@ export const Solutions: React.FC<SolutionsProps> = ({
   return (
     <section id="services" className="relative w-full overflow-hidden bg-white text-slate-900 py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 border-y border-slate-100">
       
-      {/* Subtle ambient light gradient */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-sky-50/40 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Subtle ambient warm light gradient */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-50/40 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-orange-50/30 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         
         {/* Section Header (Centered) */}
         <div className="text-center mb-8 sm:mb-10 max-w-3xl mx-auto">
           {/* Eyebrow */}
-          <div className="text-xs font-bold uppercase tracking-wider text-[#3b82f6] mb-2 sm:mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
             OUR CORE SOLUTIONS
           </div>
 
           {/* Main Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-serif font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
-            Strategic marketing. Sustainable growth.
+          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
+            Strategic marketing. <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">Sustainable growth.</span>
           </h2>
 
           {/* Subheading */}
@@ -122,24 +123,24 @@ export const Solutions: React.FC<SolutionsProps> = ({
           </p>
         </div>
 
-        {/* 3 Core Solution Pillars with Hexagon Icons */}
+        {/* 3 Core Solution Pillars with D-EDGE Hexagon Icons */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mb-8 sm:mb-12">
           
           {/* 1. Customer Acquisition */}
           <div 
-            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md"
+            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-[#FAF9F6] hover:bg-white border border-slate-200/90 hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/5"
           >
             {/* Hexagon with Search & Pin Icon */}
             <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
               <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
                 <polygon
                   points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
-                  className="fill-blue-50 stroke-[#003B95] stroke-[2.5] transition-colors group-hover:fill-blue-100/60"
+                  className="fill-amber-50/80 stroke-[#DE8E53] stroke-[2.5] transition-colors group-hover:fill-amber-100/80"
                 />
               </svg>
               
               {/* Custom Search + Location Pin Icon */}
-              <div className="absolute inset-0 flex items-center justify-center text-[#003B95] group-hover:text-blue-700 transition-colors">
+              <div className="absolute inset-0 flex items-center justify-center text-[#C25E00] group-hover:text-[#DE8E53] transition-colors">
                 <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="10.5" cy="10.5" r="7.5" />
                   <line x1="21" y1="21" x2="15.8" y2="15.8" />
@@ -149,7 +150,7 @@ export const Solutions: React.FC<SolutionsProps> = ({
               </div>
             </div>
 
-            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#003B95] transition-colors">
+            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
               CUSTOMER ACQUISITION
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
@@ -159,19 +160,19 @@ export const Solutions: React.FC<SolutionsProps> = ({
 
           {/* 2. Customer Reactivation */}
           <div 
-            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md"
+            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-[#FAF9F6] hover:bg-white border border-slate-200/90 hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/5"
           >
             {/* Hexagon with 2-Arrow Refresh Icon */}
             <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
               <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
                 <polygon
                   points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
-                  className="fill-blue-50 stroke-[#003B95] stroke-[2.5] transition-colors group-hover:fill-blue-100/60"
+                  className="fill-amber-50/80 stroke-[#DE8E53] stroke-[2.5] transition-colors group-hover:fill-amber-100/80"
                 />
               </svg>
 
               {/* 2-Arrow Circular Loop Icon */}
-              <div className="absolute inset-0 flex items-center justify-center text-[#003B95] group-hover:text-blue-700 transition-colors">
+              <div className="absolute inset-0 flex items-center justify-center text-[#C25E00] group-hover:text-[#DE8E53] transition-colors">
                 <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                   <path d="M3 3v5h5" />
@@ -181,7 +182,7 @@ export const Solutions: React.FC<SolutionsProps> = ({
               </div>
             </div>
 
-            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#003B95] transition-colors">
+            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
               CUSTOMER REACTIVATION
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
@@ -191,26 +192,26 @@ export const Solutions: React.FC<SolutionsProps> = ({
 
           {/* 3. Marketing Automation */}
           <div 
-            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-slate-50/80 hover:bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-md"
+            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-[#FAF9F6] hover:bg-white border border-slate-200/90 hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/5"
           >
             {/* Hexagon with Cursor Pointer Icon */}
             <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
               <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
                 <polygon
                   points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
-                  className="fill-blue-50 stroke-[#003B95] stroke-[2.5] transition-colors group-hover:fill-blue-100/60"
+                  className="fill-amber-50/80 stroke-[#DE8E53] stroke-[2.5] transition-colors group-hover:fill-amber-100/80"
                 />
               </svg>
 
               {/* Cursor Mouse Arrow Icon */}
-              <div className="absolute inset-0 flex items-center justify-center text-[#003B95] group-hover:text-blue-700 transition-colors">
+              <div className="absolute inset-0 flex items-center justify-center text-[#C25E00] group-hover:text-[#DE8E53] transition-colors">
                 <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M3 3l7 18 3.5-7.5L21 10 3 3z" />
                 </svg>
               </div>
             </div>
 
-            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#003B95] transition-colors">
+            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
               MARKETING AUTOMATION
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
@@ -225,10 +226,10 @@ export const Solutions: React.FC<SolutionsProps> = ({
           <button
             type="button"
             onClick={onViewAllServices}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#162235] hover:bg-[#1f2e45] active:bg-[#131b2b] text-white border border-[#1e2e46] font-bold text-sm sm:text-base uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#0B132B] to-[#16223D] hover:from-[#121E3E] hover:to-[#223354] text-white border border-[#DE8E53]/40 font-bold text-sm sm:text-base uppercase tracking-wider shadow-md hover:shadow-lg hover:shadow-amber-500/10 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
           >
             <span>VIEW OUR SERVICES</span>
-            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+            <ArrowRight className="w-4 h-4 text-[#DE8E53] stroke-[2.5]" />
           </button>
         </div>
 

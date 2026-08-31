@@ -148,18 +148,24 @@ export const Hero: React.FC<HeroProps> = ({
 
   return (
     <section className="relative pt-3 sm:pt-5 pb-5 sm:pb-7 lg:pb-9 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden w-full">
-      {/* Subtle background decoration grid */}
-      <div className="absolute top-6 right-0 w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] bg-gradient-to-bl from-blue-50/70 via-indigo-50/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Subtle D-EDGE ambient warm glow */}
+      <div className="absolute top-6 right-0 w-[320px] sm:w-[500px] h-[320px] sm:h-[500px] bg-gradient-to-bl from-amber-100/40 via-orange-50/20 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center w-full">
         
         {/* Left Column: Hero Copy & Value Proposition */}
         <div className="lg:col-span-6 flex flex-col items-start text-left w-full">
           
+          {/* Eyebrow */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53] animate-pulse" />
+            HOSPITALITY & SME GROWTH PLATFORM
+          </div>
+
           {/* Main Title */}
           <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-extrabold text-slate-900 leading-[1.15] tracking-tight mb-3 sm:mb-4">
             Digital solutions <br className="hidden sm:inline" />
-            that drive <span className="text-blue-600">real growth</span>
+            that drive <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">real growth</span>
           </h1>
 
           {/* Subheading */}
@@ -172,11 +178,12 @@ export const Hero: React.FC<HeroProps> = ({
         {/* Right Column: Interactive Dashboard & Floating Lead Component */}
         <div className="lg:col-span-6 relative flex justify-center lg:justify-end mt-2 sm:mt-4 lg:mt-0 w-full">
           {/* Main Growth Overview Card */}
-          <div className="w-full bg-white rounded-2xl p-3 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 relative">
+          <div className="w-full bg-white rounded-2xl p-3 sm:p-6 shadow-xl shadow-slate-900/5 border border-slate-200/90 relative">
             
             {/* Top Bar of Card */}
             <div className="flex items-center justify-between mb-2.5 sm:mb-5">
-              <h2 className="text-xs sm:text-base lg:text-lg font-bold text-slate-900">
+              <h2 className="text-xs sm:text-base lg:text-lg font-bold text-slate-900 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#DE8E53]" />
                 Growth Overview
               </h2>
 
@@ -184,14 +191,14 @@ export const Hero: React.FC<HeroProps> = ({
               <div className="relative">
                 <button
                   onClick={() => setShowTimeframeDropdown(!showTimeframeDropdown)}
-                  className="flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg transition-colors cursor-pointer"
+                  className="flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-amber-50/50 border border-slate-200 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg transition-colors cursor-pointer"
                 >
                   <span>{currentData.label}</span>
                   <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-500" />
                 </button>
 
                 {showTimeframeDropdown && (
-                  <div className="absolute right-0 mt-1.5 w-36 bg-white border border-slate-200 rounded-lg shadow-lg py-1 z-30 text-xs">
+                  <div className="absolute right-0 mt-1.5 w-36 bg-white border border-slate-200 rounded-xl shadow-xl py-1 z-30 text-xs overflow-hidden">
                     {(['30d', '3m', '6m', '1y'] as const).map((tf) => (
                       <button
                         key={tf}
@@ -199,8 +206,8 @@ export const Hero: React.FC<HeroProps> = ({
                           setTimeframe(tf);
                           setShowTimeframeDropdown(false);
                         }}
-                        className={`w-full text-left px-3 py-1.5 hover:bg-blue-50 transition-colors ${
-                          timeframe === tf ? 'text-blue-600 font-bold bg-blue-50/50' : 'text-slate-700'
+                        className={`w-full text-left px-3 py-1.5 hover:bg-amber-50 transition-colors ${
+                          timeframe === tf ? 'text-[#C25E00] font-bold bg-amber-500/10' : 'text-slate-700'
                         }`}
                       >
                         {datasets[tf].label}
@@ -214,7 +221,7 @@ export const Hero: React.FC<HeroProps> = ({
             {/* 3 Metric Summary Boxes */}
             <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
               {/* Total Leads */}
-              <div className="bg-slate-50/90 rounded-xl p-2 sm:p-3 border border-slate-100">
+              <div className="bg-slate-50/90 rounded-xl p-2 sm:p-3 border border-slate-200/80">
                 <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium block mb-0.5 sm:mb-1">Total Leads</span>
                 <span className="text-sm sm:text-lg font-extrabold text-slate-900 block leading-tight">
                   {currentData.leads}
@@ -225,7 +232,7 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Conversions */}
-              <div className="bg-slate-50/90 rounded-xl p-2 sm:p-3 border border-slate-100">
+              <div className="bg-slate-50/90 rounded-xl p-2 sm:p-3 border border-slate-200/80">
                 <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium block mb-0.5 sm:mb-1">Conversions</span>
                 <span className="text-sm sm:text-lg font-extrabold text-slate-900 block leading-tight">
                   {currentData.conversions}
@@ -236,7 +243,7 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
 
               {/* Revenue */}
-              <div className="bg-slate-50/90 rounded-xl p-2 sm:p-3 border border-slate-100">
+              <div className="bg-slate-50/90 rounded-xl p-2 sm:p-3 border border-slate-200/80">
                 <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium block mb-0.5 sm:mb-1">Revenue</span>
                 <span className="text-sm sm:text-lg font-extrabold text-slate-900 block leading-tight">
                   {currentData.revenue}
@@ -247,12 +254,12 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
             </div>
 
-            {/* Interactive SVG Chart */}
+            {/* Interactive SVG Chart with D-EDGE Copper/Amber Curve */}
             <div className="relative pt-1 sm:pt-2 pb-1">
               
               {/* Peak Value Badge */}
               <div 
-                className="absolute top-0 right-4 bg-blue-600 text-white font-bold text-[9px] sm:text-[11px] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-md flex items-center gap-1 z-10 animate-bounce"
+                className="absolute top-0 right-4 bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white font-bold text-[9px] sm:text-[11px] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-md flex items-center gap-1 z-10 animate-bounce"
                 style={{ animationDuration: '3s' }}
               >
                 <span>{currentData.peakVal}</span>
@@ -264,19 +271,19 @@ export const Hero: React.FC<HeroProps> = ({
                 <div className="absolute inset-0 flex flex-col justify-between text-[9px] sm:text-[10px] text-slate-400 font-medium pointer-events-none select-none">
                   <div className="flex items-center w-full">
                     <span className="w-6 sm:w-7">1.5K</span>
-                    <div className="flex-1 border-b border-dashed border-slate-100 ml-1" />
+                    <div className="flex-1 border-b border-dashed border-slate-200/70 ml-1" />
                   </div>
                   <div className="flex items-center w-full">
                     <span className="w-6 sm:w-7">1K</span>
-                    <div className="flex-1 border-b border-dashed border-slate-100 ml-1" />
+                    <div className="flex-1 border-b border-dashed border-slate-200/70 ml-1" />
                   </div>
                   <div className="flex items-center w-full">
                     <span className="w-6 sm:w-7">500</span>
-                    <div className="flex-1 border-b border-dashed border-slate-100 ml-1" />
+                    <div className="flex-1 border-b border-dashed border-slate-200/70 ml-1" />
                   </div>
                   <div className="flex items-center w-full">
                     <span className="w-6 sm:w-7">0</span>
-                    <div className="flex-1 border-b border-slate-100 ml-1" />
+                    <div className="flex-1 border-b border-slate-200/70 ml-1" />
                   </div>
                 </div>
 
@@ -284,8 +291,8 @@ export const Hero: React.FC<HeroProps> = ({
                 <svg className="w-full h-full overflow-visible pl-6 sm:pl-8" viewBox={`0 0 ${chartWidth} ${chartHeight}`} preserveAspectRatio="none">
                   <defs>
                     <linearGradient id="growthAreaGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#2563eb" stopOpacity="0.22" />
-                      <stop offset="100%" stopColor="#2563eb" stopOpacity="0.0" />
+                      <stop offset="0%" stopColor="#DE8E53" stopOpacity="0.28" />
+                      <stop offset="100%" stopColor="#DE8E53" stopOpacity="0.0" />
                     </linearGradient>
                   </defs>
 
@@ -296,7 +303,7 @@ export const Hero: React.FC<HeroProps> = ({
                   <path
                     d={linePath}
                     fill="none"
-                    stroke="#2563EB"
+                    stroke="#DE8E53"
                     strokeWidth="3"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -309,7 +316,7 @@ export const Hero: React.FC<HeroProps> = ({
                         cx={pt.x}
                         cy={pt.y}
                         r={i === coords.length - 1 ? 5 : 3.5}
-                        className="fill-white stroke-blue-600 stroke-[2.5] hover:r-6 transition-all cursor-pointer"
+                        className="fill-white stroke-[#C25E00] stroke-[2.5] hover:r-6 transition-all cursor-pointer"
                         onMouseEnter={() => setHoveredPoint(i)}
                       />
                       {i === coords.length - 1 && (
@@ -317,7 +324,7 @@ export const Hero: React.FC<HeroProps> = ({
                           cx={pt.x}
                           cy={pt.y}
                           r={10}
-                          className="fill-blue-400 opacity-30 animate-ping"
+                          className="fill-[#E5A958] opacity-40 animate-ping"
                         />
                       )}
                     </g>
@@ -331,7 +338,7 @@ export const Hero: React.FC<HeroProps> = ({
                   <span 
                     key={idx} 
                     className={`cursor-pointer transition-colors ${
-                      hoveredPoint === idx ? 'text-blue-600 font-bold' : 'hover:text-slate-800'
+                      hoveredPoint === idx ? 'text-[#C25E00] font-bold' : 'hover:text-slate-800'
                     }`}
                     onClick={() => setHoveredPoint(idx)}
                   >
@@ -343,9 +350,9 @@ export const Hero: React.FC<HeroProps> = ({
 
           </div>
 
-          {/* Floating Card: "New Lead - Sarah Wanjiku" (Shifted to bottom-left / corner so the graph and curve are unobstructed) */}
+          {/* Floating Card: "New Lead - Sarah Wanjiku" */}
           <div 
-            className="absolute -bottom-5 sm:-bottom-7 left-3 sm:-left-6 w-[170px] sm:w-[220px] bg-white rounded-xl p-2.5 sm:p-3.5 shadow-xl shadow-slate-900/10 border border-slate-100 z-20"
+            className="absolute -bottom-5 sm:-bottom-7 left-3 sm:-left-6 w-[170px] sm:w-[220px] bg-white rounded-xl p-2.5 sm:p-3.5 shadow-xl shadow-slate-900/10 border border-slate-200/90 z-20"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-1">

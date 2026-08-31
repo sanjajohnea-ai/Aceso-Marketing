@@ -36,13 +36,14 @@ export const Process: React.FC = () => {
       {/* Section Header */}
       <div className="text-left mb-6 sm:mb-8 w-full">
         {/* Eyebrow */}
-        <div className="text-xs font-bold uppercase tracking-wider text-[#3b82f6] mb-2 sm:mb-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C25E00] text-xs font-bold uppercase tracking-wider mb-3">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53]" />
           HOW WE WORK
         </div>
 
         {/* Main Heading */}
-        <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-serif font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
-          A clear process. No<br className="hidden sm:inline" /> guesswork.
+        <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
+          A clear process. <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">No guesswork.</span>
         </h2>
 
         {/* Subheading */}
@@ -56,10 +57,10 @@ export const Process: React.FC = () => {
         {processStepsData.map((step) => (
           <div
             key={step.number}
-            className="bg-slate-50/70 hover:bg-white border border-slate-200/80 hover:border-slate-300 rounded-2xl p-6 sm:p-8 flex items-start gap-5 sm:gap-7 transition-all duration-200 shadow-xs hover:shadow-md"
+            className="bg-[#FAF9F6] hover:bg-white border border-slate-200/90 hover:border-amber-400/50 rounded-2xl p-6 sm:p-8 flex items-start gap-5 sm:gap-7 transition-all duration-200 shadow-xs hover:shadow-xl hover:shadow-amber-500/5"
           >
-            {/* Faded Serif Number */}
-            <span className="text-3xl sm:text-4xl lg:text-[42px] font-serif font-bold text-[#c7d5e6] select-none shrink-0 leading-none pt-0.5">
+            {/* Faded Editorial Number */}
+            <span className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#DE8E53]/40 select-none shrink-0 leading-none pt-0.5 font-serif">
               {step.number}
             </span>
 
