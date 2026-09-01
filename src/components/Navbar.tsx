@@ -53,6 +53,31 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobilePricingExpanded, setMobilePricingExpanded] = useState(false);
   const [mobileIndustriesExpanded, setMobileIndustriesExpanded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const toggleMobileSection = (section: 'services' | 'industries' | 'pricing') => {
+    if (section === 'services') {
+      const next = !mobileServicesExpanded;
+      setMobileServicesExpanded(next);
+      if (next) {
+        setMobileIndustriesExpanded(false);
+        setMobilePricingExpanded(false);
+      }
+    } else if (section === 'industries') {
+      const next = !mobileIndustriesExpanded;
+      setMobileIndustriesExpanded(next);
+      if (next) {
+        setMobileServicesExpanded(false);
+        setMobilePricingExpanded(false);
+      }
+    } else if (section === 'pricing') {
+      const next = !mobilePricingExpanded;
+      setMobilePricingExpanded(next);
+      if (next) {
+        setMobileServicesExpanded(false);
+        setMobileIndustriesExpanded(false);
+      }
+    }
+  };
   
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
   const pricingDropdownRef = useRef<HTMLDivElement>(null);
@@ -361,16 +386,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <span>Home</span>
-                {activeSection === 'home' && (
-                  <span className="w-2 h-2 rounded-full bg-[#C25E00]" />
-                )}
               </button>
 
               {/* Services Expandable Section */}
               <div className="rounded-xl overflow-hidden">
                 <button
                   type="button"
-                  onClick={() => setMobileServicesExpanded(!mobileServicesExpanded)}
+                  onClick={() => toggleMobileSection('services')}
                   className={`w-full flex items-center justify-between px-4 py-3 min-h-[44px] text-sm font-semibold rounded-xl transition-colors cursor-pointer ${
                     isServiceActive
                       ? 'bg-amber-500/15 text-[#C25E00] font-bold'
@@ -379,9 +401,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <span className="flex items-center gap-2">
                     <span>Services</span>
-                    {isServiceActive && (
-                      <span className="text-[10px] bg-[#C25E00] text-white font-bold px-1.5 py-0.5 rounded">Active</span>
-                    )}
                   </span>
                   <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${mobileServicesExpanded ? 'rotate-180 text-[#C25E00]' : ''}`} />
                 </button>
@@ -394,14 +413,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <button
                           key={srv.id}
                           onClick={() => handleServiceSubClick(srv.navTarget)}
-                          className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
+                          className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
                             isCurrent 
                               ? 'bg-amber-50 text-[#C25E00] font-bold'
                               : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
                           }`}
                         >
-                          <span>{srv.name}</span>
-                          {isCurrent && <span className="w-1.5 h-1.5 rounded-full bg-[#C25E00]" />}
+                          {srv.name}
                         </button>
                       );
                     })}
@@ -409,90 +427,41 @@ export const Navbar: React.FC<NavbarProps> = ({
                 )}
               </div>
 
-              {/* Industries Accordion Dropdown Section */}
-              <div className="rounded-xl overflow-hidden border border-slate-200/60 bg-white/60">
+              {/* Industries Expandable Section */}
+              <div className="rounded-xl overflow-hidden">
                 <button
                   type="button"
-                  id="mobile-industries-button"
-                  aria-expanded={mobileIndustriesExpanded}
-                  aria-controls="mobile-industries-menu"
-                  onClick={() => setMobileIndustriesExpanded(!mobileIndustriesExpanded)}
+                  onClick={() => toggleMobileSection('industries')}
                   className={`w-full flex items-center justify-between px-4 py-3 min-h-[44px] text-sm font-semibold rounded-xl transition-colors cursor-pointer ${
                     isIndustryActive
                       ? 'bg-amber-500/15 text-[#C25E00] font-bold'
-                      : 'text-slate-800 hover:bg-slate-100 active:bg-slate-200/60'
+                      : 'text-slate-700 hover:bg-slate-100 active:bg-slate-200/60'
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="text-base">🏢</span>
                     <span>Industries</span>
-                    {isIndustryActive && (
-                      <span className="text-[10px] bg-[#C25E00] text-white font-bold px-1.5 py-0.5 rounded shadow-2xs">
-                        Active
-                      </span>
-                    )}
                   </span>
-                  <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
-                    <span>{industriesData.length} sectors</span>
-                    <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${mobileIndustriesExpanded ? 'rotate-180 text-[#C25E00]' : ''}`} />
-                  </div>
+                  <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${mobileIndustriesExpanded ? 'rotate-180 text-[#C25E00]' : ''}`} />
                 </button>
 
                 {mobileIndustriesExpanded && (
-                  <div 
-                    id="mobile-industries-menu"
-                    role="region"
-                    aria-labelledby="mobile-industries-button"
-                    className="p-2 space-y-1 bg-slate-50/90 rounded-b-xl border-t border-slate-200/80 animate-in fade-in slide-in-from-top-1 duration-150"
-                  >
-                    {/* All Industries Overview option */}
-                    <button
-                      onClick={() => {
-                        onNavigate('industries');
-                        setMobileMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-3 py-2.5 min-h-[42px] text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center justify-between border ${
-                        activeSection === 'industries'
-                          ? 'bg-amber-100/70 border-amber-300 text-[#C25E00]'
-                          : 'bg-white border-slate-200 text-slate-800 hover:bg-amber-50 hover:text-[#C25E00]'
-                      }`}
-                    >
-                      <span className="flex items-center gap-2">
-                        <span>✨</span>
-                        <span>View All Industries Overview</span>
-                      </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
-                    </button>
-
-                    {/* Individual Industry Sub-pages */}
-                    <div className="pt-1 space-y-1">
-                      {industriesData.map((ind) => {
-                        const isCurrent = activeSection === `industry-${ind.id}`;
-                        return (
-                          <button
-                            key={ind.id}
-                            onClick={() => handleIndustrySubClick(ind.id)}
-                            className={`w-full text-left px-3 py-2.5 min-h-[44px] text-xs font-medium rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
-                              isCurrent
-                                ? 'bg-amber-500/15 text-[#C25E00] font-bold border border-[#DE8E53]/40'
-                                : 'text-slate-700 hover:text-[#C25E00] hover:bg-white active:bg-slate-100'
-                            }`}
-                          >
-                            <span className="flex items-center gap-2.5">
-                              <span className="text-base shrink-0">{ind.iconEmoji}</span>
-                              <span className="truncate">{ind.name}</span>
-                            </span>
-                            {isCurrent ? (
-                              <span className="w-2 h-2 rounded-full bg-[#C25E00] shrink-0" />
-                            ) : (
-                              <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider shrink-0">
-                                {ind.category}
-                              </span>
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
+                  <div className="mt-1 pl-2 pr-1 py-1 space-y-1 bg-white rounded-xl border border-slate-200/80 shadow-2xs">
+                    {industriesData.map((ind) => {
+                      const isCurrent = activeSection === `industry-${ind.id}`;
+                      return (
+                        <button
+                          key={ind.id}
+                          onClick={() => handleIndustrySubClick(ind.id)}
+                          className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
+                            isCurrent
+                              ? 'bg-amber-50 text-[#C25E00] font-bold'
+                              : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
+                          }`}
+                        >
+                          {ind.name}
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -501,7 +470,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="rounded-xl overflow-hidden">
                 <button
                   type="button"
-                  onClick={() => setMobilePricingExpanded(!mobilePricingExpanded)}
+                  onClick={() => toggleMobileSection('pricing')}
                   className={`w-full flex items-center justify-between px-4 py-3 min-h-[44px] text-sm font-semibold rounded-xl transition-colors cursor-pointer ${
                     activeSection.startsWith('pricing')
                       ? 'bg-amber-500/15 text-[#C25E00] font-bold'
@@ -521,31 +490,51 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <div className="mt-1 pl-2 pr-1 py-1 space-y-1 bg-white rounded-xl border border-slate-200/80 shadow-2xs">
                     <button
                       onClick={() => handlePricingSubClick('pricing-seo')}
-                      className="w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100 rounded-lg transition-colors cursor-pointer block"
+                      className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
+                        activeSection === 'pricing-seo'
+                          ? 'bg-amber-50 text-[#C25E00] font-bold'
+                          : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
+                      }`}
                     >
                       SEO Pricing
                     </button>
                     <button
                       onClick={() => handlePricingSubClick('pricing-social')}
-                      className="w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100 rounded-lg transition-colors cursor-pointer block"
+                      className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
+                        activeSection === 'pricing-social'
+                          ? 'bg-amber-50 text-[#C25E00] font-bold'
+                          : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
+                      }`}
                     >
                       Social Media Pricing
                     </button>
                     <button
                       onClick={() => handlePricingSubClick('pricing-ppc')}
-                      className="w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100 rounded-lg transition-colors cursor-pointer block"
+                      className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
+                        activeSection === 'pricing-ppc'
+                          ? 'bg-amber-50 text-[#C25E00] font-bold'
+                          : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
+                      }`}
                     >
                       Google Ads &amp; PPC Pricing
                     </button>
                     <button
                       onClick={() => handlePricingSubClick('pricing-web')}
-                      className="w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100 rounded-lg transition-colors cursor-pointer block"
+                      className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
+                        activeSection === 'pricing-web'
+                          ? 'bg-amber-50 text-[#C25E00] font-bold'
+                          : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
+                      }`}
                     >
                       Web Design Pricing
                     </button>
                     <button
                       onClick={() => handlePricingSubClick('pricing-custom')}
-                      className="w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100 rounded-lg transition-colors cursor-pointer block"
+                      className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
+                        activeSection === 'pricing-custom'
+                          ? 'bg-amber-50 text-[#C25E00] font-bold'
+                          : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
+                      }`}
                     >
                       Custom Package Builder
                     </button>
@@ -566,9 +555,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <span>Contact Us</span>
-                {activeSection === 'contact' && (
-                  <span className="w-2 h-2 rounded-full bg-[#C25E00]" />
-                )}
               </button>
             </div>
 

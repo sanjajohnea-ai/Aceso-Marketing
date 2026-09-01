@@ -26,6 +26,71 @@ export interface IndustryItem {
 
 export const industriesData: IndustryItem[] = [
   {
+    id: 'dental-clinics',
+    name: 'Dental Clinics',
+    category: 'DENTAL & ORAL HEALTH',
+    tagline: 'High-value patient acquisition, cosmetic & restorative dental campaigns, Google Maps 3-Pack & WhatsApp appointment scheduling',
+    iconEmoji: '🦷',
+    roadblocks: [
+      'Over-reliance on low-margin routine cleanings while missing high-production implant, aligner, and cosmetic dentistry cases',
+      'High patient cancellation and no-show rates causing unpredictable chair downtime',
+      'Invisibility in local search when prospective patients search "dentist near me" or "teeth whitening Nairobi"',
+      'Front desk staff overwhelmed with phone calls leading to missed inquiries during busy clinical hours and after-hours'
+    ],
+    solutions: [
+      'Targeted Google Search & Meta Ads campaigns for high-margin procedures (dental implants, Invisalign/aligners, veneers, cosmetic whitening)',
+      'Google Maps 3-Pack Local SEO optimization positioning your dental practice at the top of local suburban searches',
+      'Automated 24/7 WhatsApp AI booking assistant confirming appointments and sending automated pre-visit reminder sequences',
+      'Systematic post-treatment review collection workflows building a trusted 5-star Google clinic reputation'
+    ],
+    deliverables: [
+      {
+        num: '01',
+        title: 'High-Value Dental Funnels',
+        description: 'Engineered Google & Meta ad funnels capturing high-production dental cases like clear aligners, implants, smile makeovers, and urgent emergency care.'
+      },
+      {
+        num: '02',
+        title: 'Dental Maps 3-Pack & Local SEO',
+        description: 'Dominate local searches for "dentist near me" and suburb-specific queries so nearby patients choose your practice first.'
+      },
+      {
+        num: '03',
+        title: '24/7 WhatsApp Dental Booking Bot',
+        description: 'Instant patient qualification, consultation scheduling, and automated reminders that virtually eliminate chair downtime.'
+      }
+    ]
+  },
+  {
+    id: 'education',
+    name: 'Education',
+    category: 'EDTECH & TRAINING',
+    tagline: 'Student intake marketing, open-day webinar funnels & enrollment follow-ups',
+    iconEmoji: '🎓',
+    roadblocks: [
+      'Seasonal enrollment crunches with unfilled seats as intake deadlines approach',
+      'Prospective students and parents dropping off halfway through long application forms',
+      'High cost per lead with weak follow-up allowing interested candidates to go cold'
+    ],
+    solutions: [
+      'Time-sensitive intake sprint campaigns across TikTok, Meta, and Google Search',
+      'Automated WhatsApp admissions advisor answering tuition, syllabus, and visa FAQs',
+      'Live masterclass and virtual open-day funnels providing proof of career outcomes'
+    ],
+    deliverables: [
+      {
+        num: '01',
+        title: 'Intake Sprint Campaigns',
+        description: 'High-urgency multi-channel blitzes filling cohorts 30–60 days before semester start.'
+      },
+      {
+        num: '02',
+        title: 'WhatsApp Admissions Advisor',
+        description: 'Instant automated answers to fee structures, schedules, and campus tour bookings.'
+      }
+    ]
+  },
+  {
     id: 'hospitality',
     name: 'Hotels & Resorts',
     category: 'HOSPITALITY',
@@ -57,6 +122,35 @@ export const industriesData: IndustryItem[] = [
         num: '03',
         title: 'Visual Experience Storytelling',
         description: 'Viral vertical video capturing amenities, views, and culinary offerings.'
+      }
+    ]
+  },
+  {
+    id: 'professional-services',
+    name: 'Professional & Legal Services',
+    category: 'B2B & ADVISORY',
+    tagline: 'Client acquisition for law firms, accounting consultancies & corporate advisors',
+    iconEmoji: '⚖️',
+    roadblocks: [
+      'Difficulty articulating complex high-ticket advisory value online',
+      'Unproductive initial consultations with low-budget or non-target prospects',
+      'Outdated static websites that fail to position partners as modern industry leaders'
+    ],
+    solutions: [
+      'High-converting practice area landing pages showcasing sector case studies',
+      'Intent-driven Google Search ads capturing commercial legal and financial keywords',
+      'Automated pre-consultation questionnaires filtering for budget and corporate size'
+    ],
+    deliverables: [
+      {
+        num: '01',
+        title: 'High-Ticket Practice Funnels',
+        description: 'Dedicated landing experiences tailored to specific corporate advisory practice areas.'
+      },
+      {
+        num: '02',
+        title: 'Inbound Retainer Engine',
+        description: 'Consistent pipeline of high-margin corporate retainers rather than one-off inquiries.'
       }
     ]
   },
@@ -95,42 +189,6 @@ export const industriesData: IndustryItem[] = [
     ]
   },
   {
-    id: 'dental-clinics',
-    name: 'Dental Clinics',
-    category: 'DENTAL & ORAL HEALTH',
-    tagline: 'High-value patient acquisition, cosmetic & restorative dental campaigns, Google Maps 3-Pack & WhatsApp appointment scheduling',
-    iconEmoji: '🦷',
-    roadblocks: [
-      'Over-reliance on low-margin routine cleanings while missing high-production implant, aligner, and cosmetic dentistry cases',
-      'High patient cancellation and no-show rates causing unpredictable chair downtime',
-      'Invisibility in local search when prospective patients search "dentist near me" or "teeth whitening Nairobi"',
-      'Front desk staff overwhelmed with phone calls leading to missed inquiries during busy clinical hours and after-hours'
-    ],
-    solutions: [
-      'Targeted Google Search & Meta Ads campaigns for high-margin procedures (dental implants, Invisalign/aligners, veneers, cosmetic whitening)',
-      'Google Maps 3-Pack Local SEO optimization positioning your dental practice at the top of local suburban searches',
-      'Automated 24/7 WhatsApp AI booking assistant confirming appointments and sending automated pre-visit reminder sequences',
-      'Systematic post-treatment review collection workflows building a trusted 5-star Google clinic reputation'
-    ],
-    deliverables: [
-      {
-        num: '01',
-        title: 'High-Value Dental Funnels',
-        description: 'Engineered Google & Meta ad funnels capturing high-production dental cases like clear aligners, implants, smile makeovers, and urgent emergency care.'
-      },
-      {
-        num: '02',
-        title: 'Dental Maps 3-Pack & Local SEO',
-        description: 'Dominate local searches for "dentist near me" and suburb-specific queries so nearby patients choose your practice first.'
-      },
-      {
-        num: '03',
-        title: '24/7 WhatsApp Dental Booking Bot',
-        description: 'Instant patient qualification, consultation scheduling, and automated reminders that virtually eliminate chair downtime.'
-      }
-    ]
-  },
-  {
     id: 'vet-clinics',
     name: 'Vet Clinics',
     category: 'VETERINARY & ANIMAL HOSPITALS',
@@ -164,64 +222,6 @@ export const industriesData: IndustryItem[] = [
         num: '03',
         title: 'PIMS Direct Booking Integration',
         description: 'Automated integration with Covetrus, IDEXX Neo, Cornerstone, or ezyVet converting high-intent pet owners into confirmed calendar exam appointments.'
-      }
-    ]
-  },
-  {
-    id: 'professional-services',
-    name: 'Professional & Legal Services',
-    category: 'B2B & ADVISORY',
-    tagline: 'Client acquisition for law firms, accounting consultancies & corporate advisors',
-    iconEmoji: '⚖️',
-    roadblocks: [
-      'Difficulty articulating complex high-ticket advisory value online',
-      'Unproductive initial consultations with low-budget or non-target prospects',
-      'Outdated static websites that fail to position partners as modern industry leaders'
-    ],
-    solutions: [
-      'High-converting practice area landing pages showcasing sector case studies',
-      'Intent-driven Google Search ads capturing commercial legal and financial keywords',
-      'Automated pre-consultation questionnaires filtering for budget and corporate size'
-    ],
-    deliverables: [
-      {
-        num: '01',
-        title: 'High-Ticket Practice Funnels',
-        description: 'Dedicated landing experiences tailored to specific corporate advisory practice areas.'
-      },
-      {
-        num: '02',
-        title: 'Inbound Retainer Engine',
-        description: 'Consistent pipeline of high-margin corporate retainers rather than one-off inquiries.'
-      }
-    ]
-  },
-  {
-    id: 'education',
-    name: 'Education',
-    category: 'EDTECH & TRAINING',
-    tagline: 'Student intake marketing, open-day webinar funnels & enrollment follow-ups',
-    iconEmoji: '🎓',
-    roadblocks: [
-      'Seasonal enrollment crunches with unfilled seats as intake deadlines approach',
-      'Prospective students and parents dropping off halfway through long application forms',
-      'High cost per lead with weak follow-up allowing interested candidates to go cold'
-    ],
-    solutions: [
-      'Time-sensitive intake sprint campaigns across TikTok, Meta, and Google Search',
-      'Automated WhatsApp admissions advisor answering tuition, syllabus, and visa FAQs',
-      'Live masterclass and virtual open-day funnels providing proof of career outcomes'
-    ],
-    deliverables: [
-      {
-        num: '01',
-        title: 'Intake Sprint Campaigns',
-        description: 'High-urgency multi-channel blitzes filling cohorts 30–60 days before semester start.'
-      },
-      {
-        num: '02',
-        title: 'WhatsApp Admissions Advisor',
-        description: 'Instant automated answers to fee structures, schedules, and campus tour bookings.'
       }
     ]
   }

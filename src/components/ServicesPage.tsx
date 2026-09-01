@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import socialMediaPhoneImg from '../assets/images/social_media_3d_phone_1786954171422.jpg';
+import businessBenefitsImg from '../assets/images/business_benefits_growth_1788265402410.jpg';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   CheckCircle2, 
@@ -73,14 +74,14 @@ export const servicesData: Record<string, ServiceDetailModel> = {
         whyItMatters: 'Responsive communication turns curious commenters into paying customers before they reach out to competitors.'
       }
     ],
-    benefitsParagraph: 'A structured social media marketing system builds top-of-mind brand authority, reduces customer acquisition friction, and fosters a loyal local audience that consistently chooses your business over competitors. By outsourcing your social strategy and content execution, you save valuable internal operational hours while maintaining an authoritative digital presence that drives measurable customer inquiries.',
+    benefitsParagraph: 'A structured social media marketing system builds brand authority, reduces acquisition friction, and drives measurable inquiries while saving valuable internal hours.',
     keyBenefits: [
-      'Active, loyal community where your target audience spends their time every day',
-      'Consistent, goal-aligned content planning and publishing across selected platforms',
-      'Engaging branded graphics, carousels, Reels, TikToks, and short-form video',
-      'Continuous metric tracking, refinement, and responsive community management',
-      'Save 20+ hours every month while maintaining a polished brand aesthetic',
-      'Seamless integration with your website, lead forms, and WhatsApp booking'
+      'Builds top-of-mind brand authority that fosters audience loyalty over competitors',
+      'Reduces customer acquisition friction with seamless lead and WhatsApp inquiry pathways',
+      'Saves 20+ internal operational hours per month by outsourcing strategy and content execution',
+      'Maintains consistent, goal-aligned publishing across selected social platforms',
+      'Delivers high-converting branded graphics, carousels, Reels, and short-form video',
+      'Provides ongoing performance tracking, audience insights, and responsive community management'
     ],
     deliverables: [
       'Comprehensive Monthly Social Media Content Calendar',
@@ -601,35 +602,59 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 </h3>
               </div>
 
-              {/* Dedicated Benefit Paragraph */}
-              <p className="text-base sm:text-lg text-slate-700 leading-relaxed bg-slate-50/80 border border-slate-200/80 p-5 sm:p-6 rounded-xl">
-                {activeService.benefitsParagraph}
-              </p>
+              {/* Dedicated Benefit Content and Visual Display */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-7 space-y-4">
+                  <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+                    {activeService.benefitsParagraph}
+                  </p>
+                  
+                  <ul className="space-y-3 pt-2">
+                    {activeService.keyBenefits.map((benefit, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
+                          ✓
+                        </span>
+                        <span className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
+                          {benefit}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                {activeService.keyBenefits.map((benefit, idx) => (
-                  <div key={idx} className="flex items-start gap-3 bg-slate-50/60 p-4 rounded-xl border border-slate-200/60">
-                    <span className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
-                      ✓
-                    </span>
-                    <span className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">{benefit}</span>
+                <div className="lg:col-span-5">
+                  <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm group">
+                    <img
+                      src={businessBenefitsImg}
+                      alt="Strategic Business Growth & Measurable ROI Analysis"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-64 sm:h-72 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4 sm:p-5">
+                      <div>
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                          Measurable Impact
+                        </span>
+                        <p className="text-white text-xs sm:text-sm font-semibold leading-snug">
+                          Data-backed execution designed for consistent SME revenue expansion
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
 
-            {/* 2. STRATEGIC PERFORMANCE TRACKING KPIS & SCORECARDS (Dedicated full-width section) */}
+            {/* 2. STRATEGIC PERFORMANCE TRACKING KPIS (Dedicated full-width section) */}
             <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6 shadow-2xs">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-5">
+              <div className="border-b border-slate-200 pb-5">
                 <div className="flex items-center gap-3">
                   <BarChart3 className="w-6 h-6 text-[#1D63ED]" />
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 uppercase tracking-wide">
-                    Performance Tracking KPIs &amp; Strategic Scorecards
+                    Performance Tracking KPIs
                   </h3>
                 </div>
-                <span className="text-xs sm:text-sm font-medium text-slate-500">
-                  How we diagnose, measure, and optimize campaign performance
-                </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-2">
@@ -638,12 +663,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                     key={idx}
                     className="bg-slate-50/90 border border-slate-200 rounded-xl p-5 space-y-3.5 flex flex-col justify-between"
                   >
-                    <div className="flex items-start justify-between gap-3">
+                    <div>
                       <span className="text-base font-bold text-slate-900 leading-snug">
                         {kpi.metric}
-                      </span>
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-blue-50 text-[#1D63ED] border border-blue-200/70 shrink-0">
-                        {kpi.focus}
                       </span>
                     </div>
 
