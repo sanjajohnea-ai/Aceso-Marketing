@@ -3,18 +3,13 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { VetClinicsDetailedSection } from './VetClinicsDetailedSection';
+import { IndustryDetailedSection } from './IndustryDetailedSection';
 import { 
   Check,
   X
 } from 'lucide-react';
 
-interface IndustriesPageProps {
-  onBackToHome: () => void;
-  onRequestAudit: () => void;
-  onNavigate: (sectionId: string) => void;
-}
-
-interface IndustryItem {
+export interface IndustryItem {
   id: string;
   name: string;
   category: string;
@@ -29,7 +24,7 @@ interface IndustryItem {
   }[];
 }
 
-const industriesData: IndustryItem[] = [
+export const industriesData: IndustryItem[] = [
   {
     id: 'hospitality',
     name: 'Hotels & Resorts',
@@ -100,37 +95,38 @@ const industriesData: IndustryItem[] = [
     ]
   },
   {
-    id: 'healthcare',
-    name: 'Healthcare & Clinics',
-    category: 'MEDICAL & WELLNESS',
-    tagline: 'Patient acquisition, Google Maps local visibility & automated appointment bookings',
-    iconEmoji: '🏥',
+    id: 'dental-clinics',
+    name: 'Dental Clinics',
+    category: 'DENTAL & ORAL HEALTH',
+    tagline: 'High-value patient acquisition, cosmetic & restorative dental campaigns, Google Maps 3-Pack & WhatsApp appointment scheduling',
+    iconEmoji: '🦷',
     roadblocks: [
-      'Heavy reliance on unpredictable word-of-mouth with empty clinic appointment slots',
-      'High patient no-show rates on unconfirmed telephone consultations',
-      'Lost patient inquiries due to delayed responses during busy clinical hours'
+      'Over-reliance on low-margin routine cleanings while missing high-production implant, aligner, and cosmetic dentistry cases',
+      'High patient cancellation and no-show rates causing unpredictable chair downtime',
+      'Invisibility in local search when prospective patients search "dentist near me" or "teeth whitening Nairobi"',
+      'Front desk staff overwhelmed with phone calls leading to missed inquiries during busy clinical hours and after-hours'
     ],
     solutions: [
-      'Google Maps 3-Pack local SEO optimization dominating "clinic near me" searches',
-      'Automated 24/7 WhatsApp appointment booking and multi-step reminder sequences',
-      'Specialist authority video reels highlighting doctor credentials and modern facilities',
-      'Systematic review collection workflows to build 5-star Google clinic reputation'
+      'Targeted Google Search & Meta Ads campaigns for high-margin procedures (dental implants, Invisalign/aligners, veneers, cosmetic whitening)',
+      'Google Maps 3-Pack Local SEO optimization positioning your dental practice at the top of local suburban searches',
+      'Automated 24/7 WhatsApp AI booking assistant confirming appointments and sending automated pre-visit reminder sequences',
+      'Systematic post-treatment review collection workflows building a trusted 5-star Google clinic reputation'
     ],
     deliverables: [
       {
         num: '01',
-        title: 'Local Maps 3-Pack Engine',
-        description: 'Dominate high-intent search queries for medical specialists and clinics in your exact area.'
+        title: 'High-Value Dental Funnels',
+        description: 'Engineered Google & Meta ad funnels capturing high-production dental cases like clear aligners, implants, smile makeovers, and urgent emergency care.'
       },
       {
         num: '02',
-        title: 'WhatsApp Booking Assistant',
-        description: '24/7 self-service consultation scheduling with automated reminder notifications.'
+        title: 'Dental Maps 3-Pack & Local SEO',
+        description: 'Dominate local searches for "dentist near me" and suburb-specific queries so nearby patients choose your practice first.'
       },
       {
         num: '03',
-        title: 'Doctor Authority Content',
-        description: 'Educational video clips establishing clinical trust, safety, and modern treatment methods.'
+        title: '24/7 WhatsApp Dental Booking Bot',
+        description: 'Instant patient qualification, consultation scheduling, and automated reminders that virtually eliminate chair downtime.'
       }
     ]
   },
@@ -172,40 +168,6 @@ const industriesData: IndustryItem[] = [
     ]
   },
   {
-    id: 'real-estate',
-    name: 'Real Estate',
-    category: 'HIGH-VALUE ASSET SALES',
-    tagline: 'High-intent buyer acquisition, diaspora investor funnels & project launch marketing',
-    iconEmoji: '🏗️',
-    roadblocks: [
-      'High volume of low-intent "tire-kicker" leads overwhelming sales agents',
-      'Prolonged buying cycles without systematic multi-touch automated nurturing',
-      'High advertising cost per lead on unsegmented social campaigns'
-    ],
-    solutions: [
-      'Pre-qualification lead funnels verifying budget and financing readiness before routing',
-      'Automated WhatsApp property brochures, virtual tours, and site visit booking triggers',
-      'Google Search campaigns capturing urgent high-intent "apartments for sale" buyers'
-    ],
-    deliverables: [
-      {
-        num: '01',
-        title: 'Pre-Qualified Buyer Funnels',
-        description: 'Budget-filtered inquiry capture with instant WhatsApp CRM routing straight to sales reps.'
-      },
-      {
-        num: '02',
-        title: 'Diaspora Acquisition Blitz',
-        description: 'Geo-targeted investor campaigns across high-income expat corridors looking to buy back home.'
-      },
-      {
-        num: '03',
-        title: 'Site Tour Booking Engine',
-        description: 'Frictionless calendar scheduling for physical and virtual site visits that increase show rates.'
-      }
-    ]
-  },
-  {
     id: 'professional-services',
     name: 'Professional & Legal Services',
     category: 'B2B & ADVISORY',
@@ -231,41 +193,6 @@ const industriesData: IndustryItem[] = [
         num: '02',
         title: 'Inbound Retainer Engine',
         description: 'Consistent pipeline of high-margin corporate retainers rather than one-off inquiries.'
-      }
-    ]
-  },
-  {
-    id: 'ecommerce',
-    name: 'E-commerce',
-    category: 'RETAIL & COMMERCE',
-    tagline: 'ROAS-driven Meta & TikTok catalog ads, checkout conversion & retention loops',
-    iconEmoji: '🛍️',
-    roadblocks: [
-      'Rising ad costs eroding product margins across generic Facebook/Instagram ads',
-      'High mobile cart abandonment and drop-offs during M-Pesa or card checkout',
-      'Low customer lifetime value with one-and-done shoppers never returning'
-    ],
-    solutions: [
-      'Dynamic Product Catalog ads on Meta & TikTok retargeting view-to-cart visitors',
-      'Automated WhatsApp cart abandonment sequences with 1-click M-Pesa payment links',
-      'High-velocity video ads showing real product demonstrations and unboxings',
-      'VIP customer retention loops with replenishment reminders and loyalty perks'
-    ],
-    deliverables: [
-      {
-        num: '01',
-        title: 'Dynamic Catalog Ad Scaling',
-        description: 'High-ROAS retargeting campaigns showcasing recently viewed items to eager buyers.'
-      },
-      {
-        num: '02',
-        title: 'M-Pesa Cart Recovery Bot',
-        description: 'Automated WhatsApp prompts recovering abandoned mobile shopping carts in minutes.'
-      },
-      {
-        num: '03',
-        title: 'High-Converting Video Engine',
-        description: 'Authentic creator demonstrations driving product discovery and rapid impulse sales.'
       }
     ]
   },
@@ -300,157 +227,64 @@ const industriesData: IndustryItem[] = [
   }
 ];
 
+interface IndustriesPageProps {
+  onBackToHome: () => void;
+  onRequestAudit: () => void;
+  onNavigate: (sectionId: string) => void;
+  selectedIndustryId?: string;
+  onSelectIndustry?: (industryId: string) => void;
+}
+
 export const IndustriesPage: React.FC<IndustriesPageProps> = ({
   onBackToHome,
   onRequestAudit,
-  onNavigate
+  onNavigate,
+  selectedIndustryId: controlledIndustryId,
+  onSelectIndustry
 }) => {
-  // Default to hospitality (Hotels & Resorts)
-  const [selectedIndustryId, setSelectedIndustryId] = useState<string>('hospitality');
+  const [internalIndustryId, setInternalIndustryId] = useState<string>('hospitality');
 
-  const activeIndustry = industriesData.find(i => i.id === selectedIndustryId) || industriesData[0];
+  const currentSelectedId = controlledIndustryId || internalIndustryId;
+  const activeIndustry = industriesData.find(i => i.id === currentSelectedId) || industriesData[0];
+
+  const handleSelectIndustry = (id: string) => {
+    if (onSelectIndustry) {
+      onSelectIndustry(id);
+    } else {
+      setInternalIndustryId(id);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-[#FAF9F6] text-slate-800 selection:bg-[#DE8E53] selection:text-white pb-16 md:pb-0">
       
       {/* Navigation */}
       <Navbar 
-        activeSection="industries"
+        activeSection={currentSelectedId ? `industry-${currentSelectedId}` : 'industries'}
         onRequestAudit={onRequestAudit}
         onNavigate={onNavigate}
       />
 
       {/* Main Workspace Layout */}
-      <main className="flex-1 pt-14 sm:pt-16 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-5 sm:space-y-6">
+      <main className="flex-1 pt-6 sm:pt-8 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-5 sm:space-y-6">
         
-        {/* Top Horizontal Industry Selector (Desktop & Mobile) */}
-        <div className="w-full">
-          {/* Scrollable / wrapped pill container */}
-          <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto pb-2 sm:pb-1 scrollbar-none snap-x lg:flex-wrap">
-            {industriesData.map((ind) => {
-              const isSelected = ind.id === selectedIndustryId;
-              return (
-                <button
-                  key={ind.id}
-                  onClick={() => setSelectedIndustryId(ind.id)}
-                  className={`snap-start shrink-0 flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer border select-none ${
-                    isSelected
-                      ? 'bg-[#0B132B] text-[#DE8E53] border-[#0B132B] shadow-sm ring-2 ring-amber-500/30'
-                      : 'bg-white text-slate-700 border-slate-200/90 hover:bg-slate-50 hover:border-slate-300'
-                  }`}
-                >
-                  <span className="text-base sm:text-lg">{ind.iconEmoji}</span>
-                  <span className="whitespace-nowrap">{ind.name}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Detail Card Directly Underneath Top Selector */}
+        {/* Detail Card for Selected Industry */}
         <div className="w-full overflow-hidden">
           <AnimatePresence mode="wait">
-            {activeIndustry.id === 'vet-clinics' ? (
-              <motion.div
-                key="vet-clinics-detailed"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full"
-              >
-                <VetClinicsDetailedSection 
-                  onRequestAudit={onRequestAudit}
-                  onNavigate={onNavigate}
-                />
-              </motion.div>
-            ) : (
-              <motion.div
-                key={activeIndustry.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white rounded-3xl border border-slate-200/90 shadow-2xs p-6 sm:p-8 space-y-6"
-              >
-                {/* Header Info */}
-                <div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                    {activeIndustry.name}
-                  </h2>
-                  <p className="text-sm sm:text-base text-slate-600 mt-1.5 leading-relaxed max-w-4xl">
-                    {activeIndustry.tagline}
-                  </p>
-                </div>
-
-                {/* Roadblocks vs How Aceso Solves It */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 py-5 border-t border-b border-slate-100">
-                  
-                  {/* Left: Common Roadblocks */}
-                  <div className="lg:col-span-5 space-y-3">
-                    <div className="text-xs font-bold tracking-wider uppercase text-slate-500">
-                      COMMON ROADBLOCKS
-                    </div>
-
-                    <ul className="space-y-3 text-xs sm:text-sm text-slate-700 leading-snug">
-                      {activeIndustry.roadblocks.map((rb, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5">
-                          <span className="w-4 h-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center shrink-0 mt-0.5 text-[9px] font-bold">
-                            ✕
-                          </span>
-                          <span>{rb}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Right: How Aceso Solves It */}
-                  <div className="lg:col-span-7 space-y-3">
-                    <div className="text-xs font-bold tracking-wider uppercase text-slate-500">
-                      HOW ACESO SOLVES IT
-                    </div>
-
-                    <ul className="space-y-3 text-xs sm:text-sm text-slate-700 leading-snug">
-                      {activeIndustry.solutions.map((sol, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5">
-                          <span className="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">
-                            ✓
-                          </span>
-                          <span>{sol}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                </div>
-
-                {/* Core Growth Deliverables */}
-                <div className="space-y-3 pt-1">
-                  <h3 className="text-xs font-bold tracking-wider uppercase text-slate-400">
-                    CORE GROWTH DELIVERABLES
-                  </h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
-                    {activeIndustry.deliverables.map((del, idx) => (
-                      <div key={idx} className="space-y-1.5 bg-slate-50/70 p-4 rounded-2xl border border-slate-100">
-                        <div className="flex items-center gap-2">
-                          <span className="w-5 h-5 rounded-md bg-amber-500/15 text-[#C25E00] font-bold text-[11px] flex items-center justify-center shrink-0 font-mono">
-                            {del.num}
-                          </span>
-                          <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
-                            {del.title}
-                          </h4>
-                        </div>
-                        <p className="text-xs text-slate-500 leading-relaxed">
-                          {del.description}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-              </motion.div>
-            )}
+            <motion.div
+              key={activeIndustry.id}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full"
+            >
+              <IndustryDetailedSection
+                industryId={activeIndustry.id}
+                onRequestAudit={onRequestAudit}
+                onNavigate={onNavigate}
+              />
+            </motion.div>
           </AnimatePresence>
         </div>
       </main>

@@ -1481,7 +1481,82 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       )}
 
       {/* Main Pricing Tables (Exact Design Matching Image) */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-12 sm:space-y-24">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-16 space-y-8 sm:space-y-24">
+        
+        {/* Mobile Category Quick-Filter Bar */}
+        <div className="w-full bg-white/90 backdrop-blur-xs border border-slate-200/90 rounded-2xl p-2 shadow-xs -mt-2 sm:mt-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 px-0.5 overscroll-x-contain">
+            <button
+              type="button"
+              onClick={() => setActiveCategory('all')}
+              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
+                activeCategory === 'all'
+                  ? 'bg-[#0B132B] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              All Packages
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveCategory('social')}
+              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
+                activeCategory === 'social'
+                  ? 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              Social Media
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveCategory('ppc')}
+              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
+                activeCategory === 'ppc'
+                  ? 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              Google &amp; Meta Ads
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveCategory('web')}
+              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
+                activeCategory === 'web'
+                  ? 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              Web Design
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveCategory('seo')}
+              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
+                activeCategory === 'seo'
+                  ? 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              SEO Packages
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenCustomBuilder) {
+                  onOpenCustomBuilder();
+                } else if (onNavigate) {
+                  onNavigate('pricing-custom');
+                }
+              }}
+              className="whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold bg-amber-50 text-[#C25E00] border border-[#DE8E53]/40 hover:bg-amber-100 transition-all cursor-pointer shrink-0 flex items-center gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Custom Builder</span>
+            </button>
+          </div>
+        </div>
         
         {filteredCategories.map((category) => (
           <CategoryPricingSection 
@@ -1493,39 +1568,39 @@ export const PricingPage: React.FC<PricingPageProps> = ({
         ))}
 
         {/* Custom Solution / Consultation Banner */}
-        <section className="bg-gradient-to-r from-[#070D1E] via-[#0B132B] to-[#162235] text-white rounded-2xl p-8 sm:p-12 shadow-md relative overflow-hidden max-w-5xl mx-auto border border-slate-800">
+        <section className="bg-gradient-to-r from-[#070D1E] via-[#0B132B] to-[#162235] text-white rounded-2xl p-6 sm:p-12 shadow-md relative overflow-hidden max-w-5xl mx-auto border border-slate-800">
           <div className="relative z-10 max-w-3xl space-y-4">
-            <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-white">
+            <h3 className="text-xl sm:text-3xl font-black uppercase tracking-wider text-white">
               Not sure which package is right for you?
             </h3>
             <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl">
               Book a free 30-minute strategy call. We&apos;ll review your business, identify the highest-ROI opportunity, and recommend the right starting point.
             </p>
-            <div className="pt-4 flex flex-wrap gap-4 items-center">
+            <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 items-stretch sm:items-center">
               <a
                 href="https://calendar.app.google/i9YT96iwcduZDF8Q8"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3.5 bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-md transition-all cursor-pointer flex items-center gap-2"
+                className="w-full sm:w-auto px-6 py-3.5 min-h-[48px] bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 text-center active:scale-[0.98]"
               >
-                <PhoneCall className="w-4 h-4 text-white" />
+                <PhoneCall className="w-4 h-4 text-white shrink-0" />
                 <span>BOOK A CALL</span>
               </a>
               
               <a
-                href="https://wa.me/254700000000?text=Hi%20there,%20I'd%20like%20to%20consult%20about%20your%20digital%20marketing%20packages"
+                href="https://wa.me/254758544241?text=Hi%20there,%20I'd%20like%20to%20consult%20about%20your%20digital%20marketing%20packages"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md shadow-md transition-colors cursor-pointer flex items-center gap-2"
+                className="w-full sm:w-auto px-6 py-3.5 min-h-[48px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-md transition-colors cursor-pointer flex items-center justify-center gap-2 text-center active:scale-[0.98]"
               >
-                <MessageSquare className="w-4 h-4 text-white" />
+                <MessageSquare className="w-4 h-4 text-white shrink-0" />
                 <span>TALK ON WHATSAPP</span>
               </a>
 
               <button
                 type="button"
                 onClick={onRequestAudit}
-                className="px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-md transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3.5 min-h-[48px] bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-colors cursor-pointer flex items-center justify-center text-center active:scale-[0.98]"
               >
                 GET A FREE AUDIT
               </button>

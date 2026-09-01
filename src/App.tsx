@@ -45,8 +45,8 @@ const pageMetadata = {
   },
   industries: {
     title: 'Industries We Work With | Aceso Solutions',
-    description: 'Purpose-built digital customer acquisition and revenue automation systems for Vet Clinics, Healthcare, Hospitality, Real Estate, Law, E-commerce & Education.',
-    keywords: 'veterinary digital marketing agency, vet clinic patient acquisition, animal hospital SEO, hospitality marketing Kenya, hotel direct bookings Nairobi, medical clinic marketing Kenya, healthcare patient acquisition Nairobi, law firm marketing Kenya, legal SEO Nairobi, real estate digital marketing Kenya, property lead generation Nairobi, ecommerce marketing Kenya, Shopify ads Nairobi, SME vertical growth agency Kenya'
+    description: 'Purpose-built digital customer acquisition and revenue automation systems for Dental Clinics, Vet Clinics, Hotels & Resorts, Tours & Travel, Professional Services & Education.',
+    keywords: 'dental clinic digital marketing Nairobi, veterinary digital marketing agency, vet clinic patient acquisition, animal hospital SEO, hospitality marketing Kenya, hotel direct bookings Nairobi, law firm marketing Kenya, legal SEO Nairobi, education student intake campaigns, SME vertical growth agency Kenya'
   },
   pricing: {
     title: 'Transparent Pricing & Plans | Aceso Solutions',
@@ -77,20 +77,34 @@ const parseRouteFromLocation = (): {
   view: PageView;
   section: string;
   pricingCategory: 'all' | 'web' | 'social' | 'seo' | 'ppc';
+  industryId?: string;
+  serviceId?: string;
 } => {
   if (typeof window === 'undefined') {
-    return { view: 'home', section: 'home', pricingCategory: 'all' };
+    return { view: 'home', section: 'home', pricingCategory: 'all', industryId: 'hospitality', serviceId: 'social' };
   }
 
   const rawPath = window.location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
   const rawHash = window.location.hash.toLowerCase().replace(/^#\/?/, '');
 
-  // 1. Check direct pathnames
-  if (rawPath === '/services' || rawHash === 'services') {
-    return { view: 'services', section: 'services', pricingCategory: 'all' };
+  // 1. Check direct pathnames for Services
+  if (rawPath === '/services' || rawPath.startsWith('/services/') || rawHash === 'services' || rawHash.startsWith('service-')) {
+    let srvId = 'social';
+    if (rawPath.startsWith('/services/')) {
+      srvId = rawPath.replace('/services/', '');
+    } else if (rawHash.startsWith('service-')) {
+      srvId = rawHash.replace('service-', '');
+    }
+    return { view: 'services', section: `service-${srvId}`, pricingCategory: 'all', serviceId: srvId };
   }
-  if (rawPath === '/industries' || rawHash === 'industries') {
-    return { view: 'industries', section: 'industries', pricingCategory: 'all' };
+  if (rawPath === '/industries' || rawPath.startsWith('/industries/') || rawHash === 'industries' || rawHash.startsWith('industry-')) {
+    let indId = 'hospitality';
+    if (rawPath.startsWith('/industries/')) {
+      indId = rawPath.replace('/industries/', '');
+    } else if (rawHash.startsWith('industry-')) {
+      indId = rawHash.replace('industry-', '');
+    }
+    return { view: 'industries', section: `industry-${indId}`, pricingCategory: 'all', industryId: indId };
   }
   if (rawPath === '/pricing' || rawPath.startsWith('/pricing/') || rawHash.startsWith('pricing')) {
     let cat: 'all' | 'web' | 'social' | 'seo' | 'ppc' = 'social';
@@ -129,6 +143,8 @@ export default function App() {
   const [currentView, setCurrentView] = useState<PageView>(initialRoute.view);
   const [activeSection, setActiveSection] = useState<string>(initialRoute.section);
   const [pricingCategory, setPricingCategory] = useState<'all' | 'web' | 'social' | 'seo' | 'ppc'>(initialRoute.pricingCategory);
+  const [selectedIndustryId, setSelectedIndustryId] = useState<string>(initialRoute.industryId || 'hospitality');
+  const [selectedServiceId, setSelectedServiceId] = useState<string>(initialRoute.serviceId || 'social');
   
   // Modal states
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
@@ -155,6 +171,12 @@ export default function App() {
       setCurrentView(route.view);
       setActiveSection(route.section);
       setPricingCategory(route.pricingCategory);
+      if (route.industryId) {
+        setSelectedIndustryId(route.industryId);
+      }
+      if (route.serviceId) {
+        setSelectedServiceId(route.serviceId);
+      }
 
       if (route.view === 'home' && route.section && route.section !== 'home') {
         setTimeout(() => {
@@ -218,18 +240,32 @@ export default function App() {
       return;
     }
 
-    if (sectionId === 'services') {
+    if (sectionId === 'services' || sectionId.startsWith('service-')) {
+      let targetServiceId = 'social';
+      if (sectionId.startsWith('service-')) {
+        targetServiceId = sectionId.replace('service-', '');
+      } else if (selectedServiceId) {
+        targetServiceId = selectedServiceId;
+      }
+      setSelectedServiceId(targetServiceId);
       setCurrentView('services');
-      setActiveSection('services');
-      updateUrlPath('/services');
+      setActiveSection(`service-${targetServiceId}`);
+      updateUrlPath(`/services/${targetServiceId}`);
       window.scrollTo(0, 0);
       return;
     }
 
-    if (sectionId === 'industries') {
+    if (sectionId === 'industries' || sectionId.startsWith('industry-')) {
+      let targetIndId = 'hospitality';
+      if (sectionId.startsWith('industry-')) {
+        targetIndId = sectionId.replace('industry-', '');
+      } else if (selectedIndustryId) {
+        targetIndId = selectedIndustryId;
+      }
+      setSelectedIndustryId(targetIndId);
       setCurrentView('industries');
-      setActiveSection('industries');
-      updateUrlPath('/industries');
+      setActiveSection(`industry-${targetIndId}`);
+      updateUrlPath(`/industries/${targetIndId}`);
       window.scrollTo(0, 0);
       return;
     }
@@ -381,21 +417,29 @@ export default function App() {
 
       {currentView === 'services' && (
         <ServicesPage 
+          selectedServiceId={selectedServiceId}
+          onSelectService={(id) => {
+            setSelectedServiceId(id);
+            setActiveSection(`service-${id}`);
+            updateUrlPath(`/services/${id}`);
+            window.scrollTo(0, 0);
+          }}
           onBackToHome={handleBackToHome}
           onRequestAudit={handleRequestAudit}
           onOpenCustomBuilder={handleOpenCustomPackagePage}
-          onNavigate={(sectionId) => {
-            if (sectionId === 'services') {
-              window.scrollTo(0, 0);
-            } else {
-              scrollToSection(sectionId);
-            }
-          }}
+          onNavigate={scrollToSection}
         />
       )}
 
       {currentView === 'industries' && (
         <IndustriesPage 
+          selectedIndustryId={selectedIndustryId}
+          onSelectIndustry={(id) => {
+            setSelectedIndustryId(id);
+            setActiveSection(`industry-${id}`);
+            updateUrlPath(`/industries/${id}`);
+            window.scrollTo(0, 0);
+          }}
           onBackToHome={handleBackToHome}
           onRequestAudit={handleRequestAudit}
           onNavigate={scrollToSection}

@@ -8,12 +8,18 @@ import {
 } from 'lucide-react';
 
 interface FooterProps {
-  onNavigate: (sectionId: string) => void;
+  onNavigate?: (sectionId: string) => void;
   onRequestAudit?: () => void;
   hideTopBanner?: boolean;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const handleNav = (target: string) => {
+    if (onNavigate) {
+      onNavigate(target);
+    }
+  };
+
   return (
     <footer className="bg-[#070D1E] text-slate-400 border-t border-slate-800">
       
@@ -21,83 +27,115 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       <div className="max-w-7xl mx-auto py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8">
           
-          {/* Brand Col (lg: 4 cols) */}
-          <div className="lg:col-span-4 space-y-4 sm:space-y-5">
-            <AcesoLogo variant="light" size="md" onClick={() => onNavigate('home')} />
+          {/* Brand Col (lg: 3 cols) */}
+          <div className="lg:col-span-3 space-y-4 sm:space-y-5">
+            <AcesoLogo variant="light" size="md" onClick={() => handleNav('home')} />
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-sm">
               Digital growth partner for hospitality, clinics, and ambitious businesses. We help you attract high-intent customers and build automated marketing systems.
             </p>
           </div>
 
-          {/* Company Links (lg: 2 cols) */}
-          <div className="lg:col-span-2 lg:border-r lg:border-slate-800 lg:pr-6">
+          {/* Industries Links (lg: 3 cols) */}
+          <div className="lg:col-span-3 lg:border-r lg:border-slate-800 lg:pr-6">
             <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-3 sm:mb-5">
-              COMPANY
+              INDUSTRIES
             </h4>
-            <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
+            <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm">
               <li>
                 <button 
-                  onClick={() => onNavigate('services')} 
+                  onClick={() => handleNav('industry-hospitality')} 
                   className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
-                  Our Services
+                  Hotels &amp; Resorts
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('industries')} 
+                  onClick={() => handleNav('industry-tours-travel')} 
                   className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
-                  Industries We Work With
+                  Tours &amp; Travel
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('pricing-social')} 
+                  onClick={() => handleNav('industry-dental-clinics')} 
                   className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
-                  Plans & Pricing
+                  Dental Clinics
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('contact')} 
+                  onClick={() => handleNav('industry-vet-clinics')} 
                   className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
-                  Contact Us
+                  Vet Clinics
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNav('industry-professional-services')} 
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
+                >
+                  Professional &amp; Legal Services
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNav('industry-education')} 
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
+                >
+                  Education &amp; Training
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Services & Pricing Links (lg: 3 cols) */}
+          {/* Services & Solutions (lg: 3 cols) */}
           <div className="lg:col-span-3 lg:border-r lg:border-slate-800 lg:pr-6">
             <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-3 sm:mb-5">
-              SERVICES & PRICING
+              OUR SERVICES
             </h4>
-            <ul className="space-y-2.5 sm:space-y-3.5 text-xs sm:text-sm">
+            <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm">
               <li>
                 <button 
-                  onClick={() => onNavigate('pricing-social')} 
+                  onClick={() => handleNav('service-social')} 
                   className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
-                  Social Media Pricing
+                  Social Media Marketing
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('pricing-seo')} 
+                  onClick={() => handleNav('service-ppc')} 
                   className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
-                  SEO Pricing
+                  Google &amp; Meta Ads (PPC)
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => onNavigate('pricing-ppc')} 
+                  onClick={() => handleNav('service-webdesign')} 
                   className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
                 >
-                  PPC Marketing Pricing
+                  Web Design &amp; Development
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNav('service-seo')} 
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
+                >
+                  Search Engine Optimization (SEO)
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => handleNav('service-whatsapp')} 
+                  className="text-slate-300 hover:text-[#DE8E53] transition-colors cursor-pointer text-left"
+                >
+                  WhatsApp Marketing &amp; Automation
                 </button>
               </li>
             </ul>
@@ -158,23 +196,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="flex items-center gap-2.5 flex-wrap justify-center md:justify-end">
             <button 
               id="footer-privacy-link"
-              onClick={() => onNavigate('privacy-policy')} 
-              className="hover:text-[#DE8E53] transition-colors cursor-pointer"
+              onClick={() => handleNav('privacy-policy')}
+              className="text-slate-400 hover:text-[#DE8E53] transition-colors cursor-pointer"
             >
               Privacy Policy
             </button>
-            <span className="text-slate-600">|</span>
+            <span className="text-slate-600">·</span>
             <button 
               id="footer-terms-link"
-              onClick={() => onNavigate('terms-of-use')} 
-              className="hover:text-[#DE8E53] transition-colors cursor-pointer"
+              onClick={() => handleNav('terms-of-use')}
+              className="text-slate-400 hover:text-[#DE8E53] transition-colors cursor-pointer"
             >
               Terms of Use
             </button>
           </div>
         </div>
       </div>
-
     </footer>
   );
 };

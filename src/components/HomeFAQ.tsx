@@ -45,13 +45,10 @@ const faqData: FAQItem[] = [
 ];
 
 export const HomeFAQ: React.FC = () => {
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const toggleItem = (id: string) => {
-    setOpenItems(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+    setOpenId(prev => (prev === id ? null : id));
   };
 
   return (
@@ -79,7 +76,7 @@ export const HomeFAQ: React.FC = () => {
         {/* Accordion FAQ List */}
         <div className="space-y-3 sm:space-y-4 w-full">
           {faqData.map((item) => {
-            const isOpen = !!openItems[item.id];
+            const isOpen = openId === item.id;
 
             return (
               <div
