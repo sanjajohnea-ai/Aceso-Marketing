@@ -178,6 +178,9 @@ export const VetClinicsDetailedSection: React.FC<VetClinicsDetailedSectionProps>
             <img 
               src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?q=80&w=1200&auto=format&fit=crop" 
               alt="Veterinarian examining pet cat" 
+              loading="lazy"
+              decoding="async"
+              referrerPolicy="no-referrer"
               className="w-full h-full object-cover opacity-90"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">

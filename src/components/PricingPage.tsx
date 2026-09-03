@@ -44,7 +44,7 @@ export interface PricingTier {
 }
 
 export interface PricingCategory {
-  id: 'web' | 'social' | 'seo' | 'ppc';
+  id: 'social' | 'seo' | 'ppc';
   title: string;
   bannerTitle: string;
   shortName: string;
@@ -56,86 +56,6 @@ export interface PricingCategory {
 }
 
 export const pricingCategories: PricingCategory[] = [
-  {
-    id: 'web',
-    title: 'Web Design & Hosting Packages',
-    bannerTitle: 'OUR WEB DESIGN PACKAGES',
-    shortName: 'Web Design',
-    subtitle: 'High-converting, responsive websites built for speed, SEO, and lead generation',
-    description: 'Professional website design and managed cloud hosting to give your business an authoritative digital storefront.',
-    icon: Globe,
-    tiers: [
-      {
-        id: 'web-starter',
-        name: 'SMALL BUSINESS STARTER SITE',
-        price: 'From KSh 10,000',
-        period: '/one-time',
-        description: 'Get everything you need to start strong online with a five-page website template customized for your business.',
-        icon: Rocket,
-        features: [
-          '5-page SEO-optimized website (Home, About, Services, Contact, Blog)',
-          'Custom brand colors, fonts, and imagery',
-          'Mobile-friendly and responsive design',
-          'Optimized site structure and navigation for user experience',
-          'Basic on-page SEO setup',
-          'Google Analytics, Google Tag, and Search Console integration'
-        ],
-        buttonText: 'GET STARTED'
-      },
-      {
-        id: 'web-hosting-pro',
-        name: 'SUCCEEDING SMALL HOSTING & MANAGEMENT',
-        price: 'From KSh 15,000',
-        period: '/year',
-        description: 'Fast, secure, and stress-free website performance. We keep your website healthy, fast, and functional so you can focus on running your business.',
-        icon: Server,
-        features: [
-          'Website speed optimization and uptime monitoring',
-          'Website accessibility checks and compliance updates',
-          'User click tracking and analytics review',
-          '30 minutes of monthly website edits',
-          'Secure hosting, SSL certification, and site management',
-          'Daily backups and malware scanning'
-        ],
-        buttonText: 'GET STARTED'
-      },
-      {
-        id: 'web-hosting-basic',
-        name: 'BASIC WEBSITE HOSTING & MANAGEMENT',
-        price: 'From KSh 7,500',
-        period: '/year',
-        description: 'Reliable hosting with essential maintenance. Get secure hosting and monthly updates that keep your site running smoothly.',
-        icon: Cloud,
-        features: [
-          'Secure web hosting with 99.9% uptime',
-          'Monthly software updates and security patches',
-          'Daily automated backups',
-          'Uptime monitoring and performance checks',
-          'Basic technical support',
-          'Email support response within 24–48 hours'
-        ],
-        buttonText: 'GET STARTED'
-      },
-      {
-        id: 'web-custom',
-        name: 'CUSTOM WEBSITE DESIGN',
-        price: 'Custom Pricing',
-        period: '/one-time',
-        description: 'Our custom websites are built from the ground up for your brand and goals, designed for speed, accessibility, and lead generation.',
-        icon: Edit3,
-        features: [
-          'Custom UI/UX design tailored to your brand',
-          'Responsive design for all devices',
-          'SEO-friendly structure and meta setup',
-          'Integration with third-party tools and APIs',
-          'Advanced contact forms and lead capture',
-          'Training and handover documentation',
-          'Ongoing support available (optional)'
-        ],
-        buttonText: 'GET STARTED'
-      }
-    ]
-  },
   {
     id: 'social',
     title: 'Social Media Marketing Pricing',
@@ -343,7 +263,7 @@ export const pricingCategories: PricingCategory[] = [
 ];
 
 interface PricingPageProps {
-  initialCategory?: 'all' | 'web' | 'social' | 'seo' | 'ppc';
+  initialCategory?: 'all' | 'social' | 'seo' | 'ppc';
   onBackToHome: () => void;
   onRequestAudit: () => void;
   onOpenCustomBuilder?: () => void;
@@ -1292,7 +1212,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
   onOpenCustomBuilder,
   onNavigate
 }) => {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'web' | 'social' | 'seo' | 'ppc'>(initialCategory);
+  const [activeCategory, setActiveCategory] = useState<'all' | 'social' | 'seo' | 'ppc'>(initialCategory || 'all');
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   // Sync if initialCategory prop changes
@@ -1303,7 +1223,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
   }, [initialCategory]);
 
   const handleNav = (sectionId: string) => {
-    if (sectionId === 'pricing-custom' || sectionId === 'custom-package') {
+    if (sectionId === 'pricing-custom' || sectionId === 'custom-package' || sectionId === 'pricing-web') {
       if (onOpenCustomBuilder) {
         onOpenCustomBuilder();
       } else if (onNavigate) {
@@ -1311,10 +1231,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       }
       return;
     }
-    if (sectionId === 'pricing-web') {
-      setActiveCategory('web');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (sectionId === 'pricing-social') {
+    if (sectionId === 'pricing-social') {
       setActiveCategory('social');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (sectionId === 'pricing-seo') {
@@ -1466,15 +1383,13 @@ export const PricingPage: React.FC<PricingPageProps> = ({
 
           <div className="relative z-10 max-w-5xl mx-auto text-center space-y-4">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-wider text-white leading-tight">
-              {activeCategory === 'web' ? 'WEB DESIGN & HOSTING PACKAGES'
-                : activeCategory === 'seo' ? 'SEO PACKAGES FOR DOMINANT VISIBILITY'
+              {activeCategory === 'seo' ? 'SEO PACKAGES FOR DOMINANT VISIBILITY'
                 : 'Transparent Pricing For Real Business Growth'}
             </h1>
             
             <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-normal">
-              {activeCategory === 'web' ? 'High-converting, responsive websites built for speed, SEO, and lead generation.'
-                : activeCategory === 'seo' ? 'Dominate Google Search and Google Maps for high-intent, compounding organic leads.'
-                : 'Choose specialized tiers for Web Design, Social Media, SEO, and Paid Advertising. Engineered specifically for small and growing enterprises with zero hidden fees.'}
+              {activeCategory === 'seo' ? 'Dominate Google Search and Google Maps for high-intent, compounding organic leads.'
+                : 'Choose specialized tiers for Social Media, SEO, and Paid Advertising. Engineered specifically for small and growing enterprises with zero hidden fees.'}
             </p>
           </div>
         </section>
@@ -1482,82 +1397,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({
 
       {/* Main Pricing Tables (Exact Design Matching Image) */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-16 space-y-8 sm:space-y-24">
-        
-        {/* Mobile Category Quick-Filter Bar */}
-        <div className="w-full bg-white/90 backdrop-blur-xs border border-slate-200/90 rounded-2xl p-2 shadow-xs -mt-2 sm:mt-0">
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 px-0.5 overscroll-x-contain">
-            <button
-              type="button"
-              onClick={() => setActiveCategory('all')}
-              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
-                activeCategory === 'all'
-                  ? 'bg-[#0B132B] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              All Packages
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveCategory('social')}
-              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
-                activeCategory === 'social'
-                  ? 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Social Media
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveCategory('ppc')}
-              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
-                activeCategory === 'ppc'
-                  ? 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Google &amp; Meta Ads
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveCategory('web')}
-              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
-                activeCategory === 'web'
-                  ? 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Web Design
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveCategory('seo')}
-              className={`whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer shrink-0 ${
-                activeCategory === 'seo'
-                  ? 'bg-gradient-to-r from-[#DE8E53] to-[#C25E00] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              SEO Packages
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                if (onOpenCustomBuilder) {
-                  onOpenCustomBuilder();
-                } else if (onNavigate) {
-                  onNavigate('pricing-custom');
-                }
-              }}
-              className="whitespace-nowrap px-4 py-2.5 min-h-[42px] rounded-xl text-xs sm:text-sm font-bold bg-amber-50 text-[#C25E00] border border-[#DE8E53]/40 hover:bg-amber-100 transition-all cursor-pointer shrink-0 flex items-center gap-1.5"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Custom Builder</span>
-            </button>
-          </div>
-        </div>
-        
         {filteredCategories.map((category) => (
           <CategoryPricingSection 
             key={category.id} 

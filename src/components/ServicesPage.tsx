@@ -36,7 +36,7 @@ export interface ServiceDetailModel {
   keyBenefits: string[];
   deliverables: string[];
   kpis: PerformanceKPI[];
-  pricingCategoryKey: 'social' | 'ppc' | 'web' | 'seo' | 'all';
+  pricingCategoryKey: 'social' | 'ppc' | 'web' | 'seo' | 'all' | 'custom';
 }
 
 export const servicesData: Record<string, ServiceDetailModel> = {
@@ -258,7 +258,7 @@ export const servicesData: Record<string, ServiceDetailModel> = {
         whyWeTrackIt: 'Reveals whether visitors stay to explore your service details and pricing or exit immediately, highlighting areas where copywriting and layout can be refined.'
       }
     ],
-    pricingCategoryKey: 'web'
+    pricingCategoryKey: 'custom'
   },
   seo: {
     id: 'seo',
@@ -404,7 +404,7 @@ export const servicesData: Record<string, ServiceDetailModel> = {
         whyWeTrackIt: 'Monitors customer response to seasonal wellness check-ups, service reminders, and promotional messages to drive repeat appointments from past clients.'
       }
     ],
-    pricingCategoryKey: 'all'
+    pricingCategoryKey: 'custom'
   }
 };
 
@@ -438,7 +438,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
   const handleViewPricing = () => {
     if (onNavigate) {
-      onNavigate(`pricing-${activeService.pricingCategoryKey}`);
+      if (activeService.id === 'whatsapp' || activeService.id === 'web' || activeService.pricingCategoryKey === 'custom') {
+        onNavigate('pricing-custom');
+      } else {
+        onNavigate(`pricing-${activeService.pricingCategoryKey}`);
+      }
     }
   };
 
@@ -501,6 +505,9 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                     <img 
                       src={activeService.heroImage} 
                       alt={activeService.title} 
+                      loading="lazy"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover opacity-95"
                     />
                     {activeService.imageCaption && (
@@ -628,6 +635,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                     <img
                       src={businessBenefitsImg}
                       alt="Strategic Business Growth & Measurable ROI Analysis"
+                      loading="lazy"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       className="w-full h-64 sm:h-72 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
                     />

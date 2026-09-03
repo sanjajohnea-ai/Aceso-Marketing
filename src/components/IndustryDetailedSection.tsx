@@ -1109,6 +1109,9 @@ export const IndustryDetailedSection: React.FC<IndustryDetailedSectionProps> = (
             <img 
               src={data.heroImage} 
               alt={data.name} 
+              loading="lazy"
+              decoding="async"
+              referrerPolicy="no-referrer"
               className="w-full h-full object-cover opacity-90"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4 sm:p-5">

@@ -2,8 +2,13 @@
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     
+    <!-- Mobile Theme Color for Browser Chrome -->
+    <meta name="theme-color" content="#0B132B" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" type="image/svg+xml" href="/favicon.svg" />
@@ -12,73 +17,183 @@
     <!-- Primary SEO Meta Tags -->
     <title>Aceso Solutions | Digital Marketing, Ads & Automation for SMEs</title>
     <meta name="title" content="Aceso Solutions | Digital Marketing, Ads & Automation for SMEs" />
-    <meta name="description" content="Aceso Solutions delivers ROI-focused social media management, Meta & TikTok ads, conversion websites, WhatsApp automation, and tailored digital growth packages for SMEs." />
+    <meta name="description" content="Aceso Solutions delivers ROI-focused social media management, Meta & TikTok ads, high-converting websites, WhatsApp automation, and tailored digital growth packages for SMEs." />
     <meta name="keywords" content="WhatsApp automation, WhatsApp business chatbots, WhatsApp CRM integration, WhatsApp marketing Kenya, automated lead generation WhatsApp, SEO services Nairobi, search engine optimization Kenya, local SEO Nairobi, Google Maps SEO, keyword ranking Kenya, on-page SEO, technical SEO, Meta ads Kenya, Facebook advertising agency, Instagram ads Nairobi, TikTok advertising Kenya, TikTok ads for business, Google Ads PPC Nairobi, paid media management, paid search campaigns, social media management Nairobi, content creation agency Kenya, graphic design for social media, digital marketing agency Kenya, SME marketing solutions, customer acquisition agency, conversion rate optimization, high-converting landing pages Nairobi, web design Kenya, digital growth audit, Aceso Solutions" />
     <meta name="author" content="Aceso Solutions" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://acesosolutions.co.ke" />
+
+    <!-- Geo Targeting for Local & Regional Search Visibility (Kenya & East Africa) -->
+    <meta name="geo.region" content="KE-30" />
+    <meta name="geo.placename" content="Nairobi" />
+    <meta name="geo.position" content="-1.286389;36.817223" />
+    <meta name="ICBM" content="-1.286389, 36.817223" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://acesosolutions.co.ke" />
     <meta property="og:title" content="Aceso Solutions | Digital Growth Partner for SMEs" />
-    <meta property="og:description" content="Flexible, transparent digital growth packages: Social Media Management from KSh 10,000/mo, targeted advertising, WhatsApp automation, and custom strategy." />
+    <meta property="og:description" content="Flexible, transparent digital growth packages: Social Media Management from KSh 10,000/mo, targeted Meta & TikTok ads, WhatsApp automation, and custom strategy." />
     <meta property="og:site_name" content="Aceso Solutions" />
+    <meta property="og:locale" content="en_KE" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Aceso Solutions Digital Marketing and Customer Acquisition Specialists" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://acesosolutions.co.ke" />
-    <meta property="twitter:title" content="Aceso Solutions | Digital Marketing & Growth for SMEs" />
-    <meta property="twitter:description" content="Build your brand and convert customers with transparent, flexible marketing packages tailored to your goals." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://acesosolutions.co.ke" />
+    <meta name="twitter:title" content="Aceso Solutions | Digital Marketing & Growth for SMEs" />
+    <meta name="twitter:description" content="Build your brand and convert customers with transparent, flexible marketing packages tailored to your goals." />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop" />
 
-    <!-- High-Performance Font Loading: Plus Jakarta Sans, Inter & Playfair Display (font-display: swap) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+    <!-- Speed & Resource Preconnects -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- High-Performance Font Loading: Inter, Playfair Display & Plus Jakarta Sans with font-display: swap -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
 
-    <!-- Schema.org JSON-LD structured data for LocalBusiness & ProfessionalService -->
+    <!-- Schema.org JSON-LD: WebSite Schema (For Sitelinks and Brand Search) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Aceso Solutions",
+        "url": "https://acesosolutions.co.ke",
+        "description": "Digital marketing, social media management, paid advertising, and marketing automation for SMEs.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Aceso Solutions",
+          "url": "https://acesosolutions.co.ke",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://acesosolutions.co.ke/favicon.svg"
+          }
+        }
+      }
+    </script>
+
+    <!-- Schema.org JSON-LD: ProfessionalService / LocalBusiness Schema -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         "name": "Aceso Solutions",
+        "legalName": "Aceso Solutions",
         "description": "Digital solutions and marketing agency providing customer acquisition, social media management, paid advertising, and marketing automation for SMEs.",
         "url": "https://acesosolutions.co.ke",
+        "logo": "https://acesosolutions.co.ke/favicon.svg",
+        "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop",
+        "telephone": "+254758544241",
+        "email": "contact@acesosolutions.co.ke",
         "priceRange": "KSh 10,000 - KSh 100,000",
-        "areaServed": "Kenya",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nairobi",
+          "addressCountry": "KE"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -1.286389,
+          "longitude": 36.817223
+        },
+        "areaServed": [
+          {
+            "@type": "Country",
+            "name": "Kenya"
+          },
+          {
+            "@type": "Country",
+            "name": "United States"
+          },
+          {
+            "@type": "Country",
+            "name": "United Kingdom"
+          }
+        ],
         "serviceType": [
           "Social Media Management",
           "Meta Ads Management",
           "TikTok Advertising",
           "Website Design & Landing Pages",
           "WhatsApp Business Automation",
-          "Search Engine Optimization (SEO)"
+          "Search Engine Optimization (SEO)",
+          "Google Ads PPC Management"
         ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "28"
+        },
         "offers": [
           {
             "@type": "Offer",
-            "name": "Starter Package",
+            "name": "Social Media Starter Package",
             "price": "10000",
             "priceCurrency": "KES",
             "description": "1 Social Platform, 8 Custom Branded Posts/mo (upto 6 reels), Monthly Content Calendar, Strategy, Short-Form Video Editing, Caption & Hashtag Writing, Scheduling, DM Monitoring & Monthly Report"
           },
           {
             "@type": "Offer",
-            "name": "Growth Package",
+            "name": "Social Media Growth Package",
             "price": "20000",
             "priceCurrency": "KES",
             "description": "Everything in Starter, 2 Social Platforms, Professional Photography & Videography (upto 3 on-location shoots), Optimization strategy, Paid Ads A/B Testing & Weekly Updates"
           },
           {
             "@type": "Offer",
-            "name": "Custom Package",
+            "name": "Custom Digital Growth Package",
             "description": "Custom Social Media Strategy, Platform Selection, Content Production, Photography & Videography, Paid Advertising, Influencer Campaigns, SEO, Community & Campaign Management, Custom Reporting"
           }
         ]
       }
     </script>
 
-    <!-- Schema.org JSON-LD structured data for FAQPage (Google Rich Snippets) -->
+    <!-- Schema.org JSON-LD: BreadcrumbList for SERP Navigation Snippets -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://acesosolutions.co.ke"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Services",
+            "item": "https://acesosolutions.co.ke/services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Pricing",
+            "item": "https://acesosolutions.co.ke/pricing"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Free Growth Audit",
+            "item": "https://acesosolutions.co.ke/free-audit"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Contact",
+            "item": "https://acesosolutions.co.ke/contact"
+          }
+        ]
+      }
+    </script>
+
+    <!-- Schema.org JSON-LD: FAQPage Schema (Google Rich Snippets) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -150,7 +265,7 @@
           },
           {
             "@type": "Question",
-            "name": "Can I combine Web Design, SEO, Social Media, and PPC into a single package?",
+            "name": "Can I combine SEO, Social Media, and PPC into a single package?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Yes! We offer bundled custom packages that combine multiple digital services at discounted multi-service rates. You can use our Custom Package Builder to select the exact channels and deliverables suited to your growth goals."

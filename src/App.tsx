@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BrandLogos } from './components/BrandLogos';
@@ -7,19 +7,29 @@ import { Process } from './components/Process';
 import { HomeFAQ } from './components/HomeFAQ';
 import { AuditSection } from './components/AuditSection';
 import { Footer } from './components/Footer';
-import { CustomPackagePage } from './components/CustomPackagePage';
-import { FreeAuditPage } from './components/FreeAuditPage';
-import { ServicesPage } from './components/ServicesPage';
-import { IndustriesPage } from './components/IndustriesPage';
-import { PricingPage } from './components/PricingPage';
-import { ContactPage } from './components/ContactPage';
-import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
-import { TermsOfUsePage } from './components/TermsOfUsePage';
 import { MobileBottomBar } from './components/MobileBottomBar';
-import { PackageDetailsModal } from './components/PackageDetailsModal';
-import { SolutionDetailsModal } from './components/SolutionDetailsModal';
-import { LeadDetailsModal } from './components/LeadDetailsModal';
 import { PackageItem, SolutionItem } from './types';
+
+// Code-splitting via React.lazy for instant initial mobile & desktop page loads
+const CustomPackagePage = lazy(() => import('./components/CustomPackagePage').then(m => ({ default: m.CustomPackagePage })));
+const FreeAuditPage = lazy(() => import('./components/FreeAuditPage').then(m => ({ default: m.FreeAuditPage })));
+const ServicesPage = lazy(() => import('./components/ServicesPage').then(m => ({ default: m.ServicesPage })));
+const IndustriesPage = lazy(() => import('./components/IndustriesPage').then(m => ({ default: m.IndustriesPage })));
+const PricingPage = lazy(() => import('./components/PricingPage').then(m => ({ default: m.PricingPage })));
+const ContactPage = lazy(() => import('./components/ContactPage').then(m => ({ default: m.ContactPage })));
+const PrivacyPolicyPage = lazy(() => import('./components/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
+const TermsOfUsePage = lazy(() => import('./components/TermsOfUsePage').then(m => ({ default: m.TermsOfUsePage })));
+const PackageDetailsModal = lazy(() => import('./components/PackageDetailsModal').then(m => ({ default: m.PackageDetailsModal })));
+const SolutionDetailsModal = lazy(() => import('./components/SolutionDetailsModal').then(m => ({ default: m.SolutionDetailsModal })));
+const LeadDetailsModal = lazy(() => import('./components/LeadDetailsModal').then(m => ({ default: m.LeadDetailsModal })));
+
+// Ultra-fast lightweight page loading fallback
+const PageLoadingFallback = () => (
+  <div className="min-h-[70vh] flex flex-col items-center justify-center p-8 bg-[#0B132B]">
+    <div className="w-10 h-10 border-3 border-amber-500/20 border-t-[#DE8E53] rounded-full animate-spin mb-4" />
+    <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase">Loading Experience...</span>
+  </div>
+);
 
 // SEO Page Metadata Configuration
 const pageMetadata = {
@@ -76,7 +86,7 @@ type PageView = 'home' | 'custom-package' | 'free-audit' | 'services' | 'industr
 const parseRouteFromLocation = (): {
   view: PageView;
   section: string;
-  pricingCategory: 'all' | 'web' | 'social' | 'seo' | 'ppc';
+  pricingCategory: 'all' | 'social' | 'seo' | 'ppc';
   industryId?: string;
   serviceId?: string;
 } => {
@@ -106,10 +116,12 @@ const parseRouteFromLocation = (): {
     }
     return { view: 'industries', section: `industry-${indId}`, pricingCategory: 'all', industryId: indId };
   }
+  if (rawPath === '/pricing/web' || rawHash === 'pricing-web') {
+    return { view: 'custom-package', section: 'pricing', pricingCategory: 'all' };
+  }
   if (rawPath === '/pricing' || rawPath.startsWith('/pricing/') || rawHash.startsWith('pricing')) {
-    let cat: 'all' | 'web' | 'social' | 'seo' | 'ppc' = 'social';
-    if (rawPath === '/pricing/web' || rawHash === 'pricing-web') cat = 'web';
-    else if (rawPath === '/pricing/social' || rawHash === 'pricing-social') cat = 'social';
+    let cat: 'all' | 'social' | 'seo' | 'ppc' = 'social';
+    if (rawPath === '/pricing/social' || rawHash === 'pricing-social') cat = 'social';
     else if (rawPath === '/pricing/seo' || rawHash === 'pricing-seo') cat = 'seo';
     else if (rawPath === '/pricing/ppc' || rawHash === 'pricing-ppc') cat = 'ppc';
     return { view: 'pricing', section: 'pricing', pricingCategory: cat };
@@ -142,7 +154,7 @@ export default function App() {
   const initialRoute = parseRouteFromLocation();
   const [currentView, setCurrentView] = useState<PageView>(initialRoute.view);
   const [activeSection, setActiveSection] = useState<string>(initialRoute.section);
-  const [pricingCategory, setPricingCategory] = useState<'all' | 'web' | 'social' | 'seo' | 'ppc'>(initialRoute.pricingCategory);
+  const [pricingCategory, setPricingCategory] = useState<'all' | 'social' | 'seo' | 'ppc'>(initialRoute.pricingCategory);
   const [selectedIndustryId, setSelectedIndustryId] = useState<string>(initialRoute.industryId || 'hospitality');
   const [selectedServiceId, setSelectedServiceId] = useState<string>(initialRoute.serviceId || 'social');
   
@@ -224,10 +236,22 @@ export default function App() {
     // Update OpenGraph tags
     setMetaTag('meta[property="og:title"]', 'property', 'og:title', meta.title);
     setMetaTag('meta[property="og:description"]', 'property', 'og:description', meta.description);
+    const currentUrl = `https://acesosolutions.co.ke${window.location.pathname}`;
+    setMetaTag('meta[property="og:url"]', 'property', 'og:url', currentUrl);
 
     // Update Twitter Card tags
     setMetaTag('meta[property="twitter:title"]', 'property', 'twitter:title', meta.title);
     setMetaTag('meta[property="twitter:description"]', 'property', 'twitter:description', meta.description);
+    setMetaTag('meta[property="twitter:url"]', 'property', 'twitter:url', currentUrl);
+
+    // Update canonical link
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', currentUrl);
   }, [currentView]);
 
   // Smooth scroll & view navigation handler with browser URL sync
@@ -270,10 +294,16 @@ export default function App() {
       return;
     }
 
-    if (sectionId === 'pricing' || sectionId === 'pricing-web' || sectionId === 'pricing-social' || sectionId === 'pricing-seo' || sectionId === 'pricing-ppc') {
-      if (sectionId === 'pricing-web') {
-        setPricingCategory('web');
-      } else if (sectionId === 'pricing-social') {
+    if (sectionId === 'pricing-web') {
+      setCurrentView('custom-package');
+      setActiveSection('pricing');
+      updateUrlPath('/custom-package');
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (sectionId === 'pricing' || sectionId === 'pricing-social' || sectionId === 'pricing-seo' || sectionId === 'pricing-ppc') {
+      if (sectionId === 'pricing-social') {
         setPricingCategory('social');
       } else if (sectionId === 'pricing-seo') {
         setPricingCategory('seo');
@@ -399,86 +429,88 @@ export default function App() {
 
   return (
     <>
-      {currentView === 'custom-package' && (
-        <CustomPackagePage 
-          onBackToHome={handleBackToHome}
-          onRequestAudit={handleRequestAudit}
-          onNavigate={scrollToSection}
-        />
-      )}
+      <Suspense fallback={<PageLoadingFallback />}>
+        {currentView === 'custom-package' && (
+          <CustomPackagePage 
+            onBackToHome={handleBackToHome}
+            onRequestAudit={handleRequestAudit}
+            onNavigate={scrollToSection}
+          />
+        )}
 
-      {currentView === 'free-audit' && (
-        <FreeAuditPage 
-          onBackToHome={handleBackToHome}
-          onNavigate={scrollToSection}
-          onNavigateToPackages={() => scrollToSection('pricing')}
-        />
-      )}
+        {currentView === 'free-audit' && (
+          <FreeAuditPage 
+            onBackToHome={handleBackToHome}
+            onNavigate={scrollToSection}
+            onNavigateToPackages={() => scrollToSection('pricing')}
+          />
+        )}
 
-      {currentView === 'services' && (
-        <ServicesPage 
-          selectedServiceId={selectedServiceId}
-          onSelectService={(id) => {
-            setSelectedServiceId(id);
-            setActiveSection(`service-${id}`);
-            updateUrlPath(`/services/${id}`);
-            window.scrollTo(0, 0);
-          }}
-          onBackToHome={handleBackToHome}
-          onRequestAudit={handleRequestAudit}
-          onOpenCustomBuilder={handleOpenCustomPackagePage}
-          onNavigate={scrollToSection}
-        />
-      )}
+        {currentView === 'services' && (
+          <ServicesPage 
+            selectedServiceId={selectedServiceId}
+            onSelectService={(id) => {
+              setSelectedServiceId(id);
+              setActiveSection(`service-${id}`);
+              updateUrlPath(`/services/${id}`);
+              window.scrollTo(0, 0);
+            }}
+            onBackToHome={handleBackToHome}
+            onRequestAudit={handleRequestAudit}
+            onOpenCustomBuilder={handleOpenCustomPackagePage}
+            onNavigate={scrollToSection}
+          />
+        )}
 
-      {currentView === 'industries' && (
-        <IndustriesPage 
-          selectedIndustryId={selectedIndustryId}
-          onSelectIndustry={(id) => {
-            setSelectedIndustryId(id);
-            setActiveSection(`industry-${id}`);
-            updateUrlPath(`/industries/${id}`);
-            window.scrollTo(0, 0);
-          }}
-          onBackToHome={handleBackToHome}
-          onRequestAudit={handleRequestAudit}
-          onNavigate={scrollToSection}
-        />
-      )}
+        {currentView === 'industries' && (
+          <IndustriesPage 
+            selectedIndustryId={selectedIndustryId}
+            onSelectIndustry={(id) => {
+              setSelectedIndustryId(id);
+              setActiveSection(`industry-${id}`);
+              updateUrlPath(`/industries/${id}`);
+              window.scrollTo(0, 0);
+            }}
+            onBackToHome={handleBackToHome}
+            onRequestAudit={handleRequestAudit}
+            onNavigate={scrollToSection}
+          />
+        )}
 
-      {currentView === 'pricing' && (
-        <PricingPage 
-          initialCategory={pricingCategory}
-          onBackToHome={handleBackToHome}
-          onRequestAudit={handleRequestAudit}
-          onOpenCustomBuilder={handleOpenCustomPackagePage}
-          onNavigate={scrollToSection}
-        />
-      )}
+        {currentView === 'pricing' && (
+          <PricingPage 
+            initialCategory={pricingCategory}
+            onBackToHome={handleBackToHome}
+            onRequestAudit={handleRequestAudit}
+            onOpenCustomBuilder={handleOpenCustomPackagePage}
+            onNavigate={scrollToSection}
+          />
+        )}
 
-      {currentView === 'contact' && (
-        <ContactPage 
-          onBackToHome={handleBackToHome}
-          onRequestAudit={handleRequestAudit}
-          onNavigate={scrollToSection}
-        />
-      )}
+        {currentView === 'contact' && (
+          <ContactPage 
+            onBackToHome={handleBackToHome}
+            onRequestAudit={handleRequestAudit}
+            onNavigate={scrollToSection}
+          />
+        )}
 
-      {currentView === 'privacy-policy' && (
-        <PrivacyPolicyPage 
-          onBackToHome={handleBackToHome}
-          onRequestAudit={handleRequestAudit}
-          onNavigate={scrollToSection}
-        />
-      )}
+        {currentView === 'privacy-policy' && (
+          <PrivacyPolicyPage 
+            onBackToHome={handleBackToHome}
+            onRequestAudit={handleRequestAudit}
+            onNavigate={scrollToSection}
+          />
+        )}
 
-      {currentView === 'terms-of-use' && (
-        <TermsOfUsePage 
-          onBackToHome={handleBackToHome}
-          onRequestAudit={handleRequestAudit}
-          onNavigate={scrollToSection}
-        />
-      )}
+        {currentView === 'terms-of-use' && (
+          <TermsOfUsePage 
+            onBackToHome={handleBackToHome}
+            onRequestAudit={handleRequestAudit}
+            onNavigate={scrollToSection}
+          />
+        )}
+      </Suspense>
 
       {currentView === 'home' && (
         <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
@@ -524,22 +556,24 @@ export default function App() {
           />
 
           {/* Modals & Drawers */}
-          <PackageDetailsModal
-            pkg={selectedPackage}
-            onClose={() => setSelectedPackage(null)}
-            onSelectPackageForAudit={handleSelectPackageForAudit}
-          />
+          <Suspense fallback={null}>
+            <PackageDetailsModal
+              pkg={selectedPackage}
+              onClose={() => setSelectedPackage(null)}
+              onSelectPackageForAudit={handleSelectPackageForAudit}
+            />
 
-          <SolutionDetailsModal
-            solution={selectedSolution}
-            onClose={() => setSelectedSolution(null)}
-            onRequestAuditForSolution={handleSolutionToAudit}
-          />
+            <SolutionDetailsModal
+              solution={selectedSolution}
+              onClose={() => setSelectedSolution(null)}
+              onRequestAuditForSolution={handleSolutionToAudit}
+            />
 
-          <LeadDetailsModal
-            isOpen={isLeadModalOpen}
-            onClose={() => setIsLeadModalOpen(false)}
-          />
+            <LeadDetailsModal
+              isOpen={isLeadModalOpen}
+              onClose={() => setIsLeadModalOpen(false)}
+            />
+          </Suspense>
 
         </div>
       )}

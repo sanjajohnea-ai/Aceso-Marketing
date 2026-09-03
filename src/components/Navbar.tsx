@@ -479,9 +479,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <span className="flex items-center gap-2">
                     <span>Pricing</span>
-                    {activeSection.startsWith('pricing') && (
-                      <span className="text-[10px] bg-[#C25E00] text-white font-bold px-1.5 py-0.5 rounded">Active</span>
-                    )}
                   </span>
                   <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${mobilePricingExpanded ? 'rotate-180 text-[#C25E00]' : ''}`} />
                 </button>
@@ -517,16 +514,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                       }`}
                     >
                       Google Ads &amp; PPC Pricing
-                    </button>
-                    <button
-                      onClick={() => handlePricingSubClick('pricing-web')}
-                      className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
-                        activeSection === 'pricing-web'
-                          ? 'bg-amber-50 text-[#C25E00] font-bold'
-                          : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
-                      }`}
-                    >
-                      Web Design Pricing
                     </button>
                     <button
                       onClick={() => handlePricingSubClick('pricing-custom')}
