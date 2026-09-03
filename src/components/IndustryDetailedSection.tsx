@@ -48,11 +48,18 @@ export interface IndustryDataModel {
   }[];
   economicsTitle: string;
   economicsParagraph1: string;
-  economicsParagraph2: string;
-  economicsMetrics: {
+  economicsParagraph2?: string;
+  economicsMetrics?: {
     value: string;
     label: string;
   }[];
+  economicsCards?: {
+    title: string;
+    description: string;
+  }[];
+  economicsFlowTitle?: string;
+  economicsFlowSteps?: string[];
+  economicsCtaText?: string;
   comparisonEyebrow: string;
   comparisonTitle: string;
   comparisonHighlight: string;
@@ -74,9 +81,9 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
     name: 'Hotels & Resorts',
     category: 'HOSPITALITY & RESORTS',
     highlightKeyword: 'Hotels & Resorts',
-    tagline: 'High-margin direct bookings, staycation demand campaigns & commission-free guest acquisition',
-    heroDefinition1: 'A hospitality digital marketing agency specializes in helping luxury lodges, boutique hotels, safari camps, and resorts drive direct bookings and eliminate heavy 18%–25% OTA commissions.',
-    heroDefinition2: 'Unlike a generalist agency, it understands hospitality search cycles, rate-parity psychology, seasonal traveler behavior, and what drives instant direct reservations across Google Hotel Ads, Meta, and WhatsApp concierge messaging.',
+    tagline: 'Direct room bookings, weekend staycation packages, and travel agency commission savings',
+    heroDefinition1: 'We help safari lodges, boutique hotels, and resorts attract direct guest bookings so you keep 100% of your revenue instead of paying 18% to 25% in booking website fees.',
+    heroDefinition2: 'Unlike general agencies, we know how travelers search and compare prices. We create attractive ads, Google Hotel listings, and WhatsApp concierge chats that make guests book directly with your hotel.',
     activeChannels: [
       {
         title: 'Google Hotel & Search Ads',
@@ -103,8 +110,7 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       { value: '0% OTA Fee', label: 'Drive direct bookings and keep 100% of guest revenue' },
       { value: '5 to 7 Days', label: 'To first direct booking inquiries on Google Search & Hotel Ads' },
       { value: 'WhatsApp', label: 'Direct concierge booking for instant quotes and staycations' },
-      { value: '100%', label: 'Transparent reporting on cost-per-room booked' },
-      { value: 'Yours', label: 'You own every guest list, pixel data, and ad account' }
+      { value: '100%', label: 'Transparent reporting on cost-per-room booked' }
     ],
     whyFailsEyebrow: 'WHY AD SPEND FAILS FOR MOST HOTELS & LODGES',
     whyFailsTitle: 'Why Your Current Hospitality Marketing ',
@@ -177,10 +183,10 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       }
     ],
     economicsTitle: 'Understand What Hospitality Paid Advertising Should Cost and What It Should Return',
-    economicsParagraph1: 'Before you run ads, you need to calculate your true cost of guest acquisition against OTA commission bleed. When an OTA charges 20% commission on a $600 3-night reservation, you are losing $120 on a single stay.',
-    economicsParagraph2: 'A well-engineered direct booking campaign acquires that same guest directly for $25 to $45 in ad spend. Even better, that direct guest enters your CRM database for future email and WhatsApp campaigns, driving repeat stays with zero future ad cost.',
+    economicsParagraph1: 'Before you run ads, you need to calculate your true cost of guest acquisition against OTA commission bleed. When an OTA charges 20% commission on a KSh 60,000 3-night reservation, you are losing KSh 12,000 on a single stay.',
+    economicsParagraph2: 'A well-engineered direct booking campaign acquires that same guest directly for KSh 2,500 to KSh 4,500 in ad spend. Even better, that direct guest enters your CRM database for future email and WhatsApp campaigns, driving repeat stays with zero future ad cost.',
     economicsMetrics: [
-      { value: '$1,200', label: 'Typical minimum monthly ad spend for competitive destinations' },
+      { value: 'KSh 50,000', label: 'Typical minimum monthly ad spend for competitive destinations' },
       { value: '18% - 25%', label: 'Commission fees saved on every direct reservation' },
       { value: 'Week 1', label: 'When direct booking inquiries begin on Google & WhatsApp' }
     ],
@@ -231,9 +237,9 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
     name: 'Tours & Travel',
     category: 'TOURS & TRAVEL',
     highlightKeyword: 'Tours & Travel',
-    tagline: 'High-ticket safari bookings, international group departures & direct traveler acquisition',
-    heroDefinition1: 'A specialized travel digital marketing agency engineered to help safari operators, destination management companies (DMCs), and luxury travel brands attract high-ticket international travelers.',
-    heroDefinition2: 'Unlike general agencies, we understand international traveler booking cycles, seasonal safari demand, visa/itinerary concerns, and how to turn casual social video viewers into confirmed multi-thousand-dollar bookings.',
+    tagline: 'Book more safaris, group tours, and travel experiences directly without middleman fees',
+    heroDefinition1: 'We help safari companies and tour operators attract travelers directly so you do not lose your profits to booking platforms and travel agents.',
+    heroDefinition2: 'Unlike general agencies, we understand how international tourists plan vacations. We run targeted search ads, share real travel videos, and use WhatsApp chats to turn inquiries into confirmed bookings.',
     activeChannels: [
       {
         title: 'Google Search Ads (Safari & Tour Intent)',
@@ -253,15 +259,14 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       },
       {
         title: 'Email & WhatsApp Follow-Up Nurture',
-        description: 'Automated nurture sequences that follow up with hesitant travelers and close multi-thousand-dollar bookings'
+        description: 'Automated nurture sequences that follow up with hesitant travelers and close high-value tour and safari bookings'
       }
     ],
     stats: [
-      { value: 'High-Ticket', label: 'Specializing in $2,000 - $15,000+ tour package client acquisition' },
+      { value: 'High-Ticket', label: 'Specializing in KSh 250,000 - KSh 1.5M+ tour package client acquisition' },
       { value: '7 Days', label: 'To first qualified international safari inquiry on Google Search' },
       { value: 'WhatsApp', label: 'Instant itinerary consultation directly on mobile' },
-      { value: '100%', label: 'Transparent reporting on cost per qualified tour lead' },
-      { value: 'Yours', label: 'Full ownership of client lists, ad pixels, and ad accounts' }
+      { value: '100%', label: 'Transparent reporting on cost per qualified tour lead' }
     ],
     whyFailsEyebrow: 'WHY AD SPEND FAILS FOR TOUR OPERATORS',
     whyFailsTitle: 'Why Your Current Travel Marketing ',
@@ -334,11 +339,11 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       }
     ],
     economicsTitle: 'Understand What Tour Operator Paid Advertising Should Cost and What It Should Return',
-    economicsParagraph1: 'A private safari or group tour booking carries an average package value of $2,500 to $10,000+ with strong operating margins. Acquiring that booking through targeted paid ads typically costs between $75 and $180 in ad spend.',
+    economicsParagraph1: 'A private safari or group tour booking carries an average package value of KSh 250,000 to KSh 1,200,000+ with strong operating margins. Acquiring that booking through targeted paid ads typically costs between KSh 7,500 and KSh 18,000 in ad spend.',
     economicsParagraph2: 'Because travel experiences generate powerful word-of-mouth referrals and repeat bucket-list trips, every acquired high-value client significantly elevates your annual tour revenue.',
     economicsMetrics: [
-      { value: '$1,500', label: 'Typical minimum monthly ad spend for international travel campaigns' },
-      { value: '$3,500+', label: 'Average booking value for multi-day private and group tours' },
+      { value: 'KSh 75,000', label: 'Typical minimum monthly ad spend for international travel campaigns' },
+      { value: 'KSh 350,000+', label: 'Average booking value for multi-day private and group tours' },
       { value: '5x - 12x', label: 'Typical return on ad spend (ROAS) on high-intent search campaigns' }
     ],
     comparisonEyebrow: 'GENERIC VS SPECIALIST',
@@ -388,9 +393,9 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
     name: 'Dental Clinics',
     category: 'DENTAL & ORAL HEALTH',
     highlightKeyword: 'Dental Clinic',
-    tagline: 'High-production patient acquisition, clear aligners, dental implants & 24/7 WhatsApp scheduling',
-    heroDefinition1: 'A specialized dental digital marketing agency helps dental practices and orthodontic clinics attract high-production patients for clear aligners, dental implants, cosmetic veneers, and routine dental care.',
-    heroDefinition2: 'Unlike general agencies, we understand dental procedure economics, patient anxiety triggers, local search proximity, and how to automate appointment booking to keep dental chairs consistently filled.',
+    tagline: 'Attract new patients for implants, aligners, and cleanings with top Google rankings and easy WhatsApp booking',
+    heroDefinition1: 'We help dental and orthodontic clinics attract new patients for teeth straightening, dental implants, cosmetic whitening, and regular checkups.',
+    heroDefinition2: 'Unlike general agencies, we understand dental patients. We help your clinic rank at the top of Google Maps, run ads that bring in real patients, and automate booking on WhatsApp to keep your chairs filled.',
     activeChannels: [
       {
         title: 'High-Value Google Search Ads',
@@ -417,8 +422,7 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       { value: 'High-Production', label: 'Focus on implants, aligners, veneers & smile makeovers' },
       { value: '3 to 7 Days', label: 'To first high-value dental appointment inquiries' },
       { value: '24/7 WhatsApp', label: 'Automated scheduling that reduces front desk phone burden' },
-      { value: '60% Drop', label: 'In clinic no-show rates via automated pre-appointment reminders' },
-      { value: 'Yours', label: 'Full ownership of all patient acquisition campaigns and data' }
+      { value: '60% Drop', label: 'In clinic no-show rates via automated pre-appointment reminders' }
     ],
     whyFailsEyebrow: 'WHY AD SPEND FAILS FOR MOST DENTAL CLINICS',
     whyFailsTitle: 'Why Your Current Dental Marketing ',
@@ -490,14 +494,25 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
         speedToResults: 'High conversion rate from week one'
       }
     ],
-    economicsTitle: 'Understand What Dental Patient Acquisition Should Cost and What It Should Return',
-    economicsParagraph1: 'High-production dental cases—such as clear aligners, dental implants, veneers, and full-mouth restorations—generate between $1,500 and $5,000+ in immediate production value per patient.',
-    economicsParagraph2: 'Acquiring a high-value dental patient through targeted search campaigns typically costs $65 to $140. When combined with family retention and recurring hygiene visits over 5+ years, the lifetime value of every acquired patient exceeds $4,000.',
-    economicsMetrics: [
-      { value: '$1,200', label: 'Typical minimum monthly ad spend for competitive dental clinics' },
-      { value: '$3,500+', label: 'Average 5-year lifetime value of an acquired dental patient' },
-      { value: 'Week 1', label: 'When first dental appointment inquiries arrive on Google & WhatsApp' }
+    economicsTitle: 'Know What Your Marketing Is Generating',
+    economicsParagraph1: 'Digital marketing should be measured by business results, not just clicks, likes, or impressions. We track the journey from people discovering your clinic to contacting you, booking an appointment, and becoming paying patients.',
+    economicsCards: [
+      {
+        title: 'COST PER LEAD',
+        description: "Know how much you're spending to generate each genuine enquiry."
+      },
+      {
+        title: 'LEAD → PATIENT',
+        description: 'See how many enquiries actually turn into booked appointments and patients.'
+      },
+      {
+        title: 'RETURN ON AD SPEND',
+        description: 'Understand how much revenue your paid campaigns generate relative to your advertising spend.'
+      }
     ],
+    economicsFlowTitle: 'We measure what matters:',
+    economicsFlowSteps: ['Reach', 'Enquiries', 'Appointments', 'Patients', 'Revenue'],
+    economicsCtaText: 'Get Your Free Growth Audit',
     comparisonEyebrow: 'GENERIC VS SPECIALIST',
     comparisonTitle: 'The Clinical Difference ',
     comparisonHighlight: 'a Dental Marketing Specialist Makes',
@@ -545,9 +560,9 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
     name: 'Vet Clinics',
     category: 'VETERINARY & ANIMAL HOSPITALS',
     highlightKeyword: 'Veterinary',
-    tagline: 'High-Value Clinical Intent (HVCI) pet owner acquisition, Google Maps 3-Pack SEO & PIMS appointment booking automation',
-    heroDefinition1: 'A veterinary digital marketing agency specializes in helping veterinary practices attract more pet owners through SEO, Google Ads, Meta Ads, and other digital channels.',
-    heroDefinition2: 'Unlike a general agency, it understands the veterinary industry and creates strategies around how pet owners search for care, what drives urgent decisions, and what builds trust and encourages appointments.',
+    tagline: 'Attract pet owners in your local area with top Google rankings, fast search ads, and instant WhatsApp booking',
+    heroDefinition1: 'We help veterinary clinics and animal hospitals attract pet owners when they need checkups, vaccinations, and emergency care.',
+    heroDefinition2: 'Unlike general agencies, we understand how pet owners search for veterinary care. We make it easy for them to find your clinic quickly on Google and book an appointment right from their phone.',
     activeChannels: [
       {
         title: 'Google Search Ads',
@@ -574,8 +589,7 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       { value: '5', label: 'Active ad channels & growth services' },
       { value: '7 Days', label: 'To first new appointment inquiries on Google Ads' },
       { value: 'WhatsApp', label: 'Direct booking ads for animal hospitals' },
-      { value: '100%', label: 'Transparent reporting on confirmed bookings' },
-      { value: 'Yours', label: 'You own every account and all campaign data' }
+      { value: '100%', label: 'Transparent reporting on confirmed bookings' }
     ],
     whyFailsEyebrow: 'WHY AD SPEND FAILS FOR MOST VET CLINICS',
     whyFailsTitle: 'Why Your Current Veterinary Marketing ',
@@ -649,9 +663,9 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
     ],
     economicsTitle: 'Understand What Veterinarian Paid Advertising Should Cost and What It Should Return',
     economicsParagraph1: 'Before you run any ads, you need to know what a new client is worth to your clinic over their lifetime and what you can afford to pay to acquire them. Most vet clinics spend money on ads without ever answering those two questions. That is why the budget disappears without results.',
-    economicsParagraph2: 'A new client who books for a wellness exam and stays with your clinic typically returns for 3 to 7 years. Across that time they spend several hundred to several thousand dollars depending on their pet\'s health. The math on acquiring that client through paid advertising works well when the campaign is built correctly.',
+    economicsParagraph2: 'A new client who books for a wellness exam and stays with your clinic typically returns for 3 to 7 years. Across that time they spend tens of thousands of shillings depending on their pet\'s health. The math on acquiring that client through paid advertising works well when the campaign is built correctly.',
     economicsMetrics: [
-      { value: '$1,500', label: 'Typical minimum monthly ad spend for a competitive city' },
+      { value: 'KSh 35,000', label: 'Typical minimum monthly ad spend for competitive clinics' },
       { value: '3 to 7', label: 'Years an average new client stays with a vet clinic' },
       { value: 'Week 1', label: 'When Google Search Ads typically produce the first appointment inquiry' }
     ],
@@ -702,9 +716,9 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
     name: 'Professional & Legal Services',
     category: 'B2B & ADVISORY',
     highlightKeyword: 'Professional & Legal Services',
-    tagline: 'High-ticket corporate retainers, inbound partner leads & qualified advisory client acquisition',
-    heroDefinition1: 'A specialized B2B and legal digital marketing agency helping corporate law firms, accounting consultancies, tax advisors, and management consultants acquire high-ticket corporate retainers.',
-    heroDefinition2: 'Unlike general agencies, we understand professional ethics, corporate buying cycles, complex advisory value propositions, and how to position senior partners as authoritative industry leaders.',
+    tagline: 'Attract qualified corporate clients and high-value retainers for law firms, accountants, and consultants',
+    heroDefinition1: 'We help corporate law firms, accounting consultancies, and business advisors attract high-value corporate clients and long-term retainers.',
+    heroDefinition2: 'Unlike general agencies, we understand professional services. We design clean websites, run targeted Google and LinkedIn ads, and set up screening forms so you only speak with serious business decision-makers.',
     activeChannels: [
       {
         title: 'High-Intent Google Search Ads',
@@ -731,8 +745,7 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       { value: 'Retainer-Led', label: 'Focus on recurring corporate retainers and high-ticket advisory mandates' },
       { value: '7 Days', label: 'To first high-intent corporate consultation inquiries on Google Search' },
       { value: 'Pre-Qualified', label: 'Automated intake questionnaires filtering out non-target leads' },
-      { value: '100%', label: 'Transparent reporting on cost-per-corporate lead and pipeline value' },
-      { value: 'Yours', label: 'Full ownership of all corporate lead assets and advertising data' }
+      { value: '100%', label: 'Transparent reporting on cost-per-corporate lead and pipeline value' }
     ],
     whyFailsEyebrow: 'WHY AD SPEND FAILS FOR LAW & ADVISORY FIRMS',
     whyFailsTitle: 'Why Your Current B2B Marketing ',
@@ -804,11 +817,11 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       }
     ],
     economicsTitle: 'Understand What Professional Services Paid Advertising Should Cost and What It Should Return',
-    economicsParagraph1: 'A corporate legal or advisory client typically engages on an ongoing monthly retainer of $1,500 to $5,000+, representing an annual value of $18,000 to $60,000+ per account.',
-    economicsParagraph2: 'Acquiring a qualified corporate advisory client through intent-driven search and LinkedIn ABM typically costs $150 to $350 in ad spend. The return on investment on a single closed corporate retainer is extraordinary.',
+    economicsParagraph1: 'A corporate legal or advisory client typically engages on an ongoing monthly retainer of KSh 150,000 to KSh 500,000+, representing an annual value of KSh 1.8M to KSh 6M+ per account.',
+    economicsParagraph2: 'Acquiring a qualified corporate advisory client through intent-driven search and LinkedIn ABM typically costs KSh 15,000 to KSh 35,000 in ad spend. The return on investment on a single closed corporate retainer is extraordinary.',
     economicsMetrics: [
-      { value: '$1,500', label: 'Typical minimum monthly ad spend for competitive advisory firms' },
-      { value: '$25,000+', label: 'Average annual value of an acquired corporate retainer client' },
+      { value: 'KSh 50,000', label: 'Typical minimum monthly ad spend for competitive advisory firms' },
+      { value: 'KSh 2.5M+', label: 'Average annual value of an acquired corporate retainer client' },
       { value: 'Week 1', label: 'When first corporate consultation inquiries arrive on Google Search' }
     ],
     comparisonEyebrow: 'GENERIC VS SPECIALIST',
@@ -858,9 +871,9 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
     name: 'Education',
     category: 'EDTECH & TRAINING',
     highlightKeyword: 'Education & Training',
-    tagline: 'Student intake sprint campaigns, open-day webinars & automated WhatsApp admissions advisors',
-    heroDefinition1: 'A specialized education digital marketing agency helping private schools, universities, professional training academies, and edtech providers fill student intake cohorts.',
-    heroDefinition2: 'Unlike general agencies, we understand academic enrollment cycles, parent/student decision criteria, fee structure transparency, and how to automate admissions follow-ups before intake deadlines.',
+    tagline: 'Enroll more students for upcoming school terms with search ads, campus video tours, and WhatsApp admissions chat',
+    heroDefinition1: 'We help private schools, colleges, academies, and training centers attract more student enrollments for each new term.',
+    heroDefinition2: 'Unlike general agencies, we understand school enrollment cycles. We connect with parents and students when they are searching for programs, showcase campus life with short videos, and answer fee questions instantly on WhatsApp.',
     activeChannels: [
       {
         title: 'High-Urgency Google Search Ads',
@@ -887,8 +900,7 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       { value: 'Intake Sprints', label: 'Purpose-built 30–60 day enrollment blitzes' },
       { value: '5 Days', label: 'To first prospective student inquiry submissions on Google & Meta' },
       { value: '24/7 WhatsApp', label: 'Automated fee and syllabus answers with instant tour booking' },
-      { value: '40% Higher', label: 'Application completion rate through frictionless mobile forms' },
-      { value: 'Yours', label: 'Full ownership of all prospective student data and campaigns' }
+      { value: '40% Higher', label: 'Application completion rate through frictionless mobile forms' }
     ],
     whyFailsEyebrow: 'WHY AD SPEND FAILS FOR EDUCATION INSTITUTIONS',
     whyFailsTitle: 'Why Your Current Education Marketing ',
@@ -960,11 +972,11 @@ export const allIndustriesData: Record<string, IndustryDataModel> = {
       }
     ],
     economicsTitle: 'Understand What Student Enrollment Paid Advertising Should Cost and What It Should Return',
-    economicsParagraph1: 'A single enrolled student contributes between $1,500 and $8,000+ per academic year in tuition fees, with multi-year degree programs generating upwards of $15,000+ in institutional revenue.',
-    economicsParagraph2: 'Acquiring an enrolled student through targeted digital sprint campaigns typically costs between $35 and $95 in ad spend, delivering an exceptional return on recruitment marketing investments.',
+    economicsParagraph1: 'A single enrolled student contributes between KSh 150,000 and KSh 800,000+ per academic year in tuition fees, with multi-year degree programs generating upwards of KSh 1.5M+ in institutional revenue.',
+    economicsParagraph2: 'Acquiring an enrolled student through targeted digital sprint campaigns typically costs between KSh 3,500 and KSh 9,500 in ad spend, delivering an exceptional return on recruitment marketing investments.',
     economicsMetrics: [
-      { value: '$1,200', label: 'Typical minimum monthly ad spend for education intake campaigns' },
-      { value: '$6,500+', label: 'Average annual tuition revenue per enrolled student' },
+      { value: 'KSh 50,000', label: 'Typical minimum monthly ad spend for education intake campaigns' },
+      { value: 'KSh 650,000+', label: 'Average annual tuition revenue per enrolled student' },
       { value: '5x - 15x', label: 'Return on ad spend (ROAS) across annual student cohorts' }
     ],
     comparisonEyebrow: 'GENERIC VS SPECIALIST',
@@ -1080,9 +1092,9 @@ export const IndustryDetailedSection: React.FC<IndustryDetailedSectionProps> = (
       </div>
 
       {/* 2. STATS BAR (NAVY BANNER) */}
-      <div className="bg-[#0B2545] rounded-2xl p-5 sm:p-8 lg:p-10 text-white grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 text-center">
+      <div className={`bg-[#0B2545] rounded-2xl p-5 sm:p-8 lg:p-10 text-white grid grid-cols-2 ${data.stats.length === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3 lg:grid-cols-5'} gap-4 sm:gap-6 text-center`}>
         {data.stats.map((stat, idx) => (
-          <div key={idx} className={`space-y-1 ${idx === 4 ? 'col-span-2 sm:col-span-1' : ''}`}>
+          <div key={idx} className={`space-y-1 ${data.stats.length === 5 && idx === 4 ? 'col-span-2 sm:col-span-1' : ''}`}>
             <div className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[#F28E13]">{stat.value}</div>
             <div className="text-xs sm:text-sm text-slate-300 font-medium leading-snug">{stat.label}</div>
           </div>
@@ -1214,7 +1226,7 @@ export const IndustryDetailedSection: React.FC<IndustryDetailedSectionProps> = (
       </div>
 
       {/* 5. ECONOMICS BANNER */}
-      <div className="bg-[#0B2545] rounded-3xl p-5 sm:p-10 lg:p-12 text-white space-y-5 sm:space-y-6">
+      <div className="bg-[#0B2545] rounded-3xl p-5 sm:p-10 lg:p-12 text-white space-y-6 sm:space-y-8">
         <div className="max-w-3xl space-y-3 sm:space-y-4">
           <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
             {data.economicsTitle}
@@ -1222,31 +1234,78 @@ export const IndustryDetailedSection: React.FC<IndustryDetailedSectionProps> = (
           <p className="text-sm sm:text-lg text-slate-200 leading-relaxed">
             {data.economicsParagraph1}
           </p>
-          <p className="text-sm sm:text-lg text-slate-200 leading-relaxed">
-            {data.economicsParagraph2}
-          </p>
+          {data.economicsParagraph2 && (
+            <p className="text-sm sm:text-lg text-slate-200 leading-relaxed">
+              {data.economicsParagraph2}
+            </p>
+          )}
         </div>
 
-        {/* 3 Metric Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5 pt-2">
-          {data.economicsMetrics.map((metric, idx) => (
-            <div key={idx} className="bg-[#103058] border border-slate-700/80 rounded-2xl p-4 sm:p-6 text-center space-y-1.5 sm:space-y-2">
-              <div className="text-2xl sm:text-4xl font-extrabold text-[#F28E13]">
-                {metric.value}
+        {/* 3 Large Cards (when data.economicsCards is provided) */}
+        {data.economicsCards && data.economicsCards.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 pt-2">
+            {data.economicsCards.map((card, idx) => (
+              <div 
+                key={idx} 
+                className="bg-[#103058] border border-slate-700/80 hover:border-[#F28E13]/50 rounded-2xl p-6 sm:p-8 flex flex-col justify-start space-y-3 sm:space-y-4 transition-all shadow-sm"
+              >
+                <div className="text-base sm:text-lg font-extrabold text-[#F28E13] tracking-wide uppercase">
+                  {card.title}
+                </div>
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-normal">
+                  {card.description}
+                </p>
               </div>
-              <p className="text-xs sm:text-base text-slate-300 leading-snug">
-                {metric.label}
-              </p>
+            ))}
+          </div>
+        ) : (
+          /* 3 Metric Cards (default fallback for other industries) */
+          data.economicsMetrics && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5 pt-2">
+              {data.economicsMetrics.map((metric, idx) => (
+                <div key={idx} className="bg-[#103058] border border-slate-700/80 rounded-2xl p-4 sm:p-6 text-center space-y-1.5 sm:space-y-2">
+                  <div className="text-2xl sm:text-4xl font-extrabold text-[#F28E13]">
+                    {metric.value}
+                  </div>
+                  <p className="text-xs sm:text-base text-slate-300 leading-snug">
+                    {metric.label}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )
+        )}
 
-        <div className="text-center pt-2 sm:pt-3">
+        {/* Flow Journey Underneath */}
+        {data.economicsFlowSteps && data.economicsFlowSteps.length > 0 && (
+          <div className="pt-2 sm:pt-4 border-t border-slate-700/60 space-y-3">
+            {data.economicsFlowTitle && (
+              <p className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300">
+                {data.economicsFlowTitle}
+              </p>
+            )}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-sm sm:text-base font-semibold text-white">
+              {data.economicsFlowSteps.map((step, idx) => (
+                <React.Fragment key={idx}>
+                  <span className="bg-[#103058] px-3.5 py-1.5 rounded-lg border border-slate-700/80 text-amber-300 font-bold text-xs sm:text-sm">
+                    {step}
+                  </span>
+                  {idx < data.economicsFlowSteps!.length - 1 && (
+                    <span className="text-slate-400 font-bold text-sm sm:text-base">→</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="pt-2 sm:pt-4">
           <button
             onClick={handleBookConsultation}
-            className="w-full sm:w-auto min-h-[48px] px-8 py-3.5 rounded-xl bg-[#F28E13] hover:bg-[#DE7C05] active:bg-[#C26B00] text-slate-950 font-bold text-sm sm:text-base transition-all shadow-sm cursor-pointer active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] px-8 py-3.5 rounded-xl bg-[#F28E13] hover:bg-[#DE7C05] active:bg-[#C26B00] text-slate-950 font-bold text-sm sm:text-base transition-all shadow-sm cursor-pointer active:scale-[0.98] inline-flex items-center justify-center gap-2"
           >
-            Book Free Consultation
+            <span>{data.economicsCtaText || 'Book Free Consultation'}</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

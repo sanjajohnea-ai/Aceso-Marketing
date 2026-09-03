@@ -1260,6 +1260,10 @@ export const PricingPage: React.FC<PricingPageProps> = ({
       a: 'No. All our monthly management packages operate on a flexible month-to-month retainer. You can upgrade, pause, or cancel at any time with a simple 14-day notice.'
     },
     {
+      q: 'How long will it take before we start seeing traction?',
+      a: 'Paid campaigns (Google & Meta Ads) and WhatsApp automations can start producing qualified enquiries within 7 to 14 days. Social media audience growth gains strong momentum within 30 days, while SEO compounds predictably over 60 to 90 days.'
+    },
+    {
       q: 'How do you determine which pricing tier is right for my business?',
       a: 'We evaluate your current digital foundation, target geographic radius, competitive intensity, and monthly revenue goals. You can also request our Free Growth Audit for a personalized recommendation.'
     },

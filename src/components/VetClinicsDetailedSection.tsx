@@ -42,10 +42,10 @@ export const VetClinicsDetailedSection: React.FC<VetClinicsDetailedSectionProps>
           </h1>
           <div className="space-y-3 max-w-3xl text-base sm:text-lg text-slate-700 leading-relaxed">
             <p>
-              A veterinary digital marketing agency specializes in helping veterinary practices attract more pet owners through SEO, Google Ads, Meta Ads, and other digital channels.
+              We help veterinary clinics and animal hospitals attract pet owners when they need checkups, vaccinations, and emergency care.
             </p>
             <p>
-              Unlike a general agency, it understands the veterinary industry and creates strategies around how pet owners search for care, what drives urgent decisions, and what builds trust and encourages appointments.
+              Unlike general agencies, we understand how pet owners search for veterinary care. We make it easy for them to find your clinic quickly on Google and book an appointment right from their phone.
             </p>
           </div>
 
@@ -135,7 +135,7 @@ export const VetClinicsDetailedSection: React.FC<VetClinicsDetailedSectionProps>
       </div>
 
       {/* 2. STATS BAR (NAVY BANNER) */}
-      <div className="bg-[#0B2545] rounded-2xl p-6 sm:p-8 text-white grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+      <div className="bg-[#0B2545] rounded-2xl p-6 sm:p-8 text-white grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
         <div className="space-y-1">
           <div className="text-2xl sm:text-3xl font-extrabold text-[#F28E13]">5</div>
           <div className="text-xs sm:text-sm text-slate-300">Active ad channels & growth services</div>
@@ -151,10 +151,6 @@ export const VetClinicsDetailedSection: React.FC<VetClinicsDetailedSectionProps>
         <div className="space-y-1">
           <div className="text-2xl sm:text-3xl font-extrabold text-[#F28E13]">100%</div>
           <div className="text-xs sm:text-sm text-slate-300">Transparent reporting</div>
-        </div>
-        <div className="col-span-2 sm:col-span-1 space-y-1">
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#F28E13]">Yours</div>
-          <div className="text-xs sm:text-sm text-slate-300">You own every account and all data</div>
         </div>
       </div>
 
@@ -398,7 +394,7 @@ export const VetClinicsDetailedSection: React.FC<VetClinicsDetailedSectionProps>
             Before you run any ads, you need to know what a new client is worth to your clinic over their lifetime and what you can afford to pay to acquire them. Most vet clinics spend money on ads without ever answering those two questions. That is why the budget disappears without results.
           </p>
           <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-            A new client who books for a wellness exam and stays with your clinic typically returns for 3 to 7 years. Across that time they spend several hundred to several thousand dollars depending on their pet's health. The math on acquiring that client through paid advertising works well when the campaign is built correctly.
+            A new client who books for a wellness exam and stays with your clinic typically returns for 3 to 7 years. Across that time they spend tens of thousands of shillings depending on their pet's health. The math on acquiring that client through paid advertising works well when the campaign is built correctly.
           </p>
         </div>
 
@@ -406,10 +402,10 @@ export const VetClinicsDetailedSection: React.FC<VetClinicsDetailedSectionProps>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
           <div className="bg-[#103058] border border-slate-700/80 rounded-2xl p-6 text-center space-y-2">
             <div className="text-3xl sm:text-4xl font-extrabold text-[#F28E13]">
-              $1,500
+              KSh 35,000
             </div>
             <p className="text-xs sm:text-sm text-slate-300 leading-snug">
-              Typical minimum monthly ad spend for a competitive Canadian city
+              Typical minimum monthly ad spend for competitive clinics in Kenya
             </p>
           </div>
 

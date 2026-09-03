@@ -29,35 +29,35 @@ export const industriesData: IndustryItem[] = [
     id: 'dental-clinics',
     name: 'Dental Clinics',
     category: 'DENTAL & ORAL HEALTH',
-    tagline: 'High-value patient acquisition, cosmetic & restorative dental campaigns, Google Maps 3-Pack & WhatsApp appointment scheduling',
+    tagline: 'Attract new patients for implants, aligners, and cleanings with top Google rankings and easy WhatsApp booking',
     iconEmoji: '🦷',
     roadblocks: [
-      'Over-reliance on low-margin routine cleanings while missing high-production implant, aligner, and cosmetic dentistry cases',
-      'High patient cancellation and no-show rates causing unpredictable chair downtime',
-      'Invisibility in local search when prospective patients search "dentist near me" or "teeth whitening Nairobi"',
-      'Front desk staff overwhelmed with phone calls leading to missed inquiries during busy clinical hours and after-hours'
+      'Too many low-cost cleanings and not enough high-value cases like dental implants or teeth straightening',
+      'Patients cancelling or not showing up, leaving empty dental chairs during the day',
+      'Hard to find on Google when nearby patients search for "dentist near me" or "teeth whitening"',
+      'Busy front desk staff missing phone calls during clinic hours and in the evening'
     ],
     solutions: [
-      'Targeted Google Search & Meta Ads campaigns for high-margin procedures (dental implants, Invisalign/aligners, veneers, cosmetic whitening)',
-      'Google Maps 3-Pack Local SEO optimization positioning your dental practice at the top of local suburban searches',
-      'Automated 24/7 WhatsApp AI booking assistant confirming appointments and sending automated pre-visit reminder sequences',
-      'Systematic post-treatment review collection workflows building a trusted 5-star Google clinic reputation'
+      'Targeted Google and Facebook ads for popular treatments like teeth whitening, clear aligners, and dental implants',
+      'Top 3 ranking on Google Maps so local patients see your clinic first',
+      '24/7 automated WhatsApp booking assistant that confirms visits and sends reminders',
+      'Simple review invites that turn happy patients into 5-star Google ratings'
     ],
     deliverables: [
       {
         num: '01',
-        title: 'High-Value Dental Funnels',
-        description: 'Engineered Google & Meta ad funnels capturing high-production dental cases like clear aligners, implants, smile makeovers, and urgent emergency care.'
+        title: 'Patient Booking Campaigns',
+        description: 'Google and social media ads designed to attract patients who need implants, aligners, and cosmetic care.'
       },
       {
         num: '02',
-        title: 'Dental Maps 3-Pack & Local SEO',
-        description: 'Dominate local searches for "dentist near me" and suburb-specific queries so nearby patients choose your practice first.'
+        title: 'Dental Maps & Local Search',
+        description: 'Get your dental clinic to the top of Google when nearby families search for a local dentist.'
       },
       {
         num: '03',
-        title: '24/7 WhatsApp Dental Booking Bot',
-        description: 'Instant patient qualification, consultation scheduling, and automated reminders that virtually eliminate chair downtime.'
+        title: '24/7 WhatsApp Booking Bot',
+        description: 'Fast, automated answers to patient questions, appointment booking, and text reminders to cut no-shows.'
       }
     ]
   },
@@ -65,28 +65,28 @@ export const industriesData: IndustryItem[] = [
     id: 'education',
     name: 'Education',
     category: 'EDTECH & TRAINING',
-    tagline: 'Student intake marketing, open-day webinar funnels & enrollment follow-ups',
+    tagline: 'Fill student cohorts, promote open days, and speed up enrollment with automated follow-ups',
     iconEmoji: '🎓',
     roadblocks: [
-      'Seasonal enrollment crunches with unfilled seats as intake deadlines approach',
-      'Prospective students and parents dropping off halfway through long application forms',
-      'High cost per lead with weak follow-up allowing interested candidates to go cold'
+      'Scrambling to fill empty classroom seats as enrollment deadlines approach',
+      'Students and parents abandoning long, complicated online application forms',
+      'Slow follow-up after open days, letting interested students choose other schools'
     ],
     solutions: [
-      'Time-sensitive intake sprint campaigns across TikTok, Meta, and Google Search',
-      'Automated WhatsApp admissions advisor answering tuition, syllabus, and visa FAQs',
-      'Live masterclass and virtual open-day funnels providing proof of career outcomes'
+      'Enrollment sprint campaigns on Google, Instagram, and TikTok before the new semester starts',
+      'Automated WhatsApp advisor answering questions about fees, courses, and schedules instantly',
+      'Virtual open days and online tours showing off campus life and student success stories'
     ],
     deliverables: [
       {
         num: '01',
-        title: 'Intake Sprint Campaigns',
-        description: 'High-urgency multi-channel blitzes filling cohorts 30–60 days before semester start.'
+        title: 'Enrollment Ad Campaigns',
+        description: 'High-impact ads that drive qualified student applications 30 to 60 days before classes start.'
       },
       {
         num: '02',
-        title: 'WhatsApp Admissions Advisor',
-        description: 'Instant automated answers to fee structures, schedules, and campus tour bookings.'
+        title: 'WhatsApp Admissions Assistant',
+        description: 'Instant answers to questions on tuition, class timetables, and campus tour bookings.'
       }
     ]
   },
@@ -94,34 +94,34 @@ export const industriesData: IndustryItem[] = [
     id: 'hospitality',
     name: 'Hotels & Resorts',
     category: 'HOSPITALITY',
-    tagline: 'Direct guest bookings, seasonal staycation campaigns & commission savings',
+    tagline: 'Get more direct room bookings, save on travel agency commissions, and fill rooms year-round',
     iconEmoji: '🏨',
     roadblocks: [
-      'Surrendering 18–25% of top-line revenue to OTA commissions (Booking.com, Expedia)',
-      'Severe revenue drops during mid-week and traditional off-peak travel months',
-      'Underutilized photography and lack of compelling vertical video for social discovery'
+      'Paying 18% to 25% in heavy commission fees to booking websites like Booking.com and Expedia',
+      'Empty rooms during weekdays and slower travel months',
+      'Great rooms and dining that are not properly showcased with modern smartphone video'
     ],
     solutions: [
-      'Direct booking website engines offering exclusive perks (free breakfast, early check-in)',
-      'Optimizing Google Business profiles to maximize local visibility, search ranking, and direct guest inquiries',
-      'Cinematic vertical video reels capturing pool, dining, and scenic room atmospheres',
-      'Google Hotel Ads and geo-targeted travel intent search campaigns'
+      'Direct booking website engine with special perks like free breakfast or flexible check-in',
+      'Optimized Google Business Profile so travelers find and book your hotel directly',
+      'Eye-catching short videos showing off your pool, rooms, dining, and views',
+      'Google Hotel search ads reaching travelers looking for places to stay in your area'
     ],
     deliverables: [
       {
         num: '01',
-        title: 'Direct Booking Funnels',
-        description: 'Convert high-intent travelers directly without third-party commission cuts.'
+        title: 'Direct Booking Engine',
+        description: 'Attract guests directly to your website so you do not lose money to third-party fees.'
       },
       {
         num: '02',
-        title: 'Staycation Demand Engine',
-        description: 'Target local urban professionals with curated weekend getaway staycation packages.'
+        title: 'Weekend & Staycation Packages',
+        description: 'Promote weekend getaways to local residents to keep rooms full during quiet periods.'
       },
       {
         num: '03',
-        title: 'Visual Experience Storytelling',
-        description: 'Viral vertical video capturing amenities, views, and culinary offerings.'
+        title: 'Visual Video Storytelling',
+        description: 'Short, engaging videos capturing the comfort, views, and dining experience at your hotel.'
       }
     ]
   },
@@ -129,28 +129,28 @@ export const industriesData: IndustryItem[] = [
     id: 'professional-services',
     name: 'Professional & Legal Services',
     category: 'B2B & ADVISORY',
-    tagline: 'Client acquisition for law firms, accounting consultancies & corporate advisors',
+    tagline: 'Attract qualified corporate clients and high-value retainers for law firms, accountants, and consultants',
     iconEmoji: '⚖️',
     roadblocks: [
-      'Difficulty articulating complex high-ticket advisory value online',
-      'Unproductive initial consultations with low-budget or non-target prospects',
-      'Outdated static websites that fail to position partners as modern industry leaders'
+      'Explaining high-end legal, tax, or advisory services in a way that feels clear and approachable',
+      'Wasting valuable partner hours on free introductory calls with clients who do not have the budget',
+      'Old, outdated websites that do not reflect the true quality and prestige of your firm'
     ],
     solutions: [
-      'High-converting practice area landing pages showcasing sector case studies',
-      'Intent-driven Google Search ads capturing commercial legal and financial keywords',
-      'Automated pre-consultation questionnaires filtering for budget and corporate size'
+      'Clean, modern service pages that explain your expertise with real client case studies',
+      'Google Search ads that appear when business owners look for commercial lawyers or accountants',
+      'Simple pre-call questionnaires that filter prospects by company size and budget before booking'
     ],
     deliverables: [
       {
         num: '01',
-        title: 'High-Ticket Practice Funnels',
-        description: 'Dedicated landing experiences tailored to specific corporate advisory practice areas.'
+        title: 'Service Landing Pages',
+        description: 'Professional pages tailored to each advisory service to build immediate credibility.'
       },
       {
         num: '02',
         title: 'Inbound Retainer Engine',
-        description: 'Consistent pipeline of high-margin corporate retainers rather than one-off inquiries.'
+        description: 'A steady flow of business inquiries from companies looking for long-term advice.'
       }
     ]
   },
@@ -158,33 +158,33 @@ export const industriesData: IndustryItem[] = [
     id: 'tours-travel',
     name: 'Tours & Travel',
     category: 'TOURS & TRAVEL',
-    tagline: 'Safari bookings, group tour sales & destination marketing for African travel brands',
+    tagline: 'Book more safaris, group tours, and travel experiences directly without middleman fees',
     iconEmoji: '✈️',
     roadblocks: [
-      'Over-reliance on aggregators like Booking.com eating into margins with commission fees',
-      'Seasonal demand spikes leaving the business idle during off-peak months',
-      'Generic marketing that fails to differentiate from hundreds of competing operators'
+      'Losing profit to booking agents and aggregators taking big percentage cuts',
+      'Big seasonal swings with quiet months where tour vehicles and guides sit idle',
+      'Looking identical to hundreds of competing safari and tour operators'
     ],
     solutions: [
-      'Google Search Ads capturing travellers actively searching for safaris, tours, and packages in your destination',
-      'Meta and TikTok video campaigns showcasing real experiences that convert browsers into eager bookers',
-      'WhatsApp and email nurture sequences that follow up on enquiries and close hesitant leads'
+      'Google Search ads reaching international and local travelers planning trips to your destination',
+      'Inspiring video clips on TikTok and Instagram showing real wildlife sightings and happy guests',
+      'Friendly WhatsApp and email follow-ups that answer questions and help travelers finalize bookings'
     ],
     deliverables: [
       {
         num: '01',
-        title: 'Direct Booking Funnels',
-        description: 'Paid and organic campaigns that redirect high-intent searchers away from aggregators straight to your booking engine.'
+        title: 'Direct Safari & Tour Bookings',
+        description: 'Ads and search optimization that guide travelers straight to your direct booking page.'
       },
       {
         num: '02',
-        title: 'Off-Season Demand Campaigns',
-        description: 'Targeted promotions and curated package offers that fill tour slots during traditionally slow travel periods.'
+        title: 'Off-Season Travel Offers',
+        description: 'Special packages and discount deals that keep tours running during quieter months.'
       },
       {
         num: '03',
-        title: 'Experience-Led Content Engine',
-        description: 'Video-first content strategy capturing real guest moments that build trust and drive organic bookings on autopilot.'
+        title: 'Real Travel Video Content',
+        description: 'Exciting videos from actual trips that give travelers the confidence to book.'
       }
     ]
   },
@@ -192,36 +192,36 @@ export const industriesData: IndustryItem[] = [
     id: 'vet-clinics',
     name: 'Vet Clinics',
     category: 'VETERINARY & ANIMAL HOSPITALS',
-    tagline: 'High-Value Clinical Intent (HVCI) pet owner acquisition, Google Maps 3-Pack SEO & PIMS appointment booking automation',
+    tagline: 'Attract pet owners for check-ups, surgery, and care with top Google Maps rankings and easy booking',
     iconEmoji: '🐾',
     roadblocks: [
-      'Ineffective generalist marketing with broad ad spend that fails to understand pet-owner search behavior, urgency triggers, and clinical intent',
-      'The "Volume Trap" of low-value routine wellness visits exhausting veterinary staff while corporate consolidators drive up client acquisition costs',
-      'Online invisibility in local search: failing to rank in the Google Maps 3-Pack or be cited as a recommended animal hospital by AI tools like ChatGPT and Google AI Overviews',
-      'Fragmented booking workflows where phone tag, unconfirmed inquiries, and lack of PIMS software integration lead to empty exam slots'
+      'Wasting money on generic ads that do not reach pet owners when they actually need veterinary care',
+      'Front desk overwhelmed by phone calls while handling sick pets in the clinic',
+      'Not showing up on Google Maps when local pet owners search for "emergency vet near me"',
+      'Missed appointments and empty exam rooms caused by delayed reminders'
     ],
     solutions: [
-      'High-Value Clinical Intent (HVCI) campaigns targeting pet owners seeking specialty surgery, advanced diagnostics, animal healthcare, and chronic disease management',
-      'Multi-channel veterinary advertising across Google Search Ads, Google Local Services Ads (LSA), Meta (Facebook & Instagram), and WhatsApp direct booking campaigns',
-      'Google Business Review Optimization & Maps 3-Pack positioning with automated 5-star review collection and reputation management',
-      'AI-First Veterinary SEO & Google Maps optimization with Neural Entity Mapping (NEM) so your hospital is cited by search engines and dominates "emergency vet near me"',
-      '100% transparent reporting on confirmed appointment inquiries, cost per new client, and direct clinical revenue attribution with full account ownership'
+      'Targeted Google and social media ads reaching pet owners who need routine care, dental work, or urgent visits',
+      'Top 3 ranking on Google Maps so local pet owners call your clinic first in an emergency',
+      'Automatic WhatsApp appointment booking and reminder messages to cut no-shows',
+      'Simple review follow-ups that collect genuine 5-star reviews from happy pet owners on Google',
+      'Clear, simple monthly reports showing your new client calls and booked appointments'
     ],
     deliverables: [
       {
         num: '01',
-        title: 'High-Value Clinical Intent (HVCI) Engine',
-        description: 'Engineered ad funnels on Google, Meta, and WhatsApp capturing high-production clinical cases like specialty surgery, animal care, and advanced diagnostics.'
+        title: 'Pet Owner Booking Engine',
+        description: 'Google and social ads that connect your clinic with local pet owners ready to book.'
       },
       {
         num: '02',
-        title: 'AI-First Veterinary SEO & Local Maps 3-Pack',
-        description: 'Dominate local "emergency vet near me" map searches with Neural Entity Mapping that positions your animal hospital as the top cited choice in Google AI Overviews & ChatGPT.'
+        title: 'Google Maps & Local Vet SEO',
+        description: 'Put your animal clinic at the top of Google search results for "vet near me" in your area.'
       },
       {
         num: '03',
-        title: 'PIMS Direct Booking Integration',
-        description: 'Automated integration with Covetrus, IDEXX Neo, Cornerstone, or ezyVet converting high-intent pet owners into confirmed calendar exam appointments.'
+        title: 'Automated Booking & Reminders',
+        description: 'Easy online booking and automated text reminders that keep your appointment calendar full.'
       }
     ]
   }

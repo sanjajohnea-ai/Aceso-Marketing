@@ -327,27 +327,10 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
                 </div>
               </div>
 
-              {/* Mobile Jump to Form Button */}
-              <div className="pt-1 lg:hidden">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const formEl = document.getElementById('audit-form-start');
-                    if (formEl) {
-                      formEl.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#DE8E53] to-[#C25E00] hover:from-[#e59b64] hover:to-[#a85000] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs cursor-pointer"
-                >
-                  <span>Fill In Audit Form</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-
             </div>
 
-            {/* Right Column: "Your Growth Snapshot" Interactive Preview Card */}
-            <div className="block lg:col-span-5 mt-4 lg:mt-0">
+            {/* Right Column: "Your Growth Snapshot" Interactive Preview Card (Hidden on mobile) */}
+            <div className="hidden lg:block lg:col-span-5 mt-4 lg:mt-0">
               <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-100 relative">
                 
                 {/* Header */}
@@ -899,8 +882,8 @@ export const FreeAuditPage: React.FC<FreeAuditPageProps> = ({
 
             </div>
 
-            {/* Right Column: Sticky Sidebar "What you'll get" */}
-            <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-24">
+            {/* Right Column: Sticky Sidebar "What you'll get" (Hidden on mobile) */}
+            <div className="hidden lg:block lg:col-span-4 space-y-5 lg:sticky lg:top-24">
               
               {/* Card 1: What you'll get */}
               <div className="bg-white rounded-2xl p-6 shadow-xs border border-slate-200">

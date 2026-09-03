@@ -34,8 +34,14 @@ const faqData: FAQItem[] = [
   },
   {
     id: 'faq-5',
-    question: 'How quickly should I expect to see results?',
-    answer: 'PPC can start generating clicks, enquiries, and valuable performance data relatively quickly. Social media marketing builds awareness and engagement as content gains traction, while SEO typically requires more time to establish authority and improve search visibility. We monitor early signals throughout the engagement while building toward sustainable customer acquisition.'
+    question: 'How long will it take before we start seeing traction?',
+    answer: [
+      'Traction depends on the marketing channels and strategies deployed for your business:',
+      '• Paid Advertising (Google & Meta Ads): Typically begins generating qualified enquiries, phone calls, and WhatsApp messages within the first 7 to 14 days once campaigns and conversion tracking are active.',
+      '• Social Media & WhatsApp Automations: Engagement and lead capture momentum build within the first 30 days as consistent messaging and automated instant responses engage prospective buyers.',
+      '• Search Engine Optimization (SEO): Organic rankings, Google Maps 3-Pack placement, and steady unpaid inbound traffic compound predictably between months 2 and 4.',
+      'We establish clear target benchmarks from day one and deliver bi-weekly and monthly performance reports tracking actual business results.'
+    ]
   },
   {
     id: 'faq-6',

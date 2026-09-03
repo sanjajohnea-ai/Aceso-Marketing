@@ -12,82 +12,82 @@ export const solutionsData: SolutionItem[] = [
     id: 'acquisition',
     stepNumber: '01',
     title: 'Customer Acquisition',
-    description: 'Bring more of the right customers to your business.',
+    description: 'Bring more paying customers to your business.',
     iconType: 'acquisition',
     badgeColor: 'text-blue-600',
     iconBg: 'bg-blue-50 text-blue-600',
     checkColor: 'text-blue-600 bg-blue-50',
     items: [
       'Social media marketing',
-      'Meta & Google advertising',
-      'SEO',
-      'Content marketing',
-      'Landing pages',
-      'Lead generation'
+      'Google & Facebook ads',
+      'Google Maps & SEO',
+      'Simple landing pages',
+      'Fast lead generation',
+      'Direct phone inquiries'
     ],
-    detailedDescription: 'Attract new customers through social media marketing, Meta and Google advertising, SEO, content marketing, landing pages, and lead generation. Turn attention into qualified enquiries and customers.',
+    detailedDescription: 'We help you attract new customers using Facebook, Instagram, Google ads, and local search. We turn online attention into real phone calls, messages, and paying customers.',
     deliverables: [
-      'Meta & Google Ads Campaign Setup & Management',
-      'Conversion-Optimized Landing Page Design',
-      'Local & Technical SEO Audit and Optimization',
-      'Creative Ad Copywriting & High-Converting Graphic Assets',
-      'Multi-channel Tracking (Pixel, CAPI, GA4)'
+      'Setting up and managing your Google and Meta ads',
+      'Designing fast, simple pages that encourage people to book or call',
+      'Helping your business show up on Google Maps and search results',
+      'Writing clear ad words and creating eye-catching pictures and videos',
+      'Tracking where your calls, messages, and sales come from'
     ],
-    caseStudyHighlight: 'Delivered +180% qualified sales inquiries for Nairobi-based logistics firm within 60 days of launch.'
+    caseStudyHighlight: 'Helped a Nairobi logistics company get 180% more inquiries within 60 days.'
   },
   {
     id: 'reactivation',
     stepNumber: '02',
     title: 'Customer Reactivation',
-    description: 'Turn existing and inactive customers into repeat business.',
+    description: 'Bring back past customers so they buy from you again.',
     iconType: 'reactivation',
     badgeColor: 'text-emerald-600',
     iconBg: 'bg-emerald-50 text-emerald-600',
     checkColor: 'text-emerald-600 bg-emerald-50',
     items: [
-      'Email marketing',
-      'SMS & WhatsApp campaigns',
-      'Customer follow-ups',
-      'Abandoned-lead recovery',
-      'Customer reactivation',
-      'Review & reputation campaigns'
+      'WhatsApp messages',
+      'Friendly SMS reminders',
+      'Quick customer follow-ups',
+      'Reconnecting with past clients',
+      'Special loyalty offers',
+      'Collecting 5-star Google reviews'
     ],
-    detailedDescription: 'Reconnect with past customers through email, SMS, WhatsApp campaigns, follow-ups, abandoned-lead recovery, and targeted reactivation campaigns to drive recurring revenue.',
+    detailedDescription: 'It is easier to sell to people who already know you. We send friendly WhatsApp messages, SMS, and emails to your past clients so they book appointments and buy from you again.',
     deliverables: [
-      'WhatsApp Business API Multi-Broadcast Automations',
-      'Targeted SMS Flash Offers & Dormancy Triggers',
-      'Automated Abandoned Cart & Stalled Quote Sequences',
-      '5-Star Google & Trustpilot Review Flywheels',
-      'Customer Lifecycle Segmentation & VIP Perks'
+      'Sending helpful WhatsApp updates and offers to past customers',
+      'Quick SMS reminders for special deals and seasonal bookings',
+      'Automated follow-ups when someone asks for a price but does not finish booking',
+      'Simple systems to gather happy 5-star Google reviews',
+      'Special perks and reward messages for loyal customers'
     ],
-    caseStudyHighlight: 'Re-ignited KSh 1.2M in sales from an inactive list of 3,400 past clients with a single targeted WhatsApp sequence.'
+    caseStudyHighlight: 'Generated KSh 1.2M in sales from past clients with a single helpful WhatsApp campaign.'
   },
   {
     id: 'automation',
     stepNumber: '03',
     title: 'Marketing Automation',
-    description: 'Make your marketing work harder with less manual effort.',
+    description: 'Save time by letting smart tools handle repetitive daily tasks.',
     iconType: 'automation',
     badgeColor: 'text-purple-600',
     iconBg: 'bg-purple-50 text-purple-600',
     checkColor: 'text-purple-600 bg-purple-50',
     items: [
-      'CRM & workflow automation',
-      'Lead nurturing',
-      'AI-powered automation',
+      'Lead tracking tools',
+      'Instant chat replies',
       'Appointment reminders',
-      'Reporting & analytics',
-      'System integrations'
+      'Connecting your daily apps',
+      'Simple weekly reports',
+      'Less manual admin work'
     ],
-    detailedDescription: 'Connect the tools your business already uses to automate lead nurturing, customer follow-ups, appointment reminders, reporting, CRM workflows, and repetitive marketing processes.',
+    detailedDescription: 'We connect your website, WhatsApp, and calendar. When a new person reaches out, they get an instant reply, an automatic reminder before their appointment, and your team never loses their phone number.',
     deliverables: [
-      'HubSpot, Zoho, or Pipedrive CRM Implementation',
-      'Zapier & Make (Integromat) API Pipelines',
-      'Automated WhatsApp & SMS Calendar Reminders',
-      'AI Lead Scoring & Instant Auto-Response Bots',
-      'Real-Time Executive KPI Dashboard on Looker Studio'
+      'One simple place to see all your new leads and customer phone numbers',
+      'Automatic WhatsApp and SMS reminders to stop missed appointments',
+      'Instant friendly replies when someone asks about your services',
+      'Connecting your website forms straight to your phone or team chat',
+      'A clear weekly report showing your new calls, bookings, and revenue'
     ],
-    caseStudyHighlight: 'Eliminated 85% of missed appointments and reduced lead response time from 4 hours down to 45 seconds.'
+    caseStudyHighlight: 'Cut missed appointments by 85% and reduced reply time from 4 hours to 45 seconds.'
   }
 ];
 
@@ -113,12 +113,12 @@ export const Solutions: React.FC<SolutionsProps> = ({
 
           {/* Main Heading */}
           <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
-            Strategic marketing. <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">Sustainable growth.</span>
+            Simple marketing. <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">Real business growth.</span>
           </h2>
 
           {/* Subheading */}
           <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-            Attract more customers, reactivate existing ones, and automate marketing workflows for sustainable growth and increased revenue.
+            We help you find new customers, bring back past clients, and save hours of manual work with easy automations.
           </p>
         </div>
 
@@ -150,10 +150,10 @@ export const Solutions: React.FC<SolutionsProps> = ({
             </div>
 
             <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
-              CUSTOMER ACQUISITION
+              GET NEW CUSTOMERS
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              Attract the right audience and convert them into paying customers through data-driven strategies and compelling campaigns.
+              Reach people who are looking for your services right now and turn them into paying clients.
             </p>
           </div>
 
@@ -182,10 +182,10 @@ export const Solutions: React.FC<SolutionsProps> = ({
             </div>
 
             <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
-              CUSTOMER REACTIVATION
+              BRING BACK PAST CLIENTS
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              Re-engage existing customers and drive repeat business with personalized campaigns and smart communication.
+              Stay in touch with past clients through friendly messages so they return and buy from you again.
             </p>
           </div>
 
@@ -211,10 +211,10 @@ export const Solutions: React.FC<SolutionsProps> = ({
             </div>
 
             <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
-              MARKETING AUTOMATION
+              SAVE TIME WITH AUTOMATION
             </h3>
             <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              Automate marketing and sales workflows to save time, reduce manual effort, and scale results across every touchpoint.
+              Send instant replies, appointment reminders, and follow-ups on autopilot without extra staff.
             </p>
           </div>
 

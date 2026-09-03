@@ -1,12 +1,17 @@
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="aceso-blue-gradient" x1="8" y1="8" x2="92" y2="88" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#2563EB" />
-      <stop offset="1" stop-color="#1D4ED8" />
+    <!-- Warm copper gradient matching the official Aceso brand logo -->
+    <linearGradient id="aceso-copper-gradient" x1="8" y1="8" x2="92" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E29457" />
+      <stop offset="50%" stop-color="#DE8E53" />
+      <stop offset="100%" stop-color="#C25E00" />
     </linearGradient>
+    <!-- Geometric cutout mask for seamless transparency on light or dark browser tabs -->
+    <mask id="aceso-cutout" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="100" height="100" fill="#FFFFFF" />
+      <path d="M50 36L35 70H65L50 36Z" fill="#000000" />
+    </mask>
   </defs>
-  <!-- Main bold geometric triangular A shape -->
-  <path d="M50 8L8 88H32L50 50L68 88H92L50 8Z" fill="url(#aceso-blue-gradient)" />
-  <!-- Inner accent cutout fold -->
-  <path d="M50 36L35 70H65L50 36Z" fill="#FFFFFF" />
+  <!-- Main bold geometric triangular A shape with brand copper gradient and inner cutout -->
+  <path d="M50 8L8 88H32L50 50L68 88H92L50 8Z" fill="url(#aceso-copper-gradient)" mask="url(#aceso-cutout)" />
 </svg>

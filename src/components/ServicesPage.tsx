@@ -5,17 +5,25 @@ import socialMediaPhoneImg from '../assets/images/social_media_3d_phone_17869541
 import businessBenefitsImg from '../assets/images/business_benefits_growth_1788265402410.jpg';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  CheckCircle2, 
   ArrowRight, 
   TrendingUp,
   Award,
-  BarChart3
+  BarChart3,
+  HelpCircle,
+  Plus,
+  Minus
 } from 'lucide-react';
 
 export interface PerformanceKPI {
   metric: string;
   focus: string;
   whyWeTrackIt: string;
+}
+
+export interface ServiceFAQItem {
+  id: string;
+  question: string;
+  answer: string | string[];
 }
 
 export interface ServiceDetailModel {
@@ -37,6 +45,7 @@ export interface ServiceDetailModel {
   deliverables: string[];
   kpis: PerformanceKPI[];
   pricingCategoryKey: 'social' | 'ppc' | 'web' | 'seo' | 'all' | 'custom';
+  faqs?: ServiceFAQItem[];
 }
 
 export const servicesData: Record<string, ServiceDetailModel> = {
@@ -92,173 +101,264 @@ export const servicesData: Record<string, ServiceDetailModel> = {
     ],
     kpis: [
       {
-        metric: 'Engagement & Interaction Quality',
-        focus: 'Content Resonance & Sentiment',
-        whyWeTrackIt: 'Measures whether your audience actively values your content through saves, shares, and substantive comments rather than passive scrolling, signaling strong brand affinity.'
+        metric: 'Post Engagement & Interactions',
+        focus: 'Audience Interest',
+        whyWeTrackIt: 'Shows if people actually care about your content by saving, sharing, and commenting instead of just scrolling past.'
       },
       {
-        metric: 'Qualified Follower & Reach Velocity',
-        focus: 'Local Audience Growth',
-        whyWeTrackIt: 'Ensures your follower base expands with real prospective customers in your specific geographic service radius rather than irrelevant or non-buying accounts.'
+        metric: 'Local Follower & Reach Growth',
+        focus: 'Nearby Potential Customers',
+        whyWeTrackIt: 'Ensures your social media reaches real local people who can actually visit your business, call you, or buy your services.'
       },
       {
-        metric: 'Direct Message & Bio Link Inquiries',
-        focus: 'Inbound Lead Attribution',
-        whyWeTrackIt: 'Tracks the exact volume of prospective customers who move from viewing content to initiating direct conversations, booking consultations, or visiting key booking pages.'
+        metric: 'Customer Inquiries & Messages',
+        focus: 'New Business Leads',
+        whyWeTrackIt: 'Tracks how many people reach out through Instagram/Facebook direct messages, WhatsApp, or website links to ask about prices and book.'
       },
       {
-        metric: 'Publishing & Editorial Consistency',
-        focus: 'Algorithm Reliability & Brand Recall',
-        whyWeTrackIt: 'Monitors posting schedule adherence to maintain favorable ranking within platform algorithms and ensure continuous top-of-mind awareness in your market.'
+        metric: 'Posting Consistency & Regularity',
+        focus: 'Staying Top of Mind',
+        whyWeTrackIt: 'Ensures we publish on schedule every week so social platforms favor your profile and nearby customers remember your business first.'
       }
     ],
-    pricingCategoryKey: 'social'
+    pricingCategoryKey: 'social',
+    faqs: [
+      {
+        id: 'faq-social-traction',
+        question: 'How long will it take before we start seeing traction from social media?',
+        answer: 'Most businesses notice increased profile visits, video views, and direct message interactions within the first 3 to 4 weeks of consistent posting. Because social media algorithms require consistent publication to categorize your brand, sustained inquiry flow and customer acquisition hit high momentum by month two and continue to compound.'
+      },
+      {
+        id: 'faq-social-1',
+        question: 'Which social media platforms do you manage, and how do we choose the right ones?',
+        answer: 'We manage Instagram, Facebook, TikTok, LinkedIn, and YouTube Shorts. During our initial onboarding strategy session, we analyze where your prospective clients and high-intent buyers spend their time. We then focus your energy and budget on the 2 or 3 platforms that drive genuine business inquiries rather than stretching resources thin across networks that do not convert.'
+      },
+      {
+        id: 'faq-social-2',
+        question: 'How do you ensure the content aligns with our brand voice and visual style?',
+        answer: 'In week one, we craft a tailored Brand Style & Messaging Guide establishing your tone, aesthetic standards, color codes, approved messaging, and target audience personas. We prepare monthly content calendars 2 to 3 weeks in advance for your review and approval, so your team has complete visibility before anything is published.'
+      },
+      {
+        id: 'faq-social-3',
+        question: 'Do we need to supply photos and videos, or does your team create them?',
+        answer: 'We handle graphic design, typography, motion graphics, carousels, and scriptwriting. If you have raw smartphone clips, clinic/office photos, or past work examples, our video team edits, color grades, and captions them into high-performing Reels and TikToks. We also provide clear shot lists guiding your staff on how to capture quick, authentic 10-second clips using a smartphone.'
+      },
+      {
+        id: 'faq-social-4',
+        question: 'How does social media marketing translate into paying clients rather than just likes?',
+        answer: 'We do not focus on vanity metrics. Every piece of content is engineered with strong hooks, clear value, and frictionless calls to action that direct viewers to WhatsApp inquiries, direct message consultations, or dedicated booking landing pages where conversions are tracked.'
+      },
+      {
+        id: 'faq-social-5',
+        question: 'Do you monitor and respond to comments and direct messages (DMs)?',
+        answer: 'Yes. Our community management workflows monitor your profiles daily for questions, comments, and incoming direct messages. We provide rapid initial greetings, answer common operational questions (hours, location, services), and route qualified booking inquiries immediately to your team or WhatsApp.'
+      }
+    ]
   },
   ppc: {
     id: 'ppc',
     title: 'Google & Meta Ads (PPC)',
     category: 'Paid Advertising (PPC)',
     heroHeadline: 'Google & Meta Pay-Per-Click Advertising',
-    description: "If you're interested in running advertisements for your business, you've come to the right place. Aceso Solutions provides the tools, strategy, and creative assets to put your business in front of ideal customers through Pay-Per-Click campaigns like Google Ads and Meta Ads. We create strategic campaigns designed to convert while maximizing visibility and minimizing your cost-per-acquisition.",
+    description: 'Get your business in front of customers ready to buy right now. We create and manage targeted ads on Google, Facebook, and Instagram. You set your daily budget, and we make sure every shilling brings in phone calls, messages, and sales.',
     heroImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
-    imageCaption: 'High-intent search keyword campaigns, Meta lead ads, and real-time ROAS dashboards.',
+    imageCaption: 'Targeted ads that bring in phone calls, messages, and booked appointments every day.',
     subServices: [
       {
         title: 'Google Search & Local Services Ads (LSA)',
-        description: 'Capture active buyers at the exact moment they search for your service with keyword and negative match tuning.',
-        example: 'Targeting exact searches like "emergency vet near me," "dental clinic Westlands," or "commercial lawyer Nairobi."',
-        whyItMatters: 'Captures prospects with immediate buying intent right at the moment they need a solution.'
+        description: 'Show up at the very top of Google when people search for your services in your city.',
+        example: 'Showing your ad whenever someone searches for "best dentist near me" or "emergency plumber Nairobi."',
+        whyItMatters: 'People searching on Google have urgent needs and are ready to buy immediately.'
       },
       {
-        title: 'Meta (Facebook & Instagram) Lead Generation',
-        description: 'Hyper-targeted demographic and interest campaigns using engaging visuals and instant lead forms.',
-        example: 'Targeting affluent pet owners, homeowners, or corporate directors with tailored video offers and 1-tap mobile inquiry forms.',
-        whyItMatters: "Reaches potential clients who aren't actively searching today but have the exact demographic profile and need."
+        title: 'Meta (Facebook & Instagram) Lead Ads',
+        description: 'Reach your ideal local customers on social media with attractive photo and video ads that invite them to chat or book.',
+        example: 'Targeting local homeowners with a special offer that opens a 1-tap WhatsApp consultation.',
+        whyItMatters: 'Builds quick awareness and brings in leads from people relaxing on their phones.'
       },
       {
-        title: 'Strategic Retargeting Funnels',
-        description: 'Re-engage website visitors who did not convert on their first visit with compelling reminder offers.',
-        example: 'Displaying special limited-time booking bonuses or customer testimonials to users who visited your pricing page.',
-        whyItMatters: 'Recovers 15%–30% of warm traffic that would otherwise be permanently lost.'
+        title: 'Reminder & Retargeting Ads',
+        description: 'Show friendly reminder ads to people who visited your website but did not finish booking.',
+        example: 'Showing customer reviews or a limited-time bonus to people who checked your service prices.',
+        whyItMatters: 'Brings back interested buyers who just needed a little more time to decide.'
       },
       {
-        title: 'Conversion Tracking & ROAS Optimization',
-        description: 'Granular call tracking, form submission tracking, and real-time dashboard reporting.',
-        example: 'Setting up Google Tag Manager and Meta Pixel with server-side API conversions for 100% accurate attribution.',
-        whyItMatters: 'Eliminates wasted ad spend by showing exactly which keyword, ad copy, and creative drove revenue.'
+        title: 'Budget Management & Tracking',
+        description: 'We monitor your ad spend every day so you never waste money on irrelevant clicks or bad keywords.',
+        example: 'Blocking negative search terms so you do not pay for searches like "free service" or "job openings."',
+        whyItMatters: 'Ensures your entire ad budget is spent only on real potential buyers.'
       }
     ],
-    benefitsParagraph: 'Paid advertising unlocks a controllable faucet of high-intent customer leads on demand, eliminating revenue volatility and seasonality. By precisely bidding on active buyers and managing ad spend with strict negative keyword controls, your business achieves a predictable pipeline of qualified inquiries with full return on ad spend transparency.',
+    benefitsParagraph: 'Paid ads work like a switch: when you need more customers, we turn them on. You get a steady flow of phone calls and bookings without guessing, and you can see exactly how much revenue your ads bring in.',
     keyBenefits: [
-      'Immediate stream of qualified inbound customer inquiries from day one',
-      'Strict daily budget management with no wasteful ad spend or keyword leaks',
-      'Continuous A/B split-testing on ad copy, hooks, and landing pages',
-      'Transparent live performance reporting dashboard with cost-per-lead metrics',
-      'Full account ownership—you own all ad campaigns, pixels, and creative assets'
+      'New customer calls and messages starting from week one',
+      'Strict daily budget limits so you never overspend',
+      'Continuous testing to get you more leads for less money',
+      'Clear live reports showing cost per lead and total revenue',
+      'You own all ad campaigns, accounts, and customer lists'
     ],
     deliverables: [
-      'Competitor Ad Intelligence & Keyword Search Volume Research',
-      'Campaign Architecture & Conversion Tracking Pixel Setup',
-      'High-Converting Ad Copywriting & Professional Creative Assets',
-      'Weekly Bid Adjustments & Negative Keyword Scrubbing',
-      'Monthly Return on Ad Spend (ROAS) Review & Optimization'
+      'Competitor and keyword research for your city',
+      'Complete ad campaign setup on Google and Meta',
+      'Custom ad copywriting, graphics, and video clips',
+      'Weekly bid checks and negative keyword filtering',
+      'Monthly performance review with simple ROI numbers'
     ],
     kpis: [
       {
         metric: 'Return on Ad Spend (ROAS)',
-        focus: 'Revenue Efficiency & Profitability',
-        whyWeTrackIt: 'Evaluates the direct gross revenue generated for each dollar invested in advertising, confirming campaigns contribute positively to business net profit.'
+        focus: 'Profitability',
+        whyWeTrackIt: 'Shows how many shillings in revenue you earned for every shilling spent on ads.'
       },
       {
-        metric: 'Cost Per Acquisition (CPA)',
-        focus: 'Acquisition Budget Control',
-        whyWeTrackIt: 'Monitors the exact cost required to generate a booked appointment or qualified lead, allowing us to reallocate budget to top-performing keywords and creatives.'
+        metric: 'Cost Per Lead (CPA)',
+        focus: 'Cost Per Inquiry',
+        whyWeTrackIt: 'Tells you the exact amount spent to generate one phone call, message, or booked appointment.'
       },
       {
         metric: 'Click-Through Rate (CTR)',
-        focus: 'Ad Copy & Creative Relevance',
-        whyWeTrackIt: 'Measures how compelling and relevant your ad headlines and hooks are to active searchers, which directly lowers Google Quality Score costs and Meta CPMs.'
+        focus: 'Ad Appeal',
+        whyWeTrackIt: 'Shows what percentage of people who saw your ad clicked on it, proving the offer is attractive.'
       },
       {
         metric: 'Landing Page Conversion Rate',
-        focus: 'Post-Click Funnel Health',
-        whyWeTrackIt: 'Identifies whether visitors directed from ads find the offer and booking flow frictionless enough to complete a form submission or initiate a phone call.'
+        focus: 'Completed Actions',
+        whyWeTrackIt: 'Shows how many ad clickers actually called, sent a message, or filled out your form.'
       }
     ],
-    pricingCategoryKey: 'ppc'
+    pricingCategoryKey: 'ppc',
+    faqs: [
+      {
+        id: 'faq-ppc-1',
+        question: 'How much ad budget do I need to start seeing meaningful results?',
+        answer: 'Ad spend is paid directly to Google or Meta and depends on your industry and competition. For most local practices and growing businesses in Kenya, we typically recommend a starting ad budget of KSh 25,000 to KSh 75,000 per month. This allows the advertising algorithms to gather statistical significance, test multiple ad creatives, and begin generating verified enquiries from week one.'
+      },
+      {
+        id: 'faq-ppc-2',
+        question: 'How long will it take before we start seeing traction from paid ads?',
+        answer: 'Paid search and social campaigns can start driving clicks and qualified inquiries within 3 to 7 days of campaign launch. Over the first 30 days, we continuously test negative keywords, audience exclusions, bidding strategies, and ad copy to lower your cost-per-lead and accelerate conversion momentum.'
+      },
+      {
+        id: 'faq-ppc-3',
+        question: 'Who owns the advertising accounts, data, and pixels?',
+        answer: 'You retain 100% ownership of your Google Ads, Meta Business Manager, pixel data, tracking scripts, and payment profiles. We manage your campaigns as an authorized partner. If you ever pause or conclude our services, your entire account structure, negative keyword libraries, and conversion history remain fully yours.'
+      },
+      {
+        id: 'faq-ppc-4',
+        question: 'Should my business run Google Search Ads or Meta (Facebook/Instagram) Ads?',
+        answer: 'Google Search targets high-intent demand—people actively typing and searching for a solution right now (such as "emergency dental clinic near me" or "corporate tax consultant"). Meta Ads target latent demand through visual storytelling, video demonstrations, and retargeting people who visited your website but did not finish booking. Most successful clients benefit from a balanced combination of both.'
+      },
+      {
+        id: 'faq-ppc-5',
+        question: 'How do you prevent wasted ad spend on unqualified clicks?',
+        answer: 'We eliminate wasted spend through aggressive negative keyword lists, tight geographic radius controls, mobile-optimized landing pages, and pre-qualifying question forms that screen out tire-kickers. We optimize campaigns around verified phone calls, form completions, and confirmed bookings rather than superficial clicks.'
+      }
+    ]
   },
   webdesign: {
     id: 'webdesign',
     title: 'Web Design & Development',
-    category: 'Web Design & CRO',
-    heroHeadline: 'Web Design & Conversion Optimization',
-    description: 'Your website is the center of your digital marketing ecosystem. We design and build modern, ultra-fast, mobile-first websites engineered specifically to turn casual visitors into paying customers. From intuitive navigation and compelling copywriting to seamless booking and payment integrations, we create websites that look stunning and drive measurable revenue.',
+    category: 'Web Design & Conversions',
+    heroHeadline: 'Fast, Modern Websites Built to Sell',
+    description: 'Your website is your online shop. We build clean, fast, and mobile-friendly websites designed to turn visitors into paying clients. From easy booking buttons to clear service details, we make it effortless for customers to contact you.',
     heroImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
-    imageCaption: 'Responsive mobile-first architecture, sub-second load speeds, and high-converting UX layouts.',
+    imageCaption: 'Fast loading speeds, simple mobile layouts, and easy booking buttons.',
     subServices: [
       {
-        title: 'Custom Responsive UI/UX Design',
-        description: 'Bespoke layouts tailored to your unique brand identity, optimized for flawless display on smartphones, tablets, and desktops.',
-        example: 'Creating mobile-first responsive wireframes that make booking an appointment or requesting a quote effortless on any device.',
-        whyItMatters: 'Over 75% of local service searches happen on mobile devices where clunky layouts cause instant bounce rates.'
+        title: 'Mobile-Friendly Design',
+        description: 'We design websites that look clean and work smoothly on smartphones, tablets, and computers.',
+        example: 'Making sure your phone number and WhatsApp button are always one tap away on phone screens.',
+        whyItMatters: 'Over 80% of local customers will visit your website from their phone.'
       },
       {
-        title: 'Conversion Rate Optimization (CRO) Architecture',
-        description: 'Strategic placement of call-to-actions, trust badges, lead forms, and friction-free checkout/booking pathways.',
-        example: 'Designing sticky mobile call/WhatsApp buttons, social proof reviews near forms, and 2-step lead capture wizards.',
-        whyItMatters: 'Doubling your website conversion rate from 2% to 4% doubles your inbound leads without spending an extra dollar on ads.'
+        title: 'Easy Booking & Clear Contact Buttons',
+        description: 'We place contact forms, WhatsApp links, and call buttons in easy-to-find spots so visitors reach out fast.',
+        example: 'Adding a quick 2-step booking form and genuine customer reviews right next to your service prices.',
+        whyItMatters: 'Making it simple to contact you doubles the number of customer inquiries from existing visitors.'
       },
       {
-        title: 'Speed & Core Web Vitals Performance Tuning',
-        description: 'Sub-second page loading speeds, image compression, clean semantic code, and modern CDN hosting.',
-        example: 'Achieving 95+ Google PageSpeed scores with next-gen image formats, caching, and clean lightweight code.',
-        whyItMatters: 'Every additional second of load time reduces conversions by 7% and directly harms Google search rankings.'
+        title: 'Fast Page Loading Speeds',
+        description: 'We optimize pictures and code so your pages open in under two seconds on any internet connection.',
+        example: 'Compressing images and removing heavy code so the site loads instantly even on mobile data.',
+        whyItMatters: 'Visitors leave if a website takes more than 3 seconds to load.'
       },
       {
-        title: 'Content Management & Lead Integration',
-        description: 'User-friendly CMS setup with automated lead capture to CRM, email notifications, and instant WhatsApp chat links.',
-        example: 'Syncing form submissions directly into Google Sheets, email alerts, and your internal sales CRM.',
-        whyItMatters: 'Ensures your team gets notified in real time when a new prospect submits an inquiry.'
+        title: 'Easy Content Updates & Lead Alerts',
+        description: 'We set up your site so you can easily change text and photos, with instant alerts whenever someone reaches out.',
+        example: 'Connecting forms directly to your email, WhatsApp, or Google Sheets so you never miss a new lead.',
+        whyItMatters: 'You get notified immediately the moment a new customer asks for a quote.'
       }
     ],
-    benefitsParagraph: 'A modern, high-converting digital storefront captures lost traffic, establishes immediate professional credibility, and turns casual site visitors into booked clients around the clock. By engineering fast loading speeds and frictionless mobile booking flows, your website converts existing traffic at a significantly higher rate, multiplying your overall marketing ROI.',
+    benefitsParagraph: 'A fast, modern website builds instant trust. Instead of losing interested visitors, your site guides them clearly to call, message, or book. It works for your business 24 hours a day, even while you sleep.',
     keyBenefits: [
-      'Mobile-optimized designs that load in under 2 seconds',
-      'High-converting layout architecture that maximizes form fills and phone calls',
-      'Complete search engine-friendly structure and schema markup',
-      'Full website ownership with easy-to-edit content management',
-      'Integrated WhatsApp click-to-chat and instant lead notification workflows'
+      'Loads in under 2 seconds on mobile phones',
+      'Clear layout that makes it easy for visitors to call or message',
+      'Built for Google search so nearby customers can find you',
+      'Full ownership of your website with simple content editing',
+      'Direct WhatsApp chat and instant email alerts for new inquiries'
     ],
     deliverables: [
-      'Full Website Information Architecture & Wireframing',
-      'Custom Responsive UI/UX Design & Front-End Development',
-      'Lead Capture Forms & WhatsApp Click-to-Chat Integration',
-      'Speed Optimization, SSL Security & Core Web Vitals Tuning',
-      'Post-Launch Technical Support & CMS Training Session'
+      'Custom website layout tailored to your business brand',
+      'Mobile-friendly design for phones, tablets, and laptops',
+      'Direct WhatsApp, call, and contact form integrations',
+      'Fast speed optimization and secure SSL setup',
+      'Simple training so your team can make easy text updates'
     ],
     kpis: [
       {
-        metric: 'Core Web Vitals & Load Speed',
-        focus: 'Technical Performance & SEO Health',
-        whyWeTrackIt: 'Evaluates rendering speed and layout stability; sub-second mobile page loads prevent prospect abandonment and satisfy Google Core Web Vitals ranking criteria.'
+        metric: 'Mobile Load Time',
+        focus: 'Speed & User Experience',
+        whyWeTrackIt: 'Fast loading keeps visitors on your page and helps you rank higher on Google.'
       },
       {
-        metric: 'Visitor-to-Inquiry Conversion Rate',
-        focus: 'Conversion Architecture Efficiency',
-        whyWeTrackIt: 'Tracks the percentage of total website visitors who complete a high-value action (call, WhatsApp message, form submission), measuring design effectiveness.'
+        metric: 'Visitor-to-Lead Rate',
+        focus: 'Website Effectiveness',
+        whyWeTrackIt: 'Shows what percentage of site visitors actually call, message, or book with you.'
       },
       {
-        metric: 'Mobile Usability & Interaction Flow',
-        focus: 'Device-Agnostic Experience',
-        whyWeTrackIt: 'Monitors touch target accuracy, layout responsiveness, and ease of navigation on mobile devices where the vast majority of local service inquiries originate.'
+        metric: 'Mobile Usability',
+        focus: 'Ease of Use',
+        whyWeTrackIt: 'Checks that buttons and text are easy to read and tap on any phone screen.'
       },
       {
-        metric: 'Bounce & Key Page Retention Rate',
-        focus: 'User Engagement & Clarity',
-        whyWeTrackIt: 'Reveals whether visitors stay to explore your service details and pricing or exit immediately, highlighting areas where copywriting and layout can be refined.'
+        metric: 'Bounce Rate',
+        focus: 'Visitor Interest',
+        whyWeTrackIt: 'Shows if visitors stay to explore your services or leave right away.'
       }
     ],
-    pricingCategoryKey: 'custom'
+    pricingCategoryKey: 'custom',
+    faqs: [
+      {
+        id: 'faq-web-traction',
+        question: 'How long will it take before our new website starts gaining traction and generating enquiries?',
+        answer: 'Immediately upon launch, your new high-performance website begins converting incoming traffic with fast mobile load speeds and prominent WhatsApp click-to-chat triggers. When combined with paid ads or local search campaigns, businesses typically see conversion rates improve within the very first week of live visitor traffic.'
+      },
+      {
+        id: 'faq-web-1',
+        question: 'How long does it take to design and launch a new website or landing page?',
+        answer: 'Dedicated high-converting campaign landing pages are typically launched within 7 to 14 business days from wireframe approval. Full custom multi-page business websites generally take 3 to 5 weeks, depending on the scope of custom features, integrations, and content review cycles.'
+      },
+      {
+        id: 'faq-web-2',
+        question: 'Will our website load quickly on mobile devices and slow connections?',
+        answer: 'Yes. Over 75% of local service traffic originates from mobile devices. We build mobile-first with clean code, compressed next-generation images, optimized typography, and minimal script weight, ensuring page load times under 2 seconds even on standard mobile networks.'
+      },
+      {
+        id: 'faq-web-3',
+        question: 'Can our team easily make text and photo updates after launch?',
+        answer: 'Absolutely. We build on user-friendly content management platforms and provide complete video training and documentation. Your team will be able to update prices, swap out photos, publish announcements, and review incoming enquiries without needing to write any code.'
+      },
+      {
+        id: 'faq-web-4',
+        question: 'Do you write the website copy or do we need to provide it?',
+        answer: 'We handle the copywriting for you. We interview your team to uncover your unique differentiators, customer pain points, and competitive strengths, then write conversion-focused headlines, benefit breakdowns, and clear calls-to-action designed to convert visitors into booked appointments.'
+      },
+      {
+        id: 'faq-web-5',
+        question: 'Do you set up analytics, tracking pixels, and conversion forms?',
+        answer: 'Yes. Every website we build includes full integration of Google Analytics 4, Google Tag Manager, Meta Pixel, automated contact forms with email/WhatsApp notifications, and foundational technical SEO (meta titles, sitemaps, semantic tags).'
+      }
+    ]
   },
   seo: {
     id: 'seo',
@@ -311,100 +411,154 @@ export const servicesData: Record<string, ServiceDetailModel> = {
     ],
     kpis: [
       {
-        metric: 'Google Maps 3-Pack Local Visibility',
-        focus: 'Proximity & Local Pack Dominance',
-        whyWeTrackIt: 'Measures geographic visibility in Google Maps for high-intent searches (e.g. "near me"), which represent the single highest-converting source of local phone calls.'
+        metric: 'Google Maps 3-Pack Rankings',
+        focus: 'Top Local Search Position',
+        whyWeTrackIt: 'Checks if your business appears in the top 3 Google Maps results when nearby customers search for what you offer (e.g., "dentist near me").'
       },
       {
-        metric: 'Commercial Keyword Ranking Trajectory',
-        focus: 'Search Engine Authority',
-        whyWeTrackIt: 'Monitors keyword positions across Google organic search to assess page-one prominence and identify opportunities for strategic on-page content updates.'
+        metric: 'First-Page Keyword Rankings',
+        focus: 'Google Search Visibility',
+        whyWeTrackIt: 'Tracks how high your website ranks on the first page of Google for the specific search terms your prospective customers type in.'
       },
       {
-        metric: 'Direct Inbound Organic Actions',
-        focus: 'Confirmed Search Inquiries',
-        whyWeTrackIt: 'Tracks direct phone calls, website clicks, and direction requests generated through your Google Business Profile and organic search listings.'
+        metric: 'Direct Phone Calls & Direction Requests',
+        focus: 'Real Customer Enquiries',
+        whyWeTrackIt: 'Counts how many people tapped to call your business, asked for driving directions, or clicked your website directly from Google.'
       },
       {
-        metric: 'Non-Branded Organic Traffic Growth',
-        focus: 'Net-New Customer Discovery',
-        whyWeTrackIt: 'Separates existing brand searches from prospective clients discovering your business for the first time via informational and service-specific queries.'
+        metric: 'New Website Visitors from Google',
+        focus: 'Free Customer Traffic',
+        whyWeTrackIt: 'Measures how many new people discover your business through Google search each month without having to pay for ads.'
       }
     ],
-    pricingCategoryKey: 'seo'
+    pricingCategoryKey: 'seo',
+    faqs: [
+      {
+        id: 'faq-seo-1',
+        question: 'How long will it take before we start seeing traction from SEO?',
+        answer: 'SEO is a compounding growth engine. Most businesses notice initial Google Business Profile impressions, indexed search gains, and local keyword movement within 60 to 90 days. Substantial organic traffic expansion, Google Map 3-Pack dominance, and a steady stream of unpaid patient or client bookings typically mature between months 4 and 6.'
+      },
+      {
+        id: 'faq-seo-2',
+        question: 'What is the difference between Local SEO and Organic Search SEO?',
+        answer: 'Local SEO focuses on placing your business in the Google Map 3-Pack for searches with localized intent (such as "vet clinic Westlands" or "hotel near airport"). Organic SEO ranks your website pages, articles, and service guides in standard Google search listings regionally and nationally. We execute both concurrently for maximum search real estate.'
+      },
+      {
+        id: 'faq-seo-3',
+        question: 'Can you guarantee a #1 ranking on Google?',
+        answer: 'No ethical SEO agency can guarantee a #1 position, as Google frequently updates its algorithms and competitors actively optimize. What we do guarantee is strict adherence to Google\'s official guidelines, transparent technical execution, high-intent local content production, and monthly reporting tied to phone calls, direction requests, and real customer enquiries.'
+      },
+      {
+        id: 'faq-seo-4',
+        question: 'What specific tasks are completed every month for ongoing SEO?',
+        answer: 'Monthly SEO includes continuous technical health and page speed maintenance, local citation audits and cleanups, Google Business Profile posts and review management, on-page optimization for new high-volume keywords, internal link optimization, and building authoritative local backlinks.'
+      },
+      {
+        id: 'faq-seo-5',
+        question: 'How do we track whether SEO is actually generating revenue?',
+        answer: 'We measure what matters: Google Maps direction requests, click-to-call phone calls, appointment form completions, and keyword ranking trends. You receive an executive summary every month showing organic visitor growth and the exact customer enquiries it generated.'
+      }
+    ]
   },
   whatsapp: {
     id: 'whatsapp',
     title: 'WhatsApp Marketing & Lead Automations',
-    category: 'WhatsApp & Lead Automation',
-    heroHeadline: 'WhatsApp Marketing & Lead Automation',
-    description: 'Transform WhatsApp into your highest-converting sales and customer service channel. We build automated WhatsApp messaging funnels that instantly engage prospects from ads, answer inquiries 24/7, schedule consultations, send appointment reminders, and recover abandoned leads without manual effort.',
+    category: 'WhatsApp & Automations',
+    heroHeadline: 'Automate WhatsApp to Reply and Book 24/7',
+    description: 'Turn WhatsApp into your fastest sales channel. We set up automatic replies that answer questions instantly, book appointments, send friendly reminders, and follow up with past clients—all without needing someone on your staff to type every message.',
     heroImage: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?q=80&w=1200&auto=format&fit=crop',
-    imageCaption: '24/7 automated qualification bots, Click-to-WhatsApp ad funnels, and appointment reminder sequences.',
+    imageCaption: 'Instant 24/7 replies, easy appointment booking, and automatic reminders on WhatsApp.',
     subServices: [
       {
-        title: '24/7 Interactive Chatbots & Menu Flows',
-        description: 'Automated conversational flows that qualify prospect needs, answer service FAQs, and capture contact information around the clock.',
-        example: 'A clinic bot that asks prospective patients what service they need, offers available times, and captures their phone number in under 30 seconds.',
-        whyItMatters: 'Ensures zero missed leads after-hours or when your reception staff is busy.'
+        title: 'Instant 24/7 Customer Replies',
+        description: 'Set up automatic replies that answer common questions about prices, locations, and open hours in seconds.',
+        example: 'A customer messages at 10 PM and gets an instant menu with service details and an easy booking button.',
+        whyItMatters: 'You never lose an interested customer just because your office is closed.'
       },
       {
-        title: 'Click-to-WhatsApp Ad Funnels',
-        description: 'Direct Meta and Google ad traffic straight into pre-filled WhatsApp conversations with automated instant welcomes.',
-        example: 'Ads that open WhatsApp with the message "Hi! I\'d like to book a consultation" pre-filled and an automated instant greeting.',
-        whyItMatters: 'Reduces form friction to near-zero and opens a direct, personal communication channel with prospects.'
+        title: 'Click-to-WhatsApp Ad Links',
+        description: 'Send people from Facebook and Instagram ads directly into a WhatsApp chat with a friendly opening greeting.',
+        example: 'An ad where clicking "Message Us" opens WhatsApp with the message "Hi, I would like to book a visit" already typed.',
+        whyItMatters: 'Customers love chatting on WhatsApp because it is fast, familiar, and easy.'
       },
       {
-        title: 'Automated Appointment Booking & Reminders',
-        description: 'Self-service scheduling synced to Google Calendar with automatic reminder alerts that eliminate costly no-shows.',
-        example: 'Automated WhatsApp reminder sent 24 hours and 2 hours before an appointment with a 1-tap confirmation button.',
-        whyItMatters: 'Reduces appointment no-shows by up to 60% and saves hours of manual receptionist phone calls.'
+        title: 'Automatic Appointment Reminders',
+        description: 'Send automated reminder messages 24 hours and 2 hours before a booked visit, with a simple button to confirm.',
+        example: 'Sending: "Hello Sarah, your appointment is tomorrow at 2 PM. Please reply 1 to confirm or 2 to reschedule."',
+        whyItMatters: 'Cuts missed appointments and no-shows by more than half.'
       },
       {
-        title: 'CRM Integration & Broadcast Campaigns',
-        description: 'Seamless customer data syncing into your CRM or Google Sheets, plus compliant broadcast campaigns to re-engage past clients.',
-        example: 'Syncing every WhatsApp conversation to your CRM with automated tags, plus seasonal promotional broadcasts to past clients.',
-        whyItMatters: 'Turns your past customer database into a repeatable source of repeat revenue.'
+        title: 'Customer Database & Follow-Up Messages',
+        description: 'Save all your customer contacts cleanly and send special holiday greetings or service check-up reminders.',
+        example: 'Sending a friendly reminder to past clients when their routine 6-month check-up is due.',
+        whyItMatters: 'Brings back past clients for repeat visits without having to find new customers.'
       }
     ],
-    benefitsParagraph: 'WhatsApp automation eliminates response delays that cause prospects to contact competitors. By instantly qualifying leads under 5 seconds, answering common questions 24/7, and sending automated two-way appointment confirmation reminders, your business captures significantly more revenue while reducing manual receptionist workload.',
+    benefitsParagraph: 'Speed matters. When someone asks about your services, getting an answer in 5 seconds means they book with you instead of calling another business. Automated WhatsApp messages handle inquiries, remind clients of their bookings, and save your front desk hours of work every week.',
     keyBenefits: [
-      'Instant response times (under 5 seconds) to capture high-intent leads',
-      '98% message open rates compared to 20% on traditional email marketing',
-      'Up to 60% reduction in appointment no-show rates via automated reminders',
-      'Automated qualification that saves hours of manual receptionist work',
-      'Direct, frictionless communication channel built on the platform customers already use'
+      'Instant replies under 5 seconds, day or night',
+      'Over 90% of messages are read within minutes',
+      'Cuts missed appointments and no-shows in half',
+      'Saves your staff hours of typing repetitive replies',
+      'Easy for your customers because they already use WhatsApp every day'
     ],
     deliverables: [
-      'Custom WhatsApp Automation Strategy & Conversation Flow Mapping',
-      'Interactive Chatbot Build & Logic Configuration',
-      'Meta Ad & Website Click-to-Chat Integration',
-      'Calendar Sync & Automated Reminder Workflows',
-      'CRM/Spreadsheet Webhook Sync & Staff Training Session'
+      'Custom WhatsApp reply flows and menu setup',
+      'Automated greeting and inquiry capture system',
+      'Direct WhatsApp chat links for your website and social ads',
+      'Google Calendar sync with automated booking reminders',
+      'Staff walk-through so your team knows how to manage incoming chats'
     ],
     kpis: [
       {
-        metric: 'First-Touch Lead Response Speed',
-        focus: 'Instant Prospect Engagement',
-        whyWeTrackIt: 'Monitors the time it takes to engage an inbound prospect; immediate conversational greetings prevent active leads from seeking alternatives from competitors.'
+        metric: 'Response Time',
+        focus: 'Fast Replies',
+        whyWeTrackIt: 'Measures how fast a new prospect gets their first greeting and answer.'
       },
       {
-        metric: 'Chatbot Qualification & Intake Rate',
-        focus: 'Lead Filtering & Data Completeness',
-        whyWeTrackIt: 'Measures the proportion of prospects who successfully complete automated intake questions, providing your sales or reception team with pre-qualified context.'
+        metric: 'Booked Appointments',
+        focus: 'Confirmed Bookings',
+        whyWeTrackIt: 'Tracks how many WhatsApp conversations turned into scheduled visits.'
       },
       {
-        metric: 'Appointment Confirmation & Attendance',
-        focus: 'No-Show Reduction & Schedule Fill',
-        whyWeTrackIt: 'Tracks confirmation replies from automated 24-hour and 2-hour WhatsApp reminder sequences to minimize empty slots and protect billable hours.'
+        metric: 'Appointment Attendance Rate',
+        focus: 'Reduced No-Shows',
+        whyWeTrackIt: 'Shows how many customers showed up on time thanks to automated WhatsApp reminders.'
       },
       {
-        metric: 'Broadcast Read & Re-Activation Rate',
-        focus: 'Client Retention & Lifetime Value',
-        whyWeTrackIt: 'Monitors customer response to seasonal wellness check-ups, service reminders, and promotional messages to drive repeat appointments from past clients.'
+        metric: 'Past Client Re-bookings',
+        focus: 'Repeat Business',
+        whyWeTrackIt: 'Measures how many previous clients booked again after receiving seasonal reminder messages.'
       }
     ],
-    pricingCategoryKey: 'custom'
+    pricingCategoryKey: 'custom',
+    faqs: [
+      {
+        id: 'faq-wa-1',
+        question: 'How long will it take before we start seeing traction with WhatsApp automations?',
+        answer: 'You will see traction from day one. As soon as your WhatsApp automations go live, every click on your ads, website buttons, or social profiles triggers instant automated conversations. Businesses typically experience a 30% to 50% increase in fast inquiry-to-booking conversions within the first two weeks.'
+      },
+      {
+        id: 'faq-wa-2',
+        question: 'Will automated WhatsApp messages sound robotic or alienate customers?',
+        answer: 'Not at all. We write warm, conversational, and natural copy tailored to your brand voice. The automation acts as a friendly concierge handling routine repetitive questions, and instantly notifies your human team the moment a customer requests personalized advice or a complex quotation.'
+      },
+      {
+        id: 'faq-wa-3',
+        question: 'Can we broadcast messages and updates to our customer list without getting blocked?',
+        answer: 'Yes. We use official WhatsApp Business API compliant methods with strict opt-in protocols. We help you segment your contacts so messages are relevant, personalized, and timely—such as automated 6-month checkup reminders, seasonal VIP promotions, or post-visit satisfaction reviews.'
+      },
+      {
+        id: 'faq-wa-4',
+        question: 'How does WhatsApp automation reduce missed appointments and no-shows?',
+        answer: 'We set up automated reminder sequences sent 24 hours and 2 hours before a scheduled visit, featuring simple 1-tap confirmation or rescheduling buttons. Because over 90% of WhatsApp messages are opened within minutes, no-show rates typically drop by 50% or more.'
+      },
+      {
+        id: 'faq-wa-5',
+        question: 'Can multiple staff members respond to incoming chats from one business number?',
+        answer: 'Yes. Through our multi-agent team inbox setup, multiple front desk team members, clinicians, or sales agents can log in simultaneously from desktops or mobile phones, assign chats to specific departments, add internal notes, and manage customer records seamlessly.'
+      }
+    ]
   }
 };
 
@@ -427,6 +581,21 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   const [internalServiceId, setInternalServiceId] = useState<string>('social');
   const currentServiceId = controlledServiceId || internalServiceId;
   const activeService = servicesData[currentServiceId] || servicesData['social'];
+
+  const [openFaqId, setOpenFaqId] = useState<string | null>(null);
+
+  // Set first FAQ open by default or reset when service changes
+  React.useEffect(() => {
+    if (activeService.faqs && activeService.faqs.length > 0) {
+      setOpenFaqId(activeService.faqs[0].id);
+    } else {
+      setOpenFaqId(null);
+    }
+  }, [activeService.id]);
+
+  const toggleFaq = (id: string) => {
+    setOpenFaqId(prev => (prev === id ? null : id));
+  };
 
   const handleBookConsultation = () => {
     if (onRequestAudit) {
@@ -471,82 +640,56 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
           >
             {/* HERO SECTION */}
             <div className="space-y-6 sm:space-y-8">
-              <div className="space-y-4 max-w-4xl">
-                
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
-                  <span className="text-[#1D63ED]">{activeService.title}</span>
-                </h1>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
+                <span className="text-[#1D63ED]">{activeService.title}</span>
+              </h1>
 
-                <p className="text-base sm:text-lg lg:text-xl text-slate-700 leading-relaxed max-w-3xl">
-                  {activeService.description}
-                </p>
-
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-3">
-                  <button
-                    onClick={handleBookConsultation}
-                    className="w-full sm:w-auto min-h-[48px] px-7 py-3.5 rounded-xl bg-[#F28E13] hover:bg-[#DE7C05] active:bg-[#C26B00] text-slate-950 font-bold text-sm sm:text-base transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
-                  >
-                    <span>Book Free Consultation</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={handleViewPricing}
-                    className="w-full sm:w-auto min-h-[48px] px-7 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-bold text-sm sm:text-base transition-all shadow-xs flex items-center justify-center cursor-pointer active:scale-[0.98]"
-                  >
-                    View Pricing &amp; Plans
-                  </button>
-                </div>
-              </div>
-
-              {/* Visual Spotlight Card (With Image or Graphic) */}
-              {activeService.heroImage && (
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-xs">
-                  <div className="lg:col-span-5 relative rounded-xl overflow-hidden bg-slate-900 aspect-16/10 sm:aspect-16/9 lg:aspect-auto lg:h-[280px]">
-                    <img 
-                      src={activeService.heroImage} 
-                      alt={activeService.title} 
-                      loading="lazy"
-                      decoding="async"
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover opacity-95"
-                    />
-                    {activeService.imageCaption && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
-                        <p className="text-xs sm:text-sm text-white font-medium">
-                          {activeService.imageCaption}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="lg:col-span-7 space-y-4">
-                    <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 leading-tight">
-                      Built specifically for growing businesses and local practices.
-                    </h2>
-                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                      We eliminate the guesswork and chaotic execution of digital marketing by pairing modern creative production with rigorous lead-tracking systems, transparent reporting, and continuous optimization.
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                      <div className="flex items-center gap-2.5 text-sm sm:text-base font-semibold text-slate-800">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                        <span>100% Account Ownership</span>
-                      </div>
-                      <div className="flex items-center gap-2.5 text-sm sm:text-base font-semibold text-slate-800">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                        <span>Transparent Lead Tracking</span>
-                      </div>
-                      <div className="flex items-center gap-2.5 text-sm sm:text-base font-semibold text-slate-800">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                        <span>Dedicated Strategy Support</span>
-                      </div>
-                      <div className="flex items-center gap-2.5 text-sm sm:text-base font-semibold text-slate-800">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                        <span>Measurable Return on Investment</span>
-                      </div>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                {/* Hero Visual Image (With Caption Overlay) - Left side on desktop */}
+                {activeService.heroImage && (
+                  <div className="lg:col-span-6">
+                    <div className="relative rounded-2xl overflow-hidden bg-slate-900 w-full h-[320px] sm:h-[380px] lg:h-[420px] shadow-md border border-slate-200/80">
+                      <img 
+                        src={activeService.heroImage} 
+                        alt={activeService.title} 
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover"
+                      />
+                      {activeService.imageCaption && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex items-end p-5 sm:p-6">
+                          <p className="text-sm sm:text-base text-white font-medium leading-relaxed drop-shadow-xs">
+                            {activeService.imageCaption}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
+                )}
+
+                <div className={`space-y-6 ${activeService.heroImage ? 'lg:col-span-6' : 'lg:col-span-12 max-w-4xl'}`}>
+                  <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-2xl">
+                    {activeService.description}
+                  </p>
+
+                  <div className="flex flex-row items-center gap-2 sm:gap-3.5 pt-2 w-full sm:w-auto">
+                    <button
+                      onClick={handleBookConsultation}
+                      className="flex-1 sm:flex-initial sm:w-auto min-h-[44px] sm:min-h-[48px] px-2.5 sm:px-7 py-2.5 sm:py-3 rounded-xl bg-[#F28E13] hover:bg-[#DE7C05] active:bg-[#C26B00] text-slate-950 font-bold text-xs sm:text-base transition-all shadow-sm flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer active:scale-[0.98] text-center"
+                    >
+                      <span>Book Free Consultation</span>
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 hidden sm:inline-block" />
+                    </button>
+                    <button
+                      onClick={handleViewPricing}
+                      className="flex-1 sm:flex-initial sm:w-auto min-h-[44px] sm:min-h-[48px] px-2.5 sm:px-7 py-2.5 sm:py-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-bold text-xs sm:text-base transition-all shadow-xs flex items-center justify-center cursor-pointer active:scale-[0.98] text-center whitespace-nowrap"
+                    >
+                      View Pricing Plans
+                    </button>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* CORE SUB-SERVICES & PILLARS */}
@@ -582,10 +725,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
                       {sub.example && (
                         <div className="bg-slate-50 border border-slate-200/90 rounded-xl p-4 text-sm text-slate-700 space-y-1.5">
-                          <p className="font-bold text-[#C25E00] text-xs uppercase tracking-wide">
+                          <p className="font-bold text-[#C25E00] text-xs uppercase tracking-wider">
                             Real-World Example
                           </p>
-                          <p className="leading-relaxed">{sub.example}</p>
+                          <p className="text-sm text-slate-700 leading-relaxed">{sub.example}</p>
                         </div>
                       )}
                     </div>
@@ -642,10 +785,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4 sm:p-5">
                       <div>
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                        <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
                           Measurable Impact
                         </span>
-                        <p className="text-white text-xs sm:text-sm font-semibold leading-snug">
+                        <p className="text-white text-sm font-semibold leading-snug">
                           Data-backed execution designed for consistent SME revenue expansion
                         </p>
                       </div>
@@ -691,6 +834,71 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               </div>
             </div>
 
+            {/* 3. FREQUENTLY ASKED QUESTIONS SECTION */}
+            {activeService.faqs && activeService.faqs.length > 0 && (
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6 shadow-2xs">
+                <div className="border-b border-slate-200 pb-4">
+                  <div className="flex items-center gap-3">
+                    <HelpCircle className="w-6 h-6 text-[#DE8E53]" />
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 uppercase tracking-wide">
+                      Frequently Asked Questions
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="space-y-3 sm:space-y-4 pt-1">
+                  {activeService.faqs.map((faq) => {
+                    const isOpen = openFaqId === faq.id;
+                    return (
+                      <div
+                        key={faq.id}
+                        className={`rounded-xl border transition-all duration-200 overflow-hidden ${
+                          isOpen
+                            ? 'bg-amber-50/25 border-amber-400/60 shadow-xs ring-1 ring-amber-400/30'
+                            : 'bg-slate-50/70 border-slate-200/90 hover:border-slate-300'
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => toggleFaq(faq.id)}
+                          className="w-full text-left px-5 sm:px-6 py-4 sm:py-4.5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none select-none"
+                          aria-expanded={isOpen}
+                        >
+                          <h4 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                            {faq.question}
+                          </h4>
+                          <div
+                            className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                              isOpen ? 'bg-amber-500/15 text-[#C25E00]' : 'bg-slate-200/70 text-slate-600'
+                            }`}
+                          >
+                            {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                          </div>
+                        </button>
+                        {isOpen && (
+                          <div className="px-5 sm:px-6 pt-0 pb-5 sm:pb-6 border-t border-slate-200/60">
+                            {Array.isArray(faq.answer) ? (
+                              <div className="space-y-2.5 pt-3.5">
+                                {faq.answer.map((para, pIdx) => (
+                                  <p key={pIdx} className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
+                                    {para}
+                                  </p>
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal pt-3.5">
+                                {faq.answer}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* BOTTOM CALL TO ACTION BANNER */}
             <div className="bg-gradient-to-r from-[#0B2545] via-[#103058] to-[#0B2545] text-white rounded-3xl p-8 sm:p-12 lg:p-14 text-center space-y-6 shadow-sm">
               <div className="max-w-2xl mx-auto space-y-3">
@@ -702,17 +910,17 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+              <div className="flex flex-row items-center justify-center gap-2 sm:gap-4 pt-2 w-full max-w-xl mx-auto">
                 <button
                   onClick={handleBookConsultation}
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#F28E13] hover:bg-[#DE7C05] text-slate-950 font-bold text-sm sm:text-base tracking-wide uppercase transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="flex-1 sm:flex-initial sm:w-auto min-h-[44px] sm:min-h-[48px] px-2.5 sm:px-8 py-2.5 sm:py-3.5 rounded-xl bg-[#F28E13] hover:bg-[#DE7C05] text-slate-950 font-bold text-xs sm:text-base tracking-wide uppercase transition-all shadow-md flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer text-center active:scale-[0.98]"
                 >
                   <span>Book Free Consultation</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 hidden sm:inline-block" />
                 </button>
                 <button
                   onClick={handleViewPricing}
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-sm sm:text-base tracking-wide uppercase transition-all flex items-center justify-center cursor-pointer"
+                  className="flex-1 sm:flex-initial sm:w-auto min-h-[44px] sm:min-h-[48px] px-2.5 sm:px-8 py-2.5 sm:py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-xs sm:text-base tracking-wide uppercase transition-all flex items-center justify-center cursor-pointer text-center active:scale-[0.98] whitespace-nowrap"
                 >
                   View Pricing Plans
                 </button>
