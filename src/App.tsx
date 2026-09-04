@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BrandLogos } from './components/BrandLogos';
@@ -9,27 +9,17 @@ import { AuditSection } from './components/AuditSection';
 import { Footer } from './components/Footer';
 import { MobileBottomBar } from './components/MobileBottomBar';
 import { PackageItem, SolutionItem } from './types';
-
-// Code-splitting via React.lazy for instant initial mobile & desktop page loads
-const CustomPackagePage = lazy(() => import('./components/CustomPackagePage').then(m => ({ default: m.CustomPackagePage })));
-const FreeAuditPage = lazy(() => import('./components/FreeAuditPage').then(m => ({ default: m.FreeAuditPage })));
-const ServicesPage = lazy(() => import('./components/ServicesPage').then(m => ({ default: m.ServicesPage })));
-const IndustriesPage = lazy(() => import('./components/IndustriesPage').then(m => ({ default: m.IndustriesPage })));
-const PricingPage = lazy(() => import('./components/PricingPage').then(m => ({ default: m.PricingPage })));
-const ContactPage = lazy(() => import('./components/ContactPage').then(m => ({ default: m.ContactPage })));
-const PrivacyPolicyPage = lazy(() => import('./components/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
-const TermsOfUsePage = lazy(() => import('./components/TermsOfUsePage').then(m => ({ default: m.TermsOfUsePage })));
-const PackageDetailsModal = lazy(() => import('./components/PackageDetailsModal').then(m => ({ default: m.PackageDetailsModal })));
-const SolutionDetailsModal = lazy(() => import('./components/SolutionDetailsModal').then(m => ({ default: m.SolutionDetailsModal })));
-const LeadDetailsModal = lazy(() => import('./components/LeadDetailsModal').then(m => ({ default: m.LeadDetailsModal })));
-
-// Ultra-fast lightweight page loading fallback
-const PageLoadingFallback = () => (
-  <div className="min-h-[70vh] flex flex-col items-center justify-center p-8 bg-[#0B132B]">
-    <div className="w-10 h-10 border-3 border-amber-500/20 border-t-[#DE8E53] rounded-full animate-spin mb-4" />
-    <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase">Loading Experience...</span>
-  </div>
-);
+import { CustomPackagePage } from './components/CustomPackagePage';
+import { FreeAuditPage } from './components/FreeAuditPage';
+import { ServicesPage } from './components/ServicesPage';
+import { IndustriesPage } from './components/IndustriesPage';
+import { PricingPage } from './components/PricingPage';
+import { ContactPage } from './components/ContactPage';
+import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
+import { TermsOfUsePage } from './components/TermsOfUsePage';
+import { PackageDetailsModal } from './components/PackageDetailsModal';
+import { SolutionDetailsModal } from './components/SolutionDetailsModal';
+import { LeadDetailsModal } from './components/LeadDetailsModal';
 
 // SEO Page Metadata Configuration
 const pageMetadata = {
@@ -80,7 +70,7 @@ const pageMetadata = {
   }
 };
 
-// Helper to parse current view and state from URL (supports pathnames and hash fallbacks)
+// Helper to parse current view and state from URL using HashRouter strategy
 type PageView = 'home' | 'custom-package' | 'free-audit' | 'services' | 'industries' | 'pricing' | 'contact' | 'privacy-policy' | 'terms-of-use';
 
 const parseRouteFromLocation = (): {
@@ -95,59 +85,85 @@ const parseRouteFromLocation = (): {
   }
 
   const rawPath = window.location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
-  const rawHash = window.location.hash.toLowerCase().replace(/^#\/?/, '');
+  const rawHash = (window.location.hash || '').toLowerCase().replace(/^#\/?/, '').replace(/\/+$/, '');
 
-  // 1. Check direct pathnames for Services
-  if (rawPath === '/services' || rawPath.startsWith('/services/') || rawHash === 'services' || rawHash.startsWith('service-')) {
+  // Determine effective route string (hash is primary source of truth)
+  let effectiveRoute = rawHash;
+
+  // Fallback / migration: If someone lands on a direct pathname (e.g. /services/social),
+  // migrate it immediately to a hash route so subsequent browser refreshes will never 404!
+  if (!effectiveRoute && rawPath !== '/' && rawPath !== '/index.html') {
+    effectiveRoute = rawPath.replace(/^\/+/, '');
+    window.history.replaceState({ route: `#/${effectiveRoute}` }, '', `/#/${effectiveRoute}`);
+  }
+
+  // 1. Root / Home
+  if (!effectiveRoute || effectiveRoute === 'home' || effectiveRoute === '/') {
+    return { view: 'home', section: 'home', pricingCategory: 'all' };
+  }
+
+  // 2. Services routes: #/services, #/services/:id, #/service-:id
+  if (effectiveRoute === 'services' || effectiveRoute.startsWith('services/') || effectiveRoute.startsWith('service-')) {
     let srvId = 'social';
-    if (rawPath.startsWith('/services/')) {
-      srvId = rawPath.replace('/services/', '');
-    } else if (rawHash.startsWith('service-')) {
-      srvId = rawHash.replace('service-', '');
+    if (effectiveRoute.startsWith('services/')) {
+      srvId = effectiveRoute.replace('services/', '').split('/')[0] || 'social';
+    } else if (effectiveRoute.startsWith('service-')) {
+      srvId = effectiveRoute.replace('service-', '').split('/')[0] || 'social';
     }
+    if (srvId === 'services') srvId = 'social';
     return { view: 'services', section: `service-${srvId}`, pricingCategory: 'all', serviceId: srvId };
   }
-  if (rawPath === '/industries' || rawPath.startsWith('/industries/') || rawHash === 'industries' || rawHash.startsWith('industry-')) {
+
+  // 3. Industries routes: #/industries, #/industries/:id, #/industry-:id
+  if (effectiveRoute === 'industries' || effectiveRoute.startsWith('industries/') || effectiveRoute.startsWith('industry-')) {
     let indId = 'hospitality';
-    if (rawPath.startsWith('/industries/')) {
-      indId = rawPath.replace('/industries/', '');
-    } else if (rawHash.startsWith('industry-')) {
-      indId = rawHash.replace('industry-', '');
+    if (effectiveRoute.startsWith('industries/')) {
+      indId = effectiveRoute.replace('industries/', '').split('/')[0] || 'hospitality';
+    } else if (effectiveRoute.startsWith('industry-')) {
+      indId = effectiveRoute.replace('industry-', '').split('/')[0] || 'hospitality';
     }
+    if (indId === 'industries') indId = 'hospitality';
     return { view: 'industries', section: `industry-${indId}`, pricingCategory: 'all', industryId: indId };
   }
-  if (rawPath === '/pricing/web' || rawHash === 'pricing-web') {
+
+  // 4. Pricing routes: #/pricing, #/pricing/web, #/pricing/social, etc.
+  if (effectiveRoute === 'pricing/web' || effectiveRoute === 'pricing-web') {
     return { view: 'custom-package', section: 'pricing', pricingCategory: 'all' };
   }
-  if (rawPath === '/pricing' || rawPath.startsWith('/pricing/') || rawHash.startsWith('pricing')) {
+  if (effectiveRoute === 'pricing' || effectiveRoute.startsWith('pricing/') || effectiveRoute.startsWith('pricing-')) {
     let cat: 'all' | 'social' | 'seo' | 'ppc' = 'social';
-    if (rawPath === '/pricing/social' || rawHash === 'pricing-social') cat = 'social';
-    else if (rawPath === '/pricing/seo' || rawHash === 'pricing-seo') cat = 'seo';
-    else if (rawPath === '/pricing/ppc' || rawHash === 'pricing-ppc') cat = 'ppc';
+    if (effectiveRoute === 'pricing/social' || effectiveRoute === 'pricing-social') cat = 'social';
+    else if (effectiveRoute === 'pricing/seo' || effectiveRoute === 'pricing-seo') cat = 'seo';
+    else if (effectiveRoute === 'pricing/ppc' || effectiveRoute === 'pricing-ppc') cat = 'ppc';
+    else if (effectiveRoute === 'pricing/all') cat = 'all';
     return { view: 'pricing', section: 'pricing', pricingCategory: cat };
   }
-  if (rawPath === '/contact' || rawHash === 'contact') {
-    return { view: 'contact', section: 'contact', pricingCategory: 'all' };
-  }
-  if (rawPath === '/free-audit' || rawHash === 'free-audit' || rawHash === 'audit') {
-    return { view: 'free-audit', section: 'audit', pricingCategory: 'all' };
-  }
-  if (rawPath === '/custom-package' || rawHash === 'custom-package' || rawHash === 'pricing-custom') {
+
+  // 5. Custom Package Builder: #/custom-package, #/pricing-custom
+  if (effectiveRoute === 'custom-package' || effectiveRoute === 'pricing-custom') {
     return { view: 'custom-package', section: 'pricing', pricingCategory: 'all' };
   }
-  if (rawPath === '/privacy-policy' || rawHash === 'privacy-policy') {
+
+  // 6. Free Audit: #/free-audit, #/audit
+  if (effectiveRoute === 'free-audit' || effectiveRoute === 'audit-page') {
+    return { view: 'free-audit', section: 'audit', pricingCategory: 'all' };
+  }
+
+  // 7. Contact: #/contact
+  if (effectiveRoute === 'contact') {
+    return { view: 'contact', section: 'contact', pricingCategory: 'all' };
+  }
+
+  // 8. Legal pages
+  if (effectiveRoute === 'privacy-policy') {
     return { view: 'privacy-policy', section: 'privacy-policy', pricingCategory: 'all' };
   }
-  if (rawPath === '/terms-of-use' || rawHash === 'terms-of-use') {
+  if (effectiveRoute === 'terms-of-use') {
     return { view: 'terms-of-use', section: 'terms-of-use', pricingCategory: 'all' };
   }
 
-  // Home section anchors (e.g. /#solutions, /#process, /#faq)
-  if (rawHash) {
-    return { view: 'home', section: rawHash, pricingCategory: 'all' };
-  }
-
-  return { view: 'home', section: 'home', pricingCategory: 'all' };
+  // 9. In-page home section anchors (e.g. #/solutions, #/process, #/faq, #/audit)
+  return { view: 'home', section: effectiveRoute, pricingCategory: 'all' };
 };
 
 export default function App() {
@@ -163,22 +179,24 @@ export default function App() {
   const [selectedSolution, setSelectedSolution] = useState<SolutionItem | null>(null);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
 
-  // Sync URL when navigating to a view/path
-  const updateUrlPath = (targetPath: string, replace = false) => {
+  // Sync URL hash when navigating (HashRouter strategy protects against 404s on refresh)
+  const updateUrlHash = (targetRoute: string, replace = false) => {
     if (typeof window === 'undefined') return;
-    const currentFull = window.location.pathname + (window.location.hash ? window.location.hash : '');
-    if (currentFull !== targetPath) {
+    const cleanRoute = targetRoute.replace(/^#\/?/, '').replace(/^\/+/, '');
+    const targetHash = cleanRoute ? `#/${cleanRoute}` : '#/';
+
+    if (window.location.hash !== targetHash) {
       if (replace) {
-        window.history.replaceState({ path: targetPath }, '', targetPath);
+        window.history.replaceState({ route: targetHash }, '', targetHash);
       } else {
-        window.history.pushState({ path: targetPath }, '', targetPath);
+        window.history.pushState({ route: targetHash }, '', targetHash);
       }
     }
   };
 
-  // Listen to browser Back and Forward navigation buttons
+  // Listen to browser Back, Forward, and Hash change events
   useEffect(() => {
-    const handlePopState = () => {
+    const handleRouteChange = () => {
       const route = parseRouteFromLocation();
       setCurrentView(route.view);
       setActiveSection(route.section);
@@ -199,8 +217,12 @@ export default function App() {
       }
     };
 
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('popstate', handleRouteChange);
+    window.addEventListener('hashchange', handleRouteChange);
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+      window.removeEventListener('hashchange', handleRouteChange);
+    };
   }, []);
 
   // Initial scroll if mounted with hash on homepage
@@ -233,10 +255,12 @@ export default function App() {
     setMetaTag('meta[name="description"]', 'name', 'description', meta.description);
     setMetaTag('meta[name="keywords"]', 'name', 'keywords', meta.keywords);
 
-    // Update OpenGraph tags
+    // Update OpenGraph tags with hash route
     setMetaTag('meta[property="og:title"]', 'property', 'og:title', meta.title);
     setMetaTag('meta[property="og:description"]', 'property', 'og:description', meta.description);
-    const currentUrl = `https://acesosolutions.co.ke${window.location.pathname}`;
+    const currentUrl = typeof window !== 'undefined'
+      ? `https://acesosolutions.co.ke/${window.location.hash ? window.location.hash : ''}`
+      : 'https://acesosolutions.co.ke/';
     setMetaTag('meta[property="og:url"]', 'property', 'og:url', currentUrl);
 
     // Update Twitter Card tags
@@ -254,12 +278,12 @@ export default function App() {
     canonicalLink.setAttribute('href', currentUrl);
   }, [currentView]);
 
-  // Smooth scroll & view navigation handler with browser URL sync
+  // Smooth scroll & view navigation handler with browser URL hash sync
   const scrollToSection = (sectionId: string) => {
     if (sectionId === 'custom-package' || sectionId === 'pricing-custom') {
       setCurrentView('custom-package');
       setActiveSection('pricing');
-      updateUrlPath('/custom-package');
+      updateUrlHash('/custom-package');
       window.scrollTo(0, 0);
       return;
     }
@@ -274,7 +298,7 @@ export default function App() {
       setSelectedServiceId(targetServiceId);
       setCurrentView('services');
       setActiveSection(`service-${targetServiceId}`);
-      updateUrlPath(`/services/${targetServiceId}`);
+      updateUrlHash(`/services/${targetServiceId}`);
       window.scrollTo(0, 0);
       return;
     }
@@ -289,7 +313,7 @@ export default function App() {
       setSelectedIndustryId(targetIndId);
       setCurrentView('industries');
       setActiveSection(`industry-${targetIndId}`);
-      updateUrlPath(`/industries/${targetIndId}`);
+      updateUrlHash(`/industries/${targetIndId}`);
       window.scrollTo(0, 0);
       return;
     }
@@ -297,24 +321,24 @@ export default function App() {
     if (sectionId === 'pricing-web') {
       setCurrentView('custom-package');
       setActiveSection('pricing');
-      updateUrlPath('/custom-package');
+      updateUrlHash('/custom-package');
       window.scrollTo(0, 0);
       return;
     }
 
     if (sectionId === 'pricing' || sectionId === 'pricing-social' || sectionId === 'pricing-seo' || sectionId === 'pricing-ppc') {
+      let cat: 'all' | 'social' | 'seo' | 'ppc' = 'social';
       if (sectionId === 'pricing-social') {
-        setPricingCategory('social');
+        cat = 'social';
       } else if (sectionId === 'pricing-seo') {
-        setPricingCategory('seo');
+        cat = 'seo';
       } else if (sectionId === 'pricing-ppc') {
-        setPricingCategory('ppc');
-      } else {
-        setPricingCategory('social');
+        cat = 'ppc';
       }
+      setPricingCategory(cat);
       setCurrentView('pricing');
       setActiveSection(sectionId);
-      updateUrlPath('/pricing');
+      updateUrlHash(`/pricing/${cat}`);
       window.scrollTo(0, 0);
       return;
     }
@@ -322,7 +346,7 @@ export default function App() {
     if (sectionId === 'contact') {
       setCurrentView('contact');
       setActiveSection('contact');
-      updateUrlPath('/contact');
+      updateUrlHash('/contact');
       window.scrollTo(0, 0);
       return;
     }
@@ -330,7 +354,7 @@ export default function App() {
     if (sectionId === 'free-audit' || sectionId === 'audit-page') {
       setCurrentView('free-audit');
       setActiveSection('audit');
-      updateUrlPath('/free-audit');
+      updateUrlHash('/free-audit');
       window.scrollTo(0, 0);
       return;
     }
@@ -338,7 +362,7 @@ export default function App() {
     if (sectionId === 'privacy-policy') {
       setCurrentView('privacy-policy');
       setActiveSection('privacy-policy');
-      updateUrlPath('/privacy-policy');
+      updateUrlHash('/privacy-policy');
       window.scrollTo(0, 0);
       return;
     }
@@ -346,7 +370,7 @@ export default function App() {
     if (sectionId === 'terms-of-use') {
       setCurrentView('terms-of-use');
       setActiveSection('terms-of-use');
-      updateUrlPath('/terms-of-use');
+      updateUrlHash('/terms-of-use');
       window.scrollTo(0, 0);
       return;
     }
@@ -354,7 +378,7 @@ export default function App() {
     if (sectionId === 'home') {
       setCurrentView('home');
       setActiveSection('home');
-      updateUrlPath('/');
+      updateUrlHash('/');
       window.scrollTo(0, 0);
       return;
     }
@@ -362,13 +386,13 @@ export default function App() {
     // Navigating to in-page section on home (e.g. solutions, process, faq, audit)
     if (currentView !== 'home') {
       setCurrentView('home');
-      updateUrlPath(`/#${sectionId}`);
+      updateUrlHash(`/${sectionId}`);
       window.scrollTo(0, 0);
       setTimeout(() => {
         performScroll(sectionId);
       }, 50);
     } else {
-      updateUrlPath(`/#${sectionId}`);
+      updateUrlHash(`/${sectionId}`);
       performScroll(sectionId);
     }
   };
@@ -395,42 +419,41 @@ export default function App() {
   const handleOpenCustomPackagePage = () => {
     setCurrentView('custom-package');
     setActiveSection('pricing');
-    updateUrlPath('/custom-package');
+    updateUrlHash('/custom-package');
     window.scrollTo(0, 0);
   };
 
   const handleBackToHome = () => {
     setCurrentView('home');
     setActiveSection('home');
-    updateUrlPath('/');
+    updateUrlHash('/');
     window.scrollTo(0, 0);
   };
 
   const handleRequestAudit = () => {
     setCurrentView('free-audit');
     setActiveSection('audit');
-    updateUrlPath('/free-audit');
+    updateUrlHash('/free-audit');
     window.scrollTo(0, 0);
   };
 
   const handleSelectPackageForAudit = (pkgName: string) => {
     setCurrentView('free-audit');
     setActiveSection('audit');
-    updateUrlPath('/free-audit');
+    updateUrlHash('/free-audit');
     window.scrollTo(0, 0);
   };
 
   const handleSolutionToAudit = (solutionTitle: string) => {
     setCurrentView('free-audit');
     setActiveSection('audit');
-    updateUrlPath('/free-audit');
+    updateUrlHash('/free-audit');
     window.scrollTo(0, 0);
   };
 
   return (
     <>
-      <Suspense fallback={<PageLoadingFallback />}>
-        {currentView === 'custom-package' && (
+      {currentView === 'custom-package' && (
           <CustomPackagePage 
             onBackToHome={handleBackToHome}
             onRequestAudit={handleRequestAudit}
@@ -452,7 +475,7 @@ export default function App() {
             onSelectService={(id) => {
               setSelectedServiceId(id);
               setActiveSection(`service-${id}`);
-              updateUrlPath(`/services/${id}`);
+              updateUrlHash(`/services/${id}`);
               window.scrollTo(0, 0);
             }}
             onBackToHome={handleBackToHome}
@@ -468,7 +491,7 @@ export default function App() {
             onSelectIndustry={(id) => {
               setSelectedIndustryId(id);
               setActiveSection(`industry-${id}`);
-              updateUrlPath(`/industries/${id}`);
+              updateUrlHash(`/industries/${id}`);
               window.scrollTo(0, 0);
             }}
             onBackToHome={handleBackToHome}
@@ -510,7 +533,6 @@ export default function App() {
             onNavigate={scrollToSection}
           />
         )}
-      </Suspense>
 
       {currentView === 'home' && (
         <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
@@ -556,24 +578,22 @@ export default function App() {
           />
 
           {/* Modals & Drawers */}
-          <Suspense fallback={null}>
-            <PackageDetailsModal
-              pkg={selectedPackage}
-              onClose={() => setSelectedPackage(null)}
-              onSelectPackageForAudit={handleSelectPackageForAudit}
-            />
+          <PackageDetailsModal
+            pkg={selectedPackage}
+            onClose={() => setSelectedPackage(null)}
+            onSelectPackageForAudit={handleSelectPackageForAudit}
+          />
 
-            <SolutionDetailsModal
-              solution={selectedSolution}
-              onClose={() => setSelectedSolution(null)}
-              onRequestAuditForSolution={handleSolutionToAudit}
-            />
+          <SolutionDetailsModal
+            solution={selectedSolution}
+            onClose={() => setSelectedSolution(null)}
+            onRequestAuditForSolution={handleSolutionToAudit}
+          />
 
-            <LeadDetailsModal
-              isOpen={isLeadModalOpen}
-              onClose={() => setIsLeadModalOpen(false)}
-            />
-          </Suspense>
+          <LeadDetailsModal
+            isOpen={isLeadModalOpen}
+            onClose={() => setIsLeadModalOpen(false)}
+          />
 
         </div>
       )}
