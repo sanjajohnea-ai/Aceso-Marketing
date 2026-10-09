@@ -24,8 +24,8 @@ import { LeadDetailsModal } from './components/LeadDetailsModal';
 // SEO Page Metadata Configuration
 const pageMetadata = {
   home: {
-    title: 'Aceso Solutions | Digital Marketing, Ads & Automation for SMEs',
-    description: 'Digital solutions that drive real growth for small and medium-sized businesses. Essential, Growth & Business packages with social media, paid ads, and automation.',
+    title: 'Aceso Solutions | Digital Marketing Agency in Kenya',
+    description: 'Looking to grow your business online? Aceso Solutions helps Kenyan SMEs attract customers through social media marketing, SEO, Google Ads, Meta Ads, and marketing automation.',
     keywords: 'digital marketing agency Kenya, social media management Nairobi, Meta ads Kenya, TikTok ads Nairobi, WhatsApp business automation, SEO services Nairobi, SME marketing solutions, customer acquisition agency, conversion rate optimization, Aceso Solutions'
   },
   'custom-package': {
