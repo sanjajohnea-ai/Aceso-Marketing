@@ -31,7 +31,7 @@ export const processStepsData: ProcessStepItem[] = [
 
 export const Process: React.FC = () => {
   return (
-    <section id="how-it-works" className="py-8 sm:py-12 lg:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <section id="process" className="py-8 sm:py-12 lg:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full scroll-mt-20">
       
       {/* Section Header */}
       <div className="text-left mb-6 sm:mb-8 w-full">

@@ -627,7 +627,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       />
 
       {/* 2. MAIN DEDICATED SERVICE PAGE WORKSPACE */}
-      <main className="flex-1 pt-6 sm:pt-10 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-12 sm:space-y-16">
+      <main className="flex-1 pt-5 sm:pt-8 pb-12 sm:pb-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8 sm:space-y-10">
         
         <AnimatePresence mode="wait">
           <motion.div
@@ -636,19 +636,19 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-12 sm:space-y-16"
+            className="space-y-8 sm:space-y-10"
           >
             {/* HERO SECTION */}
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-6">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
                 <span className="text-[#1D63ED]">{activeService.title}</span>
               </h1>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
                 {/* Hero Visual Image (With Caption Overlay) - Left side on desktop */}
                 {activeService.heroImage && (
                   <div className="lg:col-span-6">
-                    <div className="relative rounded-2xl overflow-hidden bg-slate-900 w-full h-[320px] sm:h-[380px] lg:h-[420px] shadow-md border border-slate-200/80">
+                    <div className="relative rounded-2xl overflow-hidden bg-slate-900 w-full h-[260px] sm:h-[320px] lg:h-[360px] shadow-md border border-slate-200/80">
                       <img 
                         src={activeService.heroImage} 
                         alt={activeService.title} 
@@ -693,8 +693,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </div>
 
             {/* CORE SUB-SERVICES & PILLARS */}
-            <div className="space-y-8">
-              <div className="space-y-3 max-w-3xl">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="space-y-2.5 max-w-3xl">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
                   What We Deliver in <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">{activeService.title}</span>
                 </h2>
@@ -703,11 +703,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
                 {activeService.subServices.map((sub, idx) => (
                   <div 
                     key={idx} 
-                    className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-5 shadow-2xs hover:border-slate-300 transition-all flex flex-col justify-between"
+                    className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-4 shadow-2xs hover:border-slate-300 transition-all flex flex-col justify-between"
                   >
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">
@@ -744,7 +744,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </div>
 
             {/* 1. KEY BUSINESS BENEFITS (Dedicated full-width section) */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6 shadow-2xs">
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 lg:p-7 space-y-5 shadow-2xs">
               <div className="flex items-center gap-3">
                 <TrendingUp className="w-6 h-6 text-[#C25E00]" />
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-900 uppercase tracking-wide">
@@ -753,13 +753,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
               </div>
 
               {/* Dedicated Benefit Content and Visual Display */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-7 space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div className="lg:col-span-7 space-y-3.5">
                   <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
                     {activeService.benefitsParagraph}
                   </p>
                   
-                  <ul className="space-y-3 pt-2">
+                  <ul className="space-y-2.5 pt-1">
                     {activeService.keyBenefits.map((benefit, idx) => (
                       <li key={idx} className="flex items-start gap-3">
                         <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
@@ -781,7 +781,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                       loading="lazy"
                       decoding="async"
                       referrerPolicy="no-referrer"
-                      className="w-full h-64 sm:h-72 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-56 sm:h-64 lg:h-72 object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4 sm:p-5">
                       <div>
@@ -799,8 +799,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </div>
 
             {/* 2. STRATEGIC PERFORMANCE TRACKING KPIS (Dedicated full-width section) */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6 shadow-2xs">
-              <div className="border-b border-slate-200 pb-5">
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 lg:p-7 space-y-5 shadow-2xs">
+              <div className="border-b border-slate-200 pb-4">
                 <div className="flex items-center gap-3">
                   <BarChart3 className="w-6 h-6 text-[#1D63ED]" />
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 uppercase tracking-wide">
@@ -809,11 +809,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 pt-1">
                 {activeService.kpis.map((kpi, idx) => (
                   <div 
                     key={idx}
-                    className="bg-slate-50/90 border border-slate-200 rounded-xl p-5 space-y-3.5 flex flex-col justify-between"
+                    className="bg-slate-50/90 border border-slate-200 rounded-xl p-4 sm:p-4.5 space-y-3 flex flex-col justify-between"
                   >
                     <div>
                       <span className="text-base font-bold text-slate-900 leading-snug">
@@ -836,7 +836,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
             {/* 3. FREQUENTLY ASKED QUESTIONS SECTION */}
             {activeService.faqs && activeService.faqs.length > 0 && (
-              <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 lg:p-10 space-y-6 shadow-2xs">
+              <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 lg:p-7 space-y-5 shadow-2xs">
                 <div className="border-b border-slate-200 pb-4">
                   <div className="flex items-center gap-3">
                     <HelpCircle className="w-6 h-6 text-[#DE8E53]" />

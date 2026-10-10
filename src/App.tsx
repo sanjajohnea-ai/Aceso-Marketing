@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BrandLogos } from './components/BrandLogos';
-import { Solutions } from './components/Solutions';
 import { Process } from './components/Process';
+import { Solutions } from './components/Solutions';
 import { HomeFAQ } from './components/HomeFAQ';
-import { AuditSection } from './components/AuditSection';
 import { Footer } from './components/Footer';
 import { MobileBottomBar } from './components/MobileBottomBar';
 import { PackageItem, SolutionItem } from './types';
@@ -14,6 +13,7 @@ import { FreeAuditPage } from './components/FreeAuditPage';
 import { ServicesPage } from './components/ServicesPage';
 import { IndustriesPage } from './components/IndustriesPage';
 import { PricingPage } from './components/PricingPage';
+import { PortfolioPage } from './components/PortfolioPage';
 import { ContactPage } from './components/ContactPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfUsePage } from './components/TermsOfUsePage';
@@ -53,6 +53,11 @@ const pageMetadata = {
     description: 'Transparent pricing for Web Design, Social Media Marketing, SEO, and PPC Advertising designed for small and growing enterprises.',
     keywords: 'digital marketing prices Kenya, social media management cost Nairobi, web design pricing Kenya, SEO packages Nairobi, PPC advertising management fees, affordable SME marketing packages'
   },
+  portfolio: {
+    title: 'Our Work | Real Campaigns & Tangible Results | Aceso Solutions',
+    description: 'Explore verified client case studies, social media content, and high-converting ad campaigns created for businesses across Kenya by Aceso Solutions.',
+    keywords: 'digital marketing portfolio Kenya, SME case studies Nairobi, social media campaigns Kenya, video content Kenya, marketing agency work Nairobi'
+  },
   contact: {
     title: 'Contact Us | Aceso Solutions',
     description: 'Get in touch with Aceso Solutions. Discuss your digital marketing, SEO, paid ads, web design, and automation goals with our growth strategy team.',
@@ -71,7 +76,7 @@ const pageMetadata = {
 };
 
 // Helper to parse current view and state from URL using HashRouter strategy
-type PageView = 'home' | 'custom-package' | 'free-audit' | 'services' | 'industries' | 'pricing' | 'contact' | 'privacy-policy' | 'terms-of-use';
+type PageView = 'home' | 'custom-package' | 'free-audit' | 'services' | 'industries' | 'pricing' | 'portfolio' | 'contact' | 'privacy-policy' | 'terms-of-use';
 
 const parseRouteFromLocation = (): {
   view: PageView;
@@ -149,7 +154,12 @@ const parseRouteFromLocation = (): {
     return { view: 'free-audit', section: 'audit', pricingCategory: 'all' };
   }
 
-  // 7. Contact: #/contact
+  // 7. Our Work / Portfolio: #/our-work, #/work, #/portfolio, #/portolio
+  if (effectiveRoute === 'portfolio' || effectiveRoute === 'our-work' || effectiveRoute === 'work' || effectiveRoute === 'portolio') {
+    return { view: 'portfolio', section: 'portfolio', pricingCategory: 'all' };
+  }
+
+  // 8. Contact: #/contact
   if (effectiveRoute === 'contact') {
     return { view: 'contact', section: 'contact', pricingCategory: 'all' };
   }
@@ -343,6 +353,14 @@ export default function App() {
       return;
     }
 
+    if (sectionId === 'portfolio' || sectionId === 'our-work' || sectionId === 'work' || sectionId === 'portolio') {
+      setCurrentView('portfolio');
+      setActiveSection('portfolio');
+      updateUrlHash('/our-work');
+      window.scrollTo(0, 0);
+      return;
+    }
+
     if (sectionId === 'contact') {
       setCurrentView('contact');
       setActiveSection('contact');
@@ -510,6 +528,14 @@ export default function App() {
           />
         )}
 
+        {currentView === 'portfolio' && (
+          <PortfolioPage 
+            onBackToHome={handleBackToHome}
+            onRequestAudit={handleRequestAudit}
+            onNavigate={scrollToSection}
+          />
+        )}
+
         {currentView === 'contact' && (
           <ContactPage 
             onBackToHome={handleBackToHome}
@@ -550,22 +576,26 @@ export default function App() {
             <Hero 
               onRequestAudit={handleRequestAudit}
               onOpenLeadModal={() => setIsLeadModalOpen(true)}
+              onNavigate={scrollToSection}
             />
 
-            {/* Core Solutions (3 Pillars) - White Background */}
-            <Solutions 
-              onSelectSolution={(sol) => setSelectedSolution(sol)}
-              onViewAllServices={() => scrollToSection('services')}
-            />
-
-            {/* Brand Logos (Moved below Core Solutions & Animated) */}
+            {/* Brand Logos (Platform Partners Tech Stack) */}
             <BrandLogos />
 
-            {/* 5-Step Process */}
+            {/* How We Work Process */}
             <Process />
 
-            {/* Dark Navy Growth Audit / Contact Section */}
-            <AuditSection />
+            {/* 3D Rotating Services Carousel */}
+            <Solutions 
+              onSelectSolution={(solution) => setSelectedSolution(solution)}
+              onSelectService={(serviceId) => scrollToSection(`service-${serviceId}`)}
+              onRequestAudit={handleRequestAudit}
+              onOpenLeadModal={() => setIsLeadModalOpen(true)}
+            />
+
+            {/* Scroll Anchors for Audit and Contact */}
+            <div id="audit" className="scroll-mt-20" />
+            <div id="contact" className="scroll-mt-20" />
 
             {/* Frequently Asked Questions */}
             <HomeFAQ />

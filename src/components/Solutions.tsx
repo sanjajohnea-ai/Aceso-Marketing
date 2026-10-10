@@ -1,241 +1,447 @@
-import React from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { SolutionItem } from '../types';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  Video, 
+  Target, 
+  Globe, 
+  Search, 
+  MessageSquare, 
+  ChevronLeft, 
+  ChevronRight 
+} from 'lucide-react';
 
-interface SolutionsProps {
-  onSelectSolution?: (solution: SolutionItem) => void;
-  onViewAllServices?: () => void;
+export interface ServiceCardItem {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+  tags: string;
+  detailedPoints: string[];
 }
 
-export const solutionsData: SolutionItem[] = [
+export const servicesData: ServiceCardItem[] = [
   {
-    id: 'acquisition',
-    stepNumber: '01',
-    title: 'Customer Acquisition',
-    description: 'Bring more paying customers to your business.',
-    iconType: 'acquisition',
-    badgeColor: 'text-blue-600',
-    iconBg: 'bg-blue-50 text-blue-600',
-    checkColor: 'text-blue-600 bg-blue-50',
-    items: [
-      'Social media marketing',
-      'Google & Facebook ads',
-      'Google Maps & SEO',
-      'Simple landing pages',
-      'Fast lead generation',
-      'Direct phone inquiries'
-    ],
-    detailedDescription: 'We help you attract new customers using Facebook, Instagram, Google ads, and local search. We turn online attention into real phone calls, messages, and paying customers.',
-    deliverables: [
-      'Setting up and managing your Google and Meta ads',
-      'Designing fast, simple pages that encourage people to book or call',
-      'Helping your business show up on Google Maps and search results',
-      'Writing clear ad words and creating eye-catching pictures and videos',
-      'Tracking where your calls, messages, and sales come from'
-    ],
-    caseStudyHighlight: 'Helped a Nairobi logistics company get 180% more inquiries within 60 days.'
+    id: 'social-media',
+    title: 'Social Media Marketing',
+    description: 'High-converting short-form video Reels, TikToks, branded graphics, and community engagement to grow your audience.',
+    icon: Video,
+    tags: 'REELS · TIKTOKS · BRAND GRAPHICS',
+    detailedPoints: [
+      'High-converting short-form video Reels & TikTok production',
+      'Custom branded graphics and visual social identity',
+      'Content calendar and active daily community DM management'
+    ]
   },
   {
-    id: 'reactivation',
-    stepNumber: '02',
-    title: 'Customer Reactivation',
-    description: 'Bring back past customers so they buy from you again.',
-    iconType: 'reactivation',
-    badgeColor: 'text-emerald-600',
-    iconBg: 'bg-emerald-50 text-emerald-600',
-    checkColor: 'text-emerald-600 bg-emerald-50',
-    items: [
-      'WhatsApp messages',
-      'Friendly SMS reminders',
-      'Quick customer follow-ups',
-      'Reconnecting with past clients',
-      'Special loyalty offers',
-      'Collecting 5-star Google reviews'
-    ],
-    detailedDescription: 'It is easier to sell to people who already know you. We send friendly WhatsApp messages, SMS, and emails to your past clients so they book appointments and buy from you again.',
-    deliverables: [
-      'Sending helpful WhatsApp updates and offers to past customers',
-      'Quick SMS reminders for special deals and seasonal bookings',
-      'Automated follow-ups when someone asks for a price but does not finish booking',
-      'Simple systems to gather happy 5-star Google reviews',
-      'Special perks and reward messages for loyal customers'
-    ],
-    caseStudyHighlight: 'Generated KSh 1.2M in sales from past clients with a single helpful WhatsApp campaign.'
+    id: 'google-meta-ads',
+    title: 'Google & Meta Ads (PPC)',
+    description: 'High-intent Google Search campaigns and Facebook & Instagram lead ads to capture customers ready to buy right now.',
+    icon: Target,
+    tags: 'GOOGLE SEARCH · META ADS · HIGH ROAS',
+    detailedPoints: [
+      'High-intent Google Search campaigns for active buyers',
+      'Targeted Facebook & Instagram lead generation ads',
+      'Click-to-WhatsApp direct ads with conversion tracking'
+    ]
   },
   {
-    id: 'automation',
-    stepNumber: '03',
-    title: 'Marketing Automation',
-    description: 'Save time by letting smart tools handle repetitive daily tasks.',
-    iconType: 'automation',
-    badgeColor: 'text-purple-600',
-    iconBg: 'bg-purple-50 text-purple-600',
-    checkColor: 'text-purple-600 bg-purple-50',
-    items: [
-      'Lead tracking tools',
-      'Instant chat replies',
-      'Appointment reminders',
-      'Connecting your daily apps',
-      'Simple weekly reports',
-      'Less manual admin work'
-    ],
-    detailedDescription: 'We connect your website, WhatsApp, and calendar. When a new person reaches out, they get an instant reply, an automatic reminder before their appointment, and your team never loses their phone number.',
-    deliverables: [
-      'One simple place to see all your new leads and customer phone numbers',
-      'Automatic WhatsApp and SMS reminders to stop missed appointments',
-      'Instant friendly replies when someone asks about your services',
-      'Connecting your website forms straight to your phone or team chat',
-      'A clear weekly report showing your new calls, bookings, and revenue'
-    ],
-    caseStudyHighlight: 'Cut missed appointments by 85% and reduced reply time from 4 hours to 45 seconds.'
+    id: 'web-development',
+    title: 'Web Design & Development',
+    description: 'Fast, mobile-optimized business websites and dedicated landing pages with 1-tap WhatsApp and call triggers.',
+    icon: Globe,
+    tags: 'SUB-2S SPEED · MOBILE-FIRST · WHATSAPP',
+    detailedPoints: [
+      'Sub-2-second load times on Kenyan mobile networks',
+      'Prominent 1-tap WhatsApp triggers and direct call actions',
+      'Conversion-optimized landing pages and sales funnels'
+    ]
+  },
+  {
+    id: 'seo',
+    title: 'Search Engine Optimization (SEO)',
+    description: 'Top 3 Google Maps ranking, local citations, and on-page optimization to drive qualified organic local traffic.',
+    icon: Search,
+    tags: 'GOOGLE MAPS · LOCAL SEO · TOP 3',
+    detailedPoints: [
+      'Google Business Profile top-3 Maps pack optimization',
+      'High-intent local keywords and commercial search terms',
+      'On-page technical fixes and localized reputation signals'
+    ]
+  },
+  {
+    id: 'whatsapp-automation',
+    title: 'WhatsApp Marketing & Automation',
+    description: '24/7 automated instant chatbot replies, menu flows, appointment confirmations, and CRM lead capture.',
+    icon: MessageSquare,
+    tags: '24/7 CHATBOT · APPOINTMENTS · CRM',
+    detailedPoints: [
+      '24/7 automated WhatsApp greetings and interactive menu flows',
+      'Automated appointment bookings and reminder sequences',
+      'Lead capture instantly synced to your phone and team'
+    ]
   }
 ];
 
-export const Solutions: React.FC<SolutionsProps> = ({ 
-  onSelectSolution, 
-  onViewAllServices
+interface SolutionsProps {
+  onSelectService?: (serviceId: string) => void;
+  onSelectSolution?: (solution: any) => void;
+  onRequestAudit?: () => void;
+  onOpenLeadModal?: () => void;
+  onViewAllServices?: () => void;
+}
+
+export const Solutions: React.FC<SolutionsProps> = ({
+  onSelectService,
+  onRequestAudit,
+  onOpenLeadModal
 }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [activeModalItem, setActiveModalItem] = useState<ServiceCardItem | null>(null);
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const total = servicesData.length;
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % total);
+  }, [total]);
+
+  const handlePrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + total) % total);
+  }, [total]);
+
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (!isHovered) {
+      timerRef.current = setInterval(() => {
+        handleNext();
+      }, 3000);
+    }
+  }, [isHovered, handleNext]);
+
+  useEffect(() => {
+    if (isHovered) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+    timerRef.current = setInterval(() => {
+      handleNext();
+    }, 3000);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isHovered, handleNext]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) handleNext();
+      else handlePrev();
+      resetTimer();
+    }
+  };
+
+  const handleCardClick = (index: number, item: ServiceCardItem) => {
+    if (index !== currentIndex) {
+      setCurrentIndex(index);
+      resetTimer();
+    } else {
+      onSelectService?.(item.id);
+      setActiveModalItem(item);
+    }
+  };
+
+  const handleLearnMore = (e: React.MouseEvent, item: ServiceCardItem) => {
+    e.stopPropagation();
+    onSelectService?.(item.id);
+    setActiveModalItem(item);
+  };
+
   return (
-    <section id="services" className="relative w-full overflow-hidden bg-white text-slate-900 py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 border-y border-slate-100">
-      
-      {/* Subtle ambient warm light gradient */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-50/40 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-orange-50/30 rounded-full blur-3xl pointer-events-none -z-10" />
+    <section
+      id="services"
+      className="relative w-full overflow-hidden bg-[#0B132B] py-8 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80 scroll-mt-20 select-none text-white"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Background Decorative Grids and Radial Glows */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-25"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(222, 142, 83, 0.08) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(222, 142, 83, 0.08) 1px, transparent 1px)
+          `,
+          backgroundSize: '54px 54px'
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_25%,#0B132B_85%)]" />
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[380px] pointer-events-none rounded-full blur-[100px] opacity-35"
+        style={{
+          background: 'radial-gradient(circle, rgba(222, 142, 83, 0.45) 0%, rgba(194, 94, 0, 0.25) 45%, transparent 75%)'
+        }}
+      />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        
-        {/* Section Header (Centered) */}
-        <div className="text-center mb-8 sm:mb-10 max-w-3xl mx-auto">
-          {/* Eyebrow */}
-          <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#C25E00] mb-3 sm:mb-4">
-            OUR CORE SOLUTIONS
+      <div className="relative max-w-7xl mx-auto w-full">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-1.5 sm:space-y-2">
+          <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#DE8E53] mb-1 sm:mb-1.5">
+            OUR SERVICES
           </p>
-
-          {/* Main Heading */}
-          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight leading-[1.18] mb-3 sm:mb-4">
-            Simple marketing. <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">Real business growth.</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-bold text-white tracking-tight leading-[1.2] mb-1.5 sm:mb-2">
+            Comprehensive digital solutions <br className="hidden sm:inline" />
+            tailored to your{' '}
+            <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">
+              business needs
+            </span>
           </h2>
-
-          {/* Subheading */}
-          <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-            We help you find new customers, bring back past clients, and save hours of manual work with easy automations.
+          <p className="text-slate-300 text-xs sm:text-sm lg:text-[15px] leading-relaxed max-w-2xl mx-auto font-normal">
+            From targeted customer acquisition to seamless conversions, our specialized marketing services deliver measurable growth for Kenyan businesses.
           </p>
         </div>
 
-        {/* 3 Core Solution Pillars with D-EDGE Hexagon Icons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mb-8 sm:mb-12">
-          
-          {/* 1. Customer Acquisition */}
-          <div 
-            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-[#FAF9F6] hover:bg-white border border-slate-200/90 hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/5"
-          >
-            {/* Hexagon with Search & Pin Icon */}
-            <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-              <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
-                <polygon
-                  points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
-                  className="fill-amber-50/80 stroke-[#DE8E53] stroke-[2.5] transition-colors group-hover:fill-amber-100/80"
-                />
-              </svg>
-              
-              {/* Custom Search + Location Pin Icon */}
-              <div className="absolute inset-0 flex items-center justify-center text-[#C25E00] group-hover:text-[#DE8E53] transition-colors">
-                <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="10.5" cy="10.5" r="7.5" />
-                  <line x1="21" y1="21" x2="15.8" y2="15.8" />
-                  <path d="M10.5 7.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" fill="currentColor" />
-                  <path d="M10.5 7.5v4" strokeWidth="1.5" />
-                </svg>
-              </div>
-            </div>
-
-            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
-              GET NEW CUSTOMERS
-            </h3>
-            <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              Reach people who are looking for your services right now and turn them into paying clients.
-            </p>
-          </div>
-
-          {/* 2. Customer Reactivation */}
-          <div 
-            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-[#FAF9F6] hover:bg-white border border-slate-200/90 hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/5"
-          >
-            {/* Hexagon with 2-Arrow Refresh Icon */}
-            <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-              <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
-                <polygon
-                  points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
-                  className="fill-amber-50/80 stroke-[#DE8E53] stroke-[2.5] transition-colors group-hover:fill-amber-100/80"
-                />
-              </svg>
-
-              {/* 2-Arrow Circular Loop Icon */}
-              <div className="absolute inset-0 flex items-center justify-center text-[#C25E00] group-hover:text-[#DE8E53] transition-colors">
-                <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                  <path d="M3 3v5h5" />
-                  <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-                  <path d="M16 21h5v-5" />
-                </svg>
-              </div>
-            </div>
-
-            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
-              BRING BACK PAST CLIENTS
-            </h3>
-            <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              Stay in touch with past clients through friendly messages so they return and buy from you again.
-            </p>
-          </div>
-
-          {/* 3. Marketing Automation */}
-          <div 
-            className="group flex flex-col items-center text-center p-6 sm:p-8 rounded-2xl transition-all duration-300 bg-[#FAF9F6] hover:bg-white border border-slate-200/90 hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/5"
-          >
-            {/* Hexagon with Cursor Pointer Icon */}
-            <div className="relative w-24 h-28 sm:w-28 sm:h-32 mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-              <svg viewBox="0 0 100 115.47" className="w-full h-full drop-shadow-sm">
-                <polygon
-                  points="50 2, 98 29.87, 98 85.6, 50 113.47, 2 85.6, 2 29.87"
-                  className="fill-amber-50/80 stroke-[#DE8E53] stroke-[2.5] transition-colors group-hover:fill-amber-100/80"
-                />
-              </svg>
-
-              {/* Cursor Mouse Arrow Icon */}
-              <div className="absolute inset-0 flex items-center justify-center text-[#C25E00] group-hover:text-[#DE8E53] transition-colors">
-                <svg className="w-9 h-9 sm:w-11 sm:h-11" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 3l7 18 3.5-7.5L21 10 3 3z" />
-                </svg>
-              </div>
-            </div>
-
-            <h3 className="text-base sm:text-lg font-black uppercase tracking-wider text-slate-900 mb-2.5 group-hover:text-[#C25E00] transition-colors">
-              SAVE TIME WITH AUTOMATION
-            </h3>
-            <p className="text-xs sm:text-[14px] text-slate-600 leading-relaxed font-normal max-w-xs">
-              Send instant replies, appointment reminders, and follow-ups on autopilot without extra staff.
-            </p>
-          </div>
-
-        </div>
-
-        {/* Action Button: VIEW OUR SERVICES */}
-        <div className="flex items-center justify-center">
+        {/* 3D Carousel Stage */}
+        <div className="relative w-full min-h-[390px] sm:min-h-[420px] lg:min-h-[430px] flex items-center justify-center">
+          {/* Prev Nav Button */}
           <button
             type="button"
-            onClick={onViewAllServices}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#0B132B] to-[#16223D] hover:from-[#121E3E] hover:to-[#223354] text-white border border-[#DE8E53]/40 font-bold text-sm sm:text-base uppercase tracking-wider shadow-md hover:shadow-lg hover:shadow-amber-500/10 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+            onClick={() => {
+              handlePrev();
+              resetTimer();
+            }}
+            aria-label="Previous service"
+            className="flex absolute left-2 sm:left-4 lg:left-6 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#DE8E53]/70 bg-[#0E1738]/90 backdrop-blur-md items-center justify-center text-[#DE8E53] hover:text-white hover:border-[#DE8E53] hover:scale-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(222,142,83,0.35)] group cursor-pointer"
           >
-            <span>VIEW OUR SERVICES</span>
-            <ArrowRight className="w-4 h-4 text-[#DE8E53] stroke-[2.5]" />
+            <ChevronLeft className="w-5 h-5 -translate-x-0.5 group-hover:-translate-x-1 transition-transform" />
           </button>
+
+          {/* Next Nav Button */}
+          <button
+            type="button"
+            onClick={() => {
+              handleNext();
+              resetTimer();
+            }}
+            aria-label="Next service"
+            className="absolute right-2 sm:right-4 lg:right-6 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#DE8E53]/80 bg-[#0E1738]/90 backdrop-blur-md flex items-center justify-center text-[#DE8E53] hover:text-white hover:border-[#DE8E53] hover:scale-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(222,142,83,0.4)] group cursor-pointer"
+          >
+            <ChevronRight className="w-5 h-5 translate-x-0.5 group-hover:translate-x-1 transition-transform" />
+          </button>
+
+          {/* Cards Container with 3D Perspective */}
+          <div className="relative w-full max-w-5xl h-[370px] sm:h-[400px] flex items-center justify-center perspective-[1200px]">
+            {servicesData.map((item, index) => {
+              let offset = (index - currentIndex) % total;
+              if (offset > total / 2) offset -= total;
+              if (offset < -total / 2) offset += total;
+
+              const isActive = offset === 0;
+              const isLeft = offset === -1;
+              const isRight = offset === 1;
+
+              let xPos = 0;
+              if (offset === -1) xPos = -220;
+              else if (offset === 1) xPos = 220;
+              else if (offset === -2) xPos = -420;
+              else if (offset === 2) xPos = 420;
+
+              let zIndex = 10;
+              if (isActive) zIndex = 30;
+              else if (isLeft || isRight) zIndex = 20;
+
+              let scale = 0.78;
+              let opacity = 0.45;
+              if (isActive) {
+                scale = 1.08;
+                opacity = 1;
+              } else if (isLeft || isRight) {
+                scale = 0.9;
+                opacity = 0.75;
+              }
+
+              const IconComp = item.icon;
+
+              return (
+                <motion.div
+                  key={item.id}
+                  onClick={() => handleCardClick(index, item)}
+                  animate={{ x: xPos, scale, opacity, zIndex }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 26, mass: 0.9 }}
+                  className={`absolute w-[280px] sm:w-[320px] md:w-[340px] h-[350px] sm:h-[380px] rounded-2xl cursor-pointer p-5 sm:p-6 flex flex-col items-center text-center justify-between transition-all duration-300 ${
+                    isActive
+                      ? 'bg-gradient-to-b from-[#1C2546]/95 via-[#111A3A]/95 to-[#0A1026]/98 border-2 border-[#DE8E53] shadow-[0_0_50px_10px_rgba(222,142,83,0.38)]'
+                      : isLeft || isRight
+                      ? 'bg-gradient-to-b from-[#141E3B]/80 to-[#0A1129]/85 border border-[#DE8E53]/35 backdrop-blur-md hover:border-[#DE8E53]/60'
+                      : 'bg-[#0E1630]/65 border border-slate-700/40 backdrop-blur-xs'
+                  }`}
+                  style={{ transformStyle: 'preserve-3d' }}
+                >
+                  {/* Top Icon Badge */}
+                  <div className="w-full flex justify-center pt-0.5">
+                    <div
+                      className={`w-13 h-13 sm:w-15 sm:h-15 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                        isActive
+                          ? 'border-2 border-[#DE8E53]/70 bg-gradient-to-br from-[#DE8E53]/15 to-transparent shadow-[0_0_20px_rgba(222,142,83,0.3)]'
+                          : 'border border-[#DE8E53]/30 bg-white/[0.03]'
+                      }`}
+                    >
+                      <IconComp className="w-6 h-6 sm:w-7 sm:h-7 text-white stroke-[1.75]" />
+                    </div>
+                  </div>
+
+                  {/* Text Content */}
+                  <div className="my-auto py-1">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-white tracking-tight leading-snug mb-1.5 sm:mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs sm:text-[13px] text-slate-300/90 leading-relaxed font-normal max-w-[260px] mx-auto line-clamp-3">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Bottom Learn More Action */}
+                  <div className="w-full pt-0.5">
+                    <button
+                      type="button"
+                      onClick={(e) => handleLearnMore(e, item)}
+                      className={`inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wide uppercase transition-colors duration-200 cursor-pointer ${
+                        isActive ? 'text-[#DE8E53] hover:text-[#E5A958]' : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      <span>Learn More</span>
+                      {isActive && <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
+                    </button>
+                  </div>
+
+                  {/* Subtle top glow bar on active card */}
+                  {isActive && (
+                    <div className="absolute inset-x-0 top-0 h-20 rounded-t-2xl bg-gradient-to-b from-[#DE8E53]/15 to-transparent pointer-events-none" />
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
+        {/* Carousel Indicators */}
+        <div className="mt-5 sm:mt-6 flex items-center justify-center gap-2.5">
+          {servicesData.map((item, index) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => {
+                setCurrentIndex(index);
+                resetTimer();
+              }}
+              aria-label={`Switch to ${item.title}`}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                currentIndex === index
+                  ? 'w-7 sm:w-8 bg-[#DE8E53] shadow-[0_0_10px_#DE8E53]'
+                  : 'w-2 bg-slate-700 hover:bg-slate-500'
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
+
+      {/* Interactive Detail Modal */}
+      <AnimatePresence>
+        {activeModalItem && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="relative w-full max-w-lg rounded-2xl bg-[#0F172E] border border-[#DE8E53]/40 p-6 sm:p-8 shadow-[0_0_60px_rgba(222,142,83,0.3)] text-left"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl border border-[#DE8E53]/50 bg-white/5 flex items-center justify-center">
+                    <activeModalItem.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-white tracking-tight">{activeModalItem.title}</h4>
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#DE8E53]">
+                      {activeModalItem.tags}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveModalItem(null)}
+                  className="w-8 h-8 rounded-full border border-slate-700 bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Description */}
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                {activeModalItem.description}
+              </p>
+
+              {/* What is Included */}
+              {activeModalItem.detailedPoints && (
+                <div className="space-y-3 mb-8">
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400">What is included:</p>
+                  {activeModalItem.detailedPoints.map((point, idx) => (
+                    <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E53] shrink-0 mt-1.5" />
+                      <span>{point}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveModalItem(null);
+                    if (onRequestAudit) {
+                      onRequestAudit();
+                    } else if (onOpenLeadModal) {
+                      onOpenLeadModal();
+                    } else {
+                      (document.getElementById('contact') || document.getElementById('audit'))?.scrollIntoView({
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
+                  className="flex-1 py-3 px-5 rounded-full bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] text-white font-bold text-sm shadow-[0_0_20px_rgba(222,142,83,0.4)] hover:brightness-110 transition-all text-center cursor-pointer"
+                >
+                  Get Started with this Service
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveModalItem(null)}
+                  className="py-3 px-5 rounded-full border border-slate-700 text-slate-300 hover:bg-slate-800 text-sm font-semibold transition-colors cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
-
-
