@@ -1,0 +1,442 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  X, 
+  Play, 
+  Layers, 
+  ExternalLink,
+  ArrowRight,
+  Heart,
+  MessageCircle,
+  Share2,
+  Bookmark
+} from 'lucide-react';
+import { PROJECTS, ProjectItem } from './PortfolioPage';
+
+interface HomePortfolioSectionProps {
+  onRequestAudit: () => void;
+  onNavigate: (sectionId: string) => void;
+  onCaseStudyChange?: (caseStudyId: string | null) => void;
+}
+
+export const HomePortfolioSection: React.FC<HomePortfolioSectionProps> = ({
+  onRequestAudit,
+  onNavigate,
+  onCaseStudyChange
+}) => {
+  const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
+  const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
+  const [cardSlideIndex, setCardSlideIndex] = useState<number>(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  // Auto-slide card preview on the main page every 3.2s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCardSlideIndex(prev => (prev + 1) % 4);
+    }, 3200);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Auto-slide modal carousel every 3.8s
+  useEffect(() => {
+    if (!activeModalProject?.carouselImages) return;
+    const interval = setInterval(() => {
+      setActiveSlideIndex(prev => (prev < activeModalProject.carouselImages!.length - 1 ? prev + 1 : 0));
+    }, 3800);
+    return () => clearInterval(interval);
+  }, [activeModalProject]);
+
+  // Handle keyboard ESC to close modal, and Arrow Left/Right to navigate carousel
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeProjectModal();
+      } else if (activeModalProject?.carouselImages && activeModalProject.carouselImages.length > 0) {
+        if (e.key === 'ArrowLeft') {
+          setActiveSlideIndex(prev => (prev > 0 ? prev - 1 : activeModalProject.carouselImages!.length - 1));
+        } else if (e.key === 'ArrowRight') {
+          setActiveSlideIndex(prev => (prev < activeModalProject.carouselImages!.length - 1 ? prev + 1 : 0));
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeModalProject]);
+
+  const openProjectModal = (project: ProjectItem) => {
+    setActiveModalProject(project);
+    setActiveSlideIndex(0);
+    if (onCaseStudyChange) {
+      onCaseStudyChange(project.id);
+    }
+  };
+
+  const closeProjectModal = () => {
+    setActiveModalProject(null);
+    if (onCaseStudyChange) {
+      onCaseStudyChange(null);
+    }
+  };
+
+  return (
+    <section id="our-work" className="relative py-16 sm:py-20 lg:py-24 bg-white border-b border-slate-200/80 overflow-hidden">
+      {/* Scroll anchor */}
+      <div id="portfolio" className="scroll-mt-24" />
+
+      {/* Subtle Warm Brown & Dark Blue Ambient Blob in Background */}
+      <div 
+        className="absolute top-0 right-0 w-96 sm:w-[500px] h-96 pointer-events-none z-0"
+        style={{
+          background: 'radial-gradient(circle at 85% 15%, rgba(133, 69, 25, 0.05) 0%, rgba(15, 41, 66, 0.04) 45%, rgba(255, 255, 255, 0) 70%)'
+        }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 sm:mb-12">
+          <div className="max-w-2xl">
+            <p className="text-xs sm:text-sm font-bold tracking-wider uppercase text-[#854519] mb-2 sm:mb-3">
+              OUR WORK
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-black text-[#0B1B2B] tracking-tight leading-[1.1] mb-3">
+              Real Campaigns.
+              <br />
+              Tangible Results.
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
+              From engaging social media video tours to high-impact educational NGO carousels, see how we bring brands to life across Kenya.
+            </p>
+          </div>
+
+          <div className="shrink-0">
+            <button
+              onClick={() => onNavigate('portfolio')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-100 hover:bg-[#0F2942] text-slate-800 hover:text-white text-xs sm:text-sm font-bold transition-all duration-200 shadow-2xs hover:shadow-md cursor-pointer group"
+            >
+              <span>Explore Full Portfolio</span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </button>
+          </div>
+        </div>
+
+        {/* 3 Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+          {PROJECTS.map((project) => (
+            <div
+              key={project.id}
+              className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col group"
+            >
+              {/* Thumbnail with Video Play Overlay / Carousel Overlay & Duration Badge */}
+              <div 
+                onClick={() => openProjectModal(project)}
+                className="relative aspect-video w-full overflow-hidden bg-slate-100 cursor-pointer select-none"
+              >
+                {project.carouselImages ? (
+                  <div className="w-full h-full overflow-hidden relative bg-[#EAE3D2]">
+                    <div 
+                      className="flex w-full h-full transition-transform duration-700 ease-out will-change-transform"
+                      style={{ transform: `translateX(-${cardSlideIndex * 100}%)` }}
+                    >
+                      {project.carouselImages.map((imgSrc, idx) => (
+                        <div key={idx} className="w-full h-full shrink-0 flex items-center justify-center bg-[#EAE3D2]">
+                          <img
+                            src={imgSrc}
+                            alt={`${project.title} slide ${idx + 1}`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Clickable slide indicators on card with mobile touch targets */}
+                    <div className="absolute bottom-2.5 left-2.5 z-20 flex items-center gap-1">
+                      {project.carouselImages.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCardSlideIndex(idx);
+                          }}
+                          className="p-1 cursor-pointer flex items-center justify-center min-w-[20px] min-h-[20px]"
+                          aria-label={`Slide ${idx + 1}`}
+                        >
+                          <span className={`block h-1.5 rounded-full transition-all duration-300 ${
+                            cardSlideIndex === idx ? 'w-4 bg-white shadow-xs' : 'w-1.5 bg-white/60 hover:bg-white'
+                          }`} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
+                )}
+
+                {/* Dark gradient for crisp overlay clarity */}
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors pointer-events-none" />
+
+                {/* Circular Action Button in Center */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/60 backdrop-blur-xs border-2 border-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#0F2942] group-hover:border-[#F2DECE] transition-all duration-300">
+                    {project.carouselImages ? (
+                      <Layers className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                    ) : (
+                      <Play className="w-5 h-5 sm:w-6 sm:h-6 text-white ml-0.5 fill-white" />
+                    )}
+                  </div>
+                </div>
+
+                {/* Top Left Carousel Badge if applicable */}
+                {project.carouselImages && (
+                  <div className="absolute left-2.5 top-2.5 px-2.5 py-0.5 rounded-md bg-[#0F2942]/90 backdrop-blur-xs text-white text-[11px] font-bold border border-white/20 flex items-center gap-1.5 shadow-sm">
+                    <Layers className="w-3 h-3 text-amber-300" />
+                    <span>Carousel</span>
+                  </div>
+                )}
+
+                {/* Bottom Right Duration / Slides Badge */}
+                <div className="absolute right-2.5 bottom-2.5 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-xs text-white text-[11px] sm:text-xs font-semibold tracking-wider tabular-nums shadow-xs pointer-events-none">
+                  {project.duration}
+                </div>
+              </div>
+
+              {/* Card Content Area */}
+              <div className="p-5 sm:p-6 flex-1 flex flex-col">
+                {/* Category Tags Row: Industry Tag Only */}
+                <div className="flex items-center gap-2 mb-2.5 flex-wrap">
+                  <span className="px-2.5 py-0.5 rounded-md bg-[#FDF6F0] text-[#854519] text-xs font-semibold border border-[#F2DECE]">
+                    {project.industry}
+                  </span>
+                </div>
+
+                {/* Card Title */}
+                <h3 
+                  onClick={() => openProjectModal(project)}
+                  className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-[#854519] transition-colors leading-snug mb-2 cursor-pointer line-clamp-2"
+                >
+                  {project.title}
+                </h3>
+
+                {/* Card Description */}
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal flex-1">
+                  {project.description}
+                </p>
+
+                {/* Performance Stats at the Bottom of Card */}
+                {project.socialStats && (
+                  <div className="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-700 bg-slate-50/80 -mx-5 -mb-5 sm:-mx-6 sm:-mb-6 px-4 sm:px-5 py-3 rounded-b-2xl">
+                    <div className="flex items-center gap-1.5 font-bold text-slate-800" title="Likes">
+                      <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
+                      <span>{project.socialStats.likes}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 font-bold text-slate-800" title="Comments">
+                      <MessageCircle className="w-3.5 h-3.5 fill-sky-100 text-sky-600" />
+                      <span>{project.socialStats.comments}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 font-bold text-slate-800" title="Shares">
+                      <Share2 className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>{project.socialStats.shares}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 font-bold text-slate-800" title="Bookmarks">
+                      <Bookmark className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      <span>{project.socialStats.bookmarks}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+
+      </div>
+
+      {/* Interactive Project Video & Details Modal */}
+      {activeModalProject && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={closeProjectModal}
+        >
+          <div 
+            className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-md bg-[#FDF6F0] text-[#854519] text-xs font-semibold border border-[#F2DECE]">
+                  {activeModalProject.industry}
+                </span>
+                <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+                  • <strong className="text-slate-700">{activeModalProject.client}</strong>
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={closeProjectModal}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
+                  aria-label="Close project modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body */}
+            <div className="overflow-y-auto flex-1 p-5 sm:p-7 space-y-6">
+              
+              {/* Photo Carousel for Ajenda Kenya */}
+              {activeModalProject.carouselImages && activeModalProject.carouselImages.length > 0 && (
+                <div className="space-y-4">
+                  {/* Carousel Main Stage with horizontal sliding track */}
+                  <div 
+                    className="relative aspect-square max-w-md sm:max-w-lg mx-auto rounded-2xl overflow-hidden bg-stone-900 shadow-xl border border-slate-300 group select-none cursor-grab active:cursor-grabbing"
+                    onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
+                    onTouchEnd={(e) => {
+                      if (touchStartX === null) return;
+                      const diff = touchStartX - e.changedTouches[0].clientX;
+                      const total = activeModalProject.carouselImages!.length;
+                      if (diff > 45) {
+                        setActiveSlideIndex(prev => (prev < total - 1 ? prev + 1 : 0));
+                      } else if (diff < -45) {
+                        setActiveSlideIndex(prev => (prev > 0 ? prev - 1 : total - 1));
+                      }
+                      setTouchStartX(null);
+                    }}
+                    onMouseDown={(e) => setTouchStartX(e.clientX)}
+                    onMouseUp={(e) => {
+                      if (touchStartX === null) return;
+                      const diff = touchStartX - e.clientX;
+                      const total = activeModalProject.carouselImages!.length;
+                      if (diff > 45) {
+                        setActiveSlideIndex(prev => (prev < total - 1 ? prev + 1 : 0));
+                      } else if (diff < -45) {
+                        setActiveSlideIndex(prev => (prev > 0 ? prev - 1 : total - 1));
+                      }
+                      setTouchStartX(null);
+                    }}
+                  >
+                    {/* Horizontal Sliding Track */}
+                    <div 
+                      className="flex w-full h-full transition-transform duration-500 ease-out will-change-transform"
+                      style={{ transform: `translateX(-${activeSlideIndex * 100}%)` }}
+                    >
+                      {activeModalProject.carouselImages.map((imgSrc, idx) => (
+                        <div key={idx} className="w-full h-full shrink-0 flex items-center justify-center bg-[#EAE3D2]">
+                          <img 
+                            src={imgSrc} 
+                            alt={`${activeModalProject.title} slide ${idx + 1}`} 
+                            className="w-full h-full object-contain pointer-events-none select-none"
+                            draggable={false}
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Top Right Live Post Link */}
+                    {activeModalProject.tiktokUrl && (
+                      <a 
+                        href={activeModalProject.tiktokUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute top-3 right-3 z-20 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black text-white text-xs font-semibold backdrop-blur-md border border-white/20 flex items-center gap-1.5 shadow-lg transition-all hover:scale-105 cursor-pointer"
+                        title="View Live Post on TikTok"
+                      >
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>Live Post</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-white/90" />
+                      </a>
+                    )}
+
+                    {/* Bottom Dots Indicator */}
+                    <div className="absolute bottom-3 inset-x-0 flex items-center justify-center gap-1 z-10 pointer-events-none">
+                      {activeModalProject.carouselImages.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveSlideIndex(idx);
+                          }}
+                          className="pointer-events-auto p-1.5 cursor-pointer flex items-center justify-center min-w-[28px] min-h-[28px]"
+                          aria-label={`Go to slide ${idx + 1}`}
+                        >
+                          <span className={`block h-2 rounded-full transition-all duration-300 ${
+                            activeSlideIndex === idx 
+                              ? 'w-7 bg-white shadow-sm' 
+                              : 'w-2 bg-white/50 hover:bg-white/80'
+                          }`} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Thumbnail Row */}
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 overflow-x-auto py-1">
+                    {activeModalProject.carouselImages.map((imgSrc, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveSlideIndex(idx)}
+                        className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shrink-0 ${
+                          activeSlideIndex === idx
+                            ? 'border-[#0F2942] ring-2 ring-[#0F2942]/20 scale-105 shadow-md'
+                            : 'border-slate-200 opacity-60 hover:opacity-100 hover:border-slate-400'
+                        }`}
+                      >
+                        <img 
+                          src={imgSrc} 
+                          alt={`Thumbnail ${idx + 1}`} 
+                          className="w-full h-full object-cover" 
+                        />
+                        <div className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[9px] font-bold text-center py-0.5">
+                          #{idx + 1}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                </div>
+              )}
+
+              {/* Embedded Vimeo Player matching user embed codes */}
+              {activeModalProject.vimeoEmbedUrl && (
+                <div className="space-y-3">
+                  <div className={`relative w-full ${activeModalProject.vimeoPadding?.startsWith('177') ? 'max-w-sm sm:max-w-md mx-auto' : 'mx-auto'} rounded-2xl overflow-hidden bg-black shadow-xl border border-slate-800`}>
+                    <div style={{ padding: activeModalProject.vimeoPadding || '56.25% 0 0 0', position: 'relative' }}>
+                      <iframe 
+                        src={activeModalProject.vimeoEmbedUrl}
+                        frameBorder="0" 
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                        referrerPolicy="strict-origin-when-cross-origin" 
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} 
+                        title={activeModalProject.vimeoTitle || activeModalProject.title}
+                        className="rounded-2xl"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Title & Description */}
+              <div>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-snug mb-2">
+                  {activeModalProject.title}
+                </h2>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  {activeModalProject.description}
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};

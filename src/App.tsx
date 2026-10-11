@@ -14,6 +14,7 @@ import { ServicesPage } from './components/ServicesPage';
 import { IndustriesPage } from './components/IndustriesPage';
 import { PricingPage } from './components/PricingPage';
 import { PortfolioPage } from './components/PortfolioPage';
+import { HomePortfolioSection } from './components/HomePortfolioSection';
 import { ContactPage } from './components/ContactPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfUsePage } from './components/TermsOfUsePage';
@@ -56,7 +57,7 @@ const pageMetadata = {
   portfolio: {
     title: 'Our Work | Real Campaigns & Tangible Results | Aceso Solutions',
     description: 'Explore verified client case studies, social media content, and high-converting ad campaigns created for businesses across Kenya by Aceso Solutions.',
-    keywords: 'digital marketing portfolio Kenya, SME case studies Nairobi, social media campaigns Kenya, video content Kenya, marketing agency work Nairobi'
+    keywords: 'digital marketing portfolio Kenya, SME case studies Nairobi, social media campaigns Kenya, social media content Kenya, marketing agency work Nairobi, client case studies Kenya'
   },
   contact: {
     title: 'Contact Us | Aceso Solutions',
@@ -75,6 +76,49 @@ const pageMetadata = {
   }
 };
 
+// SEO Metadata for Individual Client Case Studies (Dynamic Social Cards & SERP Rich Snippets)
+export const caseStudiesMetadata: Record<string, {
+  title: string;
+  description: string;
+  keywords: string;
+  image: string;
+  imageAlt: string;
+  ogType: string;
+  client: string;
+  industry: string;
+}> = {
+  'the-parkstay-hospitality': {
+    title: 'The Parkstay Vacation Stay Tour Case Study | Aceso Solutions',
+    description: 'How Aceso Solutions generated +142 direct bookings at Ksh 3,500/night (89% occupancy) for The Parkstay with high-impact social media video walkthroughs.',
+    keywords: 'The Parkstay case study, hospitality social media marketing Kenya, apartment video tour Nairobi, vacation rental marketing Nairobi, Airbnb video marketing Kenya, direct booking campaign Nairobi, Aceso Solutions',
+    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop',
+    imageAlt: 'The Parkstay Luxury Vacation Apartment Walkthrough Tour Case Study by Aceso Solutions',
+    ogType: 'article',
+    client: 'The Parkstay Luxury Stays',
+    industry: 'Hospitality'
+  },
+  'amazon-selection-bodywork': {
+    title: 'Amazon Selection Auto Works Video Case Study | Aceso Solutions',
+    description: 'How Aceso Solutions achieved a 62% watch rate and +84 collision repair jobs (KSh 65,000+ avg ticket) for Amazon Selection with cinematic process videos.',
+    keywords: 'Amazon Selection case study, automotive social media marketing Kenya, car repair video Nairobi, spray booth process video Kenya, auto body shop advertising Nairobi, Aceso Solutions',
+    image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop',
+    imageAlt: 'Amazon Selection Auto Works Car Spray Painting Process Video Case Study by Aceso Solutions',
+    ogType: 'article',
+    client: 'Amazon Selection Auto Works',
+    industry: 'Automotive'
+  },
+  'ajenda-kenya-id-advocacy': {
+    title: 'Ajenda Kenya #SiasaYaID NGO Comic Carousel Case Study | Aceso Solutions',
+    description: 'How Aceso Solutions created an educational Sheng comic carousel for Ajenda Kenya reaching 148k+ views, 5.3k likes, 225 comments, and 710 shares on TikTok.',
+    keywords: 'Ajenda Kenya case study, #SiasaYaID, NGO social media campaigns Kenya, youth advocacy content Nairobi, TikTok comic carousel Kenya, civic rights educational content, Aceso Solutions',
+    image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?q=80&w=1200&auto=format&fit=crop',
+    imageAlt: 'Ajenda Kenya #SiasaYaID Youth Advocacy Comic Carousel Case Study by Aceso Solutions',
+    ogType: 'article',
+    client: 'Ajenda Kenya',
+    industry: 'NGO'
+  }
+};
+
 // Helper to parse current view and state from URL using HashRouter strategy
 type PageView = 'home' | 'custom-package' | 'free-audit' | 'services' | 'industries' | 'pricing' | 'portfolio' | 'contact' | 'privacy-policy' | 'terms-of-use';
 
@@ -84,6 +128,7 @@ const parseRouteFromLocation = (): {
   pricingCategory: 'all' | 'social' | 'seo' | 'ppc';
   industryId?: string;
   serviceId?: string;
+  caseStudyId?: string;
 } => {
   if (typeof window === 'undefined') {
     return { view: 'home', section: 'home', pricingCategory: 'all', industryId: 'hospitality', serviceId: 'social' };
@@ -95,7 +140,7 @@ const parseRouteFromLocation = (): {
   // Determine effective route string (hash is primary source of truth)
   let effectiveRoute = rawHash;
 
-  // Fallback / migration: If someone lands on a direct pathname (e.g. /services/social),
+  // Fallback / migration: If someone lands on a direct pathname (e.g. /services/social or /our-work),
   // migrate it immediately to a hash route so subsequent browser refreshes will never 404!
   if (!effectiveRoute && rawPath !== '/' && rawPath !== '/index.html') {
     effectiveRoute = rawPath.replace(/^\/+/, '');
@@ -154,9 +199,28 @@ const parseRouteFromLocation = (): {
     return { view: 'free-audit', section: 'audit', pricingCategory: 'all' };
   }
 
-  // 7. Our Work / Portfolio: #/our-work, #/work, #/portfolio, #/portolio
-  if (effectiveRoute === 'portfolio' || effectiveRoute === 'our-work' || effectiveRoute === 'work' || effectiveRoute === 'portolio') {
-    return { view: 'portfolio', section: 'portfolio', pricingCategory: 'all' };
+  // 7. Our Work / Portfolio & Case Studies: #/our-work, #/work, #/portfolio, #/our-work/:caseStudyId
+  if (
+    effectiveRoute === 'portfolio' || 
+    effectiveRoute === 'our-work' || 
+    effectiveRoute === 'work' || 
+    effectiveRoute === 'portolio' ||
+    effectiveRoute.startsWith('portfolio/') ||
+    effectiveRoute.startsWith('our-work/') ||
+    effectiveRoute.startsWith('work/')
+  ) {
+    let csId: string | undefined;
+    if (effectiveRoute.startsWith('portfolio/')) {
+      csId = effectiveRoute.replace('portfolio/', '').split('/')[0];
+    } else if (effectiveRoute.startsWith('our-work/')) {
+      csId = effectiveRoute.replace('our-work/', '').split('/')[0];
+    } else if (effectiveRoute.startsWith('work/')) {
+      csId = effectiveRoute.replace('work/', '').split('/')[0];
+    }
+    if (csId === 'portfolio' || csId === 'our-work' || csId === 'work' || csId === '') {
+      csId = undefined;
+    }
+    return { view: 'portfolio', section: 'portfolio', pricingCategory: 'all', caseStudyId: csId };
   }
 
   // 8. Contact: #/contact
@@ -183,6 +247,7 @@ export default function App() {
   const [pricingCategory, setPricingCategory] = useState<'all' | 'social' | 'seo' | 'ppc'>(initialRoute.pricingCategory);
   const [selectedIndustryId, setSelectedIndustryId] = useState<string>(initialRoute.industryId || 'hospitality');
   const [selectedServiceId, setSelectedServiceId] = useState<string>(initialRoute.serviceId || 'social');
+  const [selectedCaseStudyId, setSelectedCaseStudyId] = useState<string | null>(initialRoute.caseStudyId || null);
   
   // Modal states
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
@@ -217,6 +282,11 @@ export default function App() {
       if (route.serviceId) {
         setSelectedServiceId(route.serviceId);
       }
+      if (route.caseStudyId !== undefined) {
+        setSelectedCaseStudyId(route.caseStudyId || null);
+      } else if (route.view !== 'portfolio') {
+        setSelectedCaseStudyId(null);
+      }
 
       if (route.view === 'home' && route.section && route.section !== 'home') {
         setTimeout(() => {
@@ -244,10 +314,25 @@ export default function App() {
     }
   }, []);
 
-  // Dynamic SEO meta tags update based on current page/view
+  // Dynamic SEO meta tags update based on current page/view & active case study
   useEffect(() => {
-    const meta = pageMetadata[currentView] || pageMetadata.home;
-    document.title = meta.title;
+    // Check if viewing an individual case study
+    const isCaseStudy = currentView === 'portfolio' && selectedCaseStudyId && caseStudiesMetadata[selectedCaseStudyId];
+    const caseStudyMeta = isCaseStudy ? caseStudiesMetadata[selectedCaseStudyId] : null;
+
+    const baseMeta = pageMetadata[currentView] || pageMetadata.home;
+    const title = caseStudyMeta ? caseStudyMeta.title : baseMeta.title;
+    const description = caseStudyMeta ? caseStudyMeta.description : baseMeta.description;
+    const keywords = caseStudyMeta ? caseStudyMeta.keywords : baseMeta.keywords;
+    const ogImage = caseStudyMeta 
+      ? caseStudyMeta.image 
+      : 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop';
+    const ogImageAlt = caseStudyMeta 
+      ? caseStudyMeta.imageAlt 
+      : 'Aceso Solutions Digital Marketing and Customer Acquisition Specialists';
+    const ogType = caseStudyMeta ? caseStudyMeta.ogType : 'website';
+
+    document.title = title;
 
     // Helper to safely set meta tag content
     const setMetaTag = (selector: string, attrName: string, attrValue: string, content: string) => {
@@ -261,22 +346,30 @@ export default function App() {
     };
 
     // Update primary meta tags
-    setMetaTag('meta[name="title"]', 'name', 'title', meta.title);
-    setMetaTag('meta[name="description"]', 'name', 'description', meta.description);
-    setMetaTag('meta[name="keywords"]', 'name', 'keywords', meta.keywords);
+    setMetaTag('meta[name="title"]', 'name', 'title', title);
+    setMetaTag('meta[name="description"]', 'name', 'description', description);
+    setMetaTag('meta[name="keywords"]', 'name', 'keywords', keywords);
 
-    // Update OpenGraph tags with hash route
-    setMetaTag('meta[property="og:title"]', 'property', 'og:title', meta.title);
-    setMetaTag('meta[property="og:description"]', 'property', 'og:description', meta.description);
+    // Dynamic canonical & OpenGraph URL
     const currentUrl = typeof window !== 'undefined'
       ? `https://acesosolutions.co.ke/${window.location.hash ? window.location.hash : ''}`
       : 'https://acesosolutions.co.ke/';
+
+    // Update OpenGraph tags
+    setMetaTag('meta[property="og:title"]', 'property', 'og:title', title);
+    setMetaTag('meta[property="og:description"]', 'property', 'og:description', description);
+    setMetaTag('meta[property="og:type"]', 'property', 'og:type', ogType);
     setMetaTag('meta[property="og:url"]', 'property', 'og:url', currentUrl);
+    setMetaTag('meta[property="og:image"]', 'property', 'og:image', ogImage);
+    setMetaTag('meta[property="og:image:alt"]', 'property', 'og:image:alt', ogImageAlt);
+    setMetaTag('meta[property="og:site_name"]', 'property', 'og:site_name', 'Aceso Solutions');
 
     // Update Twitter Card tags
-    setMetaTag('meta[property="twitter:title"]', 'property', 'twitter:title', meta.title);
-    setMetaTag('meta[property="twitter:description"]', 'property', 'twitter:description', meta.description);
+    setMetaTag('meta[property="twitter:title"]', 'property', 'twitter:title', title);
+    setMetaTag('meta[property="twitter:description"]', 'property', 'twitter:description', description);
+    setMetaTag('meta[property="twitter:image"]', 'property', 'twitter:image', ogImage);
     setMetaTag('meta[property="twitter:url"]', 'property', 'twitter:url', currentUrl);
+    setMetaTag('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
 
     // Update canonical link
     let canonicalLink = document.querySelector('link[rel="canonical"]');
@@ -286,7 +379,61 @@ export default function App() {
       document.head.appendChild(canonicalLink);
     }
     canonicalLink.setAttribute('href', currentUrl);
-  }, [currentView]);
+
+    // Dynamic JSON-LD Structured Data Schema for Active Case Study or Portfolio Page
+    let dynamicLd = document.getElementById('dynamic-case-study-ld') as HTMLScriptElement | null;
+    if (caseStudyMeta && selectedCaseStudyId) {
+      if (!dynamicLd) {
+        dynamicLd = document.createElement('script');
+        dynamicLd.id = 'dynamic-case-study-ld';
+        dynamicLd.type = 'application/ld+json';
+        document.head.appendChild(dynamicLd);
+      }
+      dynamicLd.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        'headline': title,
+        'name': title,
+        'description': description,
+        'image': ogImage,
+        'url': currentUrl,
+        'creator': {
+          '@type': 'Organization',
+          'name': 'Aceso Solutions',
+          'url': 'https://acesosolutions.co.ke'
+        },
+        'provider': {
+          '@type': 'Organization',
+          'name': caseStudyMeta.client
+        },
+        'genre': 'Social Media Content',
+        'keywords': keywords
+      });
+    } else if (currentView === 'portfolio') {
+      if (!dynamicLd) {
+        dynamicLd = document.createElement('script');
+        dynamicLd.id = 'dynamic-case-study-ld';
+        dynamicLd.type = 'application/ld+json';
+        document.head.appendChild(dynamicLd);
+      }
+      dynamicLd.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        'name': 'Our Work | Real Campaigns & Tangible Results | Aceso Solutions',
+        'description': baseMeta.description,
+        'url': 'https://acesosolutions.co.ke/#/our-work',
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'Aceso Solutions',
+          'url': 'https://acesosolutions.co.ke'
+        }
+      });
+    } else {
+      if (dynamicLd) {
+        dynamicLd.remove();
+      }
+    }
+  }, [currentView, selectedCaseStudyId]);
 
   // Smooth scroll & view navigation handler with browser URL hash sync
   const scrollToSection = (sectionId: string) => {
@@ -353,10 +500,37 @@ export default function App() {
       return;
     }
 
-    if (sectionId === 'portfolio' || sectionId === 'our-work' || sectionId === 'work' || sectionId === 'portolio') {
+    if (
+      sectionId === 'portfolio' || 
+      sectionId === 'our-work' || 
+      sectionId === 'work' || 
+      sectionId === 'portolio' ||
+      sectionId.startsWith('our-work/') ||
+      sectionId.startsWith('portfolio/')
+    ) {
+      let targetCsId: string | null = null;
+      if (sectionId.startsWith('our-work/')) {
+        targetCsId = sectionId.replace('our-work/', '').split('/')[0] || null;
+      } else if (sectionId.startsWith('portfolio/')) {
+        targetCsId = sectionId.replace('portfolio/', '').split('/')[0] || null;
+      }
+
+      if (currentView === 'home' && !targetCsId) {
+        const el = document.getElementById('our-work') || document.getElementById('portfolio');
+        if (el) {
+          const navOffset = 80;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          setActiveSection('portfolio');
+          updateUrlHash('/our-work');
+          return;
+        }
+      }
+      setSelectedCaseStudyId(targetCsId);
       setCurrentView('portfolio');
       setActiveSection('portfolio');
-      updateUrlHash('/our-work');
+      updateUrlHash(targetCsId ? `/our-work/${targetCsId}` : '/our-work');
       window.scrollTo(0, 0);
       return;
     }
@@ -533,6 +707,11 @@ export default function App() {
             onBackToHome={handleBackToHome}
             onRequestAudit={handleRequestAudit}
             onNavigate={scrollToSection}
+            initialCaseStudyId={selectedCaseStudyId}
+            onCaseStudyChange={(csId) => {
+              setSelectedCaseStudyId(csId);
+              updateUrlHash(csId ? `/our-work/${csId}` : '/our-work', true);
+            }}
           />
         )}
 
@@ -561,7 +740,7 @@ export default function App() {
         )}
 
       {currentView === 'home' && (
-        <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
+        <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-20 md:pb-0">
           
           {/* Navigation Bar */}
           <Navbar 
@@ -591,6 +770,16 @@ export default function App() {
               onSelectService={(serviceId) => scrollToSection(`service-${serviceId}`)}
               onRequestAudit={handleRequestAudit}
               onOpenLeadModal={() => setIsLeadModalOpen(true)}
+            />
+
+            {/* Featured Our Work Showcase */}
+            <HomePortfolioSection 
+              onRequestAudit={handleRequestAudit}
+              onNavigate={scrollToSection}
+              onCaseStudyChange={(csId) => {
+                setSelectedCaseStudyId(csId);
+                updateUrlHash(csId ? `/our-work/${csId}` : '/', true);
+              }}
             />
 
             {/* Scroll Anchors for Audit and Contact */}
@@ -628,8 +817,12 @@ export default function App() {
         </div>
       )}
 
-      {/* Persistent Mobile Bottom Bar for WhatsApp and Quick Audit */}
-      <MobileBottomBar onRequestAudit={handleRequestAudit} />
+      {/* Persistent Mobile Bottom Navigation Dock */}
+      <MobileBottomBar 
+        activeSection={activeSection}
+        onNavigate={scrollToSection}
+        onRequestAudit={handleRequestAudit} 
+      />
     </>
   );
 }

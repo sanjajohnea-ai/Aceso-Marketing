@@ -318,12 +318,11 @@ export const Solutions: React.FC<SolutionsProps> = ({
                     <button
                       type="button"
                       onClick={(e) => handleLearnMore(e, item)}
-                      className={`inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wide uppercase transition-colors duration-200 cursor-pointer ${
+                      className={`inline-flex items-center text-xs sm:text-sm font-semibold tracking-wide uppercase transition-colors duration-200 cursor-pointer ${
                         isActive ? 'text-[#DE8E53] hover:text-[#E5A958]' : 'text-slate-400 hover:text-slate-200'
                       }`}
                     >
                       <span>Learn More</span>
-                      {isActive && <ChevronRight className="w-3.5 h-3.5 ml-0.5" />}
                     </button>
                   </div>
 

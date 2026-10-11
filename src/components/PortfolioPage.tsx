@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { 
   X, 
   Play,
-  Pause,
-  ChevronLeft,
-  ChevronRight,
   Layers,
   ExternalLink,
   Heart,
@@ -29,6 +26,8 @@ interface PortfolioPageProps {
   onBackToHome: () => void;
   onRequestAudit: () => void;
   onNavigate: (sectionId: string) => void;
+  initialCaseStudyId?: string | null;
+  onCaseStudyChange?: (caseStudyId: string | null) => void;
 }
 
 export interface SocialStats {
@@ -40,7 +39,7 @@ export interface SocialStats {
   views?: string;
 }
 
-interface ProjectItem {
+export interface ProjectItem {
   id: string;
   title: string;
   client: string;
@@ -67,7 +66,7 @@ interface ProjectItem {
   };
 }
 
-const PROJECTS: ProjectItem[] = [
+export const PROJECTS: ProjectItem[] = [
   {
     id: 'the-parkstay-hospitality',
     title: 'The Parkstay – Apartment & Vacation Stay Tour',
@@ -81,7 +80,7 @@ const PROJECTS: ProjectItem[] = [
     vimeoTitle: 'IMG_0310',
     vimeoPadding: '177.78% 0 0 0',
     description: "We produced an engaging social media video tour showcasing the modern bedroom suite, ocean-view balcony, fitted kitchen, and guest swimming pool to drive direct bookings at Ksh 3,500/night.",
-    filterCategories: ['All', 'Social Media Content', 'Video Content'],
+    filterCategories: ['All', 'Social Media Content'],
     metrics: [
       { label: 'Direct Bookings', value: '+142 nights booked' },
       { label: 'Avg Rate & Occupancy', value: 'KSh 3,500/night (89% occupancy)' },
@@ -104,7 +103,7 @@ const PROJECTS: ProjectItem[] = [
     title: 'Amazon Selection -  Car Painting Process',
     client: 'Amazon Selection Auto Works',
     industry: 'Automotive',
-    contentType: 'Video Content',
+    contentType: 'Social Media Content',
     duration: '1:03',
     durationSeconds: 63,
     image: workAmazonAutoWorks,
@@ -112,7 +111,7 @@ const PROJECTS: ProjectItem[] = [
     vimeoTitle: 'Car Painting Process',
     vimeoPadding: '56.25% 0 0 0',
     description: "We produced an in-depth video showing the vehicle repair and professional car painting process at Amazon Selection Auto Works, showcasing expert bodywork preparation and spray booth finish.",
-    filterCategories: ['All', 'Video Content', 'Social Media Content'],
+    filterCategories: ['All', 'Social Media Content'],
     metrics: [
       { label: 'Video Completion Rate', value: '62% full watch' },
       { label: 'Collision Quotes', value: '+84 repair jobs' },
@@ -132,10 +131,10 @@ const PROJECTS: ProjectItem[] = [
   },
   {
     id: 'ajenda-kenya-id-advocacy',
-    title: 'Ajenda Kenya – #SiasaYaID Youth Advocacy Carousel',
+    title: 'Ajenda Kenya – #SiasaYaID NGO Carousel',
     client: 'Ajenda Kenya',
-    industry: 'Youth Advocacy',
-    contentType: 'Social Media Carousel',
+    industry: 'NGO',
+    contentType: 'Social Media Content',
     duration: '4 Slides',
     durationSeconds: 0,
     image: ajendaSlide1,
@@ -152,7 +151,7 @@ const PROJECTS: ProjectItem[] = [
       'Slide 4: Youth solidarity & frustration – "Next week tena? Si ni miezi mitatu sai bro?"'
     ],
     tiktokUrl: 'https://www.tiktok.com/@ajendakenya/photo/7494226891407101190?image_index=2&is_from_webapp=1',
-    description: "Created for Ajenda Kenya, an NGO for youth advocacy. This 4-part illustrated educational comic carousel enlightens young people on how to apply for an ID, navigating delays, and standing against extortion (#SiasaYaID).",
+    description: "Created for Ajenda Kenya, an NGO. This 4-part illustrated educational comic carousel enlightens young people on how to apply for an ID, navigating delays, and standing against extortion (#SiasaYaID).",
     filterCategories: ['All', 'Social Media Content'],
     socialStats: {
       platform: 'tiktok',
@@ -184,21 +183,40 @@ const PROJECTS: ProjectItem[] = [
 
 const FILTER_TABS = [
   'All',
-  'Social Media Content',
-  'Video Content'
+  'Social Media Content'
 ];
 
 export const PortfolioPage: React.FC<PortfolioPageProps> = ({
   onBackToHome,
   onRequestAudit,
-  onNavigate
+  onNavigate,
+  initialCaseStudyId,
+  onCaseStudyChange
 }) => {
   const [activeTab, setActiveTab] = useState<string>('All');
-  const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
+  const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(() => {
+    if (initialCaseStudyId) {
+      return PROJECTS.find(p => p.id === initialCaseStudyId) || null;
+    }
+    return null;
+  });
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
   const [isAutoSliding, setIsAutoSliding] = useState<boolean>(true);
   const [cardSlideIndex, setCardSlideIndex] = useState<number>(0);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  // Sync modal when initialCaseStudyId changes from outer URL / navigation
+  useEffect(() => {
+    if (initialCaseStudyId) {
+      const match = PROJECTS.find(p => p.id === initialCaseStudyId);
+      if (match) {
+        setActiveModalProject(match);
+        setActiveSlideIndex(0);
+      }
+    } else {
+      setActiveModalProject(null);
+    }
+  }, [initialCaseStudyId]);
 
   // Auto-slide modal carousel every 3.8s when enabled
   useEffect(() => {
@@ -226,7 +244,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setActiveModalProject(null);
+        closeProjectModal();
       } else if (activeModalProject?.carouselImages && activeModalProject.carouselImages.length > 0) {
         if (e.key === 'ArrowLeft') {
           setActiveSlideIndex(prev => (prev > 0 ? prev - 1 : activeModalProject.carouselImages!.length - 1));
@@ -243,10 +261,20 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
     setActiveModalProject(project);
     setActiveSlideIndex(0);
     setIsAutoSliding(true);
+    if (onCaseStudyChange) {
+      onCaseStudyChange(project.id);
+    }
+  };
+
+  const closeProjectModal = () => {
+    setActiveModalProject(null);
+    if (onCaseStudyChange) {
+      onCaseStudyChange(null);
+    }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-800">
+    <div className="min-h-screen flex flex-col bg-white text-slate-800 pb-20 md:pb-0">
       {/* Top Navigation */}
       <Navbar 
         activeSection="portfolio"
@@ -384,30 +412,9 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                           ))}
                         </div>
 
-                        {/* Interactive sliding arrows on hover */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCardSlideIndex(prev => (prev > 0 ? prev - 1 : project.carouselImages!.length - 1));
-                          }}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/65 hover:bg-black/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 cursor-pointer shadow-md"
-                          aria-label="Previous slide"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCardSlideIndex(prev => (prev < project.carouselImages!.length - 1 ? prev + 1 : 0));
-                          }}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/65 hover:bg-black/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 cursor-pointer shadow-md"
-                          aria-label="Next slide"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
 
-                        {/* Clickable slide indicators on card */}
-                        <div className="absolute bottom-2.5 left-2.5 z-20 flex items-center gap-1.5">
+                        {/* Clickable slide indicators on card with mobile touch targets */}
+                        <div className="absolute bottom-2.5 left-2.5 z-20 flex items-center gap-1">
                           {project.carouselImages.map((_, idx) => (
                             <button
                               key={idx}
@@ -415,11 +422,13 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                                 e.stopPropagation();
                                 setCardSlideIndex(idx);
                               }}
-                              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                                cardSlideIndex === idx ? 'w-4 bg-white shadow-xs' : 'w-1.5 bg-white/60 hover:bg-white'
-                              }`}
+                              className="p-1 cursor-pointer flex items-center justify-center min-w-[20px] min-h-[20px]"
                               aria-label={`Slide ${idx + 1}`}
-                            />
+                            >
+                              <span className={`block h-1.5 rounded-full transition-all duration-300 ${
+                                cardSlideIndex === idx ? 'w-4 bg-white shadow-xs' : 'w-1.5 bg-white/60 hover:bg-white'
+                              }`} />
+                            </button>
                           ))}
                         </div>
                       </div>
@@ -556,7 +565,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
       {activeModalProject && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setActiveModalProject(null)}
+          onClick={closeProjectModal}
         >
           <div 
             className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] flex flex-col"
@@ -577,7 +586,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
               </div>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setActiveModalProject(null)}
+                  onClick={closeProjectModal}
                   className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
                   aria-label="Close project modal"
                 >
@@ -639,73 +648,23 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                       ))}
                     </div>
 
-                    {/* Top Left Slide Indicator & Auto-slide toggle */}
-                    <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
-                      <div className="px-3 py-1 rounded-full bg-black/75 backdrop-blur-md text-white text-xs font-bold border border-white/20 shadow-md">
-                        Slide {activeSlideIndex + 1} of {activeModalProject.carouselImages.length}
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsAutoSliding(!isAutoSliding);
-                        }}
-                        className="px-2.5 py-1 rounded-full bg-black/75 hover:bg-black/90 backdrop-blur-md text-white text-xs font-semibold border border-white/20 flex items-center gap-1.5 shadow-md cursor-pointer transition-colors"
-                        title={isAutoSliding ? "Pause auto-slide" : "Start auto-slide"}
-                      >
-                        {isAutoSliding ? (
-                          <>
-                            <Pause className="w-3 h-3 fill-current text-amber-300" />
-                            <span className="text-[11px]">Sliding</span>
-                          </>
-                        ) : (
-                          <>
-                            <Play className="w-3 h-3 fill-current text-white" />
-                            <span className="text-[11px]">Play</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Top Right TikTok Badge */}
+                    {/* Top Right Live Post Link */}
                     {activeModalProject.tiktokUrl && (
                       <a 
                         href={activeModalProject.tiktokUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full bg-black/75 hover:bg-black text-white text-xs font-medium border border-white/20 flex items-center gap-1.5 shadow-md transition-colors cursor-pointer"
+                        className="absolute top-3 right-3 z-20 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black text-white text-xs font-semibold backdrop-blur-md border border-white/20 flex items-center gap-1.5 shadow-lg transition-all hover:scale-105 cursor-pointer"
+                        title="View Live Post on TikTok"
                       >
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>TikTok Live Post</span>
-                        <ExternalLink className="w-3 h-3" />
+                        <span>Live Post</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-white/90" />
                       </a>
                     )}
 
-                    {/* Previous Button */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveSlideIndex(prev => (prev > 0 ? prev - 1 : activeModalProject.carouselImages!.length - 1));
-                      }}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all shadow-lg hover:scale-110 cursor-pointer z-20"
-                      aria-label="Previous slide"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-
-                    {/* Next Button */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveSlideIndex(prev => (prev < activeModalProject.carouselImages!.length - 1 ? prev + 1 : 0));
-                      }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all shadow-lg hover:scale-110 cursor-pointer z-20"
-                      aria-label="Next slide"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-
                     {/* Bottom Dots Indicator */}
-                    <div className="absolute bottom-3 inset-x-0 flex items-center justify-center gap-2 z-10 pointer-events-none">
+                    <div className="absolute bottom-3 inset-x-0 flex items-center justify-center gap-1 z-10 pointer-events-none">
                       {activeModalProject.carouselImages.map((_, idx) => (
                         <button
                           key={idx}
@@ -713,13 +672,15 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                             e.stopPropagation();
                             setActiveSlideIndex(idx);
                           }}
-                          className={`pointer-events-auto h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                          className="pointer-events-auto p-1.5 cursor-pointer flex items-center justify-center min-w-[28px] min-h-[28px]"
+                          aria-label={`Go to slide ${idx + 1}`}
+                        >
+                          <span className={`block h-2 rounded-full transition-all duration-300 ${
                             activeSlideIndex === idx 
                               ? 'w-7 bg-white shadow-sm' 
                               : 'w-2 bg-white/50 hover:bg-white/80'
-                          }`}
-                          aria-label={`Go to slide ${idx + 1}`}
-                        />
+                          }`} />
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -748,80 +709,6 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                     ))}
                   </div>
 
-                  {/* Slide Context Narrative / Caption */}
-                  {activeModalProject.carouselCaptions && activeModalProject.carouselCaptions[activeSlideIndex] && (
-                    <div className="p-3 sm:p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/80 text-amber-950 text-xs sm:text-sm">
-                      <span className="font-bold text-amber-900 mr-1.5">Slide Insight:</span>
-                      {activeModalProject.carouselCaptions[activeSlideIndex]}
-                    </div>
-                  )}
-
-                  {/* Performance Stats at the Bottom of Carousel */}
-                  {activeModalProject.socialStats && (
-                    <div className="rounded-2xl bg-[#0B1B2B] text-white p-4 sm:p-5 border border-slate-800 shadow-xl">
-                      <div className="flex items-center justify-between pb-3 mb-3.5 border-b border-white/10">
-                        <div className="flex items-center gap-2">
-                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                          <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-200">
-                            Post Performance Stats
-                          </h4>
-                        </div>
-                        <span className="text-[11px] font-medium text-slate-400">
-                          TikTok Live Engagement
-                        </span>
-                      </div>
-
-                      {/* 4 Performance Metric Cards: Only Icons and Numbers */}
-                      <div className="grid grid-cols-4 gap-2 sm:gap-3 text-center">
-                        {/* 5.3k Likes */}
-                        <div className="rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 p-2.5 sm:p-3 transition-colors flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
-                          <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-rose-500 text-rose-500 shrink-0" />
-                          <span className="text-base sm:text-lg font-black text-white tracking-tight">
-                            {activeModalProject.socialStats.likes}
-                          </span>
-                        </div>
-
-                        {/* 225 Comments */}
-                        <div className="rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 p-2.5 sm:p-3 transition-colors flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
-                          <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 fill-sky-500 text-sky-400 shrink-0" />
-                          <span className="text-base sm:text-lg font-black text-white tracking-tight">
-                            {activeModalProject.socialStats.comments}
-                          </span>
-                        </div>
-
-                        {/* 710 Shares */}
-                        <div className="rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 p-2.5 sm:p-3 transition-colors flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
-                          <Share2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
-                          <span className="text-base sm:text-lg font-black text-white tracking-tight">
-                            {activeModalProject.socialStats.shares}
-                          </span>
-                        </div>
-
-                        {/* 177 Bookmarks */}
-                        <div className="rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 p-2.5 sm:p-3 transition-colors flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2">
-                          <Bookmark className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-400 text-amber-400 shrink-0" />
-                          <span className="text-base sm:text-lg font-black text-white tracking-tight">
-                            {activeModalProject.socialStats.bookmarks}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Link out to live TikTok post */}
-                  {activeModalProject.tiktokUrl && (
-                    <div className="flex justify-center pt-1">
-                      <a
-                        href={activeModalProject.tiktokUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F2942] hover:bg-[#0A1B2C] text-white text-xs sm:text-sm font-bold transition-all shadow-md hover:scale-[1.02] cursor-pointer"
-                      >
-                        <span>View Live Post on TikTok (@ajendakenya)</span>
-                        <ExternalLink className="w-4 h-4 ml-0.5" />
-                      </a>
-                    </div>
-                  )}
                 </div>
               )}
 
