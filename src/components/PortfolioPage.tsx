@@ -274,7 +274,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-800 pb-20 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-white text-slate-800">
       {/* Top Navigation */}
       <Navbar 
         activeSection="portfolio"
@@ -413,8 +413,8 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                         </div>
 
 
-                        {/* Clickable slide indicators on card with mobile touch targets */}
-                        <div className="absolute bottom-2.5 left-2.5 z-20 flex items-center gap-1">
+                        {/* Clickable slide indicators on card */}
+                        <div className="absolute bottom-2.5 left-2.5 z-20 flex items-center gap-1.5">
                           {project.carouselImages.map((_, idx) => (
                             <button
                               key={idx}
@@ -422,13 +422,11 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                                 e.stopPropagation();
                                 setCardSlideIndex(idx);
                               }}
-                              className="p-1 cursor-pointer flex items-center justify-center min-w-[20px] min-h-[20px]"
-                              aria-label={`Slide ${idx + 1}`}
-                            >
-                              <span className={`block h-1.5 rounded-full transition-all duration-300 ${
+                              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                                 cardSlideIndex === idx ? 'w-4 bg-white shadow-xs' : 'w-1.5 bg-white/60 hover:bg-white'
-                              }`} />
-                            </button>
+                              }`}
+                              aria-label={`Slide ${idx + 1}`}
+                            />
                           ))}
                         </div>
                       </div>
@@ -664,7 +662,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                     )}
 
                     {/* Bottom Dots Indicator */}
-                    <div className="absolute bottom-3 inset-x-0 flex items-center justify-center gap-1 z-10 pointer-events-none">
+                    <div className="absolute bottom-3 inset-x-0 flex items-center justify-center gap-2 z-10 pointer-events-none">
                       {activeModalProject.carouselImages.map((_, idx) => (
                         <button
                           key={idx}
@@ -672,15 +670,13 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({
                             e.stopPropagation();
                             setActiveSlideIndex(idx);
                           }}
-                          className="pointer-events-auto p-1.5 cursor-pointer flex items-center justify-center min-w-[28px] min-h-[28px]"
-                          aria-label={`Go to slide ${idx + 1}`}
-                        >
-                          <span className={`block h-2 rounded-full transition-all duration-300 ${
+                          className={`pointer-events-auto h-2 rounded-full transition-all duration-300 cursor-pointer ${
                             activeSlideIndex === idx 
                               ? 'w-7 bg-white shadow-sm' 
                               : 'w-2 bg-white/50 hover:bg-white/80'
-                          }`} />
-                        </button>
+                          }`}
+                          aria-label={`Go to slide ${idx + 1}`}
+                        />
                       ))}
                     </div>
                   </div>

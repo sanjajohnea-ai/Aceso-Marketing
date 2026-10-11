@@ -740,7 +740,7 @@ export default function App() {
         )}
 
       {currentView === 'home' && (
-        <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-20 md:pb-0">
+        <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white pb-16 md:pb-0">
           
           {/* Navigation Bar */}
           <Navbar 
@@ -817,12 +817,8 @@ export default function App() {
         </div>
       )}
 
-      {/* Persistent Mobile Bottom Navigation Dock */}
-      <MobileBottomBar 
-        activeSection={activeSection}
-        onNavigate={scrollToSection}
-        onRequestAudit={handleRequestAudit} 
-      />
+      {/* Persistent Mobile Bottom Bar for WhatsApp and Quick Audit */}
+      <MobileBottomBar onRequestAudit={handleRequestAudit} />
     </>
   );
 }
