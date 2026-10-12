@@ -104,7 +104,7 @@ export const HomePortfolioSection: React.FC<HomePortfolioSectionProps> = ({
               Tangible Results.
             </h2>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
-              From engaging social media video tours to high-impact educational NGO carousels, see how we bring brands to life across Kenya.
+              From engaging social media video tours to high-impact educational Nonprofit carousels, see how we bring brands to life across Kenya.
             </p>
           </div>
 

@@ -131,9 +131,9 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: 'ajenda-kenya-id-advocacy',
-    title: 'Ajenda Kenya – #SiasaYaID NGO Carousel',
+    title: 'Ajenda Kenya – #SiasaYaID Nonprofit Carousel',
     client: 'Ajenda Kenya',
-    industry: 'NGO',
+    industry: 'Nonprofit',
     contentType: 'Social Media Content',
     duration: '4 Slides',
     durationSeconds: 0,
@@ -151,7 +151,7 @@ export const PROJECTS: ProjectItem[] = [
       'Slide 4: Youth solidarity & frustration – "Next week tena? Si ni miezi mitatu sai bro?"'
     ],
     tiktokUrl: 'https://www.tiktok.com/@ajendakenya/photo/7494226891407101190?image_index=2&is_from_webapp=1',
-    description: "Created for Ajenda Kenya, an NGO. This 4-part illustrated educational comic carousel enlightens young people on how to apply for an ID, navigating delays, and standing against extortion (#SiasaYaID).",
+    description: "Created for Ajenda Kenya, a nonprofit organization. This 4-part illustrated educational comic carousel enlightens young people on how to apply for an ID, navigating delays, and standing against extortion (#SiasaYaID).",
     filterCategories: ['All', 'Social Media Content'],
     socialStats: {
       platform: 'tiktok',

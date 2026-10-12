@@ -23,61 +23,61 @@ export const servicesData: ServiceCardItem[] = [
   {
     id: 'social-media',
     title: 'Social Media Marketing',
-    description: 'High-converting short-form video Reels, TikToks, branded graphics, and community engagement to grow your audience.',
+    description: 'We create eye-catching videos, posts, and TikToks that get your brand noticed and turn viewers into loyal followers and buyers.',
     icon: Video,
-    tags: 'REELS · TIKTOKS · BRAND GRAPHICS',
+    tags: 'VIDEOS · POSTS · TIKTOK & INSTAGRAM',
     detailedPoints: [
-      'High-converting short-form video Reels & TikTok production',
-      'Custom branded graphics and visual social identity',
-      'Content calendar and active daily community DM management'
+      'Professional TikToks and Instagram Reels filmed and edited for you',
+      'Custom branded post designs and flyers that look great',
+      'Regular posting calendar and quick replies to comments and messages'
     ]
   },
   {
     id: 'google-meta-ads',
-    title: 'Google & Meta Ads (PPC)',
-    description: 'High-intent Google Search campaigns and Facebook & Instagram lead ads to capture customers ready to buy right now.',
+    title: 'Google, Facebook & Instagram Ads',
+    description: 'Put your business right in front of people actively searching for your services and ready to buy today.',
     icon: Target,
-    tags: 'GOOGLE SEARCH · META ADS · HIGH ROAS',
+    tags: 'GOOGLE SEARCH · FACEBOOK & INSTAGRAM · FAST LEADS',
     detailedPoints: [
-      'High-intent Google Search campaigns for active buyers',
-      'Targeted Facebook & Instagram lead generation ads',
-      'Click-to-WhatsApp direct ads with conversion tracking'
+      'Show up on Google when customers search for what you sell',
+      'Targeted ads on Facebook and Instagram to find your ideal buyers',
+      'Direct "Click to WhatsApp" buttons so customers reach you instantly'
     ]
   },
   {
     id: 'web-development',
-    title: 'Web Design & Development',
-    description: 'Fast, mobile-optimized business websites and dedicated landing pages with 1-tap WhatsApp and call triggers.',
+    title: 'Business Websites & Pages',
+    description: 'Clean, fast-loading mobile websites that look great on smartphones and make it effortless for visitors to call or message you on WhatsApp.',
     icon: Globe,
-    tags: 'SUB-2S SPEED · MOBILE-FIRST · WHATSAPP',
+    tags: 'FAST ON MOBILE · EASY TO USE · WHATSAPP BUTTONS',
     detailedPoints: [
-      'Sub-2-second load times on Kenyan mobile networks',
-      'Prominent 1-tap WhatsApp triggers and direct call actions',
-      'Conversion-optimized landing pages and sales funnels'
+      'Opens quickly on mobile phones, even on slower mobile networks',
+      'Direct buttons to call or chat with you on WhatsApp in 1 click',
+      'Clear layout showing your services, prices, and customer reviews'
     ]
   },
   {
     id: 'seo',
-    title: 'Search Engine Optimization (SEO)',
-    description: 'Top 3 Google Maps ranking, local citations, and on-page optimization to drive qualified organic local traffic.',
+    title: 'Google Maps & Search (SEO)',
+    description: 'Help nearby customers find your business first when they search on Google Maps or look up services in your town.',
     icon: Search,
-    tags: 'GOOGLE MAPS · LOCAL SEO · TOP 3',
+    tags: 'GOOGLE MAPS · LOCAL SEARCH · GET FOUND FIRST',
     detailedPoints: [
-      'Google Business Profile top-3 Maps pack optimization',
-      'High-intent local keywords and commercial search terms',
-      'On-page technical fixes and localized reputation signals'
+      'Get your business to show up at the top of Google Maps in your area',
+      'Help people searching "near me" find your location, phone number, and directions',
+      'Improve your website ranking so you get free visitors from Google every day'
     ]
   },
   {
     id: 'whatsapp-automation',
-    title: 'WhatsApp Marketing & Automation',
-    description: '24/7 automated instant chatbot replies, menu flows, appointment confirmations, and CRM lead capture.',
+    title: 'WhatsApp Chatbots & Automation',
+    description: 'Reply to customer inquiries instantly 24/7, send price lists, take bookings, and never miss a lead while you sleep.',
     icon: MessageSquare,
-    tags: '24/7 CHATBOT · APPOINTMENTS · CRM',
+    tags: 'INSTANT REPLIES · 24/7 AUTO-CHAT · NEVER MISS A LEAD',
     detailedPoints: [
-      '24/7 automated WhatsApp greetings and interactive menu flows',
-      'Automated appointment bookings and reminder sequences',
-      'Lead capture instantly synced to your phone and team'
+      'Instant automated replies welcoming new customers day and night',
+      'Automated menu to share prices, services, and location without waiting',
+      'Saves every customer inquiry so your team can easily follow up and close sales'
     ]
   }
 ];
@@ -203,14 +203,14 @@ export const Solutions: React.FC<SolutionsProps> = ({
             OUR SERVICES
           </p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-bold text-white tracking-tight leading-[1.2] mb-1.5 sm:mb-2">
-            Comprehensive digital solutions <br className="hidden sm:inline" />
-            tailored to your{' '}
+            Simple, practical marketing <br className="hidden sm:inline" />
+            built to grow your{' '}
             <span className="bg-gradient-to-r from-[#DE8E53] via-[#E5A958] to-[#C25E00] bg-clip-text text-transparent">
-              business needs
+              business
             </span>
           </h2>
           <p className="text-slate-300 text-xs sm:text-sm lg:text-[15px] leading-relaxed max-w-2xl mx-auto font-normal">
-            From targeted customer acquisition to seamless conversions, our specialized marketing services deliver measurable growth for Kenyan businesses.
+            Everything you need to attract new customers, build trust, and grow your sales in Kenya.
           </p>
         </div>
 

@@ -108,14 +108,14 @@ export const caseStudiesMetadata: Record<string, {
     industry: 'Automotive'
   },
   'ajenda-kenya-id-advocacy': {
-    title: 'Ajenda Kenya #SiasaYaID NGO Comic Carousel Case Study | Aceso Solutions',
+    title: 'Ajenda Kenya #SiasaYaID Nonprofit Comic Carousel Case Study | Aceso Solutions',
     description: 'How Aceso Solutions created an educational Sheng comic carousel for Ajenda Kenya reaching 148k+ views, 5.3k likes, 225 comments, and 710 shares on TikTok.',
-    keywords: 'Ajenda Kenya case study, #SiasaYaID, NGO social media campaigns Kenya, youth advocacy content Nairobi, TikTok comic carousel Kenya, civic rights educational content, Aceso Solutions',
+    keywords: 'Ajenda Kenya case study, #SiasaYaID, nonprofit social media campaigns Kenya, youth advocacy content Nairobi, TikTok comic carousel Kenya, civic rights educational content, Aceso Solutions',
     image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?q=80&w=1200&auto=format&fit=crop',
     imageAlt: 'Ajenda Kenya #SiasaYaID Youth Advocacy Comic Carousel Case Study by Aceso Solutions',
     ogType: 'article',
     client: 'Ajenda Kenya',
-    industry: 'NGO'
+    industry: 'Nonprofit'
   }
 };
 
@@ -432,6 +432,15 @@ export default function App() {
       if (dynamicLd) {
         dynamicLd.remove();
       }
+    }
+
+    // Send virtual pageview to Google Analytics (GA4) on SPA view / hash change
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'page_view', {
+        page_title: title,
+        page_location: window.location.href,
+        page_path: window.location.pathname + (window.location.hash || '')
+      });
     }
   }, [currentView, selectedCaseStudyId]);
 

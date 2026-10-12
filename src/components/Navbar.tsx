@@ -1,6 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { AcesoLogo } from './AcesoLogo';
-import { Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
+import { 
+  Menu, 
+  X, 
+  ArrowRight, 
+  ChevronDown,
+  Home,
+  Layers,
+  Sparkles,
+  Building2,
+  Tag,
+  Mail,
+  Phone,
+  MessageCircle,
+  MapPin
+} from 'lucide-react';
 
 interface NavbarProps {
   activeSection: string;
@@ -37,6 +51,39 @@ export const servicesNavItems = [
   }
 ];
 
+export const industriesNavItems = [
+  {
+    name: 'Hotels & Resorts',
+    id: 'hospitality',
+    navTarget: 'industry-hospitality'
+  },
+  {
+    name: 'Tours & Travel',
+    id: 'tours-travel',
+    navTarget: 'industry-tours-travel'
+  },
+  {
+    name: 'Dental Clinics',
+    id: 'dental-clinics',
+    navTarget: 'industry-dental-clinics'
+  },
+  {
+    name: 'Vet Clinics',
+    id: 'vet-clinics',
+    navTarget: 'industry-vet-clinics'
+  },
+  {
+    name: 'Professional & Legal Services',
+    id: 'professional-services',
+    navTarget: 'industry-professional-services'
+  },
+  {
+    name: 'Education & Training',
+    id: 'education',
+    navTarget: 'industry-education'
+  }
+];
+
 export const Navbar: React.FC<NavbarProps> = ({
   activeSection,
   onRequestAudit,
@@ -46,6 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [mobileServicesExpanded, setMobileServicesExpanded] = useState(false);
+  const [mobileIndustriesExpanded, setMobileIndustriesExpanded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
@@ -77,13 +125,52 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Lock background body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  // Close mobile drawer on Escape key or desktop viewport resize
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [mobileMenuOpen]);
+
   const handleServiceSubClick = (navTarget: string) => {
     setServicesDropdownOpen(false);
     setMobileMenuOpen(false);
     onNavigate(navTarget);
   };
 
+  const handleIndustrySubClick = (navTarget: string) => {
+    setMobileMenuOpen(false);
+    onNavigate(navTarget);
+  };
+
   const isServiceActive = activeSection === 'services' || activeSection.startsWith('service-');
+  const isIndustryActive = activeSection === 'industries' || activeSection.startsWith('industry-');
+  const isPricingActive = activeSection === 'pricing' || activeSection.startsWith('pricing-');
 
   return (
     <>
@@ -229,7 +316,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Drawer Menu Content */}
           <div 
-            className="md:hidden relative z-50 bg-[#FAF9F6] border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-2xl max-h-[calc(100vh-5rem)] overflow-y-auto overscroll-contain"
+            className="md:hidden relative z-50 bg-[#FAF9F6] border-b border-slate-200 px-4 pt-3 pb-6 space-y-3.5 shadow-2xl max-h-[calc(100vh-5rem)] overflow-y-auto overscroll-contain"
           >
             <div className="flex flex-col space-y-1">
               {/* Home */}
@@ -238,13 +325,34 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigate('home');
                   setMobileMenuOpen(false);
                 }}
-                className={`text-left px-4 py-3 min-h-[44px] text-sm font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
+                className={`text-left px-3.5 py-3 min-h-[46px] text-sm font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
                   activeSection === 'home'
                     ? 'bg-amber-500/15 text-[#C25E00] font-bold'
                     : 'text-slate-700 hover:bg-slate-100 active:bg-slate-200/60'
                 }`}
               >
-                <span>Home</span>
+                <div className="flex items-center gap-3">
+                  <Home className={`w-4 h-4 ${activeSection === 'home' ? 'text-[#C25E00]' : 'text-slate-500'}`} />
+                  <span>Home</span>
+                </div>
+              </button>
+
+              {/* Our Work */}
+              <button
+                onClick={() => {
+                  onNavigate('portfolio');
+                  setMobileMenuOpen(false);
+                }}
+                className={`text-left px-3.5 py-3 min-h-[46px] text-sm font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
+                  activeSection === 'portfolio' || activeSection === 'our-work'
+                    ? 'bg-amber-500/15 text-[#C25E00] font-bold'
+                    : 'text-slate-700 hover:bg-slate-100 active:bg-slate-200/60'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Layers className={`w-4 h-4 ${(activeSection === 'portfolio' || activeSection === 'our-work') ? 'text-[#C25E00]' : 'text-slate-500'}`} />
+                  <span>Our Work</span>
+                </div>
               </button>
 
               {/* Services Expandable Section */}
@@ -252,13 +360,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   type="button"
                   onClick={() => setMobileServicesExpanded(!mobileServicesExpanded)}
-                  className={`w-full flex items-center justify-between px-4 py-3 min-h-[44px] text-sm font-semibold rounded-xl transition-colors cursor-pointer ${
+                  className={`w-full flex items-center justify-between px-3.5 py-3 min-h-[46px] text-sm font-semibold rounded-xl transition-colors cursor-pointer ${
                     isServiceActive
                       ? 'bg-amber-500/15 text-[#C25E00] font-bold'
                       : 'text-slate-700 hover:bg-slate-100 active:bg-slate-200/60'
                   }`}
+                  aria-expanded={mobileServicesExpanded}
                 >
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center gap-3">
+                    <Sparkles className={`w-4 h-4 ${isServiceActive ? 'text-[#C25E00]' : 'text-slate-500'}`} />
                     <span>Services</span>
                   </span>
                   <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${mobileServicesExpanded ? 'rotate-180 text-[#C25E00]' : ''}`} />
@@ -286,19 +396,63 @@ export const Navbar: React.FC<NavbarProps> = ({
                 )}
               </div>
 
-              {/* Our Work */}
+              {/* Industries Expandable Section */}
+              <div className="rounded-xl overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setMobileIndustriesExpanded(!mobileIndustriesExpanded)}
+                  className={`w-full flex items-center justify-between px-3.5 py-3 min-h-[46px] text-sm font-semibold rounded-xl transition-colors cursor-pointer ${
+                    isIndustryActive
+                      ? 'bg-amber-500/15 text-[#C25E00] font-bold'
+                      : 'text-slate-700 hover:bg-slate-100 active:bg-slate-200/60'
+                  }`}
+                  aria-expanded={mobileIndustriesExpanded}
+                >
+                  <span className="flex items-center gap-3">
+                    <Building2 className={`w-4 h-4 ${isIndustryActive ? 'text-[#C25E00]' : 'text-slate-500'}`} />
+                    <span>Industries</span>
+                  </span>
+                  <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${mobileIndustriesExpanded ? 'rotate-180 text-[#C25E00]' : ''}`} />
+                </button>
+
+                {mobileIndustriesExpanded && (
+                  <div className="mt-1 pl-2 pr-1 py-1 space-y-1 bg-white rounded-xl border border-slate-200/80 shadow-2xs">
+                    {industriesNavItems.map((ind) => {
+                      const isCurrent = activeSection === ind.navTarget;
+                      return (
+                        <button
+                          key={ind.id}
+                          onClick={() => handleIndustrySubClick(ind.navTarget)}
+                          className={`w-full text-left px-3.5 py-2.5 min-h-[44px] text-sm font-medium rounded-lg transition-colors cursor-pointer block ${
+                            isCurrent 
+                              ? 'bg-amber-50 text-[#C25E00] font-bold'
+                              : 'text-slate-700 hover:text-[#C25E00] hover:bg-slate-50 active:bg-slate-100'
+                          }`}
+                        >
+                          {ind.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Pricing & Plans */}
               <button
                 onClick={() => {
-                  onNavigate('portfolio');
+                  onNavigate('pricing');
                   setMobileMenuOpen(false);
                 }}
-                className={`text-left px-4 py-3 min-h-[44px] text-sm font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
-                  activeSection === 'portfolio' || activeSection === 'our-work'
+                className={`text-left px-3.5 py-3 min-h-[46px] text-sm font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
+                  isPricingActive
                     ? 'bg-amber-500/15 text-[#C25E00] font-bold'
                     : 'text-slate-700 hover:bg-slate-100 active:bg-slate-200/60'
                 }`}
               >
-                <span>Our Work</span>
+                <div className="flex items-center gap-3">
+                  <Tag className={`w-4 h-4 ${isPricingActive ? 'text-[#C25E00]' : 'text-slate-500'}`} />
+                  <span>Pricing &amp; Plans</span>
+                </div>
               </button>
 
               {/* Contact Us */}
@@ -307,17 +461,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigate('contact');
                   setMobileMenuOpen(false);
                 }}
-                className={`text-left px-4 py-3 min-h-[44px] text-sm font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
+                className={`text-left px-3.5 py-3 min-h-[46px] text-sm font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
                   activeSection === 'contact'
                     ? 'bg-amber-500/15 text-[#C25E00] font-bold'
                     : 'text-slate-700 hover:bg-slate-100 active:bg-slate-200/60'
                 }`}
               >
-                <span>Contact Us</span>
+                <div className="flex items-center gap-3">
+                  <Mail className={`w-4 h-4 ${activeSection === 'contact' ? 'text-[#C25E00]' : 'text-slate-500'}`} />
+                  <span>Contact Us</span>
+                </div>
               </button>
             </div>
 
-            <div className="pt-3 border-t border-slate-200">
+            {/* CTA Button */}
+            <div className="pt-2">
               <button
                 onClick={() => {
                   onRequestAudit();
@@ -328,6 +486,32 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span>Request Free Growth Audit</span>
                 <ArrowRight className="w-4 h-4 text-[#DE8E53]" />
               </button>
+            </div>
+
+            {/* Quick Contact & Direct Action Strip in Mobile Menu */}
+            <div className="pt-3 border-t border-slate-200 flex flex-col gap-2">
+              <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <a
+                  href="tel:+254758544241"
+                  className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#C25E00]" />
+                  <span>Call Us</span>
+                </a>
+                <a
+                  href="https://wa.me/254758544241?text=Hi%20Aceso%20Solutions,%20I'd%20like%20to%20inquire%20about%20your%20digital%20growth%20services"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#00a859] transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-1">
+                <MapPin className="w-3 h-3 text-slate-400" />
+                <span>Nairobi, Kenya • Mon – Fri 8am – 6pm EAT</span>
+              </div>
             </div>
           </div>
         </>
